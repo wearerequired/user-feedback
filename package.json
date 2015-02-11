@@ -1,0 +1,23 @@
+{
+  "name": "user-feedback",
+  "version": "1.0.0",
+  "description": "Allows users to submit feedback and bug reports  anywhere on the site using an interactive feedback button.",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wearerequired/user-feedback.git"
+  },
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-wp-i18n": "*",
+    "grunt-wp-readme-to-markdown": "*",
+    "load-grunt-config": "*",
+    "time-grunt": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-uglify": "*"
+  },
+  "dependencies": {
+    "time-grunt": "*"
+  }
+}

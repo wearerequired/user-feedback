@@ -1,0 +1,11 @@
+default:
+  - 'i18n'
+  - 'readme'
+i18n:
+  - 'addtextdomain'
+  - 'makepot'
+js:
+  - 'concat'
+  - 'uglify'
+readme:
+  - 'wp_readme_to_markdown'
