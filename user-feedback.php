@@ -85,7 +85,7 @@ final class User_Feedback {
 			'rewrite'             => false,
 			'can_export'          => false,
 			'query_var'           => true,
-			'supports'            => array( 'thumbnail' )
+			'supports'            => array( 'author', 'thumbnail' )
 		);
 
 		register_post_type( 'user_feedback', $args );
@@ -156,7 +156,8 @@ final class User_Feedback {
 			$post_id,
 			sprintf(
 				__( 'User Feedback from %s', 'user-feedback' ),
-				date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) )
+				date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) )
+			)
 		);
 
 		// Unlink file in case of an error
@@ -330,7 +331,7 @@ final class User_Feedback {
 	 */
 	public static function admin_edit_columns( $columns ) {
 		// Add the first custom column
-		$columns['user_feedback_note']  = __( 'Feedback', 'user-feedback' );
+		$columns['user_feedback_note'] = __( 'Feedback', 'user-feedback' );
 
 		// We don't have titles
 		unset( $columns['title'] );
@@ -355,7 +356,6 @@ final class User_Feedback {
 	 * @return string
 	 */
 	public static function admin_manage_columns( $column, $post_id ) {
-
 		// Display the user feedback
 		if ( 'user_feedback_note' === $column ) {
 			$post = get_post( $post_id );
@@ -367,7 +367,6 @@ final class User_Feedback {
 			$thumbnail = get_post_thumbnail_id( $post_id );
 			echo wp_get_attachment_image( $thumbnail, 'thumbnail' );
 		}
-
 	}
 
 }
