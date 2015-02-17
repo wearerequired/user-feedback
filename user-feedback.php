@@ -329,8 +329,8 @@ final class User_Feedback {
 				<label>%4$s</label>
 				<button class="feedback-setblackout"><div class="ico"></div><span>%5$s</span></button>
 				<label class="lower">%6$s</label>
-				<div class="feedback-buttons"><button id="feedback-highlighter-next" class="feedback-next-btn feedback-btn-gray">%6$s</button>
-				<button id="feedback-highlighter-back" class="feedback-back-btn feedback-btn-gray">%7$s</button></div>
+				<div class="feedback-buttons"><button id="feedback-highlighter-next" class="feedback-next-btn feedback-btn-gray">%7$s</button>
+				<button id="feedback-highlighter-back" class="feedback-back-btn feedback-btn-gray">%8$s</button></div>
 				<div class="feedback-wizard-close"></div>
 			</div>',
 			__( 'Feedback', 'user-feedback' ),
