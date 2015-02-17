@@ -2901,6 +2901,10 @@
 
   $.feedback = function (options) {
 
+    /**
+     * Default Settings
+     */
+
     var settings = $.extend({
       ajaxURL             : '',
       postBrowserInfo     : true,
@@ -2932,6 +2936,11 @@
       highlightElement    : true,
       initialBox          : false
     }, options);
+
+    /**
+     * Initi
+     */
+
     var supportedBrowser = !!window.HTMLCanvasElement;
     if (supportedBrowser) {
       $('body').append('<button id="user-feedback-init-button" class="user-feedback-button user-feedback-button-gray">' + settings.initButtonText + '</button>');
@@ -2980,42 +2989,48 @@
 
         rect = {};
         drag = false;
-        highlight = 1,
-            post = {};
+        highlight = 1;
+        post = {};
 
-        if (settings.postBrowserInfo) {
-          post.browser = {};
-          post.browser.appCodeName = navigator.appCodeName;
-          post.browser.appName = navigator.appName;
-          post.browser.appVersion = navigator.appVersion;
-          post.browser.cookieEnabled = navigator.cookieEnabled;
-          post.browser.onLine = navigator.onLine;
-          post.browser.platform = navigator.platform;
-          post.browser.userAgent = navigator.userAgent;
-          post.browser.plugins = [];
+        // Already append debug information to the overview screen
+        $('#user-feedback-additional-theme').append(' ' + user_feedback.theme.name);
+        $('#user-feedback-additional-browser').append(' ' + user_feedback.theme.name);
+        $('#user-feedback-additional-template').append(' ' + user_feedback.theme.current_template);
+        $('#user-feedback-additional-language').append(' ' + user_feedback.language);
 
-          $.each(navigator.plugins, function (i) {
-            post.browser.plugins.push(navigator.plugins[i].name);
-          });
-          $('#user-feedback-browser-info').toggleClass('hidden');
-        }
+        /**
+         * Detect browser name + version. Example: Chrome 40, Internet Explorer 12
+         * @see http://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser
+         */
+        navigator.sayswho = (function () {
+          var ua = navigator.userAgent, tem,
+              M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+          if (/trident/i.test(M[1])) {
+            tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+            return 'Internet Explorer ' + (tem[1] || '');
+          }
+          if (M[1] === 'Chrome') {
+            tem = ua.match(/\bOPR\/(\d+)/)
+            if (tem != null) return 'Opera ' + tem[1];
+          }
+          M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+          if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+          return M.join(' ');
+        })();
 
-        if (settings.postURL) {
-          post.url = document.URL;
-          $('#user-feedback-page-info').toggleClass('hidden');
-        }
-
-        if (settings.postHTML) {
-          post.html = $('html').html();
-          $('#user-feedback-page-structure').toggleClass('hidden');
-        }
-
-        if (!settings.postBrowserInfo && !settings.postURL && !settings.postHTML)
-          $('#user-feedback-additional-none').toggleClass('hidden');
+        // Set up initial post data to be sent
+        post.browser = {};
+        post.browser.name = navigator.sayswho;
+        post.browser.cookieEnabled = navigator.cookieEnabled;
+        post.browser.platform = navigator.platform;
+        post.browser.userAgent = navigator.userAgent;
+        post.url = document.URL;
+        post.theme = user_feedback.theme;
+        post.language = user_feedback.language;
+        post.html = $('html').html();
 
         $(document).on('mousedown', '#user-feedback-canvas', function (e) {
           if (canDraw) {
-
             rect.startX = e.pageX - $(this).offset().left;
             rect.startY = e.pageY - $(this).offset().top;
             rect.w = 0;
@@ -3170,6 +3185,7 @@
           redraw(ctx);
         });
 
+        // What happens after clicking next on the intro screen
         $(document).on('click', '#user-feedback-welcome-next', function () {
           if ($('#user-feedback-note').val().length > 0) {
             canDraw = true;
@@ -3177,8 +3193,8 @@
             $('#user-feedback-helpers').removeClass('visible');
             $('#user-feedback-welcome').addClass('hidden');
             $('#user-feedback-highlighter').removeClass('hidden');
-          }
-          else {
+          } else {
+            // Error, description has to be filled out
             $('#user-feedback-welcome-error').removeClass('hidden');
           }
         });
@@ -3264,6 +3280,7 @@
           e.preventDefault();
         });
 
+        // What happens after clicking back on the highlighter bar
         $(document).on('click', '#user-feedback-highlighter-back', function () {
           canDraw = false;
           $('#user-feedback-canvas').css('cursor', 'default');
@@ -3285,6 +3302,7 @@
           $('.user-feedback-sethighlight').removeClass('user-feedback-active');
         });
 
+        // What happens after clicking next on the highlighter bar
         $(document).on('click', '#user-feedback-highlighter-next', function () {
           canDraw = false;
           $('#user-feedback-canvas').css('cursor', 'default');
@@ -3310,10 +3328,20 @@
               if (settings.showDescriptionModal) {
                 $('#user-feedback-canvas-tmp').remove();
                 $('#user-feedback-overview').toggleClass('hidden');
-                //$('#user-feedback-overview-description-text>textarea').remove();
-                //$('#user-feedback-overview-screenshot>img').remove();
                 $('user-feedback-overview-note').val($('#user-feedback-note').val());
-                $('#user-feedback-overview-screenshot h3').append('<img class="user-feedback-screenshot" src="' + img + '" />');
+                $('#user-feedback-overview-screenshot-img').attr('src', img);
+
+                // Display image size
+                $('#user-feedback-screenshot-size span').remove();
+                $('#user-feedback-screenshot-size').append(' <span>' + $('#user-feedback-overview-screenshot-img')[0].naturalWidth + 'x' + $('#user-feedback-overview-screenshot-img')[0].naturalHeight + '</span>');
+
+                // Display number of highlighted areas
+                $('#user-feedback-screenshot-highlighted span').remove();
+                if ($('.user-feedback-helper').length <= 1) {
+                  $('#user-feedback-screenshot-highlighted').append(' <span>' + $('.user-feedback-helper').length + ' ' + $('#user-feedback-screenshot-highlighted').attr('data-single') + '</span>');
+                } else {
+                  $('#user-feedback-screenshot-highlighted').append(' <span>' + $('.user-feedback-helper').length + ' ' + $('#user-feedback-screenshot-highlighted').attr('data-multiple') + '</span>');
+                }
               }
               else {
                 $('#user-feedback-module').remove();
@@ -3326,6 +3354,7 @@
           });
         });
 
+        // What happens after clicking back on the overview screen
         $(document).on('click', '#user-feedback-overview-back', function (e) {
           canDraw = true;
           $('#user-feedback-canvas').css('cursor', 'crosshair');
@@ -3347,6 +3376,7 @@
           $('#user-feedback-note').val(tx);
         });
 
+        // What happens after submitting the data
         $(document).on('click', '#user-feedback-submit', function () {
           canDraw = false;
 
@@ -3368,14 +3398,14 @@
                 .fail(function () {
                   $('#user-feedback-module').append(settings.tpl.submitError);
                 });
-          }
-          else {
+          } else {
             $('#user-feedback-overview-error').removeClass('hidden');
           }
         });
       });
     }
 
+    // Close the user feedback plugin
     function close() {
       canDraw = false;
       $(document).off('mouseenter mouseleave', '.user-feedback-helper');

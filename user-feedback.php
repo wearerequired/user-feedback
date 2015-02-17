@@ -332,13 +332,6 @@ final class User_Feedback {
 			'ajax_url'    => admin_url( 'admin-ajax.php' ),
 			'button_text' => __( 'Feedback', 'user-feedback' ),
 			'tpl'         => self::get_feedback_templates(),
-			'user'        => get_current_user_id(),
-			/*'user'        => array(
-				'logged_in' => is_user_logged_in(),
-				'id'        => get_current_user_id(),
-				'name'      => $userdata->display_name,
-				'avatar'    => self::get_avatar_url( $userdata->user_email )
-			),*/
 			'theme'       => array(
 				'name'             => $theme->Name,
 				'stylesheet'       => $theme->stylesheet,
@@ -437,10 +430,10 @@ final class User_Feedback {
 					</ul>
 				</div>
 				<div id="user-feedback-overview-screenshot">
-					<h3>%s</h3>
+					<img id="user-feedback-overview-screenshot-img" src="" alt="%s" />
 					<ul class="user-feedback-additional-notes">
 						<li id="user-feedback-screenshot-size">%s</li>
-						<li id="user-feedback-screenshot-highlighted">%s</li>
+						<li id="user-feedback-screenshot-highlighted"  data-single="%s" data-multiple="%s">%s</li>
 					</ul>
 				</div>
 				<div class="user-feedback-buttons">
@@ -457,8 +450,10 @@ final class User_Feedback {
 			__( 'Browser:', 'user-feedback' ),
 			__( 'Template:', 'user-feedback' ),
 			__( 'Language', 'user-feedback' ),
-			__( 'Screenshot', 'user-feedback' ),
+			_x( 'Screenshot', 'alt text', 'user-feedback' ),
 			__( 'Screen size:', 'user-feedback' ),
+			_x( 'area', 'single highlighted area', 'user-feedback' ),
+			_x( 'areas', 'multiple highlighted areas', 'user-feedback' ),
 			__( 'Highlighted:', 'user-feedback' ),
 			__( 'Submit', 'user-feedback' ),
 			__( 'Back', 'user-feedback' ),
@@ -470,13 +465,15 @@ final class User_Feedback {
 		// Template for the success message at the end
 		$templates['submit_success'] = sprintf( '
 			<div id="user-feedback-submit-success" class="user-feedback-modal hidden" role="dialog" aria-labelledby="user-feedback-success-title" aria-describedby="user-feedback-success-description">
-				<div id="user-feedback-success-title" class="user-feedback-logo">%1$s</div>
-				<p id="user-feedback-success-description">%2$s</p>
-				<p>%3$s</p>
-				<button class="user-feedback-button user-feedback-button-close user-feedback-button-blue">%4$s</button>
-				<button class="user-feedback-wizard-close" aria-label="%5$s">%6$s</button>
+				<div id="user-feedback-success-title" class="user-feedback-logo">%s</div>
+				<p>%s</p>
+				<p id="user-feedback-success-description">%s</p>
+				<p>%s</p>
+				<button class="user-feedback-button user-feedback-button-close user-feedback-button-blue">%s</button>
+				<button class="user-feedback-wizard-close" aria-label="%s">%s</button>
 			</div>',
 			__( 'Feedback', 'user-feedback' ),
+			$intro,
 			__( 'Thank you for your feedback. We value every piece of feedback we receive.', 'user-feedback' ),
 			__( 'We cannot respond individually to every one, but we will use your comments as we strive to improve your experience.', 'user-feedback' ),
 			__( 'OK', 'user-feedback' ),

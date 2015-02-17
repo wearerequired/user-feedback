@@ -260,9 +260,23 @@ label[for=user_feedback_dont_show_again] {
 	border: 1px solid transparent;
 	color: #E41B13;
 	background: transparent;
+	font-weight: normal;
 
 	&:hover {
 		color: #B6140D;
+		background: transparent;
+	}
+}
+
+.user-feedback-button-secondary {
+	text-align: center;
+	border: 1px solid transparent;
+	color: #333;
+	background: transparent;
+	font-weight: normal;
+
+	&:hover {
+		color: #111;
 		background: transparent;
 	}
 }
@@ -294,12 +308,7 @@ label[for=user_feedback_dont_show_again] {
 }
 
 .user-feedback-button-submit {
-	width: 72px;
-	height: 29px;
-	line-height: 27px;
 	float: right;
-	font-size: 13px;
-	padding: 0 8px;
 }
 
 .user-feedback-button-close {
@@ -351,7 +360,8 @@ label[for=user_feedback_dont_show_again] {
  */
 
 #user-feedback-overview-description {
-	float: left
+	float: left;
+	width: 45%;
 }
 
 #user-feedback-overview-user {
@@ -391,11 +401,13 @@ label[for=user_feedback_dont_show_again] {
 }
 
 #user-feedback-overview-screenshot {
-	float: right
+	float: right;
+	width: 45%;
 }
 
-.user-feedback-screenshot {
-	max-width: 396px;
+#user-feedback-overview-screenshot-img {
+	width: 100%;
+	height: auto;
 	padding: 1px;
 	border: 1px solid #adadad;
 }
@@ -418,4 +430,9 @@ label[for=user_feedback_dont_show_again] {
 		float: left;
 		width: 50%;
 	}
+}
+
+#user-feedback-overview .user-feedback-buttons {
+	clear: both;
+	display: block;
 }
