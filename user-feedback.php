@@ -319,7 +319,89 @@ final class User_Feedback {
 			__( 'Please enter a description.', 'user-feedback' )
 		);
 
-		return $templates;
+		$templates['highlighter'] = sprintf( '
+			<div id="feedback-highlighter">
+				<div class="feedback-logo">%1$s</div>
+				<p>%2$s</p>
+				<button class="feedback-sethighlight feedback-active">
+				<div class="ico"></div><span>%3$s</span>
+				</button>
+				<label>%4$s</label>
+				<button class="feedback-setblackout"><div class="ico"></div><span>%5$s</span></button>
+				<label class="lower">%6$s</label>
+				<div class="feedback-buttons"><button id="feedback-highlighter-next" class="feedback-next-btn feedback-btn-gray">%6$s</button>
+				<button id="feedback-highlighter-back" class="feedback-back-btn feedback-btn-gray">%7$s</button></div>
+				<div class="feedback-wizard-close"></div>
+			</div>',
+			__( 'Feedback', 'user-feedback' ),
+			__( "Click and drag on the page to help us better understand your feedback. You can move this dialog if it's in the way.", 'user-feedback' ),
+			__( 'Highlight', 'user-feedback' ),
+			__( 'Highlight areas relevant to your feedback.', 'user-feedback' ),
+			__( 'Black out', 'user-feedback' ),
+			__( 'Black out any personal information.', 'user-feedback' ),
+			__( 'Next', 'user-feedback' ),
+			__( 'Back', 'user-feedback' )
+		);
+
+		$templates['overview'] = sprintf( '
+			<div id="feedback-overview">
+				<div class="feedback-logo">%1$s</div>
+				<div id="feedback-overview-description">
+					<div id="feedback-overview-description-text">
+						<h3>Description</h3><h3 class="feedback-additional">%2$s</h3>
+						<div id="feedback-additional-none"><span>%3$s</span></div>
+						<div id="feedback-browser-info"><span>%4$s</span></div>
+						<div id="feedback-page-info"><span>%5$s</span></div>
+						<div id="feedback-page-structure"><span>%6$s</span></div>
+					</div>
+				</div>
+				<div id="feedback-overview-screenshot"><h3>%7$s</h3></div>
+				<div class="feedback-buttons">
+					<button id="feedback-submit" class="feedback-submit-btn feedback-btn-blue">%8$s</button>
+					<button id="feedback-overview-back" class="feedback-back-btn feedback-btn-gray">%9$s</button>
+				</div>
+				<div id="feedback-overview-error">%10$s</div>
+				<div class="feedback-wizard-close"></div>
+			</div>',
+			__( 'Feedback', 'user-feedback' ),
+			__( 'Additional info', 'user-feedback' ),
+			__( 'None', 'user-feedback' ),
+			__( 'Browser Info', 'user-feedback' ),
+			__( 'Page Info', 'user-feedback' ),
+			__( 'Page Structure', 'user-feedback' ),
+			__( 'Screenshot', 'user-feedback' ),
+			__( 'Submit', 'user-feedback' ),
+			__( 'Back', 'user-feedback' ),
+			__( 'Please enter a description.', 'user-feedback' )
+		);
+
+		$templates['submit_success'] = sprintf( '
+			<div id="feedback-submit-success">
+				<div class="feedback-logo">%1$s</div>
+				<p>%2$s</p>
+				<p>%3$s</p>
+				<button class="feedback-close-btn feedback-btn-blue">%4$s</button>
+				<div class="feedback-wizard-close"></div>
+			</div>',
+			__( 'Feedback', 'user-feedback' ),
+			__( 'Thank you for your feedback. We value every piece of feedback we receive.', 'user-feedback' ),
+			__( 'We cannot respond individually to every one, but we will use your comments as we strive to improve your experience.', 'user-feedback' ),
+			__( 'OK', 'user-feedback' )
+		);
+
+		$templates['submit_error'] = sprintf( '
+			<div id="feedback-submit-error">
+				<div class="feedback-logo">%1$s</div>
+				<p>%2$s</p>
+				<button class="feedback-close-btn feedback-btn-blue">%3$s</button>
+				<div class="feedback-wizard-close"></div>
+			</div>',
+			__( 'Feedback', 'user-feedback' ),
+			__( 'Sadly an error occurred while sending your feedback. Please try again.', 'user-feedback' ),
+			__( 'OK', 'user-feedback' )
+		);
+
+		return apply_filters( 'user_feedback_templates', $templates );
 	}
 
 	/**
