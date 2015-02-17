@@ -11,6 +11,7 @@
   line-height: 1.5;
   z-index: 40000;
   background: #fff;
+  color: #333;
   outline: 0;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   background-clip: padding-box;
@@ -26,7 +27,8 @@
 .user-feedback-bottombar {
   width: 100%;
   padding: 20px;
-  background: #333; }
+  background: #333;
+  color: #fff; }
 
 .user-feedback-modal {
   padding: 30px;
