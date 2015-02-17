@@ -1,6 +1,9 @@
 # General
 .DS_Store
 
+# Sass
+.sass-cache
+
 # npm
 node_modules
 

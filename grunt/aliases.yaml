@@ -7,5 +7,9 @@ i18n:
 js:
   - 'concat'
   - 'uglify'
+css:
+  - 'sass'
+  - 'cssmin'
+  - 'autoprefixer'
 readme:
   - 'wp_readme_to_markdown'

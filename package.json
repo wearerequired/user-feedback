@@ -15,7 +15,10 @@
     "load-grunt-config": "*",
     "time-grunt": "*",
     "grunt-contrib-concat": "*",
-    "grunt-contrib-uglify": "*"
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-sass": "*",
+    "grunt-autoprefixer": "*"
   },
   "dependencies": {
     "time-grunt": "*"

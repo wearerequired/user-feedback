@@ -285,7 +285,7 @@ final class User_Feedback {
 
 		wp_enqueue_style(
 			'user-feedback',
-			plugin_dir_url( __FILE__ ) . '/css/user-feedback.css',
+			plugin_dir_url( __FILE__ ) . '/css/build/user-feedback' . $suffix . '.css',
 			array(),
 			'1.0.0'
 		);
