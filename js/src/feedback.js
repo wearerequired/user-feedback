@@ -91,7 +91,7 @@
           $('#user-feedback-canvas').css('cursor', 'crosshair');
           $('#user-feedback-helpers').removeClass('hidden');
           $('#user-feedback-welcome').addClass('hidden');
-          $('#user-feedback-highlighter').addClass('visible');
+          $('#user-feedback-highlighter').removeClass('hidden');
         }
 
         var ctx = $('#user-feedback-canvas')[0].getContext('2d');
@@ -302,7 +302,7 @@
           if ($('#user-feedback-note').val().length > 0) {
             canDraw = true;
             $('#user-feedback-canvas').css('cursor', 'crosshair');
-            $('#user-feedback-helpers').removeClass('visible');
+            $('#user-feedback-helpers').addClass('hidden');
             $('#user-feedback-welcome').addClass('hidden');
             $('#user-feedback-highlighter').removeClass('hidden');
           } else {
@@ -399,7 +399,7 @@
           $('#user-feedback-helpers').addClass('hidden');
           $('#user-feedback-highlighter').addClass('hidden');
           $('#user-feedback-welcome-error').addClass('hidden');
-          $('#user-feedback-welcome').addClass('visible');
+          $('#user-feedback-welcome').removeClass('hidden');
         });
 
         $(document).on('mousedown', '.user-feedback-sethighlight', function () {
@@ -498,18 +498,25 @@
 
             post.img = img;
             post.note = $('#user-feedback-note').val();
-            $.post(settings.ajaxURL,
-                {
-                  'action': 'user_feedback',
-                  'data'  : post
-                },
-                function () {
-                  $('#user-feedback-module').append(settings.tpl.submitSuccess);
-                }
+            $.post(
+              settings.ajaxURL,
+              {
+                'action': 'user_feedback',
+                'data'  : post
+              },
+              function () {
+                // Set our "do not show again" cookie
+                var date = new Date();date.setDate(date.getDate()+30);
+                document.cookie = 'user_feedback_dont_show_again=1; path=/;expires=' + date.toUTCString();
+
+                // Success template
+                $('#user-feedback-module').append(settings.tpl.submitSuccess);
+              }
             )
-                .fail(function () {
-                  $('#user-feedback-module').append(settings.tpl.submitError);
-                });
+            .fail(function () {
+              // Error template
+              $('#user-feedback-module').append(settings.tpl.submitError);
+            });
           } else {
             $('#user-feedback-overview-error').removeClass('hidden');
           }
@@ -542,7 +549,7 @@
       }
       $('[data-highlighted="true"]').removeAttr('data-highlight-id').removeAttr('data-highlighted');
       $('#user-feedback-module').remove();
-      $('.user-feedback-btn').addClass('visible');
+      $('#user-feedback-init-button').removeClass('hidden');
 
       settings.onClose.call(this);
     }
