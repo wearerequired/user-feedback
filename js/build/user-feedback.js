@@ -2908,18 +2908,18 @@
    */
 
   var settings = {
-    ajaxURL          : user_feedback.ajax_url,
-    initButtonText   : user_feedback.button_text,
-    initialBox       : document.cookie.indexOf('user_feedback_dont_show_again') < 0,
+    ajaxURL       : user_feedback.ajax_url,
+    initButtonText: user_feedback.button_text,
+    initialBox    : document.cookie.indexOf('user_feedback_dont_show_again') < 0,
     // todo: probably should make these canvas options available in `wp_localize_script`
-    strokeStyle      : 'black',
-    shadowColor      : 'black',
-    shadowOffsetX    : 1,
-    shadowOffsetY    : 1,
-    shadowBlur       : 10,
-    lineJoin         : 'bevel',
-    lineWidth        : 3,
-    tpl              : {
+    strokeStyle   : 'black',
+    shadowColor   : 'black',
+    shadowOffsetX : 1,
+    shadowOffsetY : 1,
+    shadowBlur    : 10,
+    lineJoin      : 'bevel',
+    lineWidth     : 3,
+    tpl           : {
       description  : user_feedback.tpl.description,
       highlighter  : user_feedback.tpl.highlighter,
       overview     : user_feedback.tpl.overview,
@@ -3304,7 +3304,7 @@
         $('#user-feedback-helpers').addClass('hidden');
         $('#user-feedback-highlighter').addClass('hidden');
         html2canvas($('body'), {
-          onrendered     : function (canvas) {
+          onrendered: function (canvas) {
             if (!settings.screenshotStroke) {
               redraw(ctx);
             }
@@ -3356,8 +3356,10 @@
           $('#user-feedback-submit-success,#user-feedback-submit-error').remove();
           $('#user-feedback-overview').addClass('hidden');
 
+          // Store the final image & note
           post.img = img;
-          post.note = $('#user-feedback-note').val();
+          post.note = $('#user-feedback-overview-note').val();
+
           $.post(
               settings.ajaxURL,
               {
@@ -3373,8 +3375,7 @@
                 // Success template
                 $('#user-feedback-module').append(settings.tpl.submitSuccess);
               }
-          )
-              .fail(function () {
+          ).fail(function () {
                 // Error template
                 $('#user-feedback-module').append(settings.tpl.submitError);
               });
