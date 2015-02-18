@@ -51,8 +51,22 @@ $color-red-hover: #B6140D;
 	width: 540px;
 }
 
-#user-feedback-module p {
-	margin-bottom: 10px;
+#user-feedback-module {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0;
+	bottom: 0;
+
+	h3 {
+		font-weight: bold;
+		font-size: 15px;
+		margin: 8px 0;
+	}
+
+	p {
+		margin-bottom: 10px;
+	}
 }
 
 // Title in the modal
@@ -203,7 +217,7 @@ label[for=user_feedback_dont_show_again] {
 .user-feedback-setblackout {
 	box-shadow: none;
 	background: $color-white;
-	color: #444;
+	color: $color-black;
 	border: 1px solid $color-white;
 	border-radius: 2px;
 	cursor: pointer;
@@ -220,7 +234,8 @@ label[for=user_feedback_dont_show_again] {
 
 	&:focus,
 	&:hover {
-		background: #f8f8f8;
+		background: $color-light-gray;
+		color: $color-black;
 	}
 }
 
@@ -236,7 +251,7 @@ label[for=user_feedback_dont_show_again] {
 	border: 1px solid $color-white;
 
 	&:hover {
-		background: #f8f8f8;
+		background: $color-light-gray;
 		color: $color-black;
 	}
 }
@@ -266,12 +281,12 @@ label[for=user_feedback_dont_show_again] {
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	color: #444;
 	border-radius: 2px;
-	background-image: linear-gradient(to bottom, #f5f5f5, #f1f1f1);
+	background-image: linear-gradient(to bottom, $color-light-gray, $color-white);
 
 	&:hover {
 		color: $color-black;
 		border: 1px solid #c6c6c6;
-		background-image: linear-gradient(to bottom, #f8f8f8, #f1f1f1);
+		background-image: linear-gradient(to bottom, $color-light-gray, $color-white);
 	}
 }
 
@@ -367,12 +382,6 @@ label[for=user_feedback_dont_show_again] {
 	display: inline-block;
 }
 
-#user-feedback-module h3 {
-	font-weight: bold;
-	font-size: 15px;
-	margin: 8px 0;
-}
-
 .user-feedback-additional {
 	margin-bottom: 20px !important
 }
@@ -383,7 +392,7 @@ label[for=user_feedback_dont_show_again] {
 
 #user-feedback-overview-description {
 	float: left;
-	width: 45%;
+	width: 50%;
 }
 
 #user-feedback-overview-user {
@@ -416,9 +425,9 @@ label[for=user_feedback_dont_show_again] {
 }
 
 #user-feedback-overview-note {
-	width: 330px;
+	width: 100%;
 	padding: 4px;
-	height: 90px;
+	height: 110px;
 	outline: none;
 }
 
@@ -435,18 +444,23 @@ label[for=user_feedback_dont_show_again] {
 }
 
 .user-feedback-additional-notes {
-	margin-top: 5px;
+	margin: 5px 0 0 0;
+	overflow: hidden;
 	list-style: none;
 	color: $color-gray;
-	overflow: hidden;
 
 	li {
 		float: left;
 		width: 50%;
+
+		#user-feedback-overview-screenshot & {
+			float: none;
+		}
 	}
 }
 
 #user-feedback-overview .user-feedback-buttons {
 	clear: both;
 	display: block;
+	padding-top: 30px;
 }
