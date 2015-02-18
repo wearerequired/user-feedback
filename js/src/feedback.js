@@ -115,10 +115,10 @@
         })();
 
         // Already append debug information to the overview screen
-        $('#user-feedback-additional-theme').append(' ' + user_feedback.theme.name);
-        $('#user-feedback-additional-browser').append(' ' + navigator.sayswho);
-        $('#user-feedback-additional-template').append(' ' + user_feedback.theme.current_template);
-        $('#user-feedback-additional-language').append(' ' + user_feedback.language);
+        $('#user-feedback-additional-theme').append(' <span>' + user_feedback.theme.name + '</span>');
+        $('#user-feedback-additional-browser').append(' <span>' + navigator.sayswho + '</span>');
+        $('#user-feedback-additional-template').append(' <span>' + user_feedback.theme.current_template + '</span>');
+        $('#user-feedback-additional-language').append(' <span>' + user_feedback.language + '</span>');
 
         // Set up initial post data to be sent
         post.browser = {};
