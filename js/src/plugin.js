@@ -9,7 +9,6 @@
           ajaxURL             : user_feedback.ajax_url,
           initButtonText      : user_feedback.button_text,
           initialBox          : document.cookie.indexOf('user_feedback_dont_show_again') < 0,
-          showDescriptionModal: true,
           tpl                 : {
             description  : user_feedback.tpl.description,
             highlighter  : user_feedback.tpl.highlighter,

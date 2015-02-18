@@ -235,7 +235,7 @@ label[for=user_feedback_dont_show_again] {
 	&:focus,
 	&:hover {
 		background: $color-light-gray;
-		color: $color-black;
+		color: $color-blue-hover;
 	}
 }
 
@@ -260,6 +260,11 @@ label[for=user_feedback_dont_show_again] {
 	background: $color-black;
 }
 
+#user-feedback-highlighter-next,
+#user-feedback-highlighter-back {
+	display: inline;
+}
+
 /**
  * Buttons
  */
@@ -268,6 +273,9 @@ label[for=user_feedback_dont_show_again] {
 	outline: 0;
 	cursor: pointer;
 	background-clip: padding-box;
+	display: block;
+	font-size: 14px;
+	line-height: 30px;
 
 	&:focus {
 		background: inherit;
@@ -319,19 +327,11 @@ label[for=user_feedback_dont_show_again] {
 }
 
 .user-feedback-button-next {
-	line-height: 27px;
 	float: right;
-	font-size: 13px;
-	padding: 0 8px;
 }
 
 .user-feedback-button-back {
-	width: 72px;
-	height: 29px;
-	line-height: 27px;
 	float: right;
-	font-size: 13px;
-	padding: 0 8px;
 	margin-right: 20px;
 }
 
@@ -340,12 +340,7 @@ label[for=user_feedback_dont_show_again] {
 }
 
 .user-feedback-button-close {
-	width: 72px;
-	height: 29px;
-	line-height: 27px;
 	float: right;
-	font-size: 13px;
-	padding: 0 8px;
 }
 
 /**
@@ -359,7 +354,7 @@ label[for=user_feedback_dont_show_again] {
 	box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
 	background-clip: padding-box;
 	border-radius: 2px;
-	padding: 10px;
+	padding: 5px 15px;
 	outline: 0;
 	position: fixed;
 	bottom: -3px;
