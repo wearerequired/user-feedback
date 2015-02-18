@@ -2,7 +2,7 @@
 /**
  * User Feedback Plugin
  *
- * @package   WP_Team_List
+ * @package   User_Feedback
  * @author    Pascal Birchler <pascal@required.ch>
  * @license   GPL-2.0+
  * @link      https://github.com/wearerequired/user-feedback/
@@ -469,7 +469,7 @@ final class User_Feedback {
 				<p>%s</p>
 				<p id="user-feedback-success-description">%s</p>
 				<p>%s</p>
-				<button class="user-feedback-button user-feedback-button-close user-feedback-button-blue">%s</button>
+				<button class="user-feedback-button user-feedback-button-close user-feedback-button-primary">%s</button>
 				<button class="user-feedback-wizard-close" aria-label="%s">%s</button>
 			</div>',
 			__( 'Feedback', 'user-feedback' ),
