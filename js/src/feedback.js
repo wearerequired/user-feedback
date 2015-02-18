@@ -299,12 +299,15 @@
 
         // What happens after clicking next on the intro screen
         $(document).on('click', '#user-feedback-welcome-next', function () {
-          if ($('#user-feedback-note').val().length > 0) {
+          if ($('#user-feedback-note-tmp').val().length > 0) {
             canDraw = true;
             $('#user-feedback-canvas').css('cursor', 'crosshair');
             $('#user-feedback-helpers').addClass('hidden');
             $('#user-feedback-welcome').addClass('hidden');
             $('#user-feedback-highlighter').removeClass('hidden');
+
+            // Fill in the text of the textarea into the one on the overview screen
+            $('#user-feedback-overview-note').val($('#user-feedback-note-tmp').val());
           } else {
             // Error, description has to be filled out
             $('#user-feedback-welcome-error').removeClass('hidden');
@@ -379,6 +382,7 @@
           redraw(ctx);
         });
 
+        // What happens after clicking the close buttons in the modals
         $('#user-feedback-module').on('click', '.user-feedback-wizard-close,.user-feedback-button-close', function () {
           close();
         });
@@ -474,25 +478,16 @@
           $('#user-feedback-helpers').removeClass('hidden');
           $('#user-feedback-highlighter').removeClass('hidden');
           $('#user-feedback-overview-error').addClass('hidden');
-        });
 
-        $(document).on('keyup', '#user-feedback-note-tmp,#user-feedback-overview-note', function (e) {
-          var tx;
-          if (e.target.id === 'user-feedback-note-tmp')
-            tx = $('#user-feedback-note-tmp').val();
-          else {
-            tx = $('#user-feedback-overview-note').val();
-            $('#user-feedback-note-tmp').val(tx);
-          }
-
-          $('#user-feedback-note').val(tx);
+          // Fill in the text of the textarea into the one on the welcome screen
+          $('#user-feedback-note-tmp').val($('#user-feedback-overview-note').val());
         });
 
         // What happens after submitting the data
         $(document).on('click', '#user-feedback-submit', function () {
           canDraw = false;
 
-          if ($('#user-feedback-note').val().length > 0) {
+          if ($('#user-feedback-overview-note').val().length > 0) {
             $('#user-feedback-submit-success,#user-feedback-submit-error').remove();
             $('#user-feedback-overview').addClass('hidden');
 
