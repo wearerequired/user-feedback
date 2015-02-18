@@ -449,7 +449,7 @@ final class User_Feedback {
 			__( 'Theme:', 'user-feedback' ),
 			__( 'Browser:', 'user-feedback' ),
 			__( 'Template:', 'user-feedback' ),
-			__( 'Language', 'user-feedback' ),
+			__( 'Language:', 'user-feedback' ),
 			_x( 'Screenshot', 'alt text', 'user-feedback' ),
 			__( 'Screen size:', 'user-feedback' ),
 			_x( 'area', 'single highlighted area', 'user-feedback' ),
