@@ -441,7 +441,7 @@ final class User_Feedback {
 					<button id="user-feedback-overview-back" class="user-feedback-button user-feedback-button-secondary">%s</button>
 				</div>
 				<div id="user-feedback-overview-error" class="hidden">%s</div>
-				<button class="user-feedback-wizard-close" aria-label="%11$s">%s</button>
+				<button class="user-feedback-wizard-close" aria-label="%s">%s</button>
 			</div>',
 			__( 'Feedback', 'user-feedback' ),
 			self::get_avatar_url( $email, 90 ),
@@ -484,10 +484,10 @@ final class User_Feedback {
 		// Template for the error message if the submission didn't work
 		$templates['submit_error'] = sprintf( '
 			<div id="user-feedback-error" class="user-feedback-modal hidden" role="dialog" aria-labelledby="user-feedback-error-title" aria-describedby="user-feedback-error-description">
-				<div id="user-feedback-error-title" class="user-feedback-logo">%1$s</div>
-				<p id="user-feedback-error-description">%2$s</p>
-				<button class="user-feedback-button user-feedback-button-close user-feedback-button-gray">%3$s</button>
-				<button class="user-feedback-wizard-close" aria-label="%4$s">%5$s</button>
+				<div id="user-feedback-error-title" class="user-feedback-logo">%s</div>
+				<p id="user-feedback-error-description">%s</p>
+				<button class="user-feedback-button user-feedback-button-close user-feedback-button-gray">%s</button>
+				<button class="user-feedback-wizard-close" aria-label="%s">%s</button>
 			</div>',
 			__( 'Feedback', 'user-feedback' ),
 			__( 'Sadly an error occurred while sending your feedback. Please try again.', 'user-feedback' ),
