@@ -3,6 +3,19 @@
  */
 
 /**
+ * Color Definitions
+ */
+
+$color-black: #333;
+$color-white: #fff;
+$color-blue: #00B9E6;
+$color-blue-hover: #04B9E6;
+$color-gray: #999;
+$color-light-gray: #f5f5f5;
+$color-red: #E41B13;
+$color-red-hover: #B6140D;
+
+/**
  * General Stylings
  */
 
@@ -12,8 +25,8 @@
 	font-size: 16px;
 	line-height: 1.5;
 	z-index: 40000;
-	background: #fff;
-	color: #333;
+	background: $color-white;
+	color: $color-black;
 	outline: 0;
 	box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
 	background-clip: padding-box;
@@ -29,8 +42,8 @@
 .user-feedback-bottombar {
 	width: 100%;
 	padding: 20px;
-	background: #333;
-	color: #fff;
+	background: $color-black;
+	color: $color-white;
 }
 
 .user-feedback-modal {
@@ -50,8 +63,8 @@
 	font-weight: lighter;
 	text-transform: uppercase;
 	line-height: 30px;
-	background: #00B9E6;
-	color: #fff;
+	background: $color-blue;
+	color: $color-white;
 }
 
 #user-feedback-close {
@@ -71,13 +84,13 @@
 	height: 30px;
 	padding: 0;
 	line-height: 30px;
-	background: #00B9E6;
-	color: #fff;
+	background: $color-blue;
+	color: $color-white;
 	font-weight: normal;
 
 	&:hover {
-		background: #00B9E6;
-		color: #fff;
+		background: $color-blue;
+		color: $color-white;
 	}
 }
 
@@ -92,11 +105,11 @@
 	font-size: 16px;
 	line-height: 1.5;
 	resize: none;
-	background: #f5f5f5;
-	border: 1px solid #f5f5f5;
+	background: $color-light-gray;
+	border: 1px solid $color-light-gray;
 
 	&:focus {
-		border: 1px solid #64b7cc
+		border: 1px solid #64b7cc;
 	}
 }
 
@@ -121,7 +134,7 @@
 
 label[for=user_feedback_dont_show_again] {
 	cursor: pointer;
-	color: #999;
+	color: $color-gray;
 }
 
 /**
@@ -140,7 +153,7 @@ label[for=user_feedback_dont_show_again] {
 
 #user-feedback-welcome-error,
 #user-feedback-overview-error {
-	color: #f13e3e;
+	color: $color-red;
 	float: right;
 	margin-right: 30px;
 	margin-bottom: 10px;
@@ -189,9 +202,9 @@ label[for=user_feedback_dont_show_again] {
 .user-feedback-sethighlight,
 .user-feedback-setblackout {
 	box-shadow: none;
-	background: #fff;
+	background: $color-white;
 	color: #444;
-	border: 1px solid #fff;
+	border: 1px solid $color-white;
 	border-radius: 2px;
 	cursor: pointer;
 	font-size: 11px;
@@ -212,24 +225,24 @@ label[for=user_feedback_dont_show_again] {
 }
 
 .user-feedback-active {
-	color: #00B9E6;
+	color: $color-blue;
 }
 
 #user-feedback-highlighter .user-feedback-button {
 	padding: 0 10px;
 	font-size: 11px;
 	line-height: 30px;
-	background: #fff;
-	border: 1px solid #fff;
+	background: $color-white;
+	border: 1px solid $color-white;
 
 	&:hover {
 		background: #f8f8f8;
-		color: #333;
+		color: $color-black;
 	}
 }
 
 #user-feedback-highlighter .user-feedback-wizard-close {
-	background: #333;
+	background: $color-black;
 }
 
 /**
@@ -240,6 +253,11 @@ label[for=user_feedback_dont_show_again] {
 	outline: 0;
 	cursor: pointer;
 	background-clip: padding-box;
+
+	&:focus {
+		background: inherit;
+		border: 1px solid;
+	}
 }
 
 .user-feedback-button-gray {
@@ -251,7 +269,7 @@ label[for=user_feedback_dont_show_again] {
 	background-image: linear-gradient(to bottom, #f5f5f5, #f1f1f1);
 
 	&:hover {
-		color: #333;
+		color: $color-black;
 		border: 1px solid #c6c6c6;
 		background-image: linear-gradient(to bottom, #f8f8f8, #f1f1f1);
 	}
@@ -260,12 +278,13 @@ label[for=user_feedback_dont_show_again] {
 .user-feedback-button-primary {
 	text-align: center;
 	border: 1px solid transparent;
-	color: #E41B13;
+	color: $color-red;
 	background: transparent;
 	font-weight: normal;
+	padding: 0;
 
 	&:hover {
-		color: #B6140D;
+		color: $color-red-hover;
 		background: transparent;
 	}
 }
@@ -273,23 +292,15 @@ label[for=user_feedback_dont_show_again] {
 .user-feedback-button-secondary {
 	text-align: center;
 	border: 1px solid transparent;
-	color: #333;
+	color: $color-black;
 	background: transparent;
 	font-weight: normal;
+	padding: 0;
 
 	&:hover {
 		color: #111;
 		background: transparent;
 	}
-}
-
-.user-feedback-button-blue {
-	text-align: center;
-	cursor: pointer;
-	border-radius: 2px;
-	background-image: linear-gradient(to bottom, #4d90fe, #357ae8);
-	border: 1px solid #2f5bb7;
-	color: #fff;
 }
 
 .user-feedback-button-next {
@@ -326,17 +337,26 @@ label[for=user_feedback_dont_show_again] {
  * Feedback Button at the beginning
  */
 #user-feedback-init-button {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	text-align: center;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
+	background-clip: padding-box;
+	border-radius: 2px;
 	padding: 10px;
 	outline: 0;
-	background-clip: padding-box;
-	font-family: 'Open Sans', sans-serif;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
-	z-index: 40000;
-	font-size: 14px;
 	position: fixed;
 	bottom: -3px;
 	right: 60px;
-	width: auto;
+	z-index: 40000;
+	cursor: pointer;
+
+	&:hover {
+		background: $color-blue-hover;
+		border: 1px solid $color-blue-hover;
+		color: $color-white;
+	}
 
 	&.hidden {
 		display: none;
@@ -377,14 +397,14 @@ label[for=user_feedback_dont_show_again] {
 		left: 50px;
 		display: block;
 		margin: 0;
-		color: #999;
+		color: $color-gray;
 	}
 
 	&:after {
 		content: "";
 		position: absolute;
 		border-style: solid;
-		border-color: #f5f5f5 transparent;
+		border-color: $color-light-gray transparent;
 		display: block;
 		width: 0;
 		bottom: -30px;
@@ -411,21 +431,13 @@ label[for=user_feedback_dont_show_again] {
 	width: 100%;
 	height: auto;
 	padding: 1px;
-	border: 1px solid #adadad;
-}
-
-#user-feedback-overview-description-text span {
-	font-size: 14px;
-	margin: 8px 0 0 26px;
-	color: #666;
-	padding-left: 10px;
-	background: url(../../images/icons.png) -30px -34px no-repeat;
+	border: 1px solid $color-light-gray;
 }
 
 .user-feedback-additional-notes {
 	margin-top: 5px;
 	list-style: none;
-	color: #999;
+	color: $color-gray;
 	overflow: hidden;
 
 	li {

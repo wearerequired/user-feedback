@@ -2,6 +2,9 @@
  * User Feedback Stylgin
  */
 /**
+ * Color Definitions
+ */
+/**
  * General Stylings
  */
 .user-feedback-modal,
@@ -119,7 +122,7 @@ label[for=user_feedback_dont_show_again] {
 
 #user-feedback-welcome-error,
 #user-feedback-overview-error {
-  color: #f13e3e;
+  color: #E41B13;
   float: right;
   margin-right: 30px;
   margin-bottom: 10px;
@@ -205,6 +208,9 @@ label[for=user_feedback_dont_show_again] {
   outline: 0;
   cursor: pointer;
   background-clip: padding-box; }
+  .user-feedback-button:focus {
+    background: inherit;
+    border: 1px solid; }
 
 .user-feedback-button-gray {
   text-align: center;
@@ -223,7 +229,8 @@ label[for=user_feedback_dont_show_again] {
   border: 1px solid transparent;
   color: #E41B13;
   background: transparent;
-  font-weight: normal; }
+  font-weight: normal;
+  padding: 0; }
   .user-feedback-button-primary:hover {
     color: #B6140D;
     background: transparent; }
@@ -233,18 +240,11 @@ label[for=user_feedback_dont_show_again] {
   border: 1px solid transparent;
   color: #333;
   background: transparent;
-  font-weight: normal; }
+  font-weight: normal;
+  padding: 0; }
   .user-feedback-button-secondary:hover {
     color: #111;
     background: transparent; }
-
-.user-feedback-button-blue {
-  text-align: center;
-  cursor: pointer;
-  border-radius: 2px;
-  background-image: linear-gradient(to bottom, #4d90fe, #357ae8);
-  border: 1px solid #2f5bb7;
-  color: #fff; }
 
 .user-feedback-button-next {
   line-height: 27px;
@@ -276,17 +276,24 @@ label[for=user_feedback_dont_show_again] {
  * Feedback Button at the beginning
  */
 #user-feedback-init-button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
+  border-radius: 2px;
   padding: 10px;
   outline: 0;
-  background-clip: padding-box;
-  font-family: 'Open Sans', sans-serif;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-  z-index: 40000;
-  font-size: 14px;
   position: fixed;
   bottom: -3px;
   right: 60px;
-  width: auto; }
+  z-index: 40000;
+  cursor: pointer; }
+  #user-feedback-init-button:hover {
+    background: #04B9E6;
+    border: 1px solid #04B9E6;
+    color: #fff; }
   #user-feedback-init-button.hidden {
     display: none; }
 
@@ -346,14 +353,7 @@ label[for=user_feedback_dont_show_again] {
   width: 100%;
   height: auto;
   padding: 1px;
-  border: 1px solid #adadad; }
-
-#user-feedback-overview-description-text span {
-  font-size: 14px;
-  margin: 8px 0 0 26px;
-  color: #666;
-  padding-left: 10px;
-  background: url(../../images/icons.png) -30px -34px no-repeat; }
+  border: 1px solid #f5f5f5; }
 
 .user-feedback-additional-notes {
   margin-top: 5px;
