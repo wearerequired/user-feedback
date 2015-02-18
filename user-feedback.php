@@ -186,7 +186,7 @@ final class User_Feedback {
 	 * }
 	 */
 	public static function process_feedback( $feedback ) {
-		var_dump($feedback);die();
+
 		// Insert post
 		$post_id = wp_insert_post( array(
 			'post_type'    => 'user_feedback',
@@ -196,19 +196,19 @@ final class User_Feedback {
 
 		// Store the feedback data as post meta
 		$postmeta = array(
-			'user_feedback_url' => esc_url_raw( $feedback['url'] ),
-			'user_feedback_browser' => sanitize_text_field( $feedback['browser']['name'] ),
+			'user_feedback_url'      => esc_url_raw( $feedback['url'] ),
+			'user_feedback_browser'  => sanitize_text_field( $feedback['browser']['name'] ),
 			'user_feedback_platform' => sanitize_text_field( $feedback['browser']['platform'] ),
 			'user_feedback_language' => sanitize_text_field( $feedback['language'] ),
 			//'user_feedback_user_name' => sanitize_text_field( $feedback['user_name'] ),
 			//'user_feedback_user_email' => sanitize_email( $feedback['user_email'] ),
-			'user_feedback_data' => array(
+			'user_feedback_data'     => array(
 				'browser' => array_map( 'sanitize_text_field', $feedback['browser'] ),
-				'theme' => array_map( 'sanitize_text_field', $feedback['theme'] ),
+				'theme'   => array_map( 'sanitize_text_field', $feedback['theme'] ),
 			)
 		);
 
-		foreach( $postmeta as $key => $value ) {
+		foreach ( $postmeta as $key => $value ) {
 			add_post_meta( $post_id, $key, $value, true );
 		}
 
