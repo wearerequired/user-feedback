@@ -4,7 +4,7 @@ module.exports = {
     separator: ';'
   },
   maps   : {
-    src : ['js/src/html2canvas.js', 'js/src/feedback.js', 'js/src/plugin.js'],
+    src : ['js/src/html2canvas.js', 'js/src/feedback.js'],
     dest: 'js/build/user-feedback.js'
   }
 };
