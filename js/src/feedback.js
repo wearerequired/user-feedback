@@ -131,7 +131,6 @@
       post.url = document.URL;
       post.theme = user_feedback.theme;
       post.language = user_feedback.language;
-      post.html = $('html').html();
 
       $(document).on('mousedown', '#user-feedback-canvas', function (e) {
         if (canDraw) {
