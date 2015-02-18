@@ -127,7 +127,7 @@ final class User_Feedback {
 	 * @param string $img     Base64 encoded image.
 	 * @param int    $post_id The post ID this image is associated with.
 	 *
-	 * @return array|false
+	 * @return int|WP_Error
 	 */
 	public static function save_image( $img, $post_id ) {
 		// Strip the "data:image/png;base64," part and decode the image
@@ -186,6 +186,7 @@ final class User_Feedback {
 	 * }
 	 */
 	public static function process_feedback( $feedback ) {
+		var_dump($feedback);die();
 		// Insert post
 		$post_id = wp_insert_post( array(
 			'post_type'    => 'user_feedback',
@@ -193,21 +194,37 @@ final class User_Feedback {
 			'post_status'  => 'publish',
 		) );
 
+		// Store the feedback data as post meta
+		$postmeta = array(
+			'user_feedback_url' => esc_url_raw( $feedback['url'] ),
+			'user_feedback_browser' => sanitize_text_field( $feedback['browser']['name'] ),
+			'user_feedback_platform' => sanitize_text_field( $feedback['browser']['platform'] ),
+			'user_feedback_language' => sanitize_text_field( $feedback['language'] ),
+			//'user_feedback_user_name' => sanitize_text_field( $feedback['user_name'] ),
+			//'user_feedback_user_email' => sanitize_email( $feedback['user_email'] ),
+			'user_feedback_data' => array(
+				'browser' => array_map( 'sanitize_text_field', $feedback['browser'] ),
+				'theme' => array_map( 'sanitize_text_field', $feedback['theme'] ),
+			)
+		);
+
+		foreach( $postmeta as $key => $value ) {
+			add_post_meta( $post_id, $key, $value, true );
+		}
+
 		// Upload the image
 		$attachments = array();
 		$img         = self::save_image( $feedback['img'], $post_id );
 
 		if ( ! is_wp_error( $img ) ) {
 			$attachments[] = get_attached_file( $img );
+
+			// Set the attached screenshot as post thumbnail
+			set_post_thumbnail( $post_id, $img );
 		} else {
 			$img = array(
 				'url' => __( '(upload did not work)', 'user-feedback' )
 			);
-		}
-
-		if ( $post_id && ! empty( $attachments ) ) {
-			// Set the attached screenshot as post thumbnail
-			set_post_thumbnail( $post_id, $img );
 		}
 
 		// Send the email
