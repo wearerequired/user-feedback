@@ -333,16 +333,12 @@ final class User_Feedback {
 		 */
 		$language = get_bloginfo( 'language' );
 
-		if ( function_exists( 'locale_get_display_language' ) ) {
-			$language = locale_get_display_language( $language );
-		}
-
-		if ( defined( 'ICL_LANGUAGE_NAME' ) ) {
-			$language = ICL_LANGUAGE_NAME;
+		if ( defined( 'ICL_LANGUAGE_CODE' ) ) {
+			$language = ICL_LANGUAGE_CODE;
 		}
 
 		if ( function_exists( 'pll_current_language' ) ) {
-			$language = pll_current_language( 'name' );
+			$language = pll_current_language( 'slug' );
 		}
 
 		wp_localize_script( 'user-feedback', 'user_feedback', apply_filters( 'user_feedback_script_data', array(
