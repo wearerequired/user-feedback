@@ -2906,35 +2906,31 @@
      */
 
     var settings = $.extend({
-      ajaxURL             : '',
-      postBrowserInfo     : true,
-      postHTML            : true,
-      postURL             : true,
-      proxy               : undefined,
-      letterRendering     : false,
-      initButtonText      : 'Send feedback',
-      strokeStyle         : 'black',
-      shadowColor         : 'black',
-      shadowOffsetX       : 1,
-      shadowOffsetY       : 1,
-      shadowBlur          : 10,
-      lineJoin            : 'bevel',
-      lineWidth           : 3,
-      showDescriptionModal: true,
-      onScreenshotTaken   : function () {
+      ajaxURL          : '',
+      postHTML         : true,
+      letterRendering  : false,
+      initButtonText   : 'Feedback',
+      strokeStyle      : 'black',
+      shadowColor      : 'black',
+      shadowOffsetX    : 1,
+      shadowOffsetY    : 1,
+      shadowBlur       : 10,
+      lineJoin         : 'bevel',
+      lineWidth        : 3,
+      onScreenshotTaken: function () {
       },
-      tpl                 : {
+      tpl              : {
         description  : '<div id="user-feedback-welcome"><div class="user-feedback-logo">Feedback</div><p>Feedback lets you send us suggestions about our products. We welcome problem reports, feature ideas and general comments.</p><p>Start by writing a brief description:</p><textarea id="user-feedback-note-tmp"></textarea><p>Next we\'ll let you identify areas of the page related to your description.</p><button id="user-feedback-welcome-next" class="user-feedback-next-btn feedback-btn-gray">Next</button><div id="user-feedback-welcome-error">Please enter a description.</div><div class="user-feedback-wizard-close"></div></div>',
         highlighter  : '<div id="user-feedback-highlighter"><div class="user-feedback-logo">Feedback</div><p>Click and drag on the page to help us better understand your feedback. You can move this dialog if it\'s in the way.</p><button class="user-feedback-sethighlight feedback-active"><div class="ico"></div><span>Highlight</span></button><label>Highlight areas relevant to your feedback.</label><button class="user-feedback-setblackout"><div class="ico"></div><span>Black out</span></button><label class="lower">Black out any personal information.</label><div class="user-feedback-buttons"><button id="user-feedback-highlighter-next" class="user-feedback-next-btn feedback-btn-gray">Next</button><button id="user-feedback-highlighter-back" class="user-feedback-back-btn feedback-btn-gray">Back</button></div><div class="user-feedback-wizard-close"></div></div>',
         overview     : '<div id="user-feedback-overview"><div class="user-feedback-logo">Feedback</div><div id="user-feedback-overview-description"><div id="user-feedback-overview-description-text"><h3>Description</h3><h3 class="user-feedback-additional">Additional info</h3><div id="user-feedback-additional-none"><span>None</span></div><div id="user-feedback-browser-info"><span>Browser Info</span></div><div id="user-feedback-page-info"><span>Page Info</span></div><div id="user-feedback-page-structure"><span>Page Structure</span></div></div></div><div id="user-feedback-overview-screenshot"><h3>Screenshot</h3></div><div class="user-feedback-buttons"><button id="user-feedback-submit" class="user-feedback-submit-btn feedback-btn-blue">Submit</button><button id="user-feedback-overview-back" class="user-feedback-back-btn feedback-btn-gray">Back</button></div><div id="user-feedback-overview-error">Please enter a description.</div><div class="user-feedback-wizard-close"></div></div>',
         submitSuccess: '<div id="user-feedback-submit-success"><div class="user-feedback-logo">Feedback</div><p>Thank you for your feedback. We value every piece of feedback we receive.</p><p>We cannot respond individually to every one, but we will use your comments as we strive to improve your experience.</p><button class="user-feedback-close-btn feedback-btn-blue">OK</button><div class="user-feedback-wizard-close"></div></div>',
         submitError  : '<div id="user-feedback-submit-error"><div class="user-feedback-logo">Feedback</div><p>Sadly an error occured while sending your feedback. Please try again.</p><button class="user-feedback-close-btn feedback-btn-blue">OK</button><div class="user-feedback-wizard-close"></div></div>'
       },
-      onClose             : function () {
+      onClose          : function () {
       },
-      screenshotStroke    : true,
-      highlightElement    : true,
-      initialBox          : false
+      screenshotStroke : true,
+      highlightElement : true,
+      initialBox       : false
     }, options);
 
     /**
@@ -2960,17 +2956,11 @@
 
         $('body').append(tpl);
 
-        moduleStyle = {
-          'position': 'absolute',
-          'left'    : '0px',
-          'top'     : '0px'
-        };
         canvasAttr = {
           'width' : w,
           'height': h
         };
 
-        $('#user-feedback-module').css(moduleStyle);
         $('#user-feedback-canvas').attr(canvasAttr).css('z-index', '30000');
 
         if (!settings.initialBox) {
@@ -2992,12 +2982,6 @@
         highlight = 1;
         post = {};
 
-        // Already append debug information to the overview screen
-        $('#user-feedback-additional-theme').append(' ' + user_feedback.theme.name);
-        $('#user-feedback-additional-browser').append(' ' + user_feedback.theme.name);
-        $('#user-feedback-additional-template').append(' ' + user_feedback.theme.current_template);
-        $('#user-feedback-additional-language').append(' ' + user_feedback.language);
-
         /**
          * Detect browser name + version. Example: Chrome 40, Internet Explorer 12
          * @see http://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser
@@ -3017,6 +3001,12 @@
           if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
           return M.join(' ');
         })();
+
+        // Already append debug information to the overview screen
+        $('#user-feedback-additional-theme').append(' ' + user_feedback.theme.name);
+        $('#user-feedback-additional-browser').append(' ' + navigator.sayswho);
+        $('#user-feedback-additional-template').append(' ' + user_feedback.theme.current_template);
+        $('#user-feedback-additional-language').append(' ' + user_feedback.language);
 
         // Set up initial post data to be sent
         post.browser = {};
@@ -3329,31 +3319,24 @@
               $(document).scrollTop(sy);
               post.img = img;
               settings.onScreenshotTaken(post.img);
-              if (settings.showDescriptionModal) {
-                $('#user-feedback-canvas-tmp').remove();
-                $('#user-feedback-overview').toggleClass('hidden');
-                $('user-feedback-overview-note').val($('#user-feedback-note').val());
-                $('#user-feedback-overview-screenshot-img').attr('src', img);
 
-                // Display image size
-                $('#user-feedback-screenshot-size span').remove();
-                $('#user-feedback-screenshot-size').append(' <span>' + $('#user-feedback-overview-screenshot-img')[0].naturalWidth + 'x' + $('#user-feedback-overview-screenshot-img')[0].naturalHeight + '</span>');
+              $('#user-feedback-canvas-tmp').remove();
+              $('#user-feedback-overview').toggleClass('hidden');
+              $('user-feedback-overview-note').val($('#user-feedback-note').val());
+              $('#user-feedback-overview-screenshot-img').attr('src', img);
 
-                // Display number of highlighted areas
-                $('#user-feedback-screenshot-highlighted span').remove();
-                if ($('.user-feedback-helper').length <= 1) {
-                  $('#user-feedback-screenshot-highlighted').append(' <span>' + $('.user-feedback-helper').length + ' ' + $('#user-feedback-screenshot-highlighted').attr('data-single') + '</span>');
-                } else {
-                  $('#user-feedback-screenshot-highlighted').append(' <span>' + $('.user-feedback-helper').length + ' ' + $('#user-feedback-screenshot-highlighted').attr('data-multiple') + '</span>');
-                }
-              }
-              else {
-                $('#user-feedback-module').remove();
-                close();
-                _canvas.remove();
+              // Display image size
+              $('#user-feedback-screenshot-size span').remove();
+              $('#user-feedback-screenshot-size').append(' <span>' + $('#user-feedback-overview-screenshot-img')[0].naturalWidth + 'x' + $('#user-feedback-overview-screenshot-img')[0].naturalHeight + '</span>');
+
+              // Display number of highlighted areas
+              $('#user-feedback-screenshot-highlighted span').remove();
+              if ($('.user-feedback-helper').length <= 1) {
+                $('#user-feedback-screenshot-highlighted').append(' <span>' + $('.user-feedback-helper').length + ' ' + $('#user-feedback-screenshot-highlighted').attr('data-single') + '</span>');
+              } else {
+                $('#user-feedback-screenshot-highlighted').append(' <span>' + $('.user-feedback-helper').length + ' ' + $('#user-feedback-screenshot-highlighted').attr('data-multiple') + '</span>');
               }
             },
-            proxy          : settings.proxy,
             letterRendering: settings.letterRendering
           });
         });
@@ -3382,24 +3365,25 @@
             post.img = img;
             post.note = $('#user-feedback-note').val();
             $.post(
-              settings.ajaxURL,
-              {
-                'action': 'user_feedback',
-                'data'  : post
-              },
-              function () {
-                // Set our "do not show again" cookie
-                var date = new Date();date.setDate(date.getDate()+30);
-                document.cookie = 'user_feedback_dont_show_again=1; path=/;expires=' + date.toUTCString();
+                settings.ajaxURL,
+                {
+                  'action': 'user_feedback',
+                  'data'  : post
+                },
+                function () {
+                  // Set our "do not show again" cookie
+                  var date = new Date();
+                  date.setDate(date.getDate() + 30);
+                  document.cookie = 'user_feedback_dont_show_again=1; path=/;expires=' + date.toUTCString();
 
-                // Success template
-                $('#user-feedback-module').append(settings.tpl.submitSuccess);
-              }
+                  // Success template
+                  $('#user-feedback-module').append(settings.tpl.submitSuccess);
+                }
             )
-            .fail(function () {
-              // Error template
-              $('#user-feedback-module').append(settings.tpl.submitError);
-            });
+                .fail(function () {
+                  // Error template
+                  $('#user-feedback-module').append(settings.tpl.submitError);
+                });
           } else {
             $('#user-feedback-overview-error').removeClass('hidden');
           }
@@ -3489,7 +3473,6 @@
           ajaxURL             : user_feedback.ajax_url,
           initButtonText      : user_feedback.button_text,
           initialBox          : document.cookie.indexOf('user_feedback_dont_show_again') < 0,
-          showDescriptionModal: true,
           tpl                 : {
             description  : user_feedback.tpl.description,
             highlighter  : user_feedback.tpl.highlighter,
