@@ -225,20 +225,22 @@ label[for=user_feedback_dont_show_again] {
   background-clip: padding-box;
   display: block;
   font-size: 14px;
-  line-height: 30px; }
+  line-height: 30px;
+  padding: 0 5px; }
   .user-feedback-button:focus {
     background: inherit;
-    border: 1px solid; }
+    border: 1px solid;
+    color: inherit; }
 
 .user-feedback-button-gray {
   text-align: center;
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  color: #444;
+  color: #333;
   border-radius: 2px;
   background-image: linear-gradient(to bottom, #f5f5f5, #fff); }
-  .user-feedback-button-gray:hover {
-    color: #333;
+  .user-feedback-button-gray:focus, .user-feedback-button-gray:hover {
+    color: inherit;
     border: 1px solid #c6c6c6;
     background-image: linear-gradient(to bottom, #f5f5f5, #fff); }
 
@@ -247,9 +249,8 @@ label[for=user_feedback_dont_show_again] {
   border: 1px solid transparent;
   color: #E41B13;
   background: transparent;
-  font-weight: normal;
-  padding: 0; }
-  .user-feedback-button-primary:hover {
+  font-weight: normal; }
+  .user-feedback-button-primary:focus, .user-feedback-button-primary:hover {
     color: #B6140D;
     background: transparent; }
 
@@ -258,10 +259,9 @@ label[for=user_feedback_dont_show_again] {
   border: 1px solid transparent;
   color: #333;
   background: transparent;
-  font-weight: normal;
-  padding: 0; }
-  .user-feedback-button-secondary:hover {
-    color: #111;
+  font-weight: normal; }
+  .user-feedback-button-secondary:focus, .user-feedback-button-secondary:hover {
+    color: inherit;
     background: transparent; }
 
 .user-feedback-button-next {

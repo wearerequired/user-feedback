@@ -276,10 +276,12 @@ label[for=user_feedback_dont_show_again] {
 	display: block;
 	font-size: 14px;
 	line-height: 30px;
+	padding: 0 5px;
 
 	&:focus {
 		background: inherit;
 		border: 1px solid;
+		color: inherit;
 	}
 }
 
@@ -287,12 +289,13 @@ label[for=user_feedback_dont_show_again] {
 	text-align: center;
 	cursor: pointer;
 	border: 1px solid rgba(0, 0, 0, 0.1);
-	color: #444;
+	color: $color-black;
 	border-radius: 2px;
 	background-image: linear-gradient(to bottom, $color-light-gray, $color-white);
 
+	&:focus,
 	&:hover {
-		color: $color-black;
+		color: inherit;
 		border: 1px solid #c6c6c6;
 		background-image: linear-gradient(to bottom, $color-light-gray, $color-white);
 	}
@@ -304,8 +307,8 @@ label[for=user_feedback_dont_show_again] {
 	color: $color-red;
 	background: transparent;
 	font-weight: normal;
-	padding: 0;
 
+	&:focus,
 	&:hover {
 		color: $color-red-hover;
 		background: transparent;
@@ -318,10 +321,10 @@ label[for=user_feedback_dont_show_again] {
 	color: $color-black;
 	background: transparent;
 	font-weight: normal;
-	padding: 0;
 
+	&:focus,
 	&:hover {
-		color: #111;
+		color: inherit;
 		background: transparent;
 	}
 }
