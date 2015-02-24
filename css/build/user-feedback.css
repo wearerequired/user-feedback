@@ -97,6 +97,23 @@
   .user-feedback-textarea:focus {
     border: 1px solid #64b7cc; }
 
+.user-feedback-input {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: none;
+  background: #f5f5f5;
+  border: 1px solid #f5f5f5; }
+  .user-feedback-input:focus {
+    border: 1px solid #64b7cc; }
+
+#user-feedback-user-name,
+#user-feedback-user-email {
+  width: 49%; }
+
+#user-feedback-user-email {
+  float: right; }
+
 /**
  * Intro Template
  */
@@ -319,7 +336,7 @@ label[for=user_feedback_dont_show_again] {
   position: relative;
   margin-bottom: 30px;
   height: 40px; }
-  #user-feedback-overview-user span {
+  #user-feedback-overview-user div {
     position: absolute;
     bottom: 0;
     left: 50px;

@@ -127,6 +127,28 @@ $color-red-hover: #B6140D;
 	}
 }
 
+.user-feedback-input {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	resize: none;
+	background: $color-light-gray;
+	border: 1px solid $color-light-gray;
+
+	&:focus {
+		border: 1px solid #64b7cc;
+	}
+}
+
+#user-feedback-user-name,
+#user-feedback-user-email {
+	width: 49%;
+}
+
+#user-feedback-user-email {
+	float: right;
+}
+
 /**
  * Intro Template
  */
@@ -398,7 +420,7 @@ label[for=user_feedback_dont_show_again] {
 	margin-bottom: 30px;
 	height: 40px;
 
-	span {
+	div {
 		position: absolute;
 		bottom: 0;
 		left: 50px;

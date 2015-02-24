@@ -375,27 +375,33 @@ final class User_Feedback {
 			$name  = isset( $user->display_name ) ? $user->display_name : $user->user_login;
 			$intro = sprintf( __( 'Hello %s,', 'user-feedback' ), $name );
 			$email = $user->user_email;
+			$name_field = '';
+		} else {
+			$name_field = '<p><input type="text" class="user-feedback-input" id="user-feedback-user-name" placeholder="' .  __( 'Name (optional)', 'user-feedback' ) . '">
+			<input type="email" class="user-feedback-input" id="user-feedback-user-email" placeholder="' .  __( 'Email (optional)', 'user-feedback' ) . '"></p>';
 		}
 
 		// Template for the optional intro modal
 		$templates['description'] = sprintf( '
 			<div id="user-feedback-welcome" class="user-feedback-modal" role="dialog" aria-labelledby="user-feedback-welcome-title" aria-describedby="user-feedback-welcome-description">
-				<div id="user-feedback-welcome-title" class="user-feedback-logo">%1$s</div>
-				<p>%2$s</p>
-				<p id="user-feedback-welcome-description">%3$s</p>
+				<div id="user-feedback-welcome-title" class="user-feedback-logo">%s</div>
+				<p>%s</p>
+				<p id="user-feedback-welcome-description">%s</p>
 				<textarea id="user-feedback-note-tmp" class="user-feedback-textarea"></textarea>
-				<p>%4$s</p>
+				%s
+				<p>%s</p>
 				<p>
 					<input type="checkbox" value="1" id="user_feedback_dont_show_again" />
-					<label for="user_feedback_dont_show_again">%5$s</label>
+					<label for="user_feedback_dont_show_again">%s</label>
 				</p>
-				<button id="user-feedback-welcome-next" class="user-feedback-button user-feedback-button-primary user-feedback-button-next">%6$s</button>
-				<div id="user-feedback-welcome-error" class="hidden">%7$s</div>
-				<button class="user-feedback-wizard-close" aria-label="%8$s">%9$s</button>
+				<button id="user-feedback-welcome-next" class="user-feedback-button user-feedback-button-primary user-feedback-button-next">%s</button>
+				<div id="user-feedback-welcome-error" class="hidden">%s</div>
+				<button class="user-feedback-wizard-close" aria-label="%s">%s</button>
 			</div>',
 			__( 'Feedback', 'user-feedback' ),
 			$intro,
 			__( "Let us know what's going on. We welcome problem reports, feature ideas and general comments. Start by writing a brief description:", 'user-feedback' ),
+			$name_field,
 			__( "Next we'll let you identify areas of the page related to your description to help us better understand your feedback.", 'user-feedback' ),
 			__( "Don't show me this again", 'user-feedback' ),
 			__( 'Next', 'user-feedback' ),
@@ -432,7 +438,7 @@ final class User_Feedback {
 				<div id="user-feedback-overview-description">
 					<div id="user-feedback-overview-user">
 						<img src="%s" width="40" height="40" alt="" />
-						<span>%s</span>
+						<div>%s</div>
 					</div>
 					<textarea id="user-feedback-overview-note" class="user-feedback-textarea"></textarea>
 					<ul class="user-feedback-additional-notes">
@@ -458,7 +464,7 @@ final class User_Feedback {
 			</div>',
 			__( 'Feedback', 'user-feedback' ),
 			self::get_avatar_url( $email, 90 ),
-			sprintf( __( 'by %s', 'user-feedback' ), $name ),
+			sprintf( __( 'by <span>%s</span>', 'user-feedback' ), $name ),
 			__( 'Theme:', 'user-feedback' ),
 			__( 'Browser:', 'user-feedback' ),
 			__( 'Template:', 'user-feedback' ),

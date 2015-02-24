@@ -46,11 +46,24 @@
 
   // Basically every browser except IE8 supports <canvas>
   var supportedBrowser = !!window.HTMLCanvasElement;
+
+  // Event: Load
+  $.event.trigger({
+    type: "user_feedback_load",
+    settings: settings,
+    supportedBrowser: supportedBrowser
+  });
+
   if (supportedBrowser) {
     $('body').append('<button id="user-feedback-init-button" class="user-feedback-button user-feedback-button-gray">' + settings.initButtonText + '</button>');
 
     // What happens after clicking the initial feedback button
     $(document).on('click', '#user-feedback-init-button', function () {
+      // Event: Init
+      $.event.trigger({
+        type: "user_feedback_init"
+      });
+
       // Hide the button itself
       $(this).addClass('hidden');
 
@@ -131,6 +144,7 @@
       post.url = document.URL;
       post.theme = user_feedback.theme;
       post.language = user_feedback.language;
+      post.user = {};
 
       $(document).on('mousedown', '#user-feedback-canvas', function (e) {
         if (canDraw) {
@@ -211,6 +225,13 @@
             ctx.fillStyle = 'rgba(0,0,0,0.5)';
             ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
           }
+
+          // Event: Highlight
+          $.event.trigger({
+            type: "user_feedback_highlight",
+            context: ctx,
+            type: ( highlight == 1 ) ? 'highlight' : 'blackout'
+          });
         }
       });
 
@@ -297,6 +318,16 @@
 
           // Fill in the text of the textarea into the one on the overview screen
           $('#user-feedback-overview-note').val($('#user-feedback-note-tmp').val());
+
+          // Fill in the user's name and email address on the overview screen if available
+          if ( $('#user-feedback-user-name').val() != 'undefined' ) {
+            $('#user-feedback-overview-user span span').text($('#user-feedback-user-name').val());
+            post.user.name = $('#user-feedback-user-name').val();
+          }
+          if ( $('#user-feedback-user-email').val() != 'undefined' ) {
+            $('#user-feedback-overview-user img').attr('src', 'https://secure.gravatar.com/avatar/' + md5($('#user-feedback-user-email').val()) + '?s=90' );
+            post.user.email = $('#user-feedback-user-email').val();
+          }
         } else {
           // Error, description has to be filled out
           $('#user-feedback-welcome-error').removeClass('hidden');
