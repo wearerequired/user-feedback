@@ -279,7 +279,7 @@ final class User_Feedback {
 		 * @param bool $load_user_feedback Whether the user feedback script
 		 *                                 should be loaded or not. Defaults to true.
 		 */
-		$load_user_feedback = apply_filters( 'user_feedback_load', is_user_logged_in() );
+		$load_user_feedback = apply_filters( 'user_feedback_load', true );
 
 		/** @var bool $load_user_feedback */
 		if ( ! $load_user_feedback ) {
