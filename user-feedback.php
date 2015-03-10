@@ -36,8 +36,10 @@ final class User_Feedback {
 		// Register post type
 		add_action( 'init', array( __CLASS__, 'register_post_type' ) );
 
-		// Load the stylesheet
+		// Load the scripts & styles
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_scripts' ) );
+
+		add_action( 'wp_footer', array( __CLASS__, 'print_templates' ) );
 
 		// Ajax callbacks
 		add_action( 'wp_ajax_user_feedback', array( __CLASS__, 'ajax_callback' ) );
@@ -283,6 +285,8 @@ final class User_Feedback {
 
 		/** @var bool $load_user_feedback */
 		if ( ! $load_user_feedback ) {
+			remove_action( 'wp_footer', array( __CLASS__, 'print_templates' ) );
+
 			return;
 		}
 
@@ -296,7 +300,7 @@ final class User_Feedback {
 		wp_enqueue_script(
 			'user-feedback',
 			plugin_dir_url( __FILE__ ) . 'js/build/user-feedback' . $suffix . ' .js',
-			array(),
+			array( 'underscore', 'backbone' ),
 			'1.0.0',
 			true
 		);
@@ -342,180 +346,151 @@ final class User_Feedback {
 		}
 
 		wp_localize_script( 'user-feedback', 'user_feedback', apply_filters( 'user_feedback_script_data', array(
-			'ajax_url'    => admin_url( 'admin-ajax.php' ),
-			'button_text' => __( 'Feedback', 'user-feedback' ),
-			'tpl'         => self::get_feedback_templates(),
-			'theme'       => array(
+			'ajax_url'       => admin_url( 'admin-ajax.php' ),
+			'theme'          => array(
 				'name'             => $theme->Name,
 				'stylesheet'       => $theme->stylesheet,
 				'current_template' => $current_template
 			),
-			'language'    => $language,
+			'language'       => $language,
+			'canvas_options' => array(
+				'strokeStyle'   => 'black',
+				'shadowColor'   => 'black',
+				'shadowOffsetX' => 1,
+				'shadowOffsetY' => 1,
+				'shadowBlur'    => 10,
+				'lineJoin'      => 'bevel',
+				'lineWidth'     => 3,
+			),
+			'templates'      => array(
+				'button'      => array(
+					'label' => __( 'Feedback', 'user-feedback' ),
+				),
+				'bottombar'   => array(
+					'step'   => array(
+						'one'   => _x( 'Feedback', 'step 1', 'user-feedback' ),
+						'two'   => _x( 'Leave a message', 'step 2', 'user-feedback' ),
+						'three' => _x( 'Highlight area', 'step 3', 'user-feedback' ),
+					),
+					'button' => array(
+						'help'     => _x( '?', 'help button label', 'user-feedback' ),
+						'helpAria' => _x( 'Submit Feedback', 'help button title text and aria label', 'user-feedback' ),
+					),
+				),
+				'wizardStep1' => array(
+					'title'       => _x( 'Feedback', 'modal title', 'user-feedback' ),
+					'salutation'  => __( 'Hello stranger', 'user-feedback' ),
+					'intro'       => __( 'Tell us your name and email to fully support you here:', 'user-feedback' ),
+					'placeholder' => array(
+						'name'  => _x( 'Your Name', 'input field placeholder', 'user-feedback' ),
+						'email' => _x( 'Your Email', 'input field placeholder', 'user-feedback' ),
+					),
+					'button'      => array(
+						'primary'   => __( 'Next', 'user-feedback' ),
+						'secondary' => __( 'No thanks', 'user-feedback' ),
+						'close'     => _x( 'X', 'close button', 'user-feedback' ),
+						'closeAria' => _x( 'X', 'close button title text and aria label', 'user-feedback' )
+					),
+				),
+				'wizardStep2' => array(
+					'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
+					'salutation' => __( 'Hello stranger', 'user-feedback' ),
+					'intro'      => __( 'Please help us understand your feedback better!', 'user-feedback' ),
+					'intro2'     => __( 'You can not only leave us a message but also highlight areas relevant to your feedback.', 'user-feedback' ),
+					'inputLabel' => __( "Don't show me this again", 'user-feedback' ),
+					'button'     => array(
+						'primary'   => __( 'Next', 'user-feedback' ),
+						'close'     => _x( 'X', 'close button', 'user-feedback' ),
+						'closeAria' => _x( 'X', 'close button title text and aria label', 'user-feedback' )
+					),
+				)
+			),
 		) ) );
 	}
 
+	public static function get_template( $id, $content ) {
+		return "<script type='text/template' id='user-feedback-template-$id'>$content</script>";
+	}
+
 	/**
-	 * Returns the HTML templates used by the feedback JavaScript.
-	 *
-	 * Everything is already translation-ready.
-	 *
-	 * @return array
+	 * Prints the HTML templates used by the feedback JavaScript.
 	 */
-	public static function get_feedback_templates() {
-		$templates = array();
+	public static function print_templates() {
+		// Our main container
+		echo '<div id="user-feedback-container"></div>';
 
-		/** @var WP_User $userdata */
-		$user = get_userdata( get_current_user_id() );
+		// The modal structure, with an container element that will contain all tabs
+		echo self::get_template(
+			'modal',
+			'<div class="user-feedback-modal__container"></div>'
+		);
 
-		$name  = __( 'Guest', 'user-feedback' );
-		$intro = __( 'Hello there,', 'user-feedback' );
-		$email = '';
+		// The Feedback button
+		echo self::get_template(
+			'button',
+			'<button
+				id="user-feedback-init-button"
+				class="user-feedback-button user-feedback-button-gray">
+				<%= label %>
+			</button>'
+		);
 
-		if ( $user ) {
-			$name  = isset( $user->display_name ) ? $user->display_name : $user->user_login;
-			$intro = sprintf( __( 'Hello %s,', 'user-feedback' ), $name );
-			$email = $user->user_email;
-			$name_field = '';
-		} else {
-			$name_field = '<p><input type="text" class="user-feedback-input" id="user-feedback-user-name" placeholder="' .  __( 'Name (optional)', 'user-feedback' ) . '">
-			<input type="email" class="user-feedback-input" id="user-feedback-user-email" placeholder="' .  __( 'Email (optional)', 'user-feedback' ) . '"></p>';
-		}
+		// The bottom bar
+		// todo: Clicking on a step should go to that step in the wizard
+		echo self::get_template(
+			'bottombar',
+			'<div id="user-feedback-bottombar">
+				<ul id="user-feedback-bar-steps">
+					<li class="user-feedback-bar-step"><%= step.one %></li>
+					<li class="user-feedback-bar-step hidden"><%= step.two %></li>
+					<li class="user-feedback-bar-step hidden"><%= step.three %></li>
+				</ul>
+				<button class="user-feedback-button user-feedback-button-help" title="<%= button.helpAria %>" aria-label="<%= button.helpAria %>"><%= button.help %></button>
+			</div>
+			<!--<div id="user-feedback-overlay"></div>-->'
+		);
 
-		// Template for the optional intro modal
-		$templates['description'] = sprintf( '
-			<div id="user-feedback-welcome" class="user-feedback-modal" role="dialog" aria-labelledby="user-feedback-welcome-title" aria-describedby="user-feedback-welcome-description">
-				<div id="user-feedback-welcome-title" class="user-feedback-logo">%s</div>
-				<p>%s</p>
-				<p id="user-feedback-welcome-description">%s</p>
-				<textarea id="user-feedback-note-tmp" class="user-feedback-textarea"></textarea>
-				%s
-				<p>%s</p>
+		// Wizard Step 1
+		echo self::get_template(
+			'wizard-step-1',
+			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
+				<div class="user-feedback-modal__topbar">
+					<h3 class="user-feedback-modal-title"><%= title %></h3>
+					<button class="user-feedback-wizard-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+				</div>
+				<p><%= salutation %></p>
+				<p><%= intro %></p>
+				<p>
+				<input type="text" class="user-feedback-input" id="user-feedback-user-name" placeholder="<%= placeholder.name %>">
+				<input type="email" class="user-feedback-input" id="user-feedback-user-email" placeholder="<%= placeholder.email %>">
+				</p>
+				<div class="user-feedback-modal__bottombar">
+			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
+			      <button class="user-feedback-button user-feedback-button-previous"><%= button.secondary %></button>
+			    </div>
+			</div>'
+		);
+
+		// Wizard Step 2
+		echo self::get_template(
+			'wizard-step-2',
+			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
+				<div class="user-feedback-modal__topbar">
+					<h3 class="user-feedback-modal-title"><%= title %></h3>
+					<button class="user-feedback-wizard-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+				</div>
+				<p><%= salutation %></p>
+				<p><%= intro %></p>
+				<p><%= intro2 %></p>
 				<p>
 					<input type="checkbox" value="1" id="user_feedback_dont_show_again" />
-					<label for="user_feedback_dont_show_again">%s</label>
+					<label for="user_feedback_dont_show_again"><%= inputLabel %></label>
 				</p>
-				<button id="user-feedback-welcome-next" class="user-feedback-button user-feedback-button-primary user-feedback-button-next">%s</button>
-				<div id="user-feedback-welcome-error" class="hidden">%s</div>
-				<button class="user-feedback-wizard-close" aria-label="%s">%s</button>
-			</div>',
-			__( 'Feedback', 'user-feedback' ),
-			$intro,
-			__( "Let us know what's going on. We welcome problem reports, feature ideas and general comments. Start by writing a brief description:", 'user-feedback' ),
-			$name_field,
-			__( "Next we'll let you identify areas of the page related to your description to help us better understand your feedback.", 'user-feedback' ),
-			__( "Don't show me this again", 'user-feedback' ),
-			__( 'Next', 'user-feedback' ),
-			__( 'Please enter a description.', 'user-feedback' ),
-			__( 'Close', 'user-feedback' ),
-			_x( 'X', 'close button', 'user-feedback' )
+				<div class="user-feedback-modal__bottombar">
+			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
+			    </div>
+			</div>'
 		);
-
-		// Template for the highlight/black out modal
-		$templates['highlighter'] = sprintf( '
-			<div id="user-feedback-highlighter" class="user-feedback-bottombar hidden" role="dialog">
-				<button class="user-feedback-sethighlight user-feedback-active" title="%2$s">%1$s</button>
-				<button class="user-feedback-setblackout" title="%4$s">%3$s</button>
-				<div class="user-feedback-buttons">
-					<button id="user-feedback-highlighter-next" class="user-feedback-button user-feedback-button-gray">%5$s</button>
-					<button id="user-feedback-highlighter-back" class="user-feedback-button user-feedback-button-gray">%6$s</button>
-				</div>
-				<button class="user-feedback-wizard-close" aria-label="%7$s">%8$s</button>
-			</div>',
-			__( 'Highlight', 'user-feedback' ),
-			__( 'Highlight areas relevant to your feedback.', 'user-feedback' ),
-			__( 'Black out', 'user-feedback' ),
-			__( 'Black out any personal information.', 'user-feedback' ),
-			_x( 'Summary', 'next button', 'user-feedback' ),
-			_x( '?', 'back button', 'user-feedback' ),
-			__( 'Close', 'user-feedback' ),
-			_x( 'X', 'close button', 'user-feedback' )
-		);
-
-		// Template for the overview at the end
-		$templates['overview'] = sprintf( '
-			<div id="user-feedback-overview" class="user-feedback-modal hidden" role="dialog" aria-labelledby="user-feedback-overview-title" aria-describedby="user-feedback-overview-description">
-				<div id="user-feedback-overview-title" class="user-feedback-logo">%s</div>
-				<div id="user-feedback-overview-description">
-					<div id="user-feedback-overview-user">
-						<img src="%s" width="40" height="40" alt="" />
-						<div>%s</div>
-					</div>
-					<textarea id="user-feedback-overview-note" class="user-feedback-textarea"></textarea>
-					<ul class="user-feedback-additional-notes">
-						<li id="user-feedback-additional-theme">%s</li>
-						<li id="user-feedback-additional-browser">%s</li>
-						<li id="user-feedback-additional-template">%s</li>
-						<li id="user-feedback-additional-language">%s</li>
-					</ul>
-				</div>
-				<div id="user-feedback-overview-screenshot">
-					<img id="user-feedback-overview-screenshot-img" src="" alt="%s" />
-					<ul class="user-feedback-additional-notes">
-						<li id="user-feedback-screenshot-size">%s</li>
-						<li id="user-feedback-screenshot-highlighted"  data-single="%s" data-multiple="%s">%s</li>
-					</ul>
-				</div>
-				<div class="user-feedback-buttons">
-					<button id="user-feedback-submit" class="user-feedback-button user-feedback-button-submit user-feedback-button-primary">%s</button>
-					<button id="user-feedback-overview-back" class="user-feedback-button user-feedback-button-secondary">%s</button>
-				</div>
-				<div id="user-feedback-overview-error" class="hidden">%s</div>
-				<button class="user-feedback-wizard-close" aria-label="%s">%s</button>
-			</div>',
-			__( 'Feedback', 'user-feedback' ),
-			self::get_avatar_url( $email, 90 ),
-			sprintf( __( 'by <span>%s</span>', 'user-feedback' ), $name ),
-			__( 'Theme:', 'user-feedback' ),
-			__( 'Browser:', 'user-feedback' ),
-			__( 'Template:', 'user-feedback' ),
-			__( 'Language:', 'user-feedback' ),
-			_x( 'Screenshot', 'alt text', 'user-feedback' ),
-			__( 'Screen size:', 'user-feedback' ),
-			_x( 'area', 'single highlighted area', 'user-feedback' ),
-			_x( 'areas', 'multiple highlighted areas', 'user-feedback' ),
-			__( 'Highlighted:', 'user-feedback' ),
-			__( 'Submit', 'user-feedback' ),
-			__( 'Back', 'user-feedback' ),
-			__( 'Please enter a description.', 'user-feedback' ),
-			__( 'Close', 'user-feedback' ),
-			_x( 'X', 'close button', 'user-feedback' )
-		);
-
-		// Template for the success message at the end
-		$templates['submit_success'] = sprintf( '
-			<div id="user-feedback-submit-success" class="user-feedback-modal hidden" role="dialog" aria-labelledby="user-feedback-success-title" aria-describedby="user-feedback-success-description">
-				<div id="user-feedback-success-title" class="user-feedback-logo">%s</div>
-				<p>%s</p>
-				<p id="user-feedback-success-description">%s</p>
-				<p>%s</p>
-				<button class="user-feedback-button user-feedback-button-close user-feedback-button-primary">%s</button>
-				<button class="user-feedback-wizard-close" aria-label="%s">%s</button>
-			</div>',
-			__( 'Feedback', 'user-feedback' ),
-			$intro,
-			__( 'Thank you for your feedback. We value every piece of feedback we receive.', 'user-feedback' ),
-			__( 'We cannot respond individually to every one, but we will use your comments as we strive to improve your experience.', 'user-feedback' ),
-			__( 'OK', 'user-feedback' ),
-			__( 'Close', 'user-feedback' ),
-			_x( 'X', 'close button', 'user-feedback' )
-		);
-
-		// Template for the error message if the submission didn't work
-		$templates['submit_error'] = sprintf( '
-			<div id="user-feedback-error" class="user-feedback-modal hidden" role="dialog" aria-labelledby="user-feedback-error-title" aria-describedby="user-feedback-error-description">
-				<div id="user-feedback-error-title" class="user-feedback-logo">%s</div>
-				<p id="user-feedback-error-description">%s</p>
-				<button class="user-feedback-button user-feedback-button-close user-feedback-button-gray">%s</button>
-				<button class="user-feedback-wizard-close" aria-label="%s">%s</button>
-			</div>',
-			__( 'Feedback', 'user-feedback' ),
-			__( 'Sadly an error occurred while sending your feedback. Please try again.', 'user-feedback' ),
-			__( 'OK', 'user-feedback' ),
-			__( 'Close', 'user-feedback' ),
-			_x( 'X', 'close button', 'user-feedback' )
-		);
-
-		return apply_filters( 'user_feedback_templates', $templates );
 	}
 
 	/**
