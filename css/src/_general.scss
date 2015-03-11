@@ -1,0 +1,70 @@
+/**
+ * General Stylings
+ */
+
+#user-feedback-container {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	.hidden {
+		display: none !important;
+	}
+}
+
+/**
+ * Overlay Styling
+ */
+
+#user-feedback-overlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba($color-black, 0.6);
+	z-index: 9000;
+}
+
+/**
+ * Input Fields
+ */
+
+.user-feedback-textarea {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	resize: none;
+	background: $color-light-gray;
+	border: 1px solid $color-light-gray;
+
+	&:focus {
+		border: 1px solid #64b7cc;
+	}
+}
+
+.user-feedback-input {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	resize: none;
+	background: $color-light-gray;
+	border: 1px solid $color-light-gray;
+
+	&:focus {
+		border: 1px solid #64b7cc;
+	}
+}
+
+#user-feedback-user-name,
+#user-feedback-user-email {
+	width: 100%;
+}
+
+#user-feedback-user-name {
+	margin-bottom: 15px;
+}

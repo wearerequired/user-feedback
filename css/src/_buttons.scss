@@ -1,0 +1,64 @@
+/**
+ * Buttons
+ */
+
+.user-feedback-button {
+	outline: 0;
+	cursor: pointer;
+	background-clip: padding-box;
+	display: block;
+	font-size: 16px;
+	line-height: 30px;
+	padding: 0 5px;
+
+	&:focus {
+		background: inherit;
+		border: 1px solid;
+		color: inherit;
+	}
+}
+
+.user-feedback-button-gray {
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	color: $color-black;
+	border-radius: 2px;
+	background-image: linear-gradient(to bottom, $color-light-gray, $color-white);
+
+	&:focus,
+	&:hover {
+		color: inherit;
+		border: 1px solid #c6c6c6;
+		background-image: linear-gradient(to bottom, $color-light-gray, $color-white);
+	}
+}
+
+%user-feedback-button-primary {
+	text-align: center;
+	border: 1px solid transparent;
+	color: $color-white;
+	background: $color-blue;
+	padding: 0 15px;
+	font-weight: normal;
+
+	&:focus,
+	&:hover {
+		color: $color-white;
+		background: $color-blue-hover;
+	}
+}
+
+%user-feedback-button-secondary {
+	text-align: center;
+	border: 1px solid transparent;
+	color: $color-gray;
+	background: transparent;
+	font-weight: normal;
+
+	&:focus,
+	&:hover {
+		color: $color-black;
+		background: transparent;
+	}
+}
