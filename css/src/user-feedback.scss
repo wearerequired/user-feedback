@@ -7,33 +7,7 @@
 @import "general";
 @import "bottombar";
 @import "modal";
-
-
-
-
-#user-feedback-module {
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	right: 0;
-	bottom: 0;
-
-	h3 {
-		font-weight: bold;
-		font-size: 15px;
-		margin: 8px 0;
-	}
-
-	p {
-		margin-bottom: 10px;
-	}
-}
-
-#user-feedback-canvas {
-	position: absolute;
-	top: 0;
-	left: 0;
-}
+@import "canvas";
 
 /**
  * Intro Template
@@ -62,16 +36,6 @@ label[for=user-feedback-do-not-show-again] {
 /**
  * Highlighting Template
  */
-
-// A helper is a rectangle drawn by the user
-.user-feedback-helper {
-	background: rgba(0, 0, 0, 0);
-	cursor: default;
-}
-
-.user-feedback-helper[data-type="highlight"] > .user-feedback-helper-inner {
-	background: rgba(0, 68, 255, 0.1)
-}
 
 #user-feedback-welcome-error,
 #user-feedback-overview-error {
@@ -121,104 +85,7 @@ label[for=user-feedback-do-not-show-again] {
 	height: auto;
 }
 
-.user-feedback-sethighlight,
-.user-feedback-setblackout {
-	box-shadow: none;
-	background: $color-white;
-	color: $color-black;
-	border: 1px solid $color-white;
-	border-radius: 2px;
-	cursor: pointer;
-	font-size: 11px;
-	font-weight: bold;
-	text-align: center;
-	white-space: nowrap;
-	margin-right: 16px;
-	line-height: 30px;
-	min-width: 90px;
-	outline: 0;
-	padding: 0 8px;
-	display: inline-block;
 
-	&:focus,
-	&:hover {
-		background: $color-light-gray;
-		color: $color-blue-hover;
-	}
-}
-
-.user-feedback-active {
-	color: $color-blue;
-}
-
-#user-feedback-highlighter .user-feedback-button {
-	padding: 0 10px;
-	font-size: 11px;
-	line-height: 30px;
-	background: $color-white;
-	border: 1px solid $color-white;
-
-	&:hover {
-		background: $color-light-gray;
-		color: $color-black;
-	}
-}
-
-#user-feedback-highlighter .user-feedback-button-close {
-	background: $color-black;
-}
-
-#user-feedback-highlighter-next,
-#user-feedback-highlighter-back {
-	display: inline;
-}
-
-.user-feedback-button-next {
-	float: right;
-}
-
-.user-feedback-button-back {
-	float: right;
-	margin-right: 20px;
-}
-
-.user-feedback-button-submit {
-	float: right;
-}
-
-.user-feedback-button-close {
-	float: right;
-}
-
-/**
- * Feedback Button at the beginning
- */
-#user-feedback-init-button {
-	font-family: 'Open Sans', sans-serif;
-	font-size: 16px;
-	font-weight: normal;
-	text-align: center;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
-	background-clip: padding-box;
-	border-radius: 2px;
-	padding: 5px 15px;
-	outline: 0;
-	position: fixed;
-	bottom: -3px;
-	right: 60px;
-	z-index: 40000;
-	cursor: pointer;
-
-	&:hover {
-		background: $color-blue-hover;
-		border: 1px solid $color-blue-hover;
-		color: $color-white;
-	}
-
-	&.hidden {
-		display: none;
-	}
-}
 
 .user-feedback-additional {
 	margin-bottom: 20px !important

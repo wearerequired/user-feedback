@@ -1,0 +1,26 @@
+/**
+ * Canvas Styling
+ */
+
+#user-feedback-canvas {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9000; // just behind our UI
+}
+
+// A helper is a rectangle drawn by the user
+.user-feedback-helper {
+	position: absolute;
+	z-index: 95000; // between canvas and UI
+	background: rgba(0, 0, 0, 0);
+	cursor: default;
+}
+
+.user-feedback-helper[data-type="highlight"] > .user-feedback-helper-inner {
+	background: rgba(0, 68, 255, 0.1)
+}
