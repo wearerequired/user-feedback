@@ -323,7 +323,7 @@ final class User_Feedback {
 		 *
 		 * Store the theme's name and the currently used template, e.g. index.php
 		 *
-		 * @todo: Maybe use {@link get_included_files()}
+		 * @todo: Maybe use {@link get_included_files()} if necessary
 		 */
 		$theme = wp_get_theme();
 		global $template;
@@ -332,8 +332,7 @@ final class User_Feedback {
 		/**
 		 * Get the current language.
 		 *
-		 * Uses the WordPress locale setting and the according name if possible.
-		 * Also checks for WPML and Polylang.
+		 * Uses the WordPress locale setting, but also checks for WPML and Polylang.
 		 */
 		$language = get_bloginfo( 'language' );
 
@@ -351,6 +350,11 @@ final class User_Feedback {
 				'name'             => $theme->Name,
 				'stylesheet'       => $theme->stylesheet,
 				'current_template' => $current_template
+			),
+			'user'           => array(
+				'logged_in' => is_user_logged_in(),
+				'name'      => $userdata->display_name,
+				'email'     => $userdata->user_email,
 			),
 			'language'       => $language,
 			'canvas_options' => array(
@@ -482,8 +486,7 @@ final class User_Feedback {
 					<li class="user-feedback-bar-step hidden"><%= step.three %></li>
 				</ul>
 				<button class="user-feedback-button user-feedback-button-help" title="<%= button.helpAria %>" aria-label="<%= button.helpAria %>"><%= button.help %></button>
-			</div>
-			<!--<div id="user-feedback-overlay"></div>-->'
+			</div>'
 		);
 
 		// Wizard Step 1
@@ -558,6 +561,12 @@ final class User_Feedback {
 			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
 			    </div>
 			</div>'
+		);
+
+		// Wizard Step 4 (Canvas Part)
+		echo self::get_template(
+			'wizard-step-4-canvas',
+			'<canvas id="user-feedback-canvas"></canvas><div id="user-feedback-helpers"></div>'
 		);
 
 		// Wizard Step 5
