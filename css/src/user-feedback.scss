@@ -240,7 +240,7 @@ $color-red-hover: #B6140D;
 }
 
 // Close button in the upper right corner
-.user-feedback-wizard-close {
+.user-feedback-button-close {
 	float: right;
 	width: 30px;
 	height: 30px;
@@ -260,8 +260,8 @@ $color-red-hover: #B6140D;
 
 .user-feedback-modal__bottombar {
 	.user-feedback-button {
-		float: right;
-		margin-left: 15px;
+		float: left;
+		margin-right: 15px;
 	}
 
 	.user-feedback-button-next {
@@ -361,7 +361,7 @@ $color-red-hover: #B6140D;
 	transform: translate(-50%, -50%)
 }
 
-#user-feedback-note-tmp {
+#user-feedback-message {
 	width: 100%;
 	height: auto;
 	min-height: 90px;
@@ -370,7 +370,7 @@ $color-red-hover: #B6140D;
 	padding: 4px;
 }
 
-label[for=user_feedback_dont_show_again] {
+label[for=user-feedback-do-not-show-again] {
 	cursor: pointer;
 	color: $color-gray;
 }
@@ -480,7 +480,7 @@ label[for=user_feedback_dont_show_again] {
 	}
 }
 
-#user-feedback-highlighter .user-feedback-wizard-close {
+#user-feedback-highlighter .user-feedback-button-close {
 	background: $color-black;
 }
 
