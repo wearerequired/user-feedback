@@ -403,6 +403,42 @@ final class User_Feedback {
 						'close'     => _x( 'X', 'close button', 'user-feedback' ),
 						'closeAria' => _x( 'X', 'close button title text and aria label', 'user-feedback' )
 					),
+				),
+				'wizardStep3' => array(
+					'title'       => _x( 'Leave a message', 'modal title', 'user-feedback' ),
+					'placeholder' => array(
+						'message' => _x( 'Your message here…', 'textarea placeholder', 'user-feedback' ),
+					),
+					'button'      => array(
+						'primary'   => __( 'Next', 'user-feedback' ),
+						'close'     => _x( 'X', 'close button', 'user-feedback' ),
+						'closeAria' => _x( 'X', 'close button title text and aria label', 'user-feedback' )
+					),
+				),
+				'wizardStep4' => array(
+					'title'  => _x( 'Highlight area', 'modal title', 'user-feedback' ),
+					'intro'  => __( 'You can now highlight the areas relevant to your feedback.', 'user-feedback' ),
+					'button' => array(
+						'primary'   => __( 'Skip', 'user-feedback' ),
+						'close'     => _x( 'X', 'close button', 'user-feedback' ),
+						'closeAria' => _x( 'X', 'close button title text and aria label', 'user-feedback' )
+					),
+				),
+				'wizardStep5' => array(
+					'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
+					'button' => array(
+						'primary'   => __( 'Send', 'user-feedback' ),
+						'secondary' => __( 'Back', 'user-feedback' ),
+					),
+				),
+				'wizardStep6' => array(
+					'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
+					'intro'  => __( 'Thanks for your kind feedback. We will examine it and get back to you in 24h.', 'user-feedback' ),
+					'intro2' => __( 'The required+ support team', 'user-feedback' ),
+					'button' => array(
+						'primary'   => __( 'Done', 'user-feedback' ),
+						'secondary' => __( 'Leave another message', 'user-feedback' ),
+					),
 				)
 			),
 		) ) );
@@ -456,7 +492,7 @@ final class User_Feedback {
 			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
-					<button class="user-feedback-wizard-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+					<button class="user-feedback-button-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
 				</div>
 				<p><%= salutation %></p>
 				<p><%= intro %></p>
@@ -477,17 +513,80 @@ final class User_Feedback {
 			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
-					<button class="user-feedback-wizard-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+					<button class="user-feedback-button-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
 				</div>
 				<p><%= salutation %></p>
 				<p><%= intro %></p>
 				<p><%= intro2 %></p>
 				<p>
-					<input type="checkbox" value="1" id="user_feedback_dont_show_again" />
-					<label for="user_feedback_dont_show_again"><%= inputLabel %></label>
+					<input type="checkbox" value="1" id="user-feedback-do-not-show-again" />
+					<label for="user-feedback-do-not-show-again"><%= inputLabel %></label>
 				</p>
 				<div class="user-feedback-modal__bottombar">
 			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
+			    </div>
+			</div>'
+		);
+
+		// Wizard Step 3
+		echo self::get_template(
+			'wizard-step-3',
+			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
+				<div class="user-feedback-modal__topbar">
+					<h3 class="user-feedback-modal-title"><%= title %></h3>
+					<button class="user-feedback-button-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+				</div>
+				<p>
+					<textarea id="user-feedback-message" class="user-feedback-textarea" placeholder="<%= placeholder.message %>"></textarea>
+				</p>
+				<div class="user-feedback-modal__bottombar">
+			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
+			    </div>
+			</div>'
+		);
+
+		// Wizard Step 4
+		echo self::get_template(
+			'wizard-step-4',
+			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
+				<div class="user-feedback-modal__topbar">
+					<h3 class="user-feedback-modal-title"><%= title %></h3>
+					<button class="user-feedback-button-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+				</div>
+				<p><%= intro %></p>
+				<div class="user-feedback-modal__bottombar">
+			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
+			    </div>
+			</div>'
+		);
+
+		// Wizard Step 5
+		echo self::get_template(
+			'wizard-step-5',
+			'<div class="user-feedback-modal user-feedback-modal-center" role="dialog">
+				<div class="user-feedback-modal__topbar">
+					<h3 class="user-feedback-modal-title"><%= title %></h3>
+				</div>
+				Overview
+				<div class="user-feedback-modal__bottombar">
+			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
+			      <button class="user-feedback-button user-feedback-button-previous"><%= button.secondary %></button>
+			    </div>
+			</div>'
+		);
+
+		// Wizard Step 6
+		echo self::get_template(
+			'wizard-step-6',
+			'<div class="user-feedback-modal user-feedback-modal-center" role="dialog">
+				<div class="user-feedback-modal__topbar">
+					<h3 class="user-feedback-modal-title"><%= title %></h3>
+				</div>
+				<p><%= intro %></p>
+				<p><%= intro2 %></p>
+				<div class="user-feedback-modal__bottombar">
+			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
+			      <button class="user-feedback-button user-feedback-button-previous"><%= button.secondary %></button>
 			    </div>
 			</div>'
 		);
