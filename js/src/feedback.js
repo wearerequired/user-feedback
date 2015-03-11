@@ -33,6 +33,7 @@ var UserFeedback = (function (Backbone, $) {
 
     render: function () {
       this.$el.html(this.template);
+      this.delegateEvents();
 
       return this;
     },
@@ -42,15 +43,7 @@ var UserFeedback = (function (Backbone, $) {
     },
 
     toggleInitButton: function () {
-      this.toggle();
       this.model.set('toggleInitButton', true)
-
-      return this;
-    },
-
-    toggle: function () {
-      this.$el.toggleClass('hidden');
-
       return this;
     }
   });
@@ -78,55 +71,180 @@ var UserFeedback = (function (Backbone, $) {
     },
 
     showWizard: function () {
-      this.model.set('showWizard', ( this.model.get('initWizard' ) ) ? false : true );
+      this.model.set('showWizard', ( this.model.get('initWizard') ) ? false : true);
     }
   });
 
-  // Create the view for our wizard
-  var UserFeedbackWizard = Backbone.Modal.extend({
+  // Create the views for our wizard
+  var WizardStep1 = Backbone.View.extend({
     tagName  : 'div',
-    className: 'user-feedback-wizard-view',
-    template : _.template(document.getElementById('user-feedback-template-modal').innerHTML),
+    className: 'user-feedback-wizard-step-1',
+    template : _.template(
+        document.getElementById('user-feedback-template-wizard-step-1').innerHTML,
+        user_feedback.templates.wizardStep1
+    ),
 
-    viewContainer: '.user-feedback-modal__container',
-    submitEl     : '.user-feedback-button-done',
-    cancelEl     : '.user-feedback-button-cancel',
+    render: function () {
+      this.$el.html(this.template);
+      this.delegateEvents();
 
-    views: {
-      'click #step1': {
-        // Somehow it doesn't work with only one call to _.template()
-        view: _.template(_.template(
-            document.getElementById('user-feedback-template-wizard-step-1').innerHTML,
-            user_feedback.templates.wizardStep1
-        ))
-      },
-      'click #step2': {
-        view: _.template(_.template(
-            document.getElementById('user-feedback-template-wizard-step-2').innerHTML,
-            user_feedback.templates.wizardStep2
-        ))
-      }
+      return this;
     },
 
     events: {
       'click .user-feedback-button-previous': 'previousStep',
-      'click .user-feedback-button-next'    : 'nextStep'
+      'click .user-feedback-button-next'    : 'nextStep',
+      'click .user-feedback-button-close'   : 'closeWizard'
     },
 
     previousStep: function (e) {
       e.preventDefault();
-      this.previous();
+      this.model.set('previousStep', this.model.get('previousStep') + 1);
     },
 
     nextStep: function (e) {
       e.preventDefault();
-      this.next();
+      this.model.set('nextStep', this.model.get('nextStep') + 1);
     },
 
-    toggle: function () {
-      this.$el.toggleClass('hidden');
+    closeWizard: function (e) {
+      e.preventDefault();
+      this.model.set('closeWizard', true);
+    }
+  });
+
+  var WizardStep2 = WizardStep1.extend({
+    className: 'user-feedback-wizard-step-2',
+    template : _.template(
+        document.getElementById('user-feedback-template-wizard-step-2').innerHTML,
+        user_feedback.templates.wizardStep2
+    ),
+
+    nextStep: function (e) {
+      e.preventDefault();
+      this.model.set('doNotShowInfoAgain', $(document.getElementById('user-feedback-do-not-show-again')).val());
+      this.model.set('nextStep', this.model.get('nextStep') + 1);
+    },
+
+  });
+
+  var WizardStep3 = WizardStep1.extend({
+    tagName  : 'div',
+    className: 'user-feedback-wizard-step-3',
+    template : _.template(
+        document.getElementById('user-feedback-template-wizard-step-3').innerHTML,
+        user_feedback.templates.wizardStep3
+    )
+  });
+
+  var WizardStep4 = WizardStep1.extend({
+    tagName  : 'div',
+    className: 'user-feedback-wizard-step-4',
+    template : _.template(
+        document.getElementById('user-feedback-template-wizard-step-4').innerHTML,
+        user_feedback.templates.wizardStep4
+    )
+  });
+
+  var WizardStep5 = WizardStep1.extend({
+    tagName  : 'div',
+    className: 'user-feedback-wizard-step-5',
+    template : _.template(
+        document.getElementById('user-feedback-template-wizard-step-5').innerHTML,
+        user_feedback.templates.wizardStep5
+    )
+  });
+
+  var WizardStep6 = WizardStep1.extend({
+    tagName  : 'div',
+    className: 'user-feedback-wizard-step-6',
+    template : _.template(
+        document.getElementById('user-feedback-template-wizard-step-6').innerHTML,
+        user_feedback.templates.wizardStep6
+    )
+  });
+
+  var UserFeedbackWizard = Backbone.View.extend({
+    tagName  : 'div',
+    className: 'user-feedback-wizard-view',
+    template : _.template(document.getElementById('user-feedback-template-modal').innerHTML),
+
+    steps: [
+      {
+        view: new WizardStep1({model: userFeedbackModel})
+      },
+      {
+        view: new WizardStep2({model: userFeedbackModel})
+      },
+      {
+        view: new WizardStep3({model: userFeedbackModel})
+      },
+      {
+        view: new WizardStep4({model: userFeedbackModel})
+      },
+      {
+        view: new WizardStep5({model: userFeedbackModel})
+      },
+      {
+        view: new WizardStep6({model: userFeedbackModel})
+      }
+    ],
+
+    events: {},
+
+    initialize: function () {
+      _.bindAll(this, 'render');
+      this.currentStep = 0;
+
+      this.model.set('previousStep', 0);
+      this.model.set('nextStep', 0);
+
+      this.model.on('change:previousStep', this.prevStep /* function to call */, this);
+      this.model.on('change:nextStep', this.nextStep /* function to call */, this);
+      this.model.on('change:closeWizard', this.restart, this);
+    },
+
+    render: function () {
+      /*_.each(this.steps, _.bind(function (step) {
+       this.$el.append(step.view.render().el);
+       }, this));*/
+
+      this.renderCurrentStep();
 
       return this;
+    },
+
+    restart: function () {
+      this.currentStep = 0;
+    },
+
+    renderCurrentStep: function () {
+      var currentStep = this.steps[this.currentStep];
+      this.currentView = currentStep.view;
+
+      this.$el.html(this.currentView.render().el);
+    },
+
+    nextStep: function () {
+      if (!this.isLastStep()) {
+        this.currentStep += 1;
+        this.renderCurrentStep();
+      }
+    },
+
+    prevStep: function () {
+      if (!this.isFirstStep()) {
+        this.currentStep -= 1;
+        this.renderCurrentStep();
+      }
+    },
+
+    isFirstStep: function () {
+      return (this.currentStep == 0);
+    },
+
+    isLastStep: function () {
+      return (this.currentStep == this.steps.length - 1);
     }
 
   });
@@ -141,14 +259,21 @@ var UserFeedback = (function (Backbone, $) {
       this.wizard = new UserFeedbackWizard({model: userFeedbackModel});
 
       this.model.on('change:toggleInitButton', this.render /* function to call */, this);
+      this.model.on('change:closeWizard', this.restart /* function to call */, this);
     },
 
     render: function () {
-      if ( ! this.model.get('toggleInitButton') ) {
-        this.$el.html(this.initButton.render().el);
+      this.$el.empty();
+
+      if (!this.model.get('toggleInitButton')) {
+        this.$el.append(this.initButton.render().el);
       } else {
-        this.$el.empty().append(this.bottomBar.render().el).append(this.wizard.render().el);
+        this.$el.append(this.bottomBar.render().el).append(this.wizard.render().el);
       }
+    },
+
+    restart: function () {
+      this.model.unset('toggleInitButton'); // this triggers a re-rendering
     }
   });
 
@@ -162,7 +287,6 @@ var UserFeedback = (function (Backbone, $) {
   };
 
 })(Backbone, jQuery);
-
 
 jQuery(function ($, undefined) {
   UserFeedback.init();
