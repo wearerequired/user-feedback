@@ -381,8 +381,28 @@ var UserFeedback = (function (Backbone, $) {
       this.delegateEvents();
 
       return this;
+    },
+
+    nextStep: function (e) {
+      e.preventDefault();
+
+      var that = this;
+
+      html2canvas($('body'), {
+        onrendered: function (canvas) {
+          that.canvasView.redraw();
+          var _canvas = $('<canvas id="user-feedback-canvas-tmp" width="' + $(document).width() + '" height="' + $(window).height() + '"/>').hide().appendTo('body');
+          var _ctx = _canvas.get(0).getContext('2d');
+          _ctx.drawImage(canvas, 0, $(document).scrollTop(), $(document).width(), $(window).height(), 0, 0, $(document).width(), $(window).height());
+
+          that.model.set('userScreenshot', _canvas.get(0).toDataURL());
+          $('#user-feedback-canvas-tmp').remove();
+
+          that.model.set('nextStep', that.model.get('nextStep') + 1);
+        }
+      });
     }
-  });
+  })
 
   var WizardStep5 = WizardStep.extend({
     className: 'user-feedback-wizard-step-5',
@@ -416,7 +436,7 @@ var UserFeedback = (function (Backbone, $) {
     )
   });
 
-  // Wizard view that holds the individual view for each step
+// Wizard view that holds the individual view for each step
   var UserFeedbackWizard = Backbone.View.extend({
     className: 'user-feedback-wizard-view',
     template : _.template(document.getElementById('user-feedback-template-modal').innerHTML),
@@ -504,7 +524,7 @@ var UserFeedback = (function (Backbone, $) {
 
   });
 
-  // Main application view
+// Main application view
   var AppView = Backbone.View.extend({
     el: '#user-feedback-container',
 
@@ -589,7 +609,7 @@ var UserFeedback = (function (Backbone, $) {
 
   var appView = new AppView({model: userFeedbackModel});
 
-  // This gets exposed to the outside
+// This gets exposed to the outside
   return {
     app : appView,
     init: function () {
@@ -597,7 +617,8 @@ var UserFeedback = (function (Backbone, $) {
     }
   };
 
-})(Backbone, jQuery);
+})
+(Backbone, jQuery);
 
 jQuery(function ($, undefined) {
   // Only run if Canvas is supported
