@@ -3275,6 +3275,7 @@ var UserFeedback = (function (Backbone, $) {
     render: function () {
       this.$el.html(this.template);
 
+      this.$el.find('#user-feedback-canvas').width($(document).width()).height($(document).height());
       this.ctx = this.$el.find('#user-feedback-canvas')[0].getContext('2d');
       this.ctx.fillStyle = 'rgba(102,102,102,0.5)';
       this.ctx.fillRect(0, 0, $('window').width(), $('window').height());
@@ -3286,13 +3287,11 @@ var UserFeedback = (function (Backbone, $) {
       // todo: move to initialize()
 
       $(document).on('mousedown', '#user-feedback-canvas', function (e) {
-        if (that.canDraw) {
-          that.rect.startX = e.pageX - $(this).offset().left;
-          that.rect.startY = e.pageY - $(this).offset().top;
-          that.rect.w = 0;
-          that.rect.h = 0;
-          that.drag = true;
-        }
+        that.rect.startX = e.pageX - $(this).offset().left;
+        that.rect.startY = e.pageY - $(this).offset().top;
+        that.rect.w = 0;
+        that.rect.h = 0;
+        that.drag = true;
       });
 
       $(document).on('mouseup', function () {
@@ -3327,38 +3326,26 @@ var UserFeedback = (function (Backbone, $) {
       });
 
       $(document).on('mousemove', function (e) {
-        if (that.drag) {
-          $('#user-feedback-highlighter').css('cursor', 'default');
-
-          that.rect.w = (e.pageX - $('#user-feedback-canvas').offset().left) - that.rect.startX;
-          that.rect.h = (e.pageY - $('#user-feedback-canvas').offset().top) - that.rect.startY;
-
-          that.ctx.clearRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
-          that.ctx.fillStyle = 'rgba(102,102,102,0.5)';
-          that.ctx.fillRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
-          $('.user-feedback-helper').each(function () {
-            if ($(this).attr('data-type') == 'highlight')
-              that.drawlines(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
-          });
-          if (highlight == 1) {
-            that.drawlines(that.rect.startX, that.rect.startY, that.rect.w, that.rect.h);
-            that.ctx.clearRect(that.rect.startX, that.rect.startY, that.rect.w, that.rect.h);
-          }
-          $('.user-feedback-helper').each(function () {
-            if ($(this).attr('data-type') == 'highlight')
-              that.ctx.clearRect(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
-          });
-          $('.user-feedback-helper').each(function () {
-            if ($(this).attr('data-type') == 'blackout') {
-              that.ctx.fillStyle = 'rgba(0,0,0,1)';
-              that.ctx.fillRect(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height())
-            }
-          });
-          if (highlight == 0) {
-            that.ctx.fillStyle = 'rgba(0,0,0,0.5)';
-            that.ctx.fillRect(that.rect.startX, that.rect.startY, that.rect.w, that.rect.h);
-          }
+        if (!that.drag) {
+          return;
         }
+
+        $('#user-feedback-highlighter').css('cursor', 'default');
+
+        that.rect.w = (e.pageX - $('#user-feedback-canvas').offset().left) - that.rect.startX;
+        that.rect.h = (e.pageY - $('#user-feedback-canvas').offset().top) - that.rect.startY;
+
+        that.ctx.clearRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
+        that.ctx.fillStyle = 'rgba(102,102,102,0.5)';
+        that.ctx.fillRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
+        $('.user-feedback-helper').each(function () {
+          that.drawlines(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
+        });
+        that.drawlines(that.rect.startX, that.rect.startY, that.rect.w, that.rect.h);
+        that.ctx.clearRect(that.rect.startX, that.rect.startY, that.rect.w, that.rect.h);
+        $('.user-feedback-helper').each(function () {
+          that.ctx.clearRect(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
+        });
       });
 
       var highlighted = [],
@@ -3394,11 +3381,11 @@ var UserFeedback = (function (Backbone, $) {
           that.ctx.clearRect(_x, _y, _w, _h);
 
           $('.user-feedback-helper').each(function () {
-              that.ctx.clearRect(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
+            that.ctx.clearRect(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
           });
 
           if (e.type == 'click' && e.pageX == that.rect.startX && e.pageY == that.rect.startY) {
-            $('#user-feedback-helpers').append('<div class="user-feedback-helper" data-highlight-id="' + hidx + '" data-time="' + Date.now() + '" style="position:absolute;top:' + _y + 'px;left:' + _x + 'px;width:' + _w + 'px;height:' + _h + 'px;z-index:30000;"></div>');
+            $('#user-feedback-helpers').append('<div class="user-feedback-helper" data-highlight-id="' + hidx + '" data-time="' + Date.now() + '" style="top:' + _y + 'px;left:' + _x + 'px;width:' + _w + 'px;height:' + _h + 'px"></div>');
             highlighted.push(hidx);
             ++hidx;
             that.redraw();
