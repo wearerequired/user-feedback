@@ -266,9 +266,11 @@
     background: transparent;
     color: #333; }
 
-.user-feedback-modal__bottombar .user-feedback-button {
-  float: left;
-  margin-right: 15px; }
+.user-feedback-modal__bottombar {
+  clear: both; }
+  .user-feedback-modal__bottombar .user-feedback-button {
+    float: left;
+    margin-right: 15px; }
 
 /**
  * Canvas Styling

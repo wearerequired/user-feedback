@@ -429,8 +429,19 @@ final class User_Feedback {
 					),
 				),
 				'wizardStep5' => array(
-					'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
-					'button' => array(
+					'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
+					'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
+					'user'          => array(
+						'by'        => _x( 'by ', 'by user xy', 'user-feebdack' ),
+						'gravatarAlt' => _x( 'Gravatar', 'alt text', 'user-feedback' )
+					),
+					'details'       => array(
+						'theme'    => __( 'Theme: ', 'user-feedback' ),
+						'template' => __( 'Page: ', 'user-feedback' ),
+						'browser'  => __( 'Browser: ', 'user-feedback' ),
+						'language' => __( 'Language: ', 'user-feedback' ),
+					),
+					'button'        => array(
 						'primary'   => __( 'Send', 'user-feedback' ),
 						'secondary' => __( 'Back', 'user-feedback' ),
 					),
@@ -446,6 +457,7 @@ final class User_Feedback {
 				)
 			),
 		) ) );
+
 	}
 
 	public static function get_template( $id, $content ) {
@@ -576,7 +588,22 @@ final class User_Feedback {
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
 				</div>
-				Overview
+				<div id="user-feedback-overview-description">
+					<div id="user-feedback-overview-user">
+						<img src="" width="40" height="40" alt="<%= user.gravatarAlt %>" />
+						<div><%= user.by %></div>
+					</div>
+					<textarea id="user-feedback-overview-note" class="user-feedback-textarea"></textarea>
+					<ul class="user-feedback-additional-notes">
+						<li id="user-feedback-additional-theme"><%= details.theme %></li>
+						<li id="user-feedback-additional-browser"><%= details.browser %></li>
+						<li id="user-feedback-additional-template"><%= details.template %></li>
+						<li id="user-feedback-additional-language"><%= details.language %></li>
+					</ul>
+				</div>
+				<div id="user-feedback-overview-screenshot">
+					<img id="user-feedback-overview-screenshot-img" src="" alt="<%= screenshotAlt %>" />
+				</div>
 				<div class="user-feedback-modal__bottombar">
 			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
 			      <button class="user-feedback-button user-feedback-button-previous"><%= button.secondary %></button>
