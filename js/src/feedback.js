@@ -200,6 +200,9 @@ var UserFeedback = (function (Backbone, $) {
     render: function () {
       this.$el.html(this.template);
 
+      // @see http://stackoverflow.com/questions/18462303/incorrect-mouse-coordinates-when-drawing-on-canvas
+      this.$el.find('#user-feedback-canvas')[0].width = $(document).width();
+      this.$el.find('#user-feedback-canvas')[0].height = $(document).height();
       this.$el.find('#user-feedback-canvas').width($(document).width()).height($(document).height());
       this.ctx = this.$el.find('#user-feedback-canvas')[0].getContext('2d');
       this.ctx.fillStyle = 'rgba(102,102,102,0.5)';
@@ -323,6 +326,35 @@ var UserFeedback = (function (Backbone, $) {
       });
 
       $(document).on('mouseenter', '.user-feedback-helper', function () {
+        that.redraw();
+      });
+
+      $(document).on('mouseenter mouseleave', '.user-feedback-helper', function (e) {
+        if (that.drag)
+          return;
+
+        that.rect.w = 0;
+        that.rect.h = 0;
+
+        if (e.type === 'mouseenter') {
+          $(this).css('z-index', '30001');
+          $(this).append('<div class="user-feedback-helper-inner" style="width:' + ($(this).width() - 2) + 'px;height:' + ($(this).height() - 2) + 'px;position:absolute;margin:1px;"></div>');
+          $(this).append('<div id="user-feedback-close"></div>');
+          $(this).find('#user-feedback-close').css({
+            'top' : -1 * ($(this).find('#user-feedback-close').height() / 2) + 'px',
+            'left': $(this).width() - ($(this).find('#user-feedback-close').width() / 2) + 'px'
+          });
+        } else {
+          $(this).css('z-index', '30000');
+          $(this).children().remove();
+          if ($(this).attr('data-type') == 'blackout') {
+            that.redraw();
+          }
+        }
+      });
+
+      $(document).on('click', '#user-feedback-close', function () {
+        $(this).parent().remove();
         that.redraw();
       });
 
