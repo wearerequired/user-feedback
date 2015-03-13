@@ -375,6 +375,10 @@ var UserFeedback = (function (Backbone, $) {
         user_feedback.templates.wizardStep4
     ),
 
+    events: {
+      'click .user-feedback-button-screen-capture': 'screenCapture'
+    },
+
     initialize: function () {
       this.canvasView = new CanvasView({model: userFeedbackModel});
     },
@@ -386,10 +390,13 @@ var UserFeedback = (function (Backbone, $) {
       return this;
     },
 
-    nextStep: function () {
+    screenCapture: function (e) {
       var that = this;
 
-      // todo: hide bottombar and modal before taking the "screenshot" and show them afterwards
+      // Hide UI before taking the screenshot
+      $('#user-feedback-bottombar').hide();
+      $('.user-feedback-modal').hide();
+
       html2canvas($('body'), {
         onrendered: function (canvas) {
           that.canvasView.redraw();
@@ -400,10 +407,14 @@ var UserFeedback = (function (Backbone, $) {
           that.model.set('userScreenshot', _canvas.get(0).toDataURL());
           $('#user-feedback-canvas-tmp').remove();
 
-          that.model.set('nextStep', that.model.get('nextStep') + 1);
+          // Show UI again
+          $('#user-feedback-bottombar').show();
+          $('.user-feedback-modal').show();
+
+          that.trigger('nextStep');
         }
       });
-    }
+    },
   })
 
   var WizardStep5 = WizardStep.extend({
@@ -417,9 +428,26 @@ var UserFeedback = (function (Backbone, $) {
       this.$el.html(this.template);
       this.delegateEvents();
 
-      this.model.set('hideBottomBar', true);
+      this.trigger('toggleBottomBar');
+      this.fillInTheData();
 
       return this;
+    },
+
+    fillInTheData: function () {
+      var email = ( this.model.get('userEmail') != '' ) ? this.model.get('userEmail') : user_feedback.user.email;
+      var name = ( this.model.get('userName') != '' ) ? this.model.get('userName') : user_feedback.user.name;
+      this.$el.find('#user-feedback-overview-user img').attr('src', 'https://secure.gravatar.com/avatar/' + md5(email) + '?d=monsterid&s=90');
+      this.$el.find('#user-feedback-overview-user div').append(name);
+      this.$el.find('#user-feedback-overview-note').val(this.model.get('userMessage'));
+
+      this.$el.find('#user-feedback-additional-theme').append(user_feedback.theme.name);
+      this.$el.find('#user-feedback-additional-browser').append(navigator.saysWho);
+      this.$el.find('#user-feedback-additional-template').append(user_feedback.theme.current_template);
+      this.$el.find('#user-feedback-additional-language').append(user_feedback.language);
+
+      var screenshot = ( this.model.get('userScreenshot') ) ? this.model.get('userScreenshot') : '';
+      this.$el.find('#user-feedback-overview-screenshot-img').attr('src', screenshot);
     },
 
     nextStep: function () {
@@ -461,6 +489,28 @@ var UserFeedback = (function (Backbone, $) {
       }
     ],
 
+    initialize: function () {
+      _.bindAll(this, 'render');
+      this.currentStep = 0;
+
+      _.each(this.steps, function (step) {
+        this.listenTo(step.view, 'nextStep', this.goToNextStep);
+      }, this);
+
+      // A logged in user doesn't need to provide his name
+      if (user_feedback.user.logged_in) {
+        this.currentStep = 1;
+        this.model.set('userName', user_feedback.user.name);
+        this.model.set('userEmail', user_feedback.user.email);
+      }
+    },
+
+    render: function () {
+      this.renderCurrentStep();
+
+      return this;
+    },
+
     events: {
       'click .user-feedback-button-previous': 'previousStep',
       'click .user-feedback-button-next'    : 'nextStep',
@@ -481,24 +531,6 @@ var UserFeedback = (function (Backbone, $) {
       e.preventDefault();
       this.trigger('toggleWizard');
       this.restart();
-    },
-
-    initialize: function () {
-      _.bindAll(this, 'render');
-      this.currentStep = 0;
-
-      // A logged in user doesn't need to provide his name
-      if (user_feedback.user.logged_in) {
-        this.currentStep = 1;
-        this.model.set('userName', user_feedback.user.name);
-        this.model.set('userEmail', user_feedback.user.email);
-      }
-    },
-
-    render: function () {
-      this.renderCurrentStep();
-
-      return this;
     },
 
     restart: function () {
@@ -544,10 +576,11 @@ var UserFeedback = (function (Backbone, $) {
     initialize: function () {
       this.showInitButton = true;
       this.initButton = new UserFeedbackButton({model: userFeedbackModel});
-      this.listenTo(this.initButton,'toggleInitButton', this.toggleInitButton, this);
+      this.listenTo(this.initButton, 'toggleInitButton', this.toggleInitButton, this);
 
       this.showBottomBar = true;
       this.bottomBar = new UserFeedbackBar({model: userFeedbackModel});
+      // todo: individual step should be able to toggle this.
       this.listenTo(this.bottomBar, 'toggleBottomBar', this.toggleBottomBar, this);
       this.listenTo(this.bottomBar, 'toggleWizard', this.toggleWizard, this);
 
@@ -611,18 +644,16 @@ var UserFeedback = (function (Backbone, $) {
       post.url = document.URL;
       post.theme = user_feedback.theme;
       post.language = user_feedback.language;
+      post.message = this.model.get('userMessage');
+      post.img = this.model.get('userScreenshot');
       post.user = {
         name : this.model.get('userName'),
         email: this.model.get('userEmail')
       };
-      post.message = this.model.get('userMessage');
-
-      // todo: get the image
-      post.img = '';
 
       $.post(
+          user_feedback.ajax_url,
           {
-            'url'   : user_feedback.ajax_url,
             'action': 'user_feedback',
             'data'  : post
           }

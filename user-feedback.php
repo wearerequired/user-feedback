@@ -184,7 +184,7 @@ final class User_Feedback {
 	 * @type string $url      The URL from where the user submitted the feedback.
 	 * @type string $html     Contains the complete HTML output of $url.
 	 * @type string $img      Base64 encoded screenshot of the page.
-	 * @type string $note     Additional notes from the user.
+	 * @type string $message  Additional notes from the user.
 	 * }
 	 */
 	public static function process_feedback( $feedback ) {
@@ -192,7 +192,7 @@ final class User_Feedback {
 		// Insert post
 		$post_id = wp_insert_post( array(
 			'post_type'    => 'user_feedback',
-			'post_content' => sanitize_text_field( $feedback['note'] ),
+			'post_content' => sanitize_text_field( $feedback['message'] ),
 			'post_status'  => 'publish',
 		) );
 
@@ -271,7 +271,6 @@ final class User_Feedback {
 	public static function enqueue_scripts() {
 		// Use minified libraries if SCRIPT_DEBUG is turned off
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-		$suffix = '';
 
 		/**
 		 * Allow others to enable/disable the plugin's functionality at will.
@@ -423,7 +422,7 @@ final class User_Feedback {
 					'title'  => _x( 'Highlight area', 'modal title', 'user-feedback' ),
 					'intro'  => __( 'You can now highlight the areas relevant to your feedback.', 'user-feedback' ),
 					'button' => array(
-						'primary'   => __( 'Skip', 'user-feedback' ),
+						'primary'   => __( 'Take screenshot', 'user-feedback' ),
 						'close'     => _x( 'X', 'close button', 'user-feedback' ),
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
@@ -432,7 +431,7 @@ final class User_Feedback {
 					'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
 					'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
 					'user'          => array(
-						'by'        => _x( 'by ', 'by user xy', 'user-feebdack' ),
+						'by'          => _x( 'by ', 'by user xy', 'user-feebdack' ),
 						'gravatarAlt' => _x( 'Gravatar', 'alt text', 'user-feedback' )
 					),
 					'details'       => array(
@@ -570,7 +569,7 @@ final class User_Feedback {
 				</div>
 				<p><%= intro %></p>
 				<div class="user-feedback-modal__bottombar">
-			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
+			      <button class="user-feedback-button user-feedback-button-screen-capture"><%= button.primary %></button>
 			    </div>
 			</div>'
 		);
