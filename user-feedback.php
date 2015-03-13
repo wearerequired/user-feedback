@@ -393,7 +393,7 @@ final class User_Feedback {
 						'primary'   => __( 'Next', 'user-feedback' ),
 						'secondary' => __( 'No thanks', 'user-feedback' ),
 						'close'     => _x( 'X', 'close button', 'user-feedback' ),
-						'closeAria' => _x( 'X', 'close button title text and aria label', 'user-feedback' )
+						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
 				'wizardStep2' => array(
@@ -405,7 +405,7 @@ final class User_Feedback {
 					'button'     => array(
 						'primary'   => __( 'Next', 'user-feedback' ),
 						'close'     => _x( 'X', 'close button', 'user-feedback' ),
-						'closeAria' => _x( 'X', 'close button title text and aria label', 'user-feedback' )
+						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
 				'wizardStep3' => array(
@@ -416,7 +416,7 @@ final class User_Feedback {
 					'button'      => array(
 						'primary'   => __( 'Next', 'user-feedback' ),
 						'close'     => _x( 'X', 'close button', 'user-feedback' ),
-						'closeAria' => _x( 'X', 'close button title text and aria label', 'user-feedback' )
+						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
 				'wizardStep4' => array(
@@ -425,7 +425,7 @@ final class User_Feedback {
 					'button' => array(
 						'primary'   => __( 'Skip', 'user-feedback' ),
 						'close'     => _x( 'X', 'close button', 'user-feedback' ),
-						'closeAria' => _x( 'X', 'close button title text and aria label', 'user-feedback' )
+						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
 				'wizardStep5' => array(
@@ -507,7 +507,7 @@ final class User_Feedback {
 			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
-					<button class="user-feedback-button-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+					<button class="user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
 				</div>
 				<p><%= salutation %></p>
 				<p><%= intro %></p>
@@ -528,7 +528,7 @@ final class User_Feedback {
 			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
-					<button class="user-feedback-button-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+					<button class="user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
 				</div>
 				<p><%= salutation %></p>
 				<p><%= intro %></p>
@@ -549,7 +549,7 @@ final class User_Feedback {
 			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
-					<button class="user-feedback-button-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+					<button class="user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
 				</div>
 				<p>
 					<textarea id="user-feedback-message" class="user-feedback-textarea" placeholder="<%= placeholder.message %>"></textarea>
@@ -566,7 +566,7 @@ final class User_Feedback {
 			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
-					<button class="user-feedback-button-close" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+					<button class="user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
 				</div>
 				<p><%= intro %></p>
 				<div class="user-feedback-modal__bottombar">

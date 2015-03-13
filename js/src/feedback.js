@@ -58,11 +58,11 @@ var UserFeedback = (function (Backbone, $) {
     },
 
     events: {
-      'click #user-feedback-init-button': 'hideInitButton',
+      'click #user-feedback-init-button': 'toggleInitButton',
     },
 
-    hideInitButton: function () {
-      this.model.set('hideInitButton', true)
+    toggleInitButton: function () {
+      this.trigger('toggleInitButton');
       return this;
     }
   });
@@ -86,11 +86,11 @@ var UserFeedback = (function (Backbone, $) {
     },
 
     events: {
-      'click .user-feedback-button-help': 'showWizard'
+      'click .user-feedback-button-help': 'toggleWizard'
     },
 
-    showWizard: function () {
-      this.model.set('showWizard', ( this.model.get('initWizard') ) ? false : true);
+    toggleWizard: function () {
+      this.trigger('toggleWizard');
     }
   });
 
@@ -103,27 +103,7 @@ var UserFeedback = (function (Backbone, $) {
       return this;
     },
 
-    events: {
-      'click .user-feedback-button-previous': 'previousStep',
-      'click .user-feedback-button-next'    : 'nextStep',
-      'click .user-feedback-button-close'   : 'closeWizard'
-    },
-
-    previousStep: function (e) {
-      e.preventDefault();
-      // The counter does nothing but triggering the model's change event
-      this.model.set('previousStep', this.model.get('previousStep') + 1);
-    },
-
-    nextStep: function (e) {
-      e.preventDefault();
-      // The counter does nothing but triggering the model's change event
-      this.model.set('nextStep', this.model.get('nextStep') + 1);
-    },
-
-    closeWizard: function (e) {
-      e.preventDefault();
-      this.model.set('closeWizard', true);
+    nextStep: function () {
     }
   });
 
@@ -134,13 +114,10 @@ var UserFeedback = (function (Backbone, $) {
         user_feedback.templates.wizardStep1
     ),
 
-    nextStep: function (e) {
-      e.preventDefault();
+    nextStep: function () {
       this.model.set('userName', $(document.getElementById('user-feedback-user-name')).val());
       this.model.set('userEmail', $(document.getElementById('user-feedback-user-email')).val());
-
-      this.model.set('nextStep', this.model.get('nextStep') + 1);
-    },
+    }
 
   });
 
@@ -165,11 +142,8 @@ var UserFeedback = (function (Backbone, $) {
       return this;
     },
 
-    nextStep: function (e) {
-      e.preventDefault();
+    nextStep: function () {
       this.model.set('doNotShowInfoAgain', $(document.getElementById('user-feedback-do-not-show-again')).is(":checked"));
-
-      this.model.set('nextStep', this.model.get('nextStep') + 1);
     }
   });
 
@@ -180,11 +154,8 @@ var UserFeedback = (function (Backbone, $) {
         user_feedback.templates.wizardStep3
     ),
 
-    nextStep: function (e) {
-      e.preventDefault();
+    nextStep: function () {
       this.model.set('userMessage', $(document.getElementById('user-feedback-message')).val());
-
-      this.model.set('nextStep', this.model.get('nextStep') + 1);
     }
   });
 
@@ -415,11 +386,10 @@ var UserFeedback = (function (Backbone, $) {
       return this;
     },
 
-    nextStep: function (e) {
-      e.preventDefault();
-
+    nextStep: function () {
       var that = this;
 
+      // todo: hide bottombar and modal before taking the "screenshot" and show them afterwards
       html2canvas($('body'), {
         onrendered: function (canvas) {
           that.canvasView.redraw();
@@ -452,11 +422,8 @@ var UserFeedback = (function (Backbone, $) {
       return this;
     },
 
-    nextStep: function (e) {
-      e.preventDefault();
-
+    nextStep: function () {
       this.model.set('sendData', true);
-      this.model.set('nextStep', this.model.get('nextStep') + 1);
     }
   });
 
@@ -468,7 +435,7 @@ var UserFeedback = (function (Backbone, $) {
     )
   });
 
-// Wizard view that holds the individual view for each step
+  // Wizard view that holds the individual view for each step
   var UserFeedbackWizard = Backbone.View.extend({
     className: 'user-feedback-wizard-view',
     template : _.template(document.getElementById('user-feedback-template-modal').innerHTML),
@@ -494,7 +461,27 @@ var UserFeedback = (function (Backbone, $) {
       }
     ],
 
-    events: {},
+    events: {
+      'click .user-feedback-button-previous': 'previousStep',
+      'click .user-feedback-button-next'    : 'nextStep',
+      'click .user-feedback-button-close'   : 'closeWizard'
+    },
+
+    previousStep: function (e) {
+      e.preventDefault();
+      this.goToPreviousStep();
+    },
+
+    nextStep: function (e) {
+      e.preventDefault();
+      this.goToNextStep();
+    },
+
+    closeWizard: function (e) {
+      e.preventDefault();
+      this.trigger('toggleWizard');
+      this.restart();
+    },
 
     initialize: function () {
       _.bindAll(this, 'render');
@@ -506,13 +493,6 @@ var UserFeedback = (function (Backbone, $) {
         this.model.set('userName', user_feedback.user.name);
         this.model.set('userEmail', user_feedback.user.email);
       }
-
-      this.model.set('previousStep', 0);
-      this.model.set('nextStep', 0);
-
-      this.model.on('change:previousStep', this.prevStep, this);
-      this.model.on('change:nextStep', this.nextStep, this);
-      this.model.on('change:closeWizard', this.restart, this);
     },
 
     render: function () {
@@ -532,14 +512,15 @@ var UserFeedback = (function (Backbone, $) {
       this.$el.html(this.currentView.render().el);
     },
 
-    nextStep: function () {
+    goToNextStep: function () {
       if (!this.isLastStep()) {
         this.currentStep += 1;
+        this.currentView.nextStep(); // Trigger next step function in subview
         this.renderCurrentStep();
       }
     },
 
-    prevStep: function () {
+    goToPreviousStep: function () {
       if (!this.isFirstStep()) {
         this.currentStep -= 1;
         this.renderCurrentStep();
@@ -561,35 +542,52 @@ var UserFeedback = (function (Backbone, $) {
     el: '#user-feedback-container',
 
     initialize: function () {
+      this.showInitButton = true;
       this.initButton = new UserFeedbackButton({model: userFeedbackModel});
-      this.bottomBar = new UserFeedbackBar({model: userFeedbackModel});
-      this.wizard = new UserFeedbackWizard({model: userFeedbackModel});
+      this.listenTo(this.initButton,'toggleInitButton', this.toggleInitButton, this);
 
-      this.model.on('change:hideInitButton', this.render, this);
-      this.model.on('change:hideBottomBar', this.render, this);
-      this.model.on('change:closeWizard', this.restart, this);
+      this.showBottomBar = true;
+      this.bottomBar = new UserFeedbackBar({model: userFeedbackModel});
+      this.listenTo(this.bottomBar, 'toggleBottomBar', this.toggleBottomBar, this);
+      this.listenTo(this.bottomBar, 'toggleWizard', this.toggleWizard, this);
+
+      this.showWizard = true;
+      this.wizard = new UserFeedbackWizard({model: userFeedbackModel});
+      this.listenTo(this.wizard, 'toggleWizard', this.toggleWizard, this);
+
       this.model.on('change:sendData', this.send, this);
+    },
+
+    toggleInitButton: function () {
+      this.showInitButton = !this.showInitButton;
+      this.render();
+    },
+
+    toggleBottomBar: function () {
+      this.showBottomBar = !this.showBottomBar;
+      this.render();
+    },
+
+    toggleWizard: function () {
+      this.showWizard = !this.showWizard;
+      this.render();
     },
 
     render: function () {
       this.$el.empty();
 
       // Render our button if it's not toggled or else the wizard
-      if (!this.model.get('hideInitButton')) {
+      if (this.showInitButton) {
         this.$el.append(this.initButton.render().el);
       } else {
         // Only show bottom
-        if (!this.model.get('hideBottomBar')) {
+        if (this.showBottomBar) {
           this.$el.append(this.bottomBar.render().el)
         }
         this.$el.append(this.wizard.render().el);
       }
 
       return this;
-    },
-
-    restart: function () {
-      this.model.unset('hideInitButton').unset('hideBottomBar'); // this triggers a re-rendering
     },
 
     // Here we send all the data to WordPress
