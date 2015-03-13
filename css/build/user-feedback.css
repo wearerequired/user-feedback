@@ -195,7 +195,7 @@
   position: relative;
   z-index: 10000;
   padding: 15px;
-  width: 540px;
+  width: 700px;
   border: 1px solid #999;
   border-radius: 3px;
   background: #fff;
@@ -271,6 +271,65 @@
   .user-feedback-modal__bottombar .user-feedback-button {
     float: left;
     margin-right: 15px; }
+
+/**
+ * Overview Template at the end
+ */
+#user-feedback-overview-description {
+  float: left;
+  width: 60%;
+  margin-bottom: 20px; }
+
+#user-feedback-overview-user {
+  position: relative;
+  margin-bottom: 30px;
+  height: 40px; }
+  #user-feedback-overview-user div {
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    display: block;
+    margin: 0;
+    color: #999; }
+  #user-feedback-overview-user:after {
+    content: "";
+    position: absolute;
+    border-style: solid;
+    border-color: #f5f5f5 transparent;
+    display: block;
+    width: 0;
+    bottom: -30px;
+    top: auto;
+    right: auto;
+    left: 7px;
+    border-width: 0 15px 15px; }
+
+#user-feedback-overview-note {
+  width: 100%;
+  padding: 4px;
+  height: 110px;
+  outline: none; }
+
+#user-feedback-overview-screenshot {
+  float: right;
+  width: 35%; }
+
+#user-feedback-overview-screenshot-img {
+  width: 100%;
+  height: auto;
+  padding: 1px;
+  border: 1px solid #f5f5f5; }
+
+.user-feedback-additional-notes {
+  margin: 5px 0 0 0;
+  overflow: hidden;
+  list-style: none;
+  color: #999; }
+  .user-feedback-additional-notes li {
+    float: left;
+    width: 50%; }
+    #user-feedback-overview-screenshot .user-feedback-additional-notes li {
+      float: none; }
 
 /**
  * Canvas Styling
@@ -360,68 +419,5 @@ label[for=user-feedback-do-not-show-again] {
 
 .user-feedback-additional {
   margin-bottom: 20px !important; }
-
-/**
- * Overview Template at the end
- */
-#user-feedback-overview-description {
-  float: left;
-  width: 50%; }
-
-#user-feedback-overview-user {
-  position: relative;
-  margin-bottom: 30px;
-  height: 40px; }
-  #user-feedback-overview-user div {
-    position: absolute;
-    bottom: 0;
-    left: 50px;
-    display: block;
-    margin: 0;
-    color: #999; }
-  #user-feedback-overview-user:after {
-    content: "";
-    position: absolute;
-    border-style: solid;
-    border-color: #f5f5f5 transparent;
-    display: block;
-    width: 0;
-    bottom: -30px;
-    top: auto;
-    right: auto;
-    left: 7px;
-    border-width: 0 15px 15px; }
-
-#user-feedback-overview-note {
-  width: 100%;
-  padding: 4px;
-  height: 110px;
-  outline: none; }
-
-#user-feedback-overview-screenshot {
-  float: right;
-  width: 45%; }
-
-#user-feedback-overview-screenshot-img {
-  width: 100%;
-  height: auto;
-  padding: 1px;
-  border: 1px solid #f5f5f5; }
-
-.user-feedback-additional-notes {
-  margin: 5px 0 0 0;
-  overflow: hidden;
-  list-style: none;
-  color: #999; }
-  .user-feedback-additional-notes li {
-    float: left;
-    width: 50%; }
-    #user-feedback-overview-screenshot .user-feedback-additional-notes li {
-      float: none; }
-
-#user-feedback-overview .user-feedback-buttons {
-  clear: both;
-  display: block;
-  padding-top: 30px; }
 
 /*# sourceMappingURL=user-feedback.css.map */
