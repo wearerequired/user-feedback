@@ -3566,7 +3566,7 @@ var UserFeedback = (function (Backbone, $) {
 
     initialize: function () {
       _.bindAll(this, 'render');
-      this.currentStep = 0;
+      this.initialStep = 0;
 
       _.each(this.steps, function (step) {
         this.listenTo(step.view, 'nextStep', this.goToNextStep);
@@ -3574,10 +3574,12 @@ var UserFeedback = (function (Backbone, $) {
 
       // A logged in user doesn't need to provide his name
       if (user_feedback.user.logged_in) {
-        this.currentStep = 1;
+        this.initialStep = 1;
         this.model.set('userName', user_feedback.user.name);
         this.model.set('userEmail', user_feedback.user.email);
       }
+
+      this.currentStep = this.initialStep;
     },
 
     render: function () {
@@ -3589,7 +3591,9 @@ var UserFeedback = (function (Backbone, $) {
     events: {
       'click .user-feedback-button-previous': 'previousStep',
       'click .user-feedback-button-next'    : 'nextStep',
-      'click .user-feedback-button-close'   : 'closeWizard'
+      'click .user-feedback-button-close'   : 'closeWizard',
+      'click .user-feedback-button-done'    : 'closeWizard',
+      'click .user-feedback-button-restart' : 'restartWizard'
     },
 
     previousStep: function (e) {
@@ -3604,12 +3608,14 @@ var UserFeedback = (function (Backbone, $) {
 
     closeWizard: function (e) {
       e.preventDefault();
-      this.trigger('toggleWizard');
-      this.restart();
+      this.currentStep = this.initialStep;
+      this.trigger('reInitialize');
     },
 
-    restart: function () {
-      this.currentStep = 0;
+    restartWizard: function (e) {
+      e.preventDefault();
+      this.currentStep = this.initialStep;
+      this.render();
     },
 
     renderCurrentStep: function () {
@@ -3661,7 +3667,7 @@ var UserFeedback = (function (Backbone, $) {
 
       this.showWizard = true;
       this.wizard = new UserFeedbackWizard({model: userFeedbackModel});
-      this.listenTo(this.wizard, 'toggleWizard', this.toggleWizard, this);
+      this.listenTo(this.wizard, 'reInitialize', this.reInitialize, this);
 
       this.model.on('change:sendData', this.send, this);
     },
@@ -3681,8 +3687,15 @@ var UserFeedback = (function (Backbone, $) {
       this.render();
     },
 
+    reInitialize: function () {
+      this.showWizard = true;
+      this.showBottomBar = true;
+      this.showInitButton = true;
+      this.render();
+    },
+
     render: function () {
-      this.$el.empty();
+      this.$el.children().detach();
 
       // Render our button if it's not toggled or else the wizard
       if (this.showInitButton) {
@@ -3692,7 +3705,9 @@ var UserFeedback = (function (Backbone, $) {
         if (this.showBottomBar) {
           this.$el.append(this.bottomBar.render().el)
         }
-        this.$el.append(this.wizard.render().el);
+        if (this.showWizard) {
+          this.$el.append(this.wizard.render().el);
+        }
       }
 
       return this;

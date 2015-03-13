@@ -506,7 +506,7 @@ final class User_Feedback {
 			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
-					<button class="user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+					<button class="user-feedback-button user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
 				</div>
 				<p><%= salutation %></p>
 				<p><%= intro %></p>
@@ -515,8 +515,8 @@ final class User_Feedback {
 				<input type="email" class="user-feedback-input" id="user-feedback-user-email" placeholder="<%= placeholder.email %>">
 				</p>
 				<div class="user-feedback-modal__bottombar">
-			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
-			      <button class="user-feedback-button user-feedback-button-previous"><%= button.secondary %></button>
+			      <button class="user-feedback-button user-feedback-button-next user-feedback-button-primary"><%= button.primary %></button>
+			      <button class="user-feedback-button user-feedback-button-next user-feedback-button-secondary"><%= button.secondary %></button>
 			    </div>
 			</div>'
 		);
@@ -527,7 +527,7 @@ final class User_Feedback {
 			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
-					<button class="user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+					<button class="user-feedback-button user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
 				</div>
 				<p><%= salutation %></p>
 				<p><%= intro %></p>
@@ -537,7 +537,7 @@ final class User_Feedback {
 					<label for="user-feedback-do-not-show-again"><%= inputLabel %></label>
 				</p>
 				<div class="user-feedback-modal__bottombar">
-			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
+			      <button class="user-feedback-button user-feedback-button-next user-feedback-button-primary"><%= button.primary %></button>
 			    </div>
 			</div>'
 		);
@@ -548,13 +548,13 @@ final class User_Feedback {
 			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
-					<button class="user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+					<button class="user-feedback-button user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
 				</div>
 				<p>
 					<textarea id="user-feedback-message" class="user-feedback-textarea" placeholder="<%= placeholder.message %>"></textarea>
 				</p>
 				<div class="user-feedback-modal__bottombar">
-			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
+			      <button class="user-feedback-button user-feedback-button-next user-feedback-button-primary"><%= button.primary %></button>
 			    </div>
 			</div>'
 		);
@@ -565,11 +565,11 @@ final class User_Feedback {
 			'<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
 				<div class="user-feedback-modal__topbar">
 					<h3 class="user-feedback-modal-title"><%= title %></h3>
-					<button class="user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+					<button class="user-feedback-button user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
 				</div>
 				<p><%= intro %></p>
 				<div class="user-feedback-modal__bottombar">
-			      <button class="user-feedback-button user-feedback-button-screen-capture"><%= button.primary %></button>
+			      <button class="user-feedback-button user-feedback-button-primary user-feedback-button-screen-capture"><%= button.primary %></button>
 			    </div>
 			</div>'
 		);
@@ -585,7 +585,7 @@ final class User_Feedback {
 			'wizard-step-5',
 			'<div class="user-feedback-modal user-feedback-modal-center" role="dialog">
 				<div class="user-feedback-modal__topbar">
-					<h3 class="user-feedback-modal-title"><%= title %></h3>
+					<h3 class="user-feedback-button user-feedback-modal-title"><%= title %></h3>
 				</div>
 				<div id="user-feedback-overview-description">
 					<div id="user-feedback-overview-user">
@@ -604,8 +604,8 @@ final class User_Feedback {
 					<img id="user-feedback-overview-screenshot-img" src="" alt="<%= screenshotAlt %>" />
 				</div>
 				<div class="user-feedback-modal__bottombar">
-			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
-			      <button class="user-feedback-button user-feedback-button-previous"><%= button.secondary %></button>
+			      <button class="user-feedback-button user-feedback-button-next user-feedback-button-primary"><%= button.primary %></button>
+			      <button class="user-feedback-button user-feedback-button-previous user-feedback-button-secondary"><%= button.secondary %></button>
 			    </div>
 			</div>'
 		);
@@ -620,8 +620,8 @@ final class User_Feedback {
 				<p><%= intro %></p>
 				<p><%= intro2 %></p>
 				<div class="user-feedback-modal__bottombar">
-			      <button class="user-feedback-button user-feedback-button-next"><%= button.primary %></button>
-			      <button class="user-feedback-button user-feedback-button-previous"><%= button.secondary %></button>
+			      <button class="user-feedback-button user-feedback-button-done user-feedback-button-primary"><%= button.primary %></button>
+			      <button class="user-feedback-button user-feedback-button-restart user-feedback-button-secondary"><%= button.secondary %></button>
 			    </div>
 			</div>'
 		);
