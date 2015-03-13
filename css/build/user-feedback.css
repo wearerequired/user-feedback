@@ -14,10 +14,11 @@
   display: block;
   font-size: 16px;
   line-height: 30px;
-  padding: 0 5px; }
+  padding: 0 5px;
+  border: 1px solid transparent; }
   .user-feedback-button:focus {
     background: inherit;
-    border: 1px solid;
+    border: 1px solid #333;
     color: inherit; }
 
 .user-feedback-button-gray {
@@ -32,24 +33,24 @@
     border: 1px solid #c6c6c6;
     background-image: linear-gradient(to bottom, #f5f5f5, #fff); }
 
-.user-feedback-modal__bottombar .user-feedback-button-next {
+.user-feedback-button-primary {
   text-align: center;
   border: 1px solid transparent;
   color: #fff;
   background: #00B9E6;
   padding: 0 15px;
   font-weight: normal; }
-  .user-feedback-modal__bottombar .user-feedback-button-next:focus, .user-feedback-modal__bottombar .user-feedback-button-next:hover {
+  .user-feedback-button-primary:focus, .user-feedback-button-primary:hover {
     color: #fff;
     background: #13C7F4; }
 
-.user-feedback-modal__bottombar .user-feedback-button-previous {
+.user-feedback-button-secondary {
   text-align: center;
   border: 1px solid transparent;
   color: #999;
   background: transparent;
   font-weight: normal; }
-  .user-feedback-modal__bottombar .user-feedback-button-previous:focus, .user-feedback-modal__bottombar .user-feedback-button-previous:hover {
+  .user-feedback-button-secondary:focus, .user-feedback-button-secondary:hover {
     color: #333;
     background: transparent; }
 
@@ -262,9 +263,12 @@
   color: #999;
   font-size: 16px;
   font-weight: normal; }
-  .user-feedback-button-close:hover {
+  .user-feedback-button-close:focus, .user-feedback-button-close:hover {
     background: transparent;
     color: #333; }
+  .user-feedback-button-close:focus {
+    border: 1px solid;
+    outline: 0; }
 
 .user-feedback-modal__bottombar {
   clear: both; }

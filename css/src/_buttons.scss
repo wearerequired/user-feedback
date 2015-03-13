@@ -10,10 +10,11 @@
 	font-size: 16px;
 	line-height: 30px;
 	padding: 0 5px;
+	border: 1px solid transparent;
 
 	&:focus {
 		background: inherit;
-		border: 1px solid;
+		border: 1px solid $color-black;
 		color: inherit;
 	}
 }
@@ -34,7 +35,7 @@
 	}
 }
 
-%user-feedback-button-primary {
+.user-feedback-button-primary {
 	text-align: center;
 	border: 1px solid transparent;
 	color: $color-white;
@@ -49,7 +50,7 @@
 	}
 }
 
-%user-feedback-button-secondary {
+.user-feedback-button-secondary {
 	text-align: center;
 	border: 1px solid transparent;
 	color: $color-gray;

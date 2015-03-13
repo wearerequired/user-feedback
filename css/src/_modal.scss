@@ -83,9 +83,15 @@
 	font-size: 16px;
 	font-weight: normal;
 
+	&:focus,
 	&:hover {
 		background: transparent;
 		color: $color-black;
+	}
+
+	&:focus {
+		border:1px solid;
+		outline: 0;
 	}
 }
 
@@ -95,14 +101,6 @@
 	.user-feedback-button {
 		float: left;
 		margin-right: 15px;
-	}
-
-	.user-feedback-button-next {
-		@extend %user-feedback-button-primary;
-	}
-
-	.user-feedback-button-previous {
-		@extend %user-feedback-button-secondary;
 	}
 }
 
