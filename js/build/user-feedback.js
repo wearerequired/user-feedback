@@ -3429,19 +3429,17 @@ var UserFeedback = (function (Backbone, $) {
     },
 
     redraw: function (border) {
-      var that = this;
-
       border = typeof border !== 'undefined' ? border : true;
-      this.ctx.clearRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
+      this.ctx.clearRect(0, 0, $(this.canvas).width(), $(this.canvas).height());
       this.ctx.fillStyle = 'rgba(102,102,102,0.5)';
-      this.ctx.fillRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
+      this.ctx.fillRect(0, 0, $(this.canvas).width(), $(this.canvas).height());
 
-      $('.user-feedback-annotation').each(function () {
+      _.each($('.user-feedback-annotation'), function (el) {
         if (border) {
-          that.drawlines(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
+          this.drawlines(parseInt($(el).css('left'), 10), parseInt($(el).css('top'), 10), $(el).width(), $(el).height());
         }
-        that.ctx.clearRect(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
-      });
+        this.ctx.clearRect(parseInt($(el).css('left'), 10), parseInt($(el).css('top'), 10), $(el).width(), $(el).height());
+      }, this);
     }
   });
 
