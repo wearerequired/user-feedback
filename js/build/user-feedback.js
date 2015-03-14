@@ -3636,13 +3636,15 @@ var UserFeedback = (function (Backbone, $) {
 
     goToNextStep: function () {
       if (!this.isLastStep()) {
-        this.model.set('currentWizardStep', this.model.get('currentWizardStep') + 1);
+        var step = this.model.get('currentWizardStep') + 1;
         this.currentView.nextStep();
 
         // If the cookie is set, let's go straight to the next step
-        if (this.model.get('currentWizardStep') == 2 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
-          this.model.set('currentWizardStep', 3);
+        if (step == 1 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
+          step++;
         }
+
+        this.model.set('currentWizardStep', step);
 
         // todo: make more flexible
         if (this.model.get('currentWizardStep') == 4) {
