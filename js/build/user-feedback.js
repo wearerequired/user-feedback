@@ -3094,7 +3094,7 @@ var UserFeedback = (function (Backbone, $) {
    *
    * @see http://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser
    */
-  navigator.sayswho = (function () {
+  navigator.saysWho = (function () {
     var ua = navigator.userAgent, tem,
         M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
     if (/trident/i.test(M[1])) {
@@ -3153,11 +3153,12 @@ var UserFeedback = (function (Backbone, $) {
     ),
 
     initialize: function () {
-      this.model.set('showWizard', true);
+      this.model.on("change:currentWizardStep", this.changeStep, this);
     },
 
     render: function () {
       this.$el.html(this.template);
+      this.changeStep();
       return this;
     },
 
@@ -3167,6 +3168,16 @@ var UserFeedback = (function (Backbone, $) {
 
     toggleWizard: function () {
       this.trigger('toggleWizard');
+    },
+
+    changeStep: function () {
+      _.each(this.$el.find('.user-feedback-bar-step'), function (el) {
+        if ($(el).attr('data-step') <= this.model.get('currentWizardStep')) {
+          $(el).removeClass('hidden');
+        } else {
+          $(el).addClass('hidden');
+        }
+      }, this);
     }
   });
 
@@ -3207,15 +3218,11 @@ var UserFeedback = (function (Backbone, $) {
     ),
 
     render: function () {
-
-      // If the cookie is set, let's go straight to the next step
-      if (document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
-        this.model.set('nextStep', this.model.get('nextStep') + 1);
-        return this;
-      }
-
       this.$el.html(this.template);
       this.delegateEvents();
+
+      var name = ( this.model.get('userName') != '' ) ? this.model.get('userName') : user_feedback.user.name;
+      this.$el.find('p:first-of-type').append(name);
 
       return this;
     },
@@ -3258,6 +3265,7 @@ var UserFeedback = (function (Backbone, $) {
 
     render: function () {
       this.$el.html(this.template);
+      this.delegateEvents();
 
       this.canvas = this.$el.find('#user-feedback-canvas')[0];
       this.rect = {};
@@ -3268,8 +3276,6 @@ var UserFeedback = (function (Backbone, $) {
       $(this.canvas).width($(document).width()).height($(document).height());
       this.ctx = this.canvas.getContext('2d');
       this.redraw();
-
-      var that = this;
 
       return this;
     },
@@ -3501,7 +3507,6 @@ var UserFeedback = (function (Backbone, $) {
       this.$el.html(this.template);
       this.delegateEvents();
 
-      this.trigger('toggleBottomBar');
       this.fillInTheData();
 
       return this;
@@ -3524,7 +3529,7 @@ var UserFeedback = (function (Backbone, $) {
     },
 
     nextStep: function () {
-      this.model.set('sendData', true);
+      this.trigger('sendData');
     }
   });
 
@@ -3568,20 +3573,31 @@ var UserFeedback = (function (Backbone, $) {
 
       _.each(this.steps, function (step) {
         this.listenTo(step.view, 'nextStep', this.goToNextStep);
+        this.listenTo(step.view, 'sendData', function () {
+          this.trigger('sendData');
+        });
       }, this);
 
       // A logged in user doesn't need to provide his name
       if (user_feedback.user.logged_in) {
-        this.initialStep = 1;
+        this.initialStep++;
         this.model.set('userName', user_feedback.user.name);
         this.model.set('userEmail', user_feedback.user.email);
       }
 
-      this.currentStep = this.initialStep;
+      // If the cookie is set, let's go straight to the next step
+      if (this.initialStep == 1 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
+        this.initialStep++;
+      }
+
+      this.model.set('currentWizardStep', this.initialStep);
     },
 
     render: function () {
-      this.renderCurrentStep();
+      var currentStep = this.steps[this.model.get('currentWizardStep')];
+      this.currentView = currentStep.view;
+
+      this.$el.html(this.currentView.render().el);
 
       return this;
     },
@@ -3606,49 +3622,59 @@ var UserFeedback = (function (Backbone, $) {
 
     closeWizard: function (e) {
       e.preventDefault();
-      this.currentStep = this.initialStep;
+      this.model.set('currentWizardStep', this.initialStep);
       this.trigger('reInitialize');
     },
 
     restartWizard: function (e) {
       e.preventDefault();
-      this.currentStep = this.initialStep;
+      this.model.set('currentWizardStep', this.initialStep + 1);
+      this.trigger('toggleBottomBar');
+      this.trigger('changeStep', this.model.get('currentWizardStep'));
       this.render();
-    },
-
-    renderCurrentStep: function () {
-      var currentStep = this.steps[this.currentStep];
-      this.currentView = currentStep.view;
-
-      this.$el.html(this.currentView.render().el);
     },
 
     goToNextStep: function () {
       if (!this.isLastStep()) {
-        this.currentStep += 1;
-        this.currentView.nextStep(); // Trigger next step function in subview
-        this.renderCurrentStep();
+        this.model.set('currentWizardStep', this.model.get('currentWizardStep') + 1);
+        this.currentView.nextStep();
+
+        // If the cookie is set, let's go straight to the next step
+        if (this.model.get('currentWizardStep') == 2 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
+          this.model.set('currentWizardStep', 3);
+        }
+
+        // todo: make more flexible
+        if (this.model.get('currentWizardStep') == 4) {
+          this.trigger('toggleBottomBar');
+        }
+
+        this.render();
       }
     },
 
     goToPreviousStep: function () {
       if (!this.isFirstStep()) {
-        this.currentStep -= 1;
-        this.renderCurrentStep();
+        if (this.model.get('currentWizardStep') == 4) {
+          this.trigger('toggleBottomBar');
+        }
+
+        this.model.set('currentWizardStep', this.model.get('currentWizardStep') - 1)
+        this.render();
       }
     },
 
     isFirstStep: function () {
-      return (this.currentStep == 0);
+      return (this.model.get('currentWizardStep') == 0);
     },
 
     isLastStep: function () {
-      return (this.currentStep == this.steps.length - 1);
+      return (this.model.get('currentWizardStep') == this.steps.length - 1);
     }
 
   });
 
-// Main application view
+  // Main application view
   var AppView = Backbone.View.extend({
     el: '#user-feedback-container',
 
@@ -3659,15 +3685,14 @@ var UserFeedback = (function (Backbone, $) {
 
       this.showBottomBar = true;
       this.bottomBar = new UserFeedbackBar({model: userFeedbackModel});
-      // todo: individual step should be able to toggle this.
       this.listenTo(this.bottomBar, 'toggleBottomBar', this.toggleBottomBar, this);
       this.listenTo(this.bottomBar, 'toggleWizard', this.toggleWizard, this);
 
       this.showWizard = true;
       this.wizard = new UserFeedbackWizard({model: userFeedbackModel});
+      this.listenTo(this.wizard, 'toggleBottomBar', this.toggleBottomBar, this);
       this.listenTo(this.wizard, 'reInitialize', this.reInitialize, this);
-
-      this.model.on('change:sendData', this.send, this);
+      this.listenTo(this.wizard, 'sendData', this.send, this);
     },
 
     toggleInitButton: function () {

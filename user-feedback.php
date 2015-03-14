@@ -397,7 +397,7 @@ final class User_Feedback {
 				),
 				'wizardStep2' => array(
 					'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
-					'salutation' => __( 'Hello stranger', 'user-feedback' ),
+					'salutation' => __( 'Hello ', 'user-feedback' ),
 					'intro'      => __( 'Please help us understand your feedback better!', 'user-feedback' ),
 					'intro2'     => __( 'You can not only leave us a message but also highlight areas relevant to your feedback.', 'user-feedback' ),
 					'inputLabel' => __( "Don't show me this again", 'user-feedback' ),
@@ -496,9 +496,9 @@ final class User_Feedback {
 			'bottombar',
 			'<div id="user-feedback-bottombar">
 				<ul id="user-feedback-bar-steps">
-					<li class="user-feedback-bar-step"><%= step.one %></li>
-					<li class="user-feedback-bar-step hidden"><%= step.two %></li>
-					<li class="user-feedback-bar-step hidden"><%= step.three %></li>
+					<li class="user-feedback-bar-step" data-step="1"><%= step.one %></li>
+					<li class="user-feedback-bar-step hidden" data-step="2"><%= step.two %></li>
+					<li class="user-feedback-bar-step hidden" data-step="3"><%= step.three %></li>
 				</ul>
 				<button class="user-feedback-button user-feedback-button-help" title="<%= button.helpAria %>" aria-label="<%= button.helpAria %>"><%= button.help %></button>
 			</div>'
