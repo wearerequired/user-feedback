@@ -4,13 +4,14 @@
 
 .user-feedback-modal {
 	position: relative;
-	z-index: 10000;
+	z-index: 100200;
 	padding: 15px;
 	width: 700px;
 	border: 1px solid $color-gray;
 	border-radius: 3px;
 	background: $color-white;
 	color: $color-black;
+	user-select: none;
 }
 
 .user-feedback-modal-center {

@@ -6,19 +6,19 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 9000; // just behind our UI
+	z-index: 100000; // just behind our UI
 }
 
 // A helper is a rectangle drawn by the user
 .user-feedback-annotation {
 	position: absolute;
-	z-index: 9500; // between canvas and UI
+	z-index: 100100; // between canvas and UI
 	background: rgba(0, 0, 0, 0);
 	cursor: default;
 
 	&:hover {
 		background: rgba(0, 68, 255, 0.1);
-		z-index: 9700;
+		z-index: 100150;
 
 		.user-feedback-annotation-close {
 			display: block;

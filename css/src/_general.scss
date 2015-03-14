@@ -27,7 +27,7 @@
 	bottom: 0;
 	left: 0;
 	background: rgba($color-black, 0.6);
-	z-index: 9000;
+	z-index: 100000;
 }
 
 /**
@@ -41,6 +41,7 @@
 	resize: none;
 	background: $color-light-gray;
 	border: 1px solid $color-light-gray;
+	user-select: text;
 
 	&:focus {
 		border: 1px solid #64b7cc;
@@ -54,6 +55,7 @@
 	resize: none;
 	background: $color-light-gray;
 	border: 1px solid $color-light-gray;
+	user-select: text;
 
 	&:focus {
 		border: 1px solid #64b7cc;
