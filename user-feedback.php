@@ -246,7 +246,7 @@ final class User_Feedback {
 			__( 'Visited URL:', 'user-feedback' ),
 			$feedback['url'],
 			__( 'Additional Notes:', 'user-feedback' ),
-			$feedback['note'],
+			$feedback['message'],
 			__( 'A screenshot of the page visited by the user is attached.', 'user-feedback' ),
 			__( 'You can also find the screenshot here:', 'user-feedback' ),
 			$img['url']
@@ -427,6 +427,10 @@ final class User_Feedback {
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
+				'wizardStep4Annotation' => array(
+					'close'     => _x( 'X', 'close button', 'user-feedback' ),
+					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
+				),
 				'wizardStep5' => array(
 					'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
 					'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
@@ -577,7 +581,15 @@ final class User_Feedback {
 		// Wizard Step 4 (Canvas Part)
 		echo self::get_template(
 			'wizard-step-4-canvas',
-			'<canvas id="user-feedback-canvas"></canvas><div id="user-feedback-helpers"></div>'
+			'<canvas id="user-feedback-canvas"></canvas><div id="user-feedback-annotations"></div>'
+		);
+
+		// Wizard Step 4 (Canvas Annotation)
+		echo self::get_template(
+			'wizard-step-4-annotation',
+			'<div class="user-feedback-annotation" style="top:<%= top %>px;left:<%= left %>px;width:<%= width %>px;height:<%= height %>px;" data-highlight-id="<%= id %>">
+				<button class="user-feedback-annotation-close" title="<%= closeAria %>" aria-label="<%= closeAria %>"><%= close %></button>
+			</div>'
 		);
 
 		// Wizard Step 5

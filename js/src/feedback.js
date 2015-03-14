@@ -12,10 +12,11 @@
 
 // Everything is wrapped in here. We don't want to pollute the global namespace, right?
 var UserFeedback = (function (Backbone, $) {
-
-  // A utility function we need later on
   /**
-   * Detect browser name + version. Example: Chrome 40, Internet Explorer 12
+   * Detect browser name + version. Example: Chrome 40, Internet Explorer 12.
+   *
+   * A utility function we need later on.
+   *
    * @see http://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser
    */
   navigator.sayswho = (function () {
@@ -107,6 +108,7 @@ var UserFeedback = (function (Backbone, $) {
     }
   });
 
+  // Step 1: Tell us your name
   var WizardStep1 = WizardStep.extend({
     className: 'user-feedback-wizard-step-1',
     template : _.template(
@@ -121,6 +123,7 @@ var UserFeedback = (function (Backbone, $) {
 
   });
 
+  // Step 2: Submit Feedback (with "do not show again" checkbox)
   var WizardStep2 = WizardStep.extend({
     className: 'user-feedback-wizard-step-2',
     template : _.template(
@@ -147,6 +150,7 @@ var UserFeedback = (function (Backbone, $) {
     }
   });
 
+  // Step 3: Write your message
   var WizardStep3 = WizardStep.extend({
     className: 'user-feedback-wizard-step-3',
     template : _.template(
@@ -159,177 +163,169 @@ var UserFeedback = (function (Backbone, $) {
     }
   });
 
+  // View for the canvas
   var CanvasView = Backbone.View.extend({
     template: _.template(document.getElementById('user-feedback-template-wizard-step-4-canvas').innerHTML),
 
     initialize: function () {
       this.highlighted = [];
-      this.tmpHighlighted = [];
-      this.hidx = 0;
+      this.annotationCount = 0;
+    },
+
+    events: {
+      'mouseup #user-feedback-canvas'        : 'mouseUp',
+      'mousedown #user-feedback-canvas'      : 'mouseDown',
+      'mousemove #user-feedback-canvas'      : 'mouseMoveClick',
+      'click #user-feedback-canvas'          : 'mouseMoveClick',
+      'click .user-feedback-annotation-close': 'removeAnnotation',
+      'mouseleave #user-feedback-canvas'     : 'redraw'
     },
 
     render: function () {
       this.$el.html(this.template);
 
-      // @see http://stackoverflow.com/questions/18462303/incorrect-mouse-coordinates-when-drawing-on-canvas
-      this.$el.find('#user-feedback-canvas')[0].width = $(document).width();
-      this.$el.find('#user-feedback-canvas')[0].height = $(document).height();
-      this.$el.find('#user-feedback-canvas').width($(document).width()).height($(document).height());
-      this.ctx = this.$el.find('#user-feedback-canvas')[0].getContext('2d');
-      this.ctx.fillStyle = 'rgba(102,102,102,0.5)';
-      this.ctx.fillRect(0, 0, $('window').width(), $('window').height());
-
+      this.canvas = this.$el.find('#user-feedback-canvas')[0];
       this.rect = {};
+
+      // @see http://stackoverflow.com/questions/18462303/incorrect-mouse-coordinates-when-drawing-on-canvas
+      this.canvas.width = $(document).width();
+      this.canvas.height = $(document).height();
+      $(this.canvas).width($(document).width()).height($(document).height());
+      this.ctx = this.canvas.getContext('2d');
+      this.redraw();
 
       var that = this;
 
-      // todo: move to initialize()
+      return this;
+    },
 
-      $(document).on('mousedown', '#user-feedback-canvas', function (e) {
-        that.rect.startX = e.pageX - $(this).offset().left;
-        that.rect.startY = e.pageY - $(this).offset().top;
-        that.rect.w = 0;
-        that.rect.h = 0;
-        that.drag = true;
-      });
+    mouseUp: function () {
+      this.drag = false;
 
-      $(document).on('mouseup', function () {
-        that.drag = false;
+      var dtop = this.rect.startY,
+          dleft = this.rect.startX,
+          dwidth = this.rect.w,
+          dheight = this.rect.h;
 
-        var dtop = that.rect.startY,
-            dleft = that.rect.startX,
-            dwidth = that.rect.w,
-            dheight = that.rect.h;
+      if (dwidth == 0 || dheight == 0) return;
 
-        if (dwidth == 0 || dheight == 0) return;
+      if (dwidth < 0) {
+        dleft += dwidth;
+        dwidth *= -1;
+      }
+      if (dheight < 0) {
+        dtop += dheight;
+        dheight *= -1;
+      }
 
-        if (dwidth < 0) {
-          dleft += dwidth;
-          dwidth *= -1;
+      if (dtop + dheight > $(document).height())
+        dheight = $(document).height() - dtop;
+      if (dleft + dwidth > $(document).width())
+        dwidth = $(document).width() - dleft;
+
+
+      $('#user-feedback-annotations').append(_.template(
+          document.getElementById('user-feedback-template-wizard-step-4-annotation').innerHTML,
+          {
+            id       : this.annotationCount,
+            top      : dtop,
+            left     : dleft,
+            width    : dwidth,
+            height   : dheight,
+            close    : user_feedback.templates.wizardStep4Annotation.close,
+            closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
+          }
+      ));
+      this.annotationCount++;
+
+      this.redraw();
+      this.rect.w = 0;
+    },
+
+    mouseDown: function (e) {
+      this.rect.startX = e.pageX - $(e.target).offset().left;
+      this.rect.startY = e.pageY - $(e.target).offset().top;
+      this.rect.w = 0;
+      this.rect.h = 0;
+      this.drag = true;
+    },
+
+    mouseMoveClick: function (e) {
+      this.redraw();
+      var tmpHighlighted = [];
+
+      $(this.canvas).css('cursor', 'crosshair');
+
+      _.each($('* :not(body,script,iframe,div,section,.user-feedback-button,.user-feedback-modal *)'), function (el) {
+        if (e.pageX > $(el).offset().left && e.pageX < $(el).offset().left + $(el).width() && e.pageY > $(el).offset().top + parseInt($(el).css('padding-top'), 10) && e.pageY < $(el).offset().top + $(el).height() + parseInt($(el).css('padding-top'), 10)) {
+          tmpHighlighted.push($(el));
         }
-        if (dheight < 0) {
-          dtop += dheight;
-          dheight *= -1;
+      }, this);
+
+      var $toHighlight = tmpHighlighted[tmpHighlighted.length - 2]; // todo: or -1 ?
+
+      if ($toHighlight && !this.drag) {
+        $(this.canvas).css('cursor', 'pointer');
+
+        var _x = $toHighlight.offset().left - 2,
+            _y = $toHighlight.offset().top - 2,
+            _w = $toHighlight.width() + parseInt($toHighlight.css('padding-left'), 10) + parseInt($toHighlight.css('padding-right'), 10) + 6,
+            _h = $toHighlight.height() + parseInt($toHighlight.css('padding-top'), 10) + parseInt($toHighlight.css('padding-bottom'), 10) + 6;
+
+        this.drawlines(_x, _y, _w, _h);
+        this.ctx.clearRect(_x, _y, _w, _h);
+
+        _.each($('.user-feedback-annotation'), function (el) {
+          this.ctx.clearRect(parseInt($(el).css('left'), 10), parseInt($(el).css('top'), 10), $(el).width(), $(el).height());
+        }, this);
+
+        if (e.type == 'click' && e.pageX == this.rect.startX && e.pageY == this.rect.startY) {
+          $('#user-feedback-annotations').append(_.template(
+              document.getElementById('user-feedback-template-wizard-step-4-annotation').innerHTML,
+              {
+                id       : this.annotationCount,
+                top      : _y,
+                left     : _x,
+                width    : _w,
+                height   : _h,
+                close    : user_feedback.templates.wizardStep4Annotation.close,
+                closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
+              }
+          ));
+          this.highlighted.push(this.annotationCount);
+          this.annotationCount++;
+          this.redraw();
         }
+      }
 
-        if (dtop + dheight > $(document).height())
-          dheight = $(document).height() - dtop;
-        if (dleft + dwidth > $(document).width())
-          dwidth = $(document).width() - dleft;
-
-        $('#user-feedback-helpers').append('<div class="user-feedback-helper" data-time="' + Date.now() + '" style="position:absolute;top:' + dtop + 'px;left:' + dleft + 'px;width:' + dwidth + 'px;height:' + dheight + 'px;z-index:30000;"></div>');
-
-        that.redraw();
-        that.rect.w = 0;
-
-      });
-
-      $(document).on('mousemove', function (e) {
-        if (!that.drag) {
-          return;
-        }
-
+      if (this.drag && e.type == 'mousemove') {
         $('#user-feedback-highlighter').css('cursor', 'default');
 
-        that.rect.w = (e.pageX - $('#user-feedback-canvas').offset().left) - that.rect.startX;
-        that.rect.h = (e.pageY - $('#user-feedback-canvas').offset().top) - that.rect.startY;
+        this.rect.w = (e.pageX - $('#user-feedback-canvas').offset().left) - this.rect.startX;
+        this.rect.h = (e.pageY - $('#user-feedback-canvas').offset().top) - this.rect.startY;
 
-        that.ctx.clearRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
-        that.ctx.fillStyle = 'rgba(102,102,102,0.5)';
-        that.ctx.fillRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
-        $('.user-feedback-helper').each(function () {
-          that.drawlines(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
-        });
-        that.drawlines(that.rect.startX, that.rect.startY, that.rect.w, that.rect.h);
-        that.ctx.clearRect(that.rect.startX, that.rect.startY, that.rect.w, that.rect.h);
-        $('.user-feedback-helper').each(function () {
-          that.ctx.clearRect(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
-        });
-      });
+        this.ctx.clearRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
+        this.ctx.fillStyle = 'rgba(102,102,102,0.5)';
+        this.ctx.fillRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
 
-      var highlighted = [],
-          tmpHighlighted = [],
-          hidx = 0;
+        _.each($('.user-feedback-annotation'), function (el) {
+          el = $(el);
+          this.drawlines(parseInt(el.css('left'), 10), parseInt(el.css('top'), 10), el.width(), el.height());
+        }, this);
 
-      $(document).on('mousemove click', '#user-feedback-canvas', function (e) {
-        that.redraw();
-        tmpHighlighted = [];
+        this.drawlines(this.rect.startX, this.rect.startY, this.rect.w, this.rect.h);
+        this.ctx.clearRect(this.rect.startX, this.rect.startY, this.rect.w, this.rect.h);
 
-        $('#user-feedback-canvas').css('cursor', 'crosshair');
+        _.each($('.user-feedback-annotation'), function (el) {
+          el = $(el);
+          this.ctx.clearRect(parseInt(el.css('left'), 10), parseInt(el.css('top'), 10), el.width(), el.height());
+        }, this);
+      }
+    },
 
-        $('* :not(body,script,iframe,div,section,.user-feedback-button,#user-feedback-module *)').each(function () {
-          if ($(this).attr('data-highlighted') === 'true')
-            return;
-
-          if (e.pageX > $(this).offset().left && e.pageX < $(this).offset().left + $(this).width() && e.pageY > $(this).offset().top + parseInt($(this).css('padding-top'), 10) && e.pageY < $(this).offset().top + $(this).height() + parseInt($(this).css('padding-top'), 10)) {
-            tmpHighlighted.push($(this));
-          }
-        });
-
-        var $toHighlight = tmpHighlighted[tmpHighlighted.length - 2]; // todo: or -1 ?
-
-        if ($toHighlight && !that.drag) {
-          $('#user-feedback-canvas').css('cursor', 'pointer');
-
-          var _x = $toHighlight.offset().left - 2,
-              _y = $toHighlight.offset().top - 2,
-              _w = $toHighlight.width() + parseInt($toHighlight.css('padding-left'), 10) + parseInt($toHighlight.css('padding-right'), 10) + 6,
-              _h = $toHighlight.height() + parseInt($toHighlight.css('padding-top'), 10) + parseInt($toHighlight.css('padding-bottom'), 10) + 6;
-
-          that.drawlines(_x, _y, _w, _h);
-          that.ctx.clearRect(_x, _y, _w, _h);
-
-          $('.user-feedback-helper').each(function () {
-            that.ctx.clearRect(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
-          });
-
-          if (e.type == 'click' && e.pageX == that.rect.startX && e.pageY == that.rect.startY) {
-            $('#user-feedback-helpers').append('<div class="user-feedback-helper" data-highlight-id="' + hidx + '" data-time="' + Date.now() + '" style="top:' + _y + 'px;left:' + _x + 'px;width:' + _w + 'px;height:' + _h + 'px"></div>');
-            highlighted.push(hidx);
-            ++hidx;
-            that.redraw();
-          }
-        }
-      });
-
-      $(document).on('mouseleave', 'body,#user-feedback-canvas', function () {
-        that.redraw();
-      });
-
-      $(document).on('mouseenter', '.user-feedback-helper', function () {
-        that.redraw();
-      });
-
-      $(document).on('mouseenter mouseleave', '.user-feedback-helper', function (e) {
-        if (that.drag)
-          return;
-
-        that.rect.w = 0;
-        that.rect.h = 0;
-
-        if (e.type === 'mouseenter') {
-          $(this).css('z-index', '30001');
-          $(this).append('<div class="user-feedback-helper-inner" style="width:' + ($(this).width() - 2) + 'px;height:' + ($(this).height() - 2) + 'px;position:absolute;margin:1px;"></div>');
-          $(this).append('<div id="user-feedback-close"></div>');
-          $(this).find('#user-feedback-close').css({
-            'top' : -1 * ($(this).find('#user-feedback-close').height() / 2) + 'px',
-            'left': $(this).width() - ($(this).find('#user-feedback-close').width() / 2) + 'px'
-          });
-        } else {
-          $(this).css('z-index', '30000');
-          $(this).children().remove();
-          if ($(this).attr('data-type') == 'blackout') {
-            that.redraw();
-          }
-        }
-      });
-
-      $(document).on('click', '#user-feedback-close', function () {
-        $(this).parent().remove();
-        that.redraw();
-      });
-
-      return this;
+    removeAnnotation: function (e) {
+      $(e.currentTarget).parent().remove();
+      this.redraw();
     },
 
     drawlines: function (x, y, w, h) {
@@ -359,15 +355,16 @@ var UserFeedback = (function (Backbone, $) {
       this.ctx.fillStyle = 'rgba(102,102,102,0.5)';
       this.ctx.fillRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
 
-      $('.user-feedback-helper').each(function () {
+      $('.user-feedback-annotation').each(function () {
         if (border) {
           that.drawlines(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
         }
         that.ctx.clearRect(parseInt($(this).css('left'), 10), parseInt($(this).css('top'), 10), $(this).width(), $(this).height());
       });
-    },
+    }
   });
 
+  // Step 4: Highlight areas
   var WizardStep4 = WizardStep.extend({
     className: 'user-feedback-wizard-step-4',
     template : _.template(
@@ -414,9 +411,10 @@ var UserFeedback = (function (Backbone, $) {
           that.trigger('nextStep');
         }
       });
-    },
+    }
   })
 
+  // Step 5: Overview
   var WizardStep5 = WizardStep.extend({
     className: 'user-feedback-wizard-step-5',
     template : _.template(
@@ -641,12 +639,10 @@ var UserFeedback = (function (Backbone, $) {
     // Here we send all the data to WordPress
     send: function () {
       if (this.model.get('doNotShowInfoAgain') === true) {
-        // todo: uncomment after development
         // Set our "do not show again" cookie
-        /*var date = new Date();
-         date.setDate(date.getDate() + 30);
-         document.cookie = 'user_feedback_do_not_show_again=1; path=/;expires=' + date.toUTCString();
-         */
+        var date = new Date();
+        date.setDate(date.getDate() + 30);
+        document.cookie = 'user_feedback_do_not_show_again=1; path=/;expires=' + date.toUTCString();
       }
 
       // Set up initial post data to be sent
@@ -685,16 +681,14 @@ var UserFeedback = (function (Backbone, $) {
 
   var appView = new AppView({model: userFeedbackModel});
 
-// This gets exposed to the outside
+  // This gets exposed to the outside
   return {
     app : appView,
     init: function () {
       appView.render();
     }
   };
-
-})
-(Backbone, jQuery);
+})(Backbone, jQuery);
 
 jQuery(function ($, undefined) {
   // Only run if Canvas is supported

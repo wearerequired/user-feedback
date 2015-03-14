@@ -7,7 +7,7 @@
 /**
  * Buttons
  */
-.user-feedback-button {
+.user-feedback-button, .user-feedback-annotation-close {
   outline: 0;
   cursor: pointer;
   background-clip: padding-box;
@@ -16,7 +16,7 @@
   line-height: 30px;
   padding: 0 5px;
   border: 1px solid transparent; }
-  .user-feedback-button:focus {
+  .user-feedback-button:focus, .user-feedback-annotation-close:focus {
     background: inherit;
     border: 1px solid #333;
     color: inherit; }
@@ -252,7 +252,7 @@
   font-weight: lighter;
   text-transform: uppercase; }
 
-.user-feedback-button-close {
+.user-feedback-button-close, .user-feedback-annotation-close {
   float: right;
   width: 30px;
   height: 30px;
@@ -263,16 +263,16 @@
   color: #999;
   font-size: 16px;
   font-weight: normal; }
-  .user-feedback-button-close:focus, .user-feedback-button-close:hover {
+  .user-feedback-button-close:focus, .user-feedback-annotation-close:focus, .user-feedback-button-close:hover, .user-feedback-annotation-close:hover {
     background: transparent;
     color: #333; }
-  .user-feedback-button-close:focus {
+  .user-feedback-button-close:focus, .user-feedback-annotation-close:focus {
     border: 1px solid;
     outline: 0; }
 
 .user-feedback-modal__bottombar {
   clear: both; }
-  .user-feedback-modal__bottombar .user-feedback-button {
+  .user-feedback-modal__bottombar .user-feedback-button, .user-feedback-modal__bottombar .user-feedback-annotation-close {
     float: left;
     margin-right: 15px; }
 
@@ -344,14 +344,28 @@
   left: 0;
   z-index: 9000; }
 
-.user-feedback-helper {
+.user-feedback-annotation {
   position: absolute;
-  z-index: 95000;
+  z-index: 9500;
   background: transparent;
   cursor: default; }
+  .user-feedback-annotation:hover {
+    background: rgba(0, 68, 255, 0.1);
+    z-index: 9700; }
+    .user-feedback-annotation:hover .user-feedback-annotation-close {
+      display: block; }
 
-.user-feedback-helper[data-type="highlight"] > .user-feedback-helper-inner {
-  background: rgba(0, 68, 255, 0.1); }
+.user-feedback-annotation-close {
+  display: none;
+  top: 0;
+  right: 0;
+  border-radius: 0;
+  background: rgba(153, 153, 153, 0.4);
+  color: #fff; }
+  .user-feedback-annotation-close:focus, .user-feedback-annotation-close:hover {
+    display: block;
+    background: #13C7F4;
+    color: #fff; }
 
 /**
  * Intro Template
