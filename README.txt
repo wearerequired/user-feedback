@@ -8,15 +8,17 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Allows users to submit feedback and bug reports anywhere on the site using an interactive feedback button.
+Allow users to submit feedback and bug reports anywhere on the site using an interactive feedback button.
 
 == Description ==
 
-Currently, logged-in users can send feedback using a dedicated feedback button on the front-end. They can highlight or black out parts of the page and write some additional notes.
+With this plugin, users can send feedback using a dedicated feedback button on the front-end. They can highlight parts of the page and write an accompanying message.
 
-This information (screenshot, notes, user agent, URL) is  sent via email to the blog administrator. The screenshot is also uploaded to WordPress for later use.
+Together with some helpful debug information like browser version, language and visited URL, the annotated screenshot is stored directly in WordPress. Each feedback is also sent to the blog administrator via email.
 
-Note: The plugin is powered by ivoviz' [feedback tool](https://github.com/ivoviz/feedback), which is available under the MIT license.
+The user interface is built in a way to _guide_ the user through submitting his feedback easily and without distraction. Thanks to highly optimized JavaScript the plugin is very fast and convenient to use.
+
+Check out this quick [demo video](https://cloudup.com/cyD3qAV9GeG) of the plugin in action.
 
 == Installation ==
 
@@ -27,9 +29,9 @@ Note: The plugin is powered by ivoviz' [feedback tool](https://github.com/ivoviz
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= Which browsers are supported? =
 
-An answer to that question.
+Basically any modern browser is supported that supports `<canvas>` elements, including Internet Explorer and up. Have a look at [caniuse.com](http://caniuse.com/#feat=canvas) for a nice overview.
 
 == Screenshots ==
 
