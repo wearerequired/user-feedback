@@ -1,0 +1,20 @@
+<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">
+	<div class="user-feedback-modal__topbar">
+		<h3 class="user-feedback-modal-title"><%= title %></h3>
+		<button class="user-feedback-button user-feedback-button-close" title="<%= button.closeAria %>" aria-label="<%= button.closeAria %>"><%= button.close %></button>
+	</div>
+	<p><%= salutation %></p>
+
+	<p><%= intro %></p>
+
+	<p><%= intro2 %></p>
+
+	<p>
+		<input type="checkbox" value="1" id="user-feedback-do-not-show-again" />
+		<label for="user-feedback-do-not-show-again"><%= inputLabel %></label>
+	</p>
+
+	<div class="user-feedback-modal__bottombar">
+		<button class="user-feedback-button user-feedback-button-next user-feedback-button-primary"><%= button.primary %></button>
+	</div>
+</div>

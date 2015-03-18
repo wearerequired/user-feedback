@@ -5,7 +5,7 @@ module.exports = {
     },
     options: {
       transform: ['node-underscorify'],
-      debug    : true,
+      //debug    : true,
       external : ['jquery', 'underscore', 'backbone']
     }
   }
