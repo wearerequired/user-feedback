@@ -5,6 +5,7 @@ i18n:
   - 'addtextdomain'
   - 'makepot'
 js:
+  - 'browserify'
   - 'concat'
   - 'uglify'
 css:

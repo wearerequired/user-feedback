@@ -8,17 +8,22 @@
     "url": "git@github.com:wearerequired/user-feedback.git"
   },
   "devDependencies": {
+    "browserify-shim": "*",
+    "bundle-collapser": "*",
     "grunt": "*",
+    "grunt-autoprefixer": "*",
+    "grunt-browserify": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-sass": "*",
+    "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
     "grunt-wp-i18n": "*",
     "grunt-wp-readme-to-markdown": "*",
     "load-grunt-config": "*",
-    "time-grunt": "*",
-    "grunt-contrib-concat": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-cssmin": "*",
-    "grunt-contrib-sass": "*",
-    "grunt-autoprefixer": "*"
+    "node-underscorify": "*",
+    "remapify": "1.4.3",
+    "time-grunt": "*"
   },
   "dependencies": {
     "time-grunt": "*"

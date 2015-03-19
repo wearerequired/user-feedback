@@ -14,6 +14,6 @@ module.exports = {
 
   jsminify: {
     files: 'js/src/**/*.js',
-    tasks: ['concat', 'uglify']
+    tasks: ['browserify', 'concat', 'uglify']
   }
 };
