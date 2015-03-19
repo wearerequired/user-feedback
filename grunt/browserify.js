@@ -1,3 +1,4 @@
+var collapse = require('bundle-collapser/plugin');
 module.exports = {
   dist: {
     files  : {
@@ -5,7 +6,8 @@ module.exports = {
     },
     options: {
       transform: ['node-underscorify'],
-      external : ['jquery', 'underscore', 'backbone']
+      external : ['jquery', 'underscore', 'backbone'],
+      plugin   : [collapse]
     }
   }
 };

@@ -3087,12 +3087,12 @@ if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
  */
 
 // Create the model class via Backbone (which sets up things like prototype objects correctly).
-var userFeedbackModel = require('./models/model.js');
+var userFeedbackModel = require(2);
 
 $ = window.jQuery;
 
 // Main application view
-var AppView = require('./views/app.js');
+var AppView = require(11);
 
 jQuery(document).ready(function ($) {
   // Only run if Canvas is supported
@@ -3102,7 +3102,7 @@ jQuery(document).ready(function ($) {
     appView.render();
   }
 });
-},{"./models/model.js":2,"./views/app.js":11}],2:[function(require,module,exports){
+},{"11":11,"2":2}],2:[function(require,module,exports){
 'use strict';
 
 var UserFeedbackModel = Backbone.Model.extend({});
@@ -3290,16 +3290,16 @@ return __p;
 },{}],11:[function(require,module,exports){
 'use strict';
 
-var userFeedbackModel = require('../models/model.js');
+var userFeedbackModel = require(2);
 
 // Create the view for our feedback button
-var UserFeedbackButton = require('./button.js');
+var UserFeedbackButton = require(13);
 
 // Create the view for the bar at the bottom of the screen
-var UserFeedbackBar = require('./bottombar.js');
+var UserFeedbackBar = require(12);
 
 // Wizard view that holds the individual view for each step
-var UserFeedbackWizard = require('./wizard.js');
+var UserFeedbackWizard = require(22);
 
 var AppView = Backbone.View.extend({
   el: '#user-feedback-container',
@@ -3406,10 +3406,10 @@ var AppView = Backbone.View.extend({
 });
 
 module.exports = AppView;
-},{"../models/model.js":2,"./bottombar.js":12,"./button.js":13,"./wizard.js":22}],12:[function(require,module,exports){
+},{"12":12,"13":13,"2":2,"22":22}],12:[function(require,module,exports){
 'use strict';
 
-var template = require("../templates/bottombar.html");
+var template = require(3);
 
 var UserFeedbackBar = Backbone.View.extend({
   tagName  : 'div',
@@ -3446,10 +3446,10 @@ var UserFeedbackBar = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackBar;
-},{"../templates/bottombar.html":3}],13:[function(require,module,exports){
+},{"3":3}],13:[function(require,module,exports){
 'use strict';
 
-var template = require("../templates/button.html");
+var template = require(4);
 
 var UserFeedbackButton = Backbone.View.extend({
   tagName  : 'div',
@@ -3474,7 +3474,7 @@ var UserFeedbackButton = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackButton;
-},{"../templates/button.html":4}],14:[function(require,module,exports){
+},{"4":4}],14:[function(require,module,exports){
 'use strict';
 
 var CanvasView = Backbone.View.extend({
@@ -3679,8 +3679,8 @@ module.exports = CanvasView;
 },{}],15:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require('./step.js');
-var template = require("../../templates/step-1.html");
+var WizardStep = require(21);
+var template = require(5);
 
 var WizardStep1 = WizardStep.extend({
   className: 'user-feedback-wizard-step-1',
@@ -3694,11 +3694,11 @@ var WizardStep1 = WizardStep.extend({
 });
 
 module.exports = WizardStep1;
-},{"../../templates/step-1.html":5,"./step.js":21}],16:[function(require,module,exports){
+},{"21":21,"5":5}],16:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require('./step.js');
-var template = require("../../templates/step-2.html");
+var WizardStep = require(21);
+var template = require(6);
 
 var WizardStep2 = WizardStep.extend({
   className: 'user-feedback-wizard-step-2',
@@ -3720,11 +3720,11 @@ var WizardStep2 = WizardStep.extend({
 });
 
 module.exports = WizardStep2;
-},{"../../templates/step-2.html":6,"./step.js":21}],17:[function(require,module,exports){
+},{"21":21,"6":6}],17:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require('./step.js');
-var template = require("../../templates/step-3.html");
+var WizardStep = require(21);
+var template = require(7);
 
 var WizardStep3 = WizardStep.extend({
   className: 'user-feedback-wizard-step-3',
@@ -3736,13 +3736,13 @@ var WizardStep3 = WizardStep.extend({
 });
 
 module.exports = WizardStep3;
-},{"../../templates/step-3.html":7,"./step.js":21}],18:[function(require,module,exports){
+},{"21":21,"7":7}],18:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require('./step.js');
-var CanvasView = require('../canvas.js');
-var userFeedbackModel = require('../../models/model.js');
-var template = require("../../templates/step-4.html");
+var WizardStep = require(21);
+var CanvasView = require(14);
+var userFeedbackModel = require(2);
+var template = require(8);
 
 var WizardStep4 = WizardStep.extend({
   className: 'user-feedback-wizard-step-4',
@@ -3791,11 +3791,11 @@ var WizardStep4 = WizardStep.extend({
 });
 
 module.exports = WizardStep4;
-},{"../../models/model.js":2,"../../templates/step-4.html":8,"../canvas.js":14,"./step.js":21}],19:[function(require,module,exports){
+},{"14":14,"2":2,"21":21,"8":8}],19:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require('./step.js');
-var template = require("../../templates/step-5.html");
+var WizardStep = require(21);
+var template = require(9);
 
 /**
  * Detect browser name + version. Example: Chrome 40, Internet Explorer 12.
@@ -3855,11 +3855,11 @@ var WizardStep5 = WizardStep.extend({
 });
 
 module.exports = WizardStep5;
-},{"../../templates/step-5.html":9,"./step.js":21}],20:[function(require,module,exports){
+},{"21":21,"9":9}],20:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require('./step.js');
-var template = require("../../templates/step-6.html");
+var WizardStep = require(21);
+var template = require(10);
 
 var WizardStep6 = WizardStep.extend({
   className: 'user-feedback-wizard-step-6',
@@ -3867,7 +3867,7 @@ var WizardStep6 = WizardStep.extend({
 });
 
 module.exports = WizardStep6;
-},{"../../templates/step-6.html":10,"./step.js":21}],21:[function(require,module,exports){
+},{"10":10,"21":21}],21:[function(require,module,exports){
 'use strict';
 
 var WizardStep = Backbone.View.extend({
@@ -3886,13 +3886,13 @@ module.exports = WizardStep;
 },{}],22:[function(require,module,exports){
 'use strict';
 
-var WizardStep1 = require('./steps/1.js');
-var WizardStep2 = require('./steps/2.js');
-var WizardStep3 = require('./steps/3.js');
-var WizardStep4 = require('./steps/4.js');
-var WizardStep5 = require('./steps/5.js');
-var WizardStep6 = require('./steps/6.js');
-var userFeedbackModel = require('../models/model.js');
+var WizardStep1 = require(15);
+var WizardStep2 = require(16);
+var WizardStep3 = require(17);
+var WizardStep4 = require(18);
+var WizardStep5 = require(19);
+var WizardStep6 = require(20);
+var userFeedbackModel = require(2);
 
 var UserFeedbackWizard = Backbone.View.extend({
   className: 'user-feedback-wizard-view',
@@ -4029,4 +4029,4 @@ var UserFeedbackWizard = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackWizard;
-},{"../models/model.js":2,"./steps/1.js":15,"./steps/2.js":16,"./steps/3.js":17,"./steps/4.js":18,"./steps/5.js":19,"./steps/6.js":20}]},{},[1]);
+},{"15":15,"16":16,"17":17,"18":18,"19":19,"2":2,"20":20}]},{},[1]);

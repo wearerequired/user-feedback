@@ -8,6 +8,7 @@
     "url": "git@github.com:wearerequired/user-feedback.git"
   },
   "devDependencies": {
+    "bundle-collapser": "*",
     "grunt": "*",
     "grunt-autoprefixer": "*",
     "grunt-browserify": "*",
@@ -16,6 +17,7 @@
     "grunt-contrib-sass": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
+    "grunt-minifyify": "*",
     "grunt-wp-i18n": "*",
     "grunt-wp-readme-to-markdown": "*",
     "load-grunt-config": "*",
