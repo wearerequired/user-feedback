@@ -1,7 +1,7 @@
 'use strict';
 
-var WizardStep = require('./step.js');
-var template = require("../../templates/step-5.html");
+var WizardStep = require('steps/step');
+var template = require('templates/step-5');
 
 /**
  * Detect browser name + version. Example: Chrome 40, Internet Explorer 12.

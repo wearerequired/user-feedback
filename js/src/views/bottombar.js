@@ -1,6 +1,6 @@
 'use strict';
 
-var template = require("../templates/bottombar.html");
+var template = require('templates/bottombar');
 
 var UserFeedbackBar = Backbone.View.extend({
   tagName  : 'div',

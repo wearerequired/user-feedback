@@ -1,6 +1,6 @@
 'use strict';
 
-var template = require("../templates/button.html");
+var template = require('templates/button');
 
 var UserFeedbackButton = Backbone.View.extend({
   tagName  : 'div',

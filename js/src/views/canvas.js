@@ -1,6 +1,6 @@
 'use strict';
 
-var template = require("../templates/annotation.html");
+var template = require('templates/annotation');
 
 var CanvasView = Backbone.View.extend({
   className: 'user-feedback-wizard-step-4-canvas',

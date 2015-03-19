@@ -1,7 +1,7 @@
 'use strict';
 
-var WizardStep = require('./step.js');
-var template = require("../../templates/step-3.html");
+var WizardStep = require('steps/step');
+var template = require('templates/step-3');
 
 var WizardStep3 = WizardStep.extend({
   className: 'user-feedback-wizard-step-3',

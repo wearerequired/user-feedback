@@ -1,9 +1,9 @@
 'use strict';
 
-var WizardStep = require('./step.js');
-var CanvasView = require('../canvas.js');
-var userFeedbackModel = require('../../models/model.js');
-var template = require("../../templates/step-4.html");
+var WizardStep = require('steps/step');
+var CanvasView = require('views/canvas');
+var userFeedbackModel = require('models/model');
+var template = require('templates/step-4');
 
 var WizardStep4 = WizardStep.extend({
   className: 'user-feedback-wizard-step-4',

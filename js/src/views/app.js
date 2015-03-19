@@ -1,15 +1,15 @@
 'use strict';
 
-var userFeedbackModel = require('../models/model.js');
+var userFeedbackModel = require('models/model');
 
 // Create the view for our feedback button
-var UserFeedbackButton = require('./button.js');
+var UserFeedbackButton = require('views/button');
 
 // Create the view for the bar at the bottom of the screen
-var UserFeedbackBar = require('./bottombar.js');
+var UserFeedbackBar = require('views/bottombar');
 
 // Wizard view that holds the individual view for each step
-var UserFeedbackWizard = require('./wizard.js');
+var UserFeedbackWizard = require('views/wizard');
 
 var AppView = Backbone.View.extend({
   el: '#user-feedback-container',

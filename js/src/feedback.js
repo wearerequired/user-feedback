@@ -11,12 +11,12 @@
  */
 
 // Create the model class via Backbone (which sets up things like prototype objects correctly).
-var userFeedbackModel = require('./models/model.js');
+var userFeedbackModel = require('models/model');
 
 $ = window.jQuery;
 
 // Main application view
-var AppView = require('./views/app.js');
+var AppView = require('views/app');
 
 jQuery(document).ready(function ($) {
   // Only run if Canvas is supported

@@ -1,12 +1,12 @@
 'use strict';
 
-var WizardStep1 = require('./steps/1.js');
-var WizardStep2 = require('./steps/2.js');
-var WizardStep3 = require('./steps/3.js');
-var WizardStep4 = require('./steps/4.js');
-var WizardStep5 = require('./steps/5.js');
-var WizardStep6 = require('./steps/6.js');
-var userFeedbackModel = require('../models/model.js');
+var WizardStep1 = require('steps/1');
+var WizardStep2 = require('steps/2');
+var WizardStep3 = require('steps/3');
+var WizardStep4 = require('steps/4');
+var WizardStep5 = require('steps/5');
+var WizardStep6 = require('steps/6');
+var userFeedbackModel = require('models/model');
 
 var UserFeedbackWizard = Backbone.View.extend({
   className: 'user-feedback-wizard-view',
