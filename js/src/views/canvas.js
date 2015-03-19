@@ -1,8 +1,10 @@
 'use strict';
 
+var template = require("../templates/annotation.html");
+
 var CanvasView = Backbone.View.extend({
   className: 'user-feedback-wizard-step-4-canvas',
-  template: _.template('<canvas id="user-feedback-canvas"></canvas><div id="user-feedback-annotations"></div>'),
+  template : _.template('<canvas id="user-feedback-canvas"></canvas><div id="user-feedback-annotations"></div>'),
 
   initialize: function () {
     this.highlighted = [];
@@ -60,18 +62,15 @@ var CanvasView = Backbone.View.extend({
       dwidth = $(document).width() - dleft;
 
 
-    $('#user-feedback-annotations').append(_.template(
-        document.getElementById('user-feedback-template-wizard-step-4-annotation').innerHTML,
-        {
-          id       : this.annotationCount,
-          top      : dtop,
-          left     : dleft,
-          width    : dwidth,
-          height   : dheight,
-          close    : user_feedback.templates.wizardStep4Annotation.close,
-          closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
-        }
-    ));
+    $('#user-feedback-annotations').append(template({
+      id       : this.annotationCount,
+      top      : dtop,
+      left     : dleft,
+      width    : dwidth,
+      height   : dheight,
+      close    : user_feedback.templates.wizardStep4Annotation.close,
+      closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
+    }));
     this.annotationCount++;
 
     this.redraw();
@@ -116,18 +115,15 @@ var CanvasView = Backbone.View.extend({
       }, this);
 
       if (e.type == 'click' && e.pageX == this.rect.startX && e.pageY == this.rect.startY) {
-        $('#user-feedback-annotations').append(_.template(
-            document.getElementById('user-feedback-template-wizard-step-4-annotation').innerHTML,
-            {
-              id       : this.annotationCount,
-              top      : _y,
-              left     : _x,
-              width    : _w,
-              height   : _h,
-              close    : user_feedback.templates.wizardStep4Annotation.close,
-              closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
-            }
-        ));
+        $('#user-feedback-annotations').append(template({
+          id       : this.annotationCount,
+          top      : _y,
+          left     : _x,
+          width    : _w,
+          height   : _h,
+          close    : user_feedback.templates.wizardStep4Annotation.close,
+          closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
+        }));
         this.highlighted.push(this.annotationCount);
         this.annotationCount++;
         this.redraw();

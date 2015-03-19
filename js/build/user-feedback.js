@@ -3092,7 +3092,7 @@ var userFeedbackModel = require(2);
 $ = window.jQuery;
 
 // Main application view
-var AppView = require(11);
+var AppView = require(12);
 
 jQuery(document).ready(function ($) {
   // Only run if Canvas is supported
@@ -3102,7 +3102,7 @@ jQuery(document).ready(function ($) {
     appView.render();
   }
 });
-},{"11":11,"2":2}],2:[function(require,module,exports){
+},{"12":12,"2":2}],2:[function(require,module,exports){
 'use strict';
 
 var UserFeedbackModel = Backbone.Model.extend({});
@@ -3110,6 +3110,31 @@ var userFeedbackModel = new UserFeedbackModel;
 
 module.exports = userFeedbackModel
 },{}],3:[function(require,module,exports){
+module.exports = function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<div class="user-feedback-annotation" style="top:'+
+((__t=( top ))==null?'':__t)+
+'px;left:'+
+((__t=( left ))==null?'':__t)+
+'px;width:'+
+((__t=( width ))==null?'':__t)+
+'px;height:'+
+((__t=( height ))==null?'':__t)+
+'px;" data-highlight-id="'+
+((__t=( id ))==null?'':__t)+
+'">\n\t<button class="user-feedback-annotation-close" title="'+
+((__t=( closeAria ))==null?'':__t)+
+'" aria-label="'+
+((__t=( closeAria ))==null?'':__t)+
+'">'+
+((__t=( close ))==null?'':__t)+
+'</button>\n</div>';
+}
+return __p;
+};
+
+},{}],4:[function(require,module,exports){
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
@@ -3130,7 +3155,7 @@ __p+='<div id="user-feedback-bottombar">\n\t<ul id="user-feedback-bar-steps">\n\
 return __p;
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
@@ -3141,7 +3166,7 @@ __p+='<button\n\t\tid="user-feedback-init-button"\n\t\tclass="user-feedback-butt
 return __p;
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
@@ -3170,7 +3195,7 @@ __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog"
 return __p;
 };
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
@@ -3197,7 +3222,7 @@ __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog"
 return __p;
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
@@ -3218,7 +3243,7 @@ __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog"
 return __p;
 };
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
@@ -3239,7 +3264,7 @@ __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog"
 return __p;
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
@@ -3268,7 +3293,7 @@ __p+='<div class="user-feedback-modal user-feedback-modal-center" role="dialog">
 return __p;
 };
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
@@ -3287,19 +3312,19 @@ __p+='<div class="user-feedback-modal user-feedback-modal-center" role="dialog">
 return __p;
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 var userFeedbackModel = require(2);
 
 // Create the view for our feedback button
-var UserFeedbackButton = require(13);
+var UserFeedbackButton = require(14);
 
 // Create the view for the bar at the bottom of the screen
-var UserFeedbackBar = require(12);
+var UserFeedbackBar = require(13);
 
 // Wizard view that holds the individual view for each step
-var UserFeedbackWizard = require(22);
+var UserFeedbackWizard = require(23);
 
 var AppView = Backbone.View.extend({
   el: '#user-feedback-container',
@@ -3406,10 +3431,10 @@ var AppView = Backbone.View.extend({
 });
 
 module.exports = AppView;
-},{"12":12,"13":13,"2":2,"22":22}],12:[function(require,module,exports){
+},{"13":13,"14":14,"2":2,"23":23}],13:[function(require,module,exports){
 'use strict';
 
-var template = require(3);
+var template = require(4);
 
 var UserFeedbackBar = Backbone.View.extend({
   tagName  : 'div',
@@ -3446,10 +3471,10 @@ var UserFeedbackBar = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackBar;
-},{"3":3}],13:[function(require,module,exports){
+},{"4":4}],14:[function(require,module,exports){
 'use strict';
 
-var template = require(4);
+var template = require(5);
 
 var UserFeedbackButton = Backbone.View.extend({
   tagName  : 'div',
@@ -3474,12 +3499,14 @@ var UserFeedbackButton = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackButton;
-},{"4":4}],14:[function(require,module,exports){
+},{"5":5}],15:[function(require,module,exports){
 'use strict';
+
+var template = require(3);
 
 var CanvasView = Backbone.View.extend({
   className: 'user-feedback-wizard-step-4-canvas',
-  template: _.template('<canvas id="user-feedback-canvas"></canvas><div id="user-feedback-annotations"></div>'),
+  template : _.template('<canvas id="user-feedback-canvas"></canvas><div id="user-feedback-annotations"></div>'),
 
   initialize: function () {
     this.highlighted = [];
@@ -3537,18 +3564,15 @@ var CanvasView = Backbone.View.extend({
       dwidth = $(document).width() - dleft;
 
 
-    $('#user-feedback-annotations').append(_.template(
-        document.getElementById('user-feedback-template-wizard-step-4-annotation').innerHTML,
-        {
-          id       : this.annotationCount,
-          top      : dtop,
-          left     : dleft,
-          width    : dwidth,
-          height   : dheight,
-          close    : user_feedback.templates.wizardStep4Annotation.close,
-          closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
-        }
-    ));
+    $('#user-feedback-annotations').append(template({
+      id       : this.annotationCount,
+      top      : dtop,
+      left     : dleft,
+      width    : dwidth,
+      height   : dheight,
+      close    : user_feedback.templates.wizardStep4Annotation.close,
+      closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
+    }));
     this.annotationCount++;
 
     this.redraw();
@@ -3593,18 +3617,15 @@ var CanvasView = Backbone.View.extend({
       }, this);
 
       if (e.type == 'click' && e.pageX == this.rect.startX && e.pageY == this.rect.startY) {
-        $('#user-feedback-annotations').append(_.template(
-            document.getElementById('user-feedback-template-wizard-step-4-annotation').innerHTML,
-            {
-              id       : this.annotationCount,
-              top      : _y,
-              left     : _x,
-              width    : _w,
-              height   : _h,
-              close    : user_feedback.templates.wizardStep4Annotation.close,
-              closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
-            }
-        ));
+        $('#user-feedback-annotations').append(template({
+          id       : this.annotationCount,
+          top      : _y,
+          left     : _x,
+          width    : _w,
+          height   : _h,
+          close    : user_feedback.templates.wizardStep4Annotation.close,
+          closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
+        }));
         this.highlighted.push(this.annotationCount);
         this.annotationCount++;
         this.redraw();
@@ -3676,11 +3697,11 @@ var CanvasView = Backbone.View.extend({
 });
 
 module.exports = CanvasView;
-},{}],15:[function(require,module,exports){
+},{"3":3}],16:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(21);
-var template = require(5);
+var WizardStep = require(22);
+var template = require(6);
 
 var WizardStep1 = WizardStep.extend({
   className: 'user-feedback-wizard-step-1',
@@ -3694,11 +3715,11 @@ var WizardStep1 = WizardStep.extend({
 });
 
 module.exports = WizardStep1;
-},{"21":21,"5":5}],16:[function(require,module,exports){
+},{"22":22,"6":6}],17:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(21);
-var template = require(6);
+var WizardStep = require(22);
+var template = require(7);
 
 var WizardStep2 = WizardStep.extend({
   className: 'user-feedback-wizard-step-2',
@@ -3720,11 +3741,11 @@ var WizardStep2 = WizardStep.extend({
 });
 
 module.exports = WizardStep2;
-},{"21":21,"6":6}],17:[function(require,module,exports){
+},{"22":22,"7":7}],18:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(21);
-var template = require(7);
+var WizardStep = require(22);
+var template = require(8);
 
 var WizardStep3 = WizardStep.extend({
   className: 'user-feedback-wizard-step-3',
@@ -3736,13 +3757,13 @@ var WizardStep3 = WizardStep.extend({
 });
 
 module.exports = WizardStep3;
-},{"21":21,"7":7}],18:[function(require,module,exports){
+},{"22":22,"8":8}],19:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(21);
-var CanvasView = require(14);
+var WizardStep = require(22);
+var CanvasView = require(15);
 var userFeedbackModel = require(2);
-var template = require(8);
+var template = require(9);
 
 var WizardStep4 = WizardStep.extend({
   className: 'user-feedback-wizard-step-4',
@@ -3791,11 +3812,11 @@ var WizardStep4 = WizardStep.extend({
 });
 
 module.exports = WizardStep4;
-},{"14":14,"2":2,"21":21,"8":8}],19:[function(require,module,exports){
+},{"15":15,"2":2,"22":22,"9":9}],20:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(21);
-var template = require(9);
+var WizardStep = require(22);
+var template = require(10);
 
 /**
  * Detect browser name + version. Example: Chrome 40, Internet Explorer 12.
@@ -3855,11 +3876,11 @@ var WizardStep5 = WizardStep.extend({
 });
 
 module.exports = WizardStep5;
-},{"21":21,"9":9}],20:[function(require,module,exports){
+},{"10":10,"22":22}],21:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(21);
-var template = require(10);
+var WizardStep = require(22);
+var template = require(11);
 
 var WizardStep6 = WizardStep.extend({
   className: 'user-feedback-wizard-step-6',
@@ -3867,7 +3888,7 @@ var WizardStep6 = WizardStep.extend({
 });
 
 module.exports = WizardStep6;
-},{"10":10,"21":21}],21:[function(require,module,exports){
+},{"11":11,"22":22}],22:[function(require,module,exports){
 'use strict';
 
 var WizardStep = Backbone.View.extend({
@@ -3883,15 +3904,15 @@ var WizardStep = Backbone.View.extend({
 });
 
 module.exports = WizardStep;
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
-var WizardStep1 = require(15);
-var WizardStep2 = require(16);
-var WizardStep3 = require(17);
-var WizardStep4 = require(18);
-var WizardStep5 = require(19);
-var WizardStep6 = require(20);
+var WizardStep1 = require(16);
+var WizardStep2 = require(17);
+var WizardStep3 = require(18);
+var WizardStep4 = require(19);
+var WizardStep5 = require(20);
+var WizardStep6 = require(21);
 var userFeedbackModel = require(2);
 
 var UserFeedbackWizard = Backbone.View.extend({
@@ -4029,4 +4050,4 @@ var UserFeedbackWizard = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackWizard;
-},{"15":15,"16":16,"17":17,"18":18,"19":19,"2":2,"20":20}]},{},[1]);
+},{"16":16,"17":17,"18":18,"19":19,"2":2,"20":20,"21":21}]},{},[1]);
