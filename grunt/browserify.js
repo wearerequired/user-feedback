@@ -8,7 +8,6 @@ module.exports = {
     },
     options: {
       transform  : ['node-underscorify'],
-      external   : ['jquery', 'underscore', 'backbone'],
       plugin     : [collapse],
       browserifyOptions: { "extensions": ['.html'] },
       preBundleCB: function (b) {

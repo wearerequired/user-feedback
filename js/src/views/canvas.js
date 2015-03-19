@@ -28,9 +28,9 @@ var CanvasView = Backbone.View.extend({
     this.rect = {};
 
     // @see http://stackoverflow.com/questions/18462303/incorrect-mouse-coordinates-when-drawing-on-canvas
-    this.canvas.width = $(document).width();
-    this.canvas.height = $(document).height();
-    $(this.canvas).width($(document).width()).height($(document).height());
+    this.canvas.width = jQuery(document).width();
+    this.canvas.height = jQuery(document).height();
+    jQuery(this.canvas).width(jQuery(document).width()).height(jQuery(document).height());
     this.ctx = this.canvas.getContext('2d');
     this.redraw();
 
@@ -56,13 +56,13 @@ var CanvasView = Backbone.View.extend({
       dheight *= -1;
     }
 
-    if (dtop + dheight > $(document).height())
-      dheight = $(document).height() - dtop;
-    if (dleft + dwidth > $(document).width())
-      dwidth = $(document).width() - dleft;
+    if (dtop + dheight > jQuery(document).height())
+      dheight = jQuery(document).height() - dtop;
+    if (dleft + dwidth > jQuery(document).width())
+      dwidth = jQuery(document).width() - dleft;
 
 
-    $('#user-feedback-annotations').append(template({
+    jQuery('#user-feedback-annotations').append(template({
       id       : this.annotationCount,
       top      : dtop,
       left     : dleft,
@@ -78,8 +78,8 @@ var CanvasView = Backbone.View.extend({
   },
 
   mouseDown: function (e) {
-    this.rect.startX = e.pageX - $(e.target).offset().left;
-    this.rect.startY = e.pageY - $(e.target).offset().top;
+    this.rect.startX = e.pageX - jQuery(e.target).offset().left;
+    this.rect.startY = e.pageY - jQuery(e.target).offset().top;
     this.rect.w = 0;
     this.rect.h = 0;
     this.drag = true;
@@ -89,18 +89,18 @@ var CanvasView = Backbone.View.extend({
     this.redraw();
     var tmpHighlighted = [];
 
-    $(this.canvas).css('cursor', 'crosshair');
+    jQuery(this.canvas).css('cursor', 'crosshair');
 
-    _.each($('* :not(body,script,iframe,div,section,.user-feedback-button,.user-feedback-modal *)'), function (el) {
-      if (e.pageX > $(el).offset().left && e.pageX < $(el).offset().left + $(el).width() && e.pageY > $(el).offset().top + parseInt($(el).css('padding-top'), 10) && e.pageY < $(el).offset().top + $(el).height() + parseInt($(el).css('padding-top'), 10)) {
-        tmpHighlighted.push($(el));
+    _.each(jQuery('* :not(body,script,iframe,div,section,.user-feedback-button,.user-feedback-modal *)'), function (el) {
+      if (e.pageX > jQuery(el).offset().left && e.pageX < jQuery(el).offset().left + jQuery(el).width() && e.pageY > jQuery(el).offset().top + parseInt(jQuery(el).css('padding-top'), 10) && e.pageY < jQuery(el).offset().top + jQuery(el).height() + parseInt(jQuery(el).css('padding-top'), 10)) {
+        tmpHighlighted.push(jQuery(el));
       }
     }, this);
 
     var $toHighlight = tmpHighlighted[tmpHighlighted.length - 2]; // todo: or -1 ?
 
     if ($toHighlight && !this.drag) {
-      $(this.canvas).css('cursor', 'pointer');
+      jQuery(this.canvas).css('cursor', 'pointer');
 
       var _x = $toHighlight.offset().left - 2,
           _y = $toHighlight.offset().top - 2,
@@ -110,12 +110,12 @@ var CanvasView = Backbone.View.extend({
       this.drawlines(_x, _y, _w, _h);
       this.ctx.clearRect(_x, _y, _w, _h);
 
-      _.each($('.user-feedback-annotation'), function (el) {
-        this.ctx.clearRect(parseInt($(el).css('left'), 10), parseInt($(el).css('top'), 10), $(el).width(), $(el).height());
+      _.each(jQuery('.user-feedback-annotation'), function (el) {
+        this.ctx.clearRect(parseInt(jQuery(el).css('left'), 10), parseInt(jQuery(el).css('top'), 10), jQuery(el).width(), jQuery(el).height());
       }, this);
 
       if (e.type == 'click' && e.pageX == this.rect.startX && e.pageY == this.rect.startY) {
-        $('#user-feedback-annotations').append(template({
+        jQuery('#user-feedback-annotations').append(template({
           id       : this.annotationCount,
           top      : _y,
           left     : _x,
@@ -131,32 +131,32 @@ var CanvasView = Backbone.View.extend({
     }
 
     if (this.drag && e.type == 'mousemove') {
-      $('#user-feedback-highlighter').css('cursor', 'default');
+      jQuery('#user-feedback-highlighter').css('cursor', 'default');
 
-      this.rect.w = (e.pageX - $('#user-feedback-canvas').offset().left) - this.rect.startX;
-      this.rect.h = (e.pageY - $('#user-feedback-canvas').offset().top) - this.rect.startY;
+      this.rect.w = (e.pageX - jQuery('#user-feedback-canvas').offset().left) - this.rect.startX;
+      this.rect.h = (e.pageY - jQuery('#user-feedback-canvas').offset().top) - this.rect.startY;
 
-      this.ctx.clearRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
+      this.ctx.clearRect(0, 0, jQuery('#user-feedback-canvas').width(), jQuery('#user-feedback-canvas').height());
       this.ctx.fillStyle = 'rgba(102,102,102,0.5)';
-      this.ctx.fillRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
+      this.ctx.fillRect(0, 0, jQuery('#user-feedback-canvas').width(), jQuery('#user-feedback-canvas').height());
 
-      _.each($('.user-feedback-annotation'), function (el) {
-        el = $(el);
+      _.each(jQuery('.user-feedback-annotation'), function (el) {
+        el = jQuery(el);
         this.drawlines(parseInt(el.css('left'), 10), parseInt(el.css('top'), 10), el.width(), el.height());
       }, this);
 
       this.drawlines(this.rect.startX, this.rect.startY, this.rect.w, this.rect.h);
       this.ctx.clearRect(this.rect.startX, this.rect.startY, this.rect.w, this.rect.h);
 
-      _.each($('.user-feedback-annotation'), function (el) {
-        el = $(el);
+      _.each(jQuery('.user-feedback-annotation'), function (el) {
+        el = jQuery(el);
         this.ctx.clearRect(parseInt(el.css('left'), 10), parseInt(el.css('top'), 10), el.width(), el.height());
       }, this);
     }
   },
 
   removeAnnotation: function (e) {
-    $(e.currentTarget).parent().remove();
+    jQuery(e.currentTarget).parent().remove();
     this.redraw();
   },
 
@@ -181,15 +181,15 @@ var CanvasView = Backbone.View.extend({
 
   redraw: function (border) {
     border = typeof border !== 'undefined' ? border : true;
-    this.ctx.clearRect(0, 0, $(this.canvas).width(), $(this.canvas).height());
+    this.ctx.clearRect(0, 0, jQuery(this.canvas).width(), jQuery(this.canvas).height());
     this.ctx.fillStyle = 'rgba(102,102,102,0.5)';
-    this.ctx.fillRect(0, 0, $(this.canvas).width(), $(this.canvas).height());
+    this.ctx.fillRect(0, 0, jQuery(this.canvas).width(), jQuery(this.canvas).height());
 
-    _.each($('.user-feedback-annotation'), function (el) {
+    _.each(jQuery('.user-feedback-annotation'), function (el) {
       if (border) {
-        this.drawlines(parseInt($(el).css('left'), 10), parseInt($(el).css('top'), 10), $(el).width(), $(el).height());
+        this.drawlines(parseInt(jQuery(el).css('left'), 10), parseInt(jQuery(el).css('top'), 10), jQuery(el).width(), jQuery(el).height());
       }
-      this.ctx.clearRect(parseInt($(el).css('left'), 10), parseInt($(el).css('top'), 10), $(el).width(), $(el).height());
+      this.ctx.clearRect(parseInt(jQuery(el).css('left'), 10), parseInt(jQuery(el).css('top'), 10), jQuery(el).width(), jQuery(el).height());
     }, this);
   }
 });

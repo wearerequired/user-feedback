@@ -27,10 +27,10 @@ var UserFeedbackBar = Backbone.View.extend({
 
   changeStep: function () {
     _.each(this.$el.find('.user-feedback-bar-step'), function (el) {
-      if ($(el).attr('data-step') <= this.model.get('currentWizardStep')) {
-        $(el).removeClass('hidden');
+      if (jQuery(el).attr('data-step') <= this.model.get('currentWizardStep')) {
+        jQuery(el).removeClass('hidden');
       } else {
-        $(el).addClass('hidden');
+        jQuery(el).addClass('hidden');
       }
     }, this);
   }

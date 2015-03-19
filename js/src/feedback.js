@@ -1,5 +1,3 @@
-/* global jQuery, user_feedback, Backbone, _ */
-
 /**
  * Feedback.js Script.
  *
@@ -10,12 +8,8 @@
  * @copyright 2015 required gmbh
  */
 
-// Create the model class via Backbone (which sets up things like prototype objects correctly).
+// Load required modules
 var userFeedbackModel = require('models/model');
-
-$ = window.jQuery;
-
-// Main application view
 var AppView = require('views/app');
 
 jQuery(document).ready(function ($) {

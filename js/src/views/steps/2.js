@@ -18,7 +18,7 @@ var WizardStep2 = WizardStep.extend({
   },
 
   nextStep: function () {
-    this.model.set('doNotShowInfoAgain', $(document.getElementById('user-feedback-do-not-show-again')).is(":checked"));
+    this.model.set('doNotShowInfoAgain', jQuery(document.getElementById('user-feedback-do-not-show-again')).is(":checked"));
   }
 });
 

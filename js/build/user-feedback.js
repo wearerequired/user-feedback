@@ -3074,8 +3074,6 @@ if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
     };
   };
 })(window, document);;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/* global jQuery, user_feedback, Backbone, _ */
-
 /**
  * Feedback.js Script.
  *
@@ -3086,12 +3084,8 @@ if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
  * @copyright 2015 required gmbh
  */
 
-// Create the model class via Backbone (which sets up things like prototype objects correctly).
+// Load required modules
 var userFeedbackModel = require(2);
-
-$ = window.jQuery;
-
-// Main application view
 var AppView = require(12);
 
 jQuery(document).ready(function ($) {
@@ -3461,10 +3455,10 @@ var UserFeedbackBar = Backbone.View.extend({
 
   changeStep: function () {
     _.each(this.$el.find('.user-feedback-bar-step'), function (el) {
-      if ($(el).attr('data-step') <= this.model.get('currentWizardStep')) {
-        $(el).removeClass('hidden');
+      if (jQuery(el).attr('data-step') <= this.model.get('currentWizardStep')) {
+        jQuery(el).removeClass('hidden');
       } else {
-        $(el).addClass('hidden');
+        jQuery(el).addClass('hidden');
       }
     }, this);
   }
@@ -3530,9 +3524,9 @@ var CanvasView = Backbone.View.extend({
     this.rect = {};
 
     // @see http://stackoverflow.com/questions/18462303/incorrect-mouse-coordinates-when-drawing-on-canvas
-    this.canvas.width = $(document).width();
-    this.canvas.height = $(document).height();
-    $(this.canvas).width($(document).width()).height($(document).height());
+    this.canvas.width = jQuery(document).width();
+    this.canvas.height = jQuery(document).height();
+    jQuery(this.canvas).width(jQuery(document).width()).height(jQuery(document).height());
     this.ctx = this.canvas.getContext('2d');
     this.redraw();
 
@@ -3558,13 +3552,13 @@ var CanvasView = Backbone.View.extend({
       dheight *= -1;
     }
 
-    if (dtop + dheight > $(document).height())
-      dheight = $(document).height() - dtop;
-    if (dleft + dwidth > $(document).width())
-      dwidth = $(document).width() - dleft;
+    if (dtop + dheight > jQuery(document).height())
+      dheight = jQuery(document).height() - dtop;
+    if (dleft + dwidth > jQuery(document).width())
+      dwidth = jQuery(document).width() - dleft;
 
 
-    $('#user-feedback-annotations').append(template({
+    jQuery('#user-feedback-annotations').append(template({
       id       : this.annotationCount,
       top      : dtop,
       left     : dleft,
@@ -3580,8 +3574,8 @@ var CanvasView = Backbone.View.extend({
   },
 
   mouseDown: function (e) {
-    this.rect.startX = e.pageX - $(e.target).offset().left;
-    this.rect.startY = e.pageY - $(e.target).offset().top;
+    this.rect.startX = e.pageX - jQuery(e.target).offset().left;
+    this.rect.startY = e.pageY - jQuery(e.target).offset().top;
     this.rect.w = 0;
     this.rect.h = 0;
     this.drag = true;
@@ -3591,18 +3585,18 @@ var CanvasView = Backbone.View.extend({
     this.redraw();
     var tmpHighlighted = [];
 
-    $(this.canvas).css('cursor', 'crosshair');
+    jQuery(this.canvas).css('cursor', 'crosshair');
 
-    _.each($('* :not(body,script,iframe,div,section,.user-feedback-button,.user-feedback-modal *)'), function (el) {
-      if (e.pageX > $(el).offset().left && e.pageX < $(el).offset().left + $(el).width() && e.pageY > $(el).offset().top + parseInt($(el).css('padding-top'), 10) && e.pageY < $(el).offset().top + $(el).height() + parseInt($(el).css('padding-top'), 10)) {
-        tmpHighlighted.push($(el));
+    _.each(jQuery('* :not(body,script,iframe,div,section,.user-feedback-button,.user-feedback-modal *)'), function (el) {
+      if (e.pageX > jQuery(el).offset().left && e.pageX < jQuery(el).offset().left + jQuery(el).width() && e.pageY > jQuery(el).offset().top + parseInt(jQuery(el).css('padding-top'), 10) && e.pageY < jQuery(el).offset().top + jQuery(el).height() + parseInt(jQuery(el).css('padding-top'), 10)) {
+        tmpHighlighted.push(jQuery(el));
       }
     }, this);
 
     var $toHighlight = tmpHighlighted[tmpHighlighted.length - 2]; // todo: or -1 ?
 
     if ($toHighlight && !this.drag) {
-      $(this.canvas).css('cursor', 'pointer');
+      jQuery(this.canvas).css('cursor', 'pointer');
 
       var _x = $toHighlight.offset().left - 2,
           _y = $toHighlight.offset().top - 2,
@@ -3612,12 +3606,12 @@ var CanvasView = Backbone.View.extend({
       this.drawlines(_x, _y, _w, _h);
       this.ctx.clearRect(_x, _y, _w, _h);
 
-      _.each($('.user-feedback-annotation'), function (el) {
-        this.ctx.clearRect(parseInt($(el).css('left'), 10), parseInt($(el).css('top'), 10), $(el).width(), $(el).height());
+      _.each(jQuery('.user-feedback-annotation'), function (el) {
+        this.ctx.clearRect(parseInt(jQuery(el).css('left'), 10), parseInt(jQuery(el).css('top'), 10), jQuery(el).width(), jQuery(el).height());
       }, this);
 
       if (e.type == 'click' && e.pageX == this.rect.startX && e.pageY == this.rect.startY) {
-        $('#user-feedback-annotations').append(template({
+        jQuery('#user-feedback-annotations').append(template({
           id       : this.annotationCount,
           top      : _y,
           left     : _x,
@@ -3633,32 +3627,32 @@ var CanvasView = Backbone.View.extend({
     }
 
     if (this.drag && e.type == 'mousemove') {
-      $('#user-feedback-highlighter').css('cursor', 'default');
+      jQuery('#user-feedback-highlighter').css('cursor', 'default');
 
-      this.rect.w = (e.pageX - $('#user-feedback-canvas').offset().left) - this.rect.startX;
-      this.rect.h = (e.pageY - $('#user-feedback-canvas').offset().top) - this.rect.startY;
+      this.rect.w = (e.pageX - jQuery('#user-feedback-canvas').offset().left) - this.rect.startX;
+      this.rect.h = (e.pageY - jQuery('#user-feedback-canvas').offset().top) - this.rect.startY;
 
-      this.ctx.clearRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
+      this.ctx.clearRect(0, 0, jQuery('#user-feedback-canvas').width(), jQuery('#user-feedback-canvas').height());
       this.ctx.fillStyle = 'rgba(102,102,102,0.5)';
-      this.ctx.fillRect(0, 0, $('#user-feedback-canvas').width(), $('#user-feedback-canvas').height());
+      this.ctx.fillRect(0, 0, jQuery('#user-feedback-canvas').width(), jQuery('#user-feedback-canvas').height());
 
-      _.each($('.user-feedback-annotation'), function (el) {
-        el = $(el);
+      _.each(jQuery('.user-feedback-annotation'), function (el) {
+        el = jQuery(el);
         this.drawlines(parseInt(el.css('left'), 10), parseInt(el.css('top'), 10), el.width(), el.height());
       }, this);
 
       this.drawlines(this.rect.startX, this.rect.startY, this.rect.w, this.rect.h);
       this.ctx.clearRect(this.rect.startX, this.rect.startY, this.rect.w, this.rect.h);
 
-      _.each($('.user-feedback-annotation'), function (el) {
-        el = $(el);
+      _.each(jQuery('.user-feedback-annotation'), function (el) {
+        el = jQuery(el);
         this.ctx.clearRect(parseInt(el.css('left'), 10), parseInt(el.css('top'), 10), el.width(), el.height());
       }, this);
     }
   },
 
   removeAnnotation: function (e) {
-    $(e.currentTarget).parent().remove();
+    jQuery(e.currentTarget).parent().remove();
     this.redraw();
   },
 
@@ -3683,15 +3677,15 @@ var CanvasView = Backbone.View.extend({
 
   redraw: function (border) {
     border = typeof border !== 'undefined' ? border : true;
-    this.ctx.clearRect(0, 0, $(this.canvas).width(), $(this.canvas).height());
+    this.ctx.clearRect(0, 0, jQuery(this.canvas).width(), jQuery(this.canvas).height());
     this.ctx.fillStyle = 'rgba(102,102,102,0.5)';
-    this.ctx.fillRect(0, 0, $(this.canvas).width(), $(this.canvas).height());
+    this.ctx.fillRect(0, 0, jQuery(this.canvas).width(), jQuery(this.canvas).height());
 
-    _.each($('.user-feedback-annotation'), function (el) {
+    _.each(jQuery('.user-feedback-annotation'), function (el) {
       if (border) {
-        this.drawlines(parseInt($(el).css('left'), 10), parseInt($(el).css('top'), 10), $(el).width(), $(el).height());
+        this.drawlines(parseInt(jQuery(el).css('left'), 10), parseInt(jQuery(el).css('top'), 10), jQuery(el).width(), jQuery(el).height());
       }
-      this.ctx.clearRect(parseInt($(el).css('left'), 10), parseInt($(el).css('top'), 10), $(el).width(), $(el).height());
+      this.ctx.clearRect(parseInt(jQuery(el).css('left'), 10), parseInt(jQuery(el).css('top'), 10), jQuery(el).width(), jQuery(el).height());
     }, this);
   }
 });
@@ -3708,8 +3702,8 @@ var WizardStep1 = WizardStep.extend({
   template : template(user_feedback.templates.wizardStep1),
 
   nextStep: function () {
-    this.model.set('userName', $(document.getElementById('user-feedback-user-name')).val());
-    this.model.set('userEmail', $(document.getElementById('user-feedback-user-email')).val());
+    this.model.set('userName', jQuery(document.getElementById('user-feedback-user-name')).val());
+    this.model.set('userEmail', jQuery(document.getElementById('user-feedback-user-email')).val());
   }
 
 });
@@ -3736,7 +3730,7 @@ var WizardStep2 = WizardStep.extend({
   },
 
   nextStep: function () {
-    this.model.set('doNotShowInfoAgain', $(document.getElementById('user-feedback-do-not-show-again')).is(":checked"));
+    this.model.set('doNotShowInfoAgain', jQuery(document.getElementById('user-feedback-do-not-show-again')).is(":checked"));
   }
 });
 
@@ -3752,7 +3746,7 @@ var WizardStep3 = WizardStep.extend({
   template : template(user_feedback.templates.wizardStep3),
 
   nextStep: function () {
-    this.model.set('userMessage', $(document.getElementById('user-feedback-message')).val());
+    this.model.set('userMessage', jQuery(document.getElementById('user-feedback-message')).val());
   }
 });
 
@@ -3788,22 +3782,22 @@ var WizardStep4 = WizardStep.extend({
     var that = this;
 
     // Hide UI before taking the screenshot
-    $('#user-feedback-bottombar').hide();
-    $('.user-feedback-modal').hide();
+    jQuery('#user-feedback-bottombar').hide();
+    jQuery('.user-feedback-modal').hide();
 
-    html2canvas($('body'), {
+    html2canvas(jQuery('body'), {
       onrendered: function (canvas) {
         that.canvasView.redraw();
-        var _canvas = $('<canvas id="user-feedback-canvas-tmp" width="' + $(document).width() + '" height="' + $(window).height() + '"/>').hide().appendTo('body');
+        var _canvas = jQuery('<canvas id="user-feedback-canvas-tmp" width="' + jQuery(document).width() + '" height="' + jQuery(window).height() + '"/>').hide().appendTo('body');
         var _ctx = _canvas.get(0).getContext('2d');
-        _ctx.drawImage(canvas, 0, $(document).scrollTop(), $(document).width(), $(window).height(), 0, 0, $(document).width(), $(window).height());
+        _ctx.drawImage(canvas, 0, jQuery(document).scrollTop(), jQuery(document).width(), jQuery(window).height(), 0, 0, jQuery(document).width(), jQuery(window).height());
 
         that.model.set('userScreenshot', _canvas.get(0).toDataURL());
-        $('#user-feedback-canvas-tmp').remove();
+        jQuery('#user-feedback-canvas-tmp').remove();
 
         // Show UI again
-        $('#user-feedback-bottombar').show();
-        $('.user-feedback-modal').show();
+        jQuery('#user-feedback-bottombar').show();
+        jQuery('.user-feedback-modal').show();
 
         that.trigger('nextStep');
       }

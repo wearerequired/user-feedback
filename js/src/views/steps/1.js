@@ -8,8 +8,8 @@ var WizardStep1 = WizardStep.extend({
   template : template(user_feedback.templates.wizardStep1),
 
   nextStep: function () {
-    this.model.set('userName', $(document.getElementById('user-feedback-user-name')).val());
-    this.model.set('userEmail', $(document.getElementById('user-feedback-user-email')).val());
+    this.model.set('userName', jQuery(document.getElementById('user-feedback-user-name')).val());
+    this.model.set('userEmail', jQuery(document.getElementById('user-feedback-user-email')).val());
   }
 
 });

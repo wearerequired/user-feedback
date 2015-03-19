@@ -8,7 +8,7 @@ var WizardStep3 = WizardStep.extend({
   template : template(user_feedback.templates.wizardStep3),
 
   nextStep: function () {
-    this.model.set('userMessage', $(document.getElementById('user-feedback-message')).val());
+    this.model.set('userMessage', jQuery(document.getElementById('user-feedback-message')).val());
   }
 });
 
