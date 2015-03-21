@@ -3262,7 +3262,7 @@ return __p;
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="user-feedback-modal user-feedback-modal-center" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-button user-feedback-modal-title">'+
+__p+='<div class="user-feedback-modal user-feedback-modal-center" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
 '</h3>\n\t</div>\n\t<div id="user-feedback-overview-description">\n\t\t<div id="user-feedback-overview-user">\n\t\t\t<img src="" width="40" height="40" alt="'+
 ((__t=( user.gravatarAlt ))==null?'':__t)+
