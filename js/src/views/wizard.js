@@ -94,9 +94,9 @@ var UserFeedbackWizard = Backbone.View.extend({
 
   restartWizard: function (e) {
     e.preventDefault();
-    this.model.set('currentWizardStep', this.initialStep + 1);
+    this.model.set('currentWizardStep', 2);
     this.trigger('toggleBottomBar');
-    this.trigger('changeStep', this.model.get('currentWizardStep'));
+    this.trigger('changeStep', 2);
     this.render();
   },
 
