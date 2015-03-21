@@ -98,7 +98,7 @@ var AppView = Backbone.View.extend({
       email: this.model.get('userEmail')
     };
 
-    $.post(
+    jQuery.post(
         user_feedback.ajax_url,
         {
           'action': 'user_feedback',
