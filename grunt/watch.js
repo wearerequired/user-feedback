@@ -13,7 +13,7 @@ module.exports = {
   },
 
   jsminify: {
-    files: 'js/src/**/*.js',
+    files: 'js/src/**/*.*',
     tasks: ['browserify', 'concat', 'uglify']
   }
 };
