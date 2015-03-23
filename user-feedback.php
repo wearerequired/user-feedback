@@ -254,15 +254,6 @@ final class User_Feedback {
 				'email'     => $userdata->user_email,
 			),
 			'language'       => $language,
-			'canvas_options' => array(
-				'strokeStyle'   => 'black',
-				'shadowColor'   => 'black',
-				'shadowOffsetX' => 1,
-				'shadowOffsetY' => 1,
-				'shadowBlur'    => 10,
-				'lineJoin'      => 'bevel',
-				'lineWidth'     => 3,
-			),
 			'templates'      => array(
 				'button'                => array(
 					'label' => __( 'Feedback', 'user-feedback' ),
