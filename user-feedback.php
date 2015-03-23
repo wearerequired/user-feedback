@@ -271,16 +271,16 @@ final class User_Feedback {
 				),
 				'wizardStep1'           => array(
 					'title'       => _x( 'Feedback', 'modal title', 'user-feedback' ),
-					'salutation'  => __( 'Hello stranger', 'user-feedback' ),
-					'intro'       => __( 'Tell us your name and email to fully support you here:', 'user-feedback' ),
+					'salutation'  => __( 'Howdy stranger,', 'user-feedback' ),
+					'intro'       => __( 'Please let us know who you are. This way we will get back to you as soon as the issue is resolved:', 'user-feedback' ),
 					'placeholder' => array(
-						'name'  => _x( 'Your Name', 'input field placeholder', 'user-feedback' ),
-						'email' => _x( 'Your Email', 'input field placeholder', 'user-feedback' ),
+						'name'  => _x( 'Your name', 'input field placeholder', 'user-feedback' ),
+						'email' => _x( 'Email address', 'input field placeholder', 'user-feedback' ),
 					),
 					'button'      => array(
 						'primary'   => __( 'Next', 'user-feedback' ),
-						'secondary' => __( 'No thanks', 'user-feedback' ),
-						'close'     => _x( 'X', 'close button', 'user-feedback' ),
+						'secondary' => __( 'Stay anonymous', 'user-feedback' ),
+						'close'     => _x( '&times;', 'close button', 'user-feedback' ),
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
@@ -289,42 +289,42 @@ final class User_Feedback {
 					'salutation' => __( 'Hello ', 'user-feedback' ),
 					'intro'      => __( 'Please help us understand your feedback better!', 'user-feedback' ),
 					'intro2'     => __( 'You can not only leave us a message but also highlight areas relevant to your feedback.', 'user-feedback' ),
-					'inputLabel' => __( "Don't show me this again", 'user-feedback' ),
+					'inputLabel' => __( 'Don\'t show me this again', 'user-feedback' ),
 					'button'     => array(
 						'primary'   => __( 'Next', 'user-feedback' ),
-						'close'     => _x( 'X', 'close button', 'user-feedback' ),
+						'close'     => _x( '&times;', 'close button', 'user-feedback' ),
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
 				'wizardStep3'           => array(
 					'title'       => _x( 'Leave a message', 'modal title', 'user-feedback' ),
 					'placeholder' => array(
-						'message' => _x( 'Your message here…', 'textarea placeholder', 'user-feedback' ),
+						'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
 					),
 					'button'      => array(
 						'primary'   => __( 'Next', 'user-feedback' ),
-						'close'     => _x( 'X', 'close button', 'user-feedback' ),
+						'close'     => _x( '&times;', 'close button', 'user-feedback' ),
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
 				'wizardStep4'           => array(
 					'title'  => _x( 'Highlight area', 'modal title', 'user-feedback' ),
-					'intro'  => __( 'You can now highlight the areas relevant to your feedback.', 'user-feedback' ),
+					'intro'  => __( 'Highlight the areas relevant to your feedback.', 'user-feedback' ),
 					'button' => array(
 						'primary'   => __( 'Take screenshot', 'user-feedback' ),
-						'close'     => _x( 'X', 'close button', 'user-feedback' ),
+						'close'     => _x( '&times', 'close button', 'user-feedback' ),
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
 				'wizardStep4Annotation' => array(
-					'close'     => _x( 'X', 'close button', 'user-feedback' ),
+					'close'     => _x( '&times', 'close button', 'user-feedback' ),
 					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 				),
 				'wizardStep5'           => array(
 					'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
 					'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
 					'user'          => array(
-						'by'          => _x( 'by ', 'by user xy', 'user-feebdack' ),
+						'by'          => _x( 'From ', 'by user xy', 'user-feebdack' ),
 						'gravatarAlt' => _x( 'Gravatar', 'alt text', 'user-feedback' )
 					),
 					'details'       => array(
@@ -340,8 +340,8 @@ final class User_Feedback {
 				),
 				'wizardStep6'           => array(
 					'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
-					'intro'  => __( 'Thanks for your kind feedback. We will examine it and get back to you in 24h.', 'user-feedback' ),
-					'intro2' => __( 'The required+ support team', 'user-feedback' ),
+					'intro'  => __( 'Thank you for taking your time to give us feedback. We will examine it and get back to as quickly as possible.', 'user-feedback' ),
+					'intro2' => __( '&ndash; Your required+ support team', 'user-feedback' ),
 					'button' => array(
 						'primary'   => __( 'Done', 'user-feedback' ),
 						'secondary' => __( 'Leave another message', 'user-feedback' ),
