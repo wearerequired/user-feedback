@@ -368,24 +368,6 @@ final class User_Feedback {
 		echo '<div id="user-feedback-container"></div>';
 	}
 
-	/**
-	 * Get the avatar URL based on the email address.
-	 *
-	 * @param string $email A user's email address.
-	 *
-	 * @param int    $size  Size of the avatar image. Defaults to 96px.
-	 *
-	 * @return string
-	 */
-	public static function get_avatar_url( $email, $size = 96 ) {
-		$avatar = 'https://secure.gravatar.com/avatar/' . md5( $email );
-
-		// Add size and default parameters
-		$avatar = add_query_arg( array( 's' => absint( $size ), 'd' => 'mm' ), $avatar );
-
-		return esc_url( $avatar );
-	}
-
 }
 
 add_action( 'plugins_loaded', array( 'User_Feedback', 'init' ) );
