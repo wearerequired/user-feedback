@@ -126,22 +126,23 @@ final class User_Feedback {
 	/**
 	 * Save the submitted image as media item.
 	 *
-	 * @param string $img     Base64 encoded image.
+	 * @param string $imgs     Base64 encoded image.
 	 * @param int    $post_id The post ID this image is associated with.
 	 *
 	 * @return int|WP_Error
 	 */
-	public static function save_image( $img, $post_id ) {
-		// Strip the "data:image/png;base64," part and decode the image
-		$img = base64_decode( explode( ',', $img )[1] );
-
-		if ( ! $img ) {
-			return false;
+	public static function save_image( $imgs, $post_id ) {
+		$i = 0;
+		foreach ( $imgs as $img ) {
+			file_put_contents( '/tmp' . date( 'Y-m-d-H-i' ) . '/' . $i . '.png', base64_decode( explode( ',', $img )[1] ));
+			$i++;
 		}
 
 		// Upload to tmp folder
 		$filename = 'user-feedback-' . date( 'Y-m-d-H-i' ) . '.png';
 		file_put_contents( '/tmp/' . md5( $filename ), $img );
+
+		return;
 
 		// Create file array for wp_handle_sideload
 		$file_array = array(
@@ -216,18 +217,8 @@ final class User_Feedback {
 
 		// Upload the image
 		$attachments = array();
-		$img         = self::save_image( $feedback['img'], $post_id );
+		self::save_image( $feedback['img'], $post_id );
 
-		if ( ! is_wp_error( $img ) ) {
-			$attachments[] = get_attached_file( $img );
-
-			// Set the attached screenshot as post thumbnail
-			set_post_thumbnail( $post_id, $img );
-		} else {
-			$img = array(
-				'url' => __( '(upload did not work)', 'user-feedback' )
-			);
-		}
 
 		// Send the email
 		$message = sprintf( "
@@ -422,7 +413,7 @@ final class User_Feedback {
 					'title'  => _x( 'Highlight area', 'modal title', 'user-feedback' ),
 					'intro'  => __( 'You can now highlight the areas relevant to your feedback.', 'user-feedback' ),
 					'button' => array(
-						'primary'   => __( 'Take screenshot', 'user-feedback' ),
+						'primary'   => __( 'Record', 'user-feedback' ),
 						'close'     => _x( 'X', 'close button', 'user-feedback' ),
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
