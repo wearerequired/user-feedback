@@ -33,9 +33,6 @@ final class User_Feedback {
 	 * Add all hooks on init
 	 */
 	public static function init() {
-		// Register post type
-		add_action( 'init', array( __CLASS__, 'register_post_type' ) );
-
 		// Load the scripts & styles
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_scripts' ) );
 
@@ -47,50 +44,6 @@ final class User_Feedback {
 
 		// Send feedback emails
 		add_action( 'user_feedback_received', array( __CLASS__, 'process_feedback' ) );
-
-		// modify admin list columns
-		add_filter( "manage_edit-user_feedback_columns", array( __CLASS__, 'admin_edit_columns' ) );
-
-		// fill custom columns
-		add_action( "manage_user_feedback_posts_custom_column", array( __CLASS__, 'admin_manage_columns' ), 10, 2 );
-	}
-
-	/**
-	 * Register the user feedback post type.
-	 */
-	public static function register_post_type() {
-		$labels = array(
-			'name'               => _x( 'User Feedback', 'post type general name', 'user-feedback' ),
-			'singular_name'      => _x( 'Feedback', 'post type singular name', 'user-feedback' ),
-			'menu_name'          => _x( 'User Feedback', 'admin menu', 'user-feedback' ),
-			'name_admin_bar'     => _x( 'User Feedback', 'add new on admin bar', 'user-feedback' ),
-			'add_new'            => _x( 'Add New', 'feedback', 'user-feedback' ),
-			'add_new_item'       => __( 'Add New Feedback', 'user-feedback' ),
-			'new_item'           => __( 'New Feedback', 'user-feedback' ),
-			'edit_item'          => __( 'Edit Feedback', 'user-feedback' ),
-			'view_item'          => __( 'View Feedback', 'user-feedback' ),
-			'all_items'          => __( 'All Feedbacks', 'user-feedback' ),
-			'search_items'       => __( 'Search Feedbacks', 'user-feedback' ),
-			'parent_item_colon'  => __( 'Parent Feedbacks:', 'user-feedback' ),
-			'not_found'          => __( 'No feedbacks found.', 'user-feedback' ),
-			'not_found_in_trash' => __( 'No feedbacks found in Trash.', 'user-feedback' )
-		);
-
-		$args = array(
-			'labels'              => $labels,
-			'public'              => false,
-			'show_ui'             => true,
-			'show_in_menu'        => true,
-			'show_in_admin_bar'   => false,
-			'exclude_from_search' => true,
-			'has_archive'         => false,
-			'rewrite'             => false,
-			'can_export'          => false,
-			'query_var'           => true,
-			'supports'            => array( 'author', 'thumbnail' )
-		);
-
-		register_post_type( 'user_feedback', $args );
 	}
 
 	/**
@@ -126,12 +79,11 @@ final class User_Feedback {
 	/**
 	 * Save the submitted image as media item.
 	 *
-	 * @param string $img     Base64 encoded image.
-	 * @param int    $post_id The post ID this image is associated with.
+	 * @param string $img Base64 encoded image.
 	 *
 	 * @return int|WP_Error
 	 */
-	public static function save_image( $img, $post_id ) {
+	public static function save_image( $img ) {
 		// Strip the "data:image/png;base64," part and decode the image
 		$img = base64_decode( explode( ',', $img )[1] );
 
@@ -141,33 +93,14 @@ final class User_Feedback {
 
 		// Upload to tmp folder
 		$filename = 'user-feedback-' . date( 'Y-m-d-H-i' ) . '.png';
-		file_put_contents( '/tmp/' . md5( $filename ), $img );
+		// todo: Use WP_Filesystem class
+		$file = file_put_contents( '/tmp/' . $filename, $img );
 
-		// Create file array for wp_handle_sideload
-		$file_array = array(
-			'error'    => '',
-			'tmp_name' => '/tmp/' . md5( $filename ),
-			'name'     => $filename,
-			'type'     => 'image/png',
-			'size'     => filesize( '/tmp/' . md5( $filename ) )
-		);
-
-		// Try upload
-		$file = media_handle_sideload(
-			$file_array,
-			$post_id,
-			sprintf(
-				__( 'User Feedback from %s', 'user-feedback' ),
-				date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) )
-			)
-		);
-
-		// Unlink file in case of an error
-		if ( is_wp_error( $file ) ) {
-			unlink( $file_array['tmp_name'] );
+		if ( ! $file ) {
+			return false;
 		}
 
-		return $file;
+		return '/tmp/' . $filename;
 	}
 
 	/**
@@ -189,44 +122,10 @@ final class User_Feedback {
 	 */
 	public static function process_feedback( $feedback ) {
 
-		// Insert post
-		$post_id = wp_insert_post( array(
-			'post_type'    => 'user_feedback',
-			'post_content' => sanitize_text_field( $feedback['message'] ),
-			'post_status'  => 'publish',
-		) );
-
-		// Store the feedback data as post meta
-		$postmeta = array(
-			'user_feedback_url'      => esc_url_raw( $feedback['url'] ),
-			'user_feedback_browser'  => sanitize_text_field( $feedback['browser']['name'] ),
-			'user_feedback_platform' => sanitize_text_field( $feedback['browser']['platform'] ),
-			'user_feedback_language' => sanitize_text_field( $feedback['language'] ),
-			//'user_feedback_user_name' => sanitize_text_field( $feedback['user_name'] ),
-			//'user_feedback_user_email' => sanitize_email( $feedback['user_email'] ),
-			'user_feedback_data'     => array(
-				'browser' => array_map( 'sanitize_text_field', $feedback['browser'] ),
-				'theme'   => array_map( 'sanitize_text_field', $feedback['theme'] ),
-			)
-		);
-
-		foreach ( $postmeta as $key => $value ) {
-			add_post_meta( $post_id, $key, $value, true );
-		}
-
-		// Upload the image
 		$attachments = array();
-		$img         = self::save_image( $feedback['img'], $post_id );
-
-		if ( ! is_wp_error( $img ) ) {
-			$attachments[] = get_attached_file( $img );
-
-			// Set the attached screenshot as post thumbnail
-			set_post_thumbnail( $post_id, $img );
-		} else {
-			$img = array(
-				'url' => __( '(upload did not work)', 'user-feedback' )
-			);
+		$img         = self::save_image( $feedback['img'] );
+		if ( $img ) {
+			$attachments[] = $img;
 		}
 
 		// Send the email
@@ -237,7 +136,7 @@ final class User_Feedback {
 			%s %s\n
 			%s %s\n\n
 			%s\n%s\n\n
-			%s %s %s",
+			%s",
 			__( 'Hey there,', 'user-feedback' ),
 			__( 'Someone just left some feedback regarding your site!', 'user-feedback' ),
 			__( 'Details:', 'user-feedback' ),
@@ -247,12 +146,10 @@ final class User_Feedback {
 			$feedback['url'],
 			__( 'Additional Notes:', 'user-feedback' ),
 			$feedback['message'],
-			__( 'A screenshot of the page visited by the user is attached.', 'user-feedback' ),
-			__( 'You can also find the screenshot here:', 'user-feedback' ),
-			$img['url']
+			__( 'A screenshot of the page visited by the user is attached.', 'user-feedback' )
 		);
 
-		$email = wp_mail(
+		wp_mail(
 			apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) ),
 			apply_filters( 'user_feedback_email_subject',
 				sprintf( '%s: %s',
@@ -261,7 +158,8 @@ final class User_Feedback {
 				)
 			),
 			apply_filters( 'user_feedback_email_message', $message ),
-			$attachments
+			'',
+			$img
 		);
 	}
 
@@ -366,10 +264,10 @@ final class User_Feedback {
 				'lineWidth'     => 3,
 			),
 			'templates'      => array(
-				'button'      => array(
+				'button'                => array(
 					'label' => __( 'Feedback', 'user-feedback' ),
 				),
-				'bottombar'   => array(
+				'bottombar'             => array(
 					'step'   => array(
 						'one'   => _x( 'Feedback', 'step 1', 'user-feedback' ),
 						'two'   => _x( 'Leave a message', 'step 2', 'user-feedback' ),
@@ -380,7 +278,7 @@ final class User_Feedback {
 						'helpAria' => _x( 'Submit Feedback', 'help button title text and aria label', 'user-feedback' ),
 					),
 				),
-				'wizardStep1' => array(
+				'wizardStep1'           => array(
 					'title'       => _x( 'Feedback', 'modal title', 'user-feedback' ),
 					'salutation'  => __( 'Hello stranger', 'user-feedback' ),
 					'intro'       => __( 'Tell us your name and email to fully support you here:', 'user-feedback' ),
@@ -395,7 +293,7 @@ final class User_Feedback {
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
-				'wizardStep2' => array(
+				'wizardStep2'           => array(
 					'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
 					'salutation' => __( 'Hello ', 'user-feedback' ),
 					'intro'      => __( 'Please help us understand your feedback better!', 'user-feedback' ),
@@ -407,7 +305,7 @@ final class User_Feedback {
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
-				'wizardStep3' => array(
+				'wizardStep3'           => array(
 					'title'       => _x( 'Leave a message', 'modal title', 'user-feedback' ),
 					'placeholder' => array(
 						'message' => _x( 'Your message here…', 'textarea placeholder', 'user-feedback' ),
@@ -418,7 +316,7 @@ final class User_Feedback {
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
-				'wizardStep4' => array(
+				'wizardStep4'           => array(
 					'title'  => _x( 'Highlight area', 'modal title', 'user-feedback' ),
 					'intro'  => __( 'You can now highlight the areas relevant to your feedback.', 'user-feedback' ),
 					'button' => array(
@@ -431,7 +329,7 @@ final class User_Feedback {
 					'close'     => _x( 'X', 'close button', 'user-feedback' ),
 					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 				),
-				'wizardStep5' => array(
+				'wizardStep5'           => array(
 					'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
 					'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
 					'user'          => array(
@@ -449,7 +347,7 @@ final class User_Feedback {
 						'secondary' => __( 'Back', 'user-feedback' ),
 					),
 				),
-				'wizardStep6' => array(
+				'wizardStep6'           => array(
 					'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
 					'intro'  => __( 'Thanks for your kind feedback. We will examine it and get back to you in 24h.', 'user-feedback' ),
 					'intro2' => __( 'The required+ support team', 'user-feedback' ),
@@ -486,53 +384,6 @@ final class User_Feedback {
 		$avatar = add_query_arg( array( 's' => absint( $size ), 'd' => 'mm' ), $avatar );
 
 		return esc_url( $avatar );
-	}
-
-	/**
-	 * Adds list table columns for our post type.
-	 *
-	 * @param  array $columns Array of default columns
-	 *
-	 * @return array
-	 */
-	public static function admin_edit_columns( $columns ) {
-		// Add the first custom column
-		$columns['user_feedback_note'] = __( 'Feedback', 'user-feedback' );
-
-		// We don't have titles
-		unset( $columns['title'] );
-
-		// Move the date to the middle
-		$tmp = $columns['date'];
-		unset( $columns['date'] );
-		$columns['date'] = $tmp;
-
-		// Screenshot comes last
-		$columns['user_feedback_image'] = __( 'Screenshot', 'user-feedback' );
-
-		return $columns;
-	}
-
-	/**
-	 * Adds the content for our custom list table columns.
-	 *
-	 * @param  string $column  Name of the column defined in $this->admin_edit_columns().
-	 * @param  int    $post_id WP_Post ID.
-	 *
-	 * @return string
-	 */
-	public static function admin_manage_columns( $column, $post_id ) {
-		// Display the user feedback
-		if ( 'user_feedback_note' === $column ) {
-			$post = get_post( $post_id );
-			echo esc_html( $post->post_content );
-		}
-
-		// Display the screenshot
-		if ( 'user_feedback_image' === $column ) {
-			$thumbnail = get_post_thumbnail_id( $post_id );
-			echo wp_get_attachment_image( $thumbnail, 'thumbnail' );
-		}
 	}
 
 }
