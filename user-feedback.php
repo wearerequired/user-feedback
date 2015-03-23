@@ -137,8 +137,8 @@ final class User_Feedback {
 			%s %s\n\n
 			%s\n%s\n\n
 			%s",
-			__( 'Hey there,', 'user-feedback' ),
-			__( 'Someone just left some feedback regarding your site!', 'user-feedback' ),
+			__( 'Howdy,', 'user-feedback' ),
+			__( 'You just received a new user feedback regarding your website!', 'user-feedback' ),
 			__( 'Details:', 'user-feedback' ),
 			__( 'User Agent:', 'user-feedback' ),
 			$feedback['browser']['userAgent'],
@@ -146,7 +146,7 @@ final class User_Feedback {
 			$feedback['url'],
 			__( 'Additional Notes:', 'user-feedback' ),
 			$feedback['message'],
-			__( 'A screenshot of the page visited by the user is attached.', 'user-feedback' )
+			__( 'A screenshot of the visited page is attached.', 'user-feedback' )
 		);
 
 		wp_mail(
@@ -154,7 +154,7 @@ final class User_Feedback {
 			apply_filters( 'user_feedback_email_subject',
 				sprintf( '%s: %s',
 					get_bloginfo( 'name' ),
-					__( 'New User Feedback Received', 'user-feedback' )
+					__( 'New User Feedback', 'user-feedback' )
 				)
 			),
 			apply_filters( 'user_feedback_email_message', $message ),
