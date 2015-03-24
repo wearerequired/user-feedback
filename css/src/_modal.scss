@@ -57,7 +57,7 @@
 .user-feedback-modal__topbar {
 	padding-bottom: 10px;
 	border-bottom: 1px solid $color-light-gray;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 	overflow: hidden;
 }
 
@@ -77,11 +77,12 @@
 	width: 30px;
 	height: 30px;
 	padding: 0;
+	margin-top: -2px;
 	line-height: 30px;
 	cursor: pointer;
 	background: transparent;
 	color: $color-gray;
-	font-size: 16px;
+	font-size: 20px;
 	font-weight: normal;
 
 	&:focus,
