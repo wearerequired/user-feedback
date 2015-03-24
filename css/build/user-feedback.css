@@ -72,7 +72,7 @@
   right: 60px;
   z-index: 100000;
   cursor: pointer; }
-  #user-feedback-init-button:hover {
+  #user-feedback-init-button:focus, #user-feedback-init-button:hover {
     background: #13C7F4;
     border: 1px solid #13C7F4;
     color: #fff; }
@@ -197,8 +197,10 @@
   background: #00B9E6;
   color: #fff;
   border-radius: 100%;
+  border: 1px solid #00B9E6;
   width: 30px; }
-  .user-feedback-button-help:hover {
+  .user-feedback-button-help:focus, .user-feedback-button-help:hover {
+    border-color: #13C7F4;
     background: #13C7F4; }
 
 /**
@@ -273,8 +275,7 @@
   width: 30px;
   height: 30px;
   padding: 0;
-  margin-top: -2px;
-  line-height: 30px;
+  line-height: 28px;
   cursor: pointer;
   background: transparent;
   color: #999;
@@ -284,8 +285,9 @@
     background: transparent;
     color: #333; }
   .user-feedback-button-close:focus, .user-feedback-annotation-close:focus {
+    color: #13C7F4;
     border: 1px solid;
-    outline: 0; }
+    border-radius: 100%; }
 
 .user-feedback-modal__bottombar {
   clear: both; }

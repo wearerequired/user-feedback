@@ -83,6 +83,7 @@
 	z-index: 100000;
 	cursor: pointer;
 
+	&:focus,
 	&:hover {
 		background: $color-blue-hover;
 		border: 1px solid $color-blue-hover;

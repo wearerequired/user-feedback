@@ -31,6 +31,16 @@ var AppView = Backbone.View.extend({
     this.listenTo(this.wizard, 'sendData', this.send, this);
   },
 
+  events: {
+    'keydown': 'keydownHandler'
+  },
+
+  keydownHandler: function (e) {
+    if (!e.keyCode || e.keyCode === 27) {
+      this.reInitialize();
+    }
+  },
+
   toggleInitButton: function () {
     this.showInitButton = !this.showInitButton;
     this.render();
@@ -56,17 +66,22 @@ var AppView = Backbone.View.extend({
   render: function () {
     this.$el.children().detach();
 
+    this.$el.removeAttr('tabindex');
+
     // Render our button if it's not toggled or else the wizard
     if (this.showInitButton) {
       this.$el.append(this.initButton.render().el);
     } else {
-      // Only show bottom
       if (this.showBottomBar) {
         this.$el.append(this.bottomBar.render().el)
       }
+
       if (this.showWizard) {
         this.$el.append(this.wizard.render().el);
       }
+
+      this.$el.attr('tabindex', 0);
+      this.$el.focus();
     }
 
     return this;
