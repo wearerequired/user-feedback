@@ -25,60 +25,33 @@ var WizardStep4 = WizardStep.extend({
   },
 
   screenCapture: function (e) {
-    var that = this;
-
     // Hide UI before taking the screenshot
     jQuery('#user-feedback-bottombar').hide();
     jQuery('.user-feedback-modal').hide();
 
-    jQuery(document).mousemove(function (e) {
-      that.model.set('mouseX', e.pageX);
-      that.model.set('mouseY', e.pageY);
+    var recorder = RecordRTC(this.canvasView.canvas, {
+      type: 'canvas'
     });
+    recorder.startRecording();
 
-    this.count = 0;
-    this.images = [];
-    this.captureFrame();
-  },
-
-  captureFrame: function () {
     var that = this;
 
-    html2canvas(document.body).then(function (canvas) {
-      console.log("Screenshot " + that.count);
+    setTimeout(function() {
+      recorder.stopRecording(function(url) {
+        console.log(url);
+        window.open(url);
 
-      var context = canvas.getContext('2d');
-      var radius = 20;
-
-      console.log("Draw Circle for Mouse");
-
-      context.beginPath();
-      context.arc(that.model.get('mouseX'), that.model.get('mouseY'), radius, 0, 2 * Math.PI, false);
-      context.fillStyle = '#00B9E6';
-      context.fill();
-
-      that.images.push(canvas.toDataURL());
-      that.count++;
-
-      if (that.count == 60) {
-        console.log("Finished");
         // Show UI again
         jQuery('#user-feedback-bottombar').show();
         jQuery('.user-feedback-modal').show();
-
-        that.model.set('userScreenshot', that.images);
 
         // Show UI again
         jQuery('#user-feedback-bottombar').show();
         jQuery('.user-feedback-modal').show();
         that.trigger('nextStep');
+      });
+    }, 10000);
 
-        return;
-      }
-
-      console.log("Draw Circle for Mouse");
-      that.captureFrame();
-    });
   }
 });
 
