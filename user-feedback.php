@@ -224,7 +224,7 @@ final class User_Feedback {
 		 */
 		$theme = wp_get_theme();
 		global $template;
-		$current_template = str_replace( $theme->theme_root . '/' . $theme->stylesheet . '/', '', $template );
+		$current_template = basename( str_replace( $theme->theme_root . '/' . $theme->stylesheet . '/', '', $template ) );
 
 		/**
 		 * Get the current language.
