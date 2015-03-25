@@ -14,6 +14,7 @@
   display: block;
   font-size: 16px;
   line-height: 30px;
+  margin: 0;
   padding: 0 5px;
   border: 1px solid transparent; }
   .user-feedback-button:focus, .user-feedback-annotation-close:focus {
@@ -83,11 +84,13 @@
  * General Stylings
  */
 #user-feedback-container {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.5; }
   #user-feedback-container * {
     box-sizing: border-box; }
+  #user-feedback-container p {
+    font-size: 16px; }
   #user-feedback-container .hidden {
     display: none !important; }
 
@@ -162,7 +165,8 @@
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-          user-select: none; }
+          user-select: none;
+  border-top: 1px solid #999; }
 
 #user-feedback-bar-steps {
   float: left;
@@ -264,11 +268,13 @@
 .user-feedback-modal-title {
   float: left;
   margin: 0;
-  color: #00B9E6;
+  padding: 0;
+  color: #00B9E6 !important;
   font-size: 20px;
   line-height: 30px;
   font-weight: lighter;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif; }
 
 .user-feedback-button-close, .user-feedback-annotation-close {
   float: right;
@@ -350,7 +356,10 @@
   color: #999; }
   .user-feedback-additional-notes li {
     float: left;
-    width: 50%; }
+    width: 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; }
     #user-feedback-overview-screenshot .user-feedback-additional-notes li {
       float: none; }
 

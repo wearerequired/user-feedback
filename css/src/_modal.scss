@@ -64,11 +64,14 @@
 .user-feedback-modal-title {
 	float: left;
 	margin: 0;
-	color: $color-blue;
+	padding: 0;
+	// some people use !important for generic things like this. makes me sad :(
+	color: $color-blue !important;
 	font-size: 20px;
 	line-height: 30px;
 	font-weight: lighter;
 	text-transform: uppercase;
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
 // Close button in the upper right corner
@@ -173,6 +176,9 @@
 	li {
 		float: left;
 		width: 50%;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 
 		#user-feedback-overview-screenshot & {
 			float: none;

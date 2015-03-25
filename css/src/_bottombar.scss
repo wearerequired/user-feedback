@@ -16,6 +16,7 @@
 	box-sizing: border-box;
 	transform: translatez(0);
 	user-select: none;
+	border-top: 1px solid $color-gray;
 }
 
 #user-feedback-bar-steps {
