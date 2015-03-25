@@ -175,10 +175,10 @@ final class User_Feedback {
 		 *
 		 * For example, you could also load the plugin for non-logged-in users.
 		 *
-		 * @param bool $load_user_feedback Whether the user feedback script
-		 *                                 should be loaded or not. Defaults to true.
+		 * @param bool $load_user_feedback Whether the user feedback script should be loaded or not.
+		 *                                 Defaults to true for logged in users.
 		 */
-		$load_user_feedback = apply_filters( 'user_feedback_load', true );
+		$load_user_feedback = apply_filters( 'user_feedback_load', is_user_logged_in() );
 
 		/** @var bool $load_user_feedback */
 		if ( ! $load_user_feedback ) {
@@ -242,19 +242,19 @@ final class User_Feedback {
 		}
 
 		wp_localize_script( 'user-feedback', 'user_feedback', apply_filters( 'user_feedback_script_data', array(
-			'ajax_url'       => admin_url( 'admin-ajax.php' ),
-			'theme'          => array(
+			'ajax_url'  => admin_url( 'admin-ajax.php' ),
+			'theme'     => array(
 				'name'             => $theme->Name,
 				'stylesheet'       => $theme->stylesheet,
 				'current_template' => $current_template
 			),
-			'user'           => array(
+			'user'      => array(
 				'logged_in' => is_user_logged_in(),
 				'name'      => $userdata->display_name,
 				'email'     => $userdata->user_email,
 			),
-			'language'       => $language,
-			'templates'      => array(
+			'language'  => $language,
+			'templates' => array(
 				'button'                => array(
 					'label' => __( 'Feedback', 'user-feedback' ),
 				),
