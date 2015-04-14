@@ -1,5 +1,5 @@
 === User Feedback ===
-Contributors: swissspidy
+Contributors: wearerequired, swissspidy
 Donate link: http://required.ch/
 Tags: users, feedback, email, media, support
 Requires at least: 3.5.1
