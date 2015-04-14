@@ -85,7 +85,8 @@ final class User_Feedback {
 	 */
 	public static function save_image( $img ) {
 		// Strip the "data:image/png;base64," part and decode the image
-		$img = base64_decode( explode( ',', $img )[1] );
+		$img = explode( ',', $img );
+		$img = base64_decode( $img[1] );
 
 		if ( ! $img ) {
 			return false;
