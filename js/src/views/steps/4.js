@@ -4,6 +4,7 @@ var WizardStep = require('steps/step');
 var CanvasView = require('views/canvas');
 var userFeedbackModel = require('models/model');
 var template = require('templates/step-4');
+var html2canvas = require('html2canvas');
 
 var WizardStep4 = WizardStep.extend({
   className: 'user-feedback-wizard-step-4',

@@ -6,7 +6,6 @@ i18n:
   - 'makepot'
 js:
   - 'browserify'
-  - 'concat'
   - 'uglify'
 css:
   - 'sass'

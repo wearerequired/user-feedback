@@ -2,6 +2,7 @@
 
 var WizardStep = require('steps/step');
 var template = require('templates/step-5');
+var md5 = require('MD5');
 
 var WizardStep5 = WizardStep.extend({
   className: 'user-feedback-wizard-step-5',
