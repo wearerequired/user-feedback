@@ -733,7 +733,7 @@ var WizardStep = require(23);
 var CanvasView = require(16);
 var userFeedbackModel = require(2);
 var template = require(9);
-var html2canvas = require(37);
+window.html2canvas = require(37); // Apparently needs to be globally accessible
 
 var WizardStep4 = WizardStep.extend({
   className: 'user-feedback-wizard-step-4',
@@ -761,22 +761,22 @@ var WizardStep4 = WizardStep.extend({
     jQuery('#user-feedback-bottombar').hide();
     jQuery('.user-feedback-modal').hide();
 
-    html2canvas(jQuery('body'), {
-      onrendered: function (canvas) {
-        that.canvasView.redraw();
-        var _canvas = jQuery('<canvas id="user-feedback-canvas-tmp" width="' + jQuery(document).width() + '" height="' + jQuery(window).height() + '"/>').hide().appendTo('body');
-        var _ctx = _canvas.get(0).getContext('2d');
-        _ctx.drawImage(canvas, 0, jQuery(document).scrollTop(), jQuery(document).width(), jQuery(window).height(), 0, 0, jQuery(document).width(), jQuery(window).height());
+    html2canvas(document.body).then(function(canvas) {
+      that.canvasView.redraw();
+      var _canvas = jQuery('<canvas id="user-feedback-canvas-tmp" width="' + jQuery(document).width() + '" height="' + jQuery(window).height() + '"/>').hide().appendTo('body');
+      var _ctx = _canvas.get(0).getContext('2d');
+      _ctx.drawImage(canvas, 0, jQuery(document).scrollTop(), jQuery(document).width(), jQuery(window).height(), 0, 0, jQuery(document).width(), jQuery(window).height());
 
-        that.model.set('userScreenshot', _canvas.get(0).toDataURL());
-        jQuery('#user-feedback-canvas-tmp').remove();
+      that.model.set('userScreenshot', _canvas.get(0).toDataURL());
+      jQuery('#user-feedback-canvas-tmp').remove();
 
-        // Show UI again
-        jQuery('#user-feedback-bottombar').show();
-        jQuery('.user-feedback-modal').show();
+      // Show UI again
+      jQuery('#user-feedback-bottombar').show();
+      jQuery('.user-feedback-modal').show();
 
-        that.trigger('nextStep');
-      }
+      that.trigger('nextStep');
+    }, function(error) {
+      // Handle error
     });
   }
 });
