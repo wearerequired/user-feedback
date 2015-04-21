@@ -90,7 +90,8 @@
   #user-feedback-container * {
     box-sizing: border-box; }
   #user-feedback-container p {
-    font-size: 16px; }
+    font-size: 16px;
+    margin: 0 0 10px; }
   #user-feedback-container .hidden {
     display: none !important; }
 
