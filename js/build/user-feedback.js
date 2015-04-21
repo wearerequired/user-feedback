@@ -155,7 +155,7 @@ __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog"
 ((__t=( button.close ))==null?'':__t)+
 '\n\t\t</button>\n\t</div>\n\t<p>\n\t\t<textarea\n\t\t\t\tid="user-feedback-message"\n\t\t\t\tclass="user-feedback-textarea"\n\t\t\t\tplaceholder="'+
 ((__t=( placeholder.message ))==null?'':__t)+
-'"\n\t\t\t\ttabindex="1">\n\t\t</textarea>\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
+'"\n\t\t\t\ttabindex="1"></textarea>\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.primary ))==null?'':__t)+
 '\n\t\t</button>\n\t</div>\n</div>';
 }
