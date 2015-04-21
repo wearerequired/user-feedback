@@ -129,36 +129,60 @@ final class User_Feedback {
 			$attachments[] = $img;
 		}
 
-		// Send the email
-		$message = sprintf( "
-			%s\n\n
-			%s\n\n
-			%s\n
-			%s %s\n
-			%s %s\n\n
-			%s\n%s\n\n
-			%s",
-			__( 'Howdy,', 'user-feedback' ),
-			__( 'You just received a new user feedback regarding your website!', 'user-feedback' ),
-			__( 'Details:', 'user-feedback' ),
-			__( 'User Agent:', 'user-feedback' ),
-			$feedback['browser']['userAgent'],
-			__( 'Visited URL:', 'user-feedback' ),
-			$feedback['url'],
-			__( 'Additional Notes:', 'user-feedback' ),
-			$feedback['message'],
-			__( 'A screenshot of the visited page is attached.', 'user-feedback' )
-		);
+		$user_name  = stripslashes( $feedback['user']['name'] );
+		$user_email = stripslashes( $feedback['user']['email'] );
 
+		if ( empty( $user_name ) ) {
+			$user_name = __( 'Anonymous', 'user-feedback' );
+		}
+
+		if ( empty( $user_email ) ) {
+			$user_email = __( '(not provided)', 'user-feedback' );
+		}
+
+		$message = __( 'Howdy,', 'user-feedback' ) . "\r\n\r\n";
+		$message .= __( 'You just received a new user feedback regarding your website!', 'user-feedback' ) . "\r\n\r\n";
+		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
+		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
+		$message .= sprintf( __( 'Browser: %s (%s)', 'user-feedback' ), $feedback['browser']['name'], $feedback['browser']['userAgent'] ) . "\r\n";
+		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $feedback['url'] ) . "\r\n";
+		$message .= sprintf( __( 'Site Language: %s', 'user-feedback' ), $feedback['language'] ) . "\r\n";
+		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
+		$message .= stripslashes( $feedback['message'] ) . "\r\n\r\n";
+		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+
+		// Send email to the blog admin
 		wp_mail(
 			apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) ),
 			apply_filters( 'user_feedback_email_subject',
-				sprintf( '%s: %s',
-					get_bloginfo( 'name' ),
-					__( 'New User Feedback', 'user-feedback' )
-				)
+				sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_option( 'blogname' ) )
 			),
 			apply_filters( 'user_feedback_email_message', $message ),
+			'',
+			$img
+		);
+
+		if ( ! is_email( $user_email ) ) {
+			return;
+		}
+
+		$message = __( 'Howdy,', 'user-feedback' ) . "\r\n\r\n";
+		$message .= __( 'We just received the following feedback from you and will get in touch shortly. Thank you.', 'user-feedback' ) . "\r\n\r\n";
+		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
+		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
+		$message .= sprintf( __( 'Browser: %s', 'user-feedback' ), $feedback['browser']['name'] ) . "\r\n";
+		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $feedback['url'] ) . "\r\n";
+		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
+		$message .= stripslashes( $feedback['message'] ) . "\r\n\r\n";
+		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+
+		// Send email to the submitting user
+		wp_mail(
+			apply_filters( 'user_feedback_email_copy_address', $user_email ),
+			apply_filters( 'user_feedback_email_copy_subject',
+				sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_option( 'blogname' ) )
+			),
+			apply_filters( 'user_feedback_email_copy_message', $message ),
 			'',
 			$img
 		);
