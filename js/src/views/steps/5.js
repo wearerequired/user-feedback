@@ -33,6 +33,7 @@ var WizardStep5 = WizardStep.extend({
   },
 
   nextStep: function () {
+    this.model.set('userMessage', this.$el.find('#user-feedback-overview-note').val());
     this.trigger('sendData');
   }
 });
