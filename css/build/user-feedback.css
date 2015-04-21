@@ -384,7 +384,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100000; }
+  z-index: 100000;
+  cursor: crosshair; }
 
 .user-feedback-annotation {
   position: absolute;

@@ -552,19 +552,9 @@ var CanvasView = Backbone.View.extend({
     this.redraw();
     var tmpHighlighted = [];
 
-    jQuery(this.canvas).css('cursor', 'crosshair');
-
-    _.each(jQuery('* :not(body,script,iframe,div,section,.user-feedback-button,.user-feedback-modal *, #user-feedback-canvas)'), function (el) {
-      if (e.pageX > jQuery(el).offset().left && e.pageX < jQuery(el).offset().left + jQuery(el).width() && e.pageY > jQuery(el).offset().top + parseInt(jQuery(el).css('padding-top'), 10) && e.pageY < jQuery(el).offset().top + jQuery(el).height() + parseInt(jQuery(el).css('padding-top'), 10)) {
-        tmpHighlighted.push(jQuery(el));
-      }
-    }, this);
-
     var $toHighlight = tmpHighlighted[tmpHighlighted.length - 1];
 
     if ($toHighlight && !this.drag) {
-      jQuery(this.canvas).css('cursor', 'pointer');
-
       var _x = $toHighlight.offset().left - 2,
           _y = $toHighlight.offset().top - 2,
           _w = $toHighlight.width() + parseInt($toHighlight.css('padding-left'), 10) + parseInt($toHighlight.css('padding-right'), 10) + 6,
@@ -576,26 +566,9 @@ var CanvasView = Backbone.View.extend({
       _.each(jQuery('.user-feedback-annotation'), function (el) {
         this.clearRect(parseInt(jQuery(el).css('left'), 10), parseInt(jQuery(el).css('top'), 10), jQuery(el).width(), jQuery(el).height());
       }, this);
-
-      if (e.type == 'click' && e.pageX == this.rect.startX && e.pageY == this.rect.startY) {
-        jQuery('#user-feedback-annotations').append(template({
-          id       : this.annotationCount,
-          top      : _y,
-          left     : _x,
-          width    : _w,
-          height   : _h,
-          close    : user_feedback.templates.wizardStep4Annotation.close,
-          closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
-        }));
-        this.highlighted.push(this.annotationCount);
-        this.annotationCount++;
-        this.redraw();
-      }
     }
 
     if (this.drag && e.type == 'mousemove') {
-      jQuery('#user-feedback-highlighter').css('cursor', 'default');
-
       this.rect.w = (e.pageX - jQuery('#user-feedback-canvas').offset().left) - this.rect.startX;
       this.rect.h = (e.pageY - jQuery('#user-feedback-canvas').offset().top) - this.rect.startY;
 
@@ -647,7 +620,7 @@ var CanvasView = Backbone.View.extend({
     this.ctx.lineWidth = 1;
   },
 
-  clearRect: function(x, y, w, h) {
+  clearRect: function (x, y, w, h) {
     this.ctx.shadowColor = "transparent";
     this.ctx.strokeStyle = "transparent";
     this.ctx.clearRect(x, y, w, h);
