@@ -63,7 +63,7 @@ var UserFeedbackWizard = Backbone.View.extend({
     var currentStep = this.steps[this.model.get('currentWizardStep')];
     this.currentView = currentStep.view;
 
-    this.$el.html(this.currentView.render().el);
+    this.$el.html(this.currentView.render().el).focus();
 
     return this;
   },

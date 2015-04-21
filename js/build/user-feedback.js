@@ -63,11 +63,11 @@ __p+='<div id="user-feedback-bottombar">\n\t<ul id="user-feedback-bar-steps">\n\
 ((__t=( step.two ))==null?'':__t)+
 '</li>\n\t\t<li class="user-feedback-bar-step hidden" data-step="3">'+
 ((__t=( step.three ))==null?'':__t)+
-'</li>\n\t</ul>\n\t<button class="user-feedback-button user-feedback-button-help" title="'+
+'</li>\n\t</ul>\n\t<button\n\t\t\tclass="user-feedback-button user-feedback-button-help"\n\t\t\ttitle="'+
 ((__t=( button.helpAria ))==null?'':__t)+
-'" aria-label="'+
+'"\n\t\t\taria-label="'+
 ((__t=( button.helpAria ))==null?'':__t)+
-'">'+
+'"\n\t\t\ttabindex="3">'+
 ((__t=( button.help ))==null?'':__t)+
 '</button>\n</div>';
 }
@@ -78,7 +78,7 @@ return __p;
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<button\n\t\tid="user-feedback-init-button"\n\t\tclass="user-feedback-button user-feedback-button-gray"\n\t\taccesskey="u">\n\t'+
+__p+='<button\n\t\tid="user-feedback-init-button"\n\t\tclass="user-feedback-button user-feedback-button-gray"\n\t\taccesskey="u"\n\t\ttabindex="1">\n\t'+
 ((__t=( label ))==null?'':__t)+
 '\n</button>';
 }
@@ -91,25 +91,25 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
-'</h3>\n\t\t<button class="user-feedback-button user-feedback-button-close" title="'+
+'</h3>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-close"\n\t\t\t\ttitle="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'" aria-label="'+
+'"\n\t\t\t\taria-label="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'">'+
+'"\n\t\t\t\ttabindex="2">\n\t\t\t'+
 ((__t=( button.close ))==null?'':__t)+
-'</button>\n\t</div>\n\t<p>'+
+'\n\t\t</button>\n\t</div>\n\t<p>'+
 ((__t=( salutation ))==null?'':__t)+
 '</p>\n\n\t<p>'+
 ((__t=( intro ))==null?'':__t)+
-'</p>\n\n\t<p>\n\t\t<input type="text" class="user-feedback-input" id="user-feedback-user-name" placeholder="'+
+'</p>\n\n\t<p>\n\t\t<input\n\t\t\t\ttype="text"\n\t\t\t\tclass="user-feedback-input"\n\t\t\t\tid="user-feedback-user-name"\n\t\t\t\tplaceholder="'+
 ((__t=( placeholder.name ))==null?'':__t)+
-'">\n\t\t<input type="email" class="user-feedback-input" id="user-feedback-user-email" placeholder="'+
+'"\n\t\t\t\ttabindex="1">\n\t\t<input\n\t\t\t\ttype="email"\n\t\t\t\tclass="user-feedback-input"\n\t\t\t\tid="user-feedback-user-email"\n\t\t\t\tplaceholder="'+
 ((__t=( placeholder.email ))==null?'':__t)+
-'">\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-next user-feedback-button-primary">'+
+'"\n\t\t\t\ttabindex="1">\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t\t<button class="user-feedback-button user-feedback-button-next user-feedback-button-secondary">'+
+'\n\t\t</button>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-secondary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.secondary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
@@ -120,23 +120,23 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
-'</h3>\n\t\t<button class="user-feedback-button user-feedback-button-close" title="'+
+'</h3>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-close"\n\t\t\t\ttitle="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'" aria-label="'+
+'"\n\t\t\t\taria-label="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'">'+
+'"\n\t\t\t\ttabindex="2">\n\t\t\t'+
 ((__t=( button.close ))==null?'':__t)+
-'</button>\n\t</div>\n\t<p>'+
+'\n\t\t</button>\n\t</div>\n\t<p>'+
 ((__t=( salutation ))==null?'':__t)+
 '</p>\n\n\t<p>'+
 ((__t=( intro ))==null?'':__t)+
 '</p>\n\n\t<p>'+
 ((__t=( intro2 ))==null?'':__t)+
-'</p>\n\n\t<p>\n\t\t<input type="checkbox" value="1" id="user-feedback-do-not-show-again" />\n\t\t<label for="user-feedback-do-not-show-again">'+
+'</p>\n\n\t<p>\n\t\t<input type="checkbox" value="1" id="user-feedback-do-not-show-again" tabindex="1" />\n\t\t<label for="user-feedback-do-not-show-again">'+
 ((__t=( inputLabel ))==null?'':__t)+
-'</label>\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-next user-feedback-button-primary">'+
+'</label>\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
@@ -147,17 +147,17 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
-'</h3>\n\t\t<button class="user-feedback-button user-feedback-button-close" title="'+
+'</h3>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-close"\n\t\t\t\ttitle="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'" aria-label="'+
+'"\n\t\t\t\taria-label="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'">'+
+'"\n\t\t\t\ttabindex="2">\n\t\t\t'+
 ((__t=( button.close ))==null?'':__t)+
-'</button>\n\t</div>\n\t<p>\n\t\t<textarea id="user-feedback-message" class="user-feedback-textarea" placeholder="'+
+'\n\t\t</button>\n\t</div>\n\t<p>\n\t\t<textarea\n\t\t\t\tid="user-feedback-message"\n\t\t\t\tclass="user-feedback-textarea"\n\t\t\t\tplaceholder="'+
 ((__t=( placeholder.message ))==null?'':__t)+
-'"></textarea>\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-next user-feedback-button-primary">'+
+'"\n\t\t\t\ttabindex="1">\n\t\t</textarea>\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
@@ -168,17 +168,17 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
-'</h3>\n\t\t<button class="user-feedback-button user-feedback-button-close" title="'+
+'</h3>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-close"\n\t\t\t\ttitle="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'" aria-label="'+
+'"\n\t\t\t\taria-label="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'">'+
+'"\n\t\t\t\ttabindex="2">\n\t\t\t'+
 ((__t=( button.close ))==null?'':__t)+
-'</button>\n\t</div>\n\t<p>'+
+'\n\t\t</button>\n\t</div>\n\t<p>'+
 ((__t=( intro ))==null?'':__t)+
-'</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-primary user-feedback-button-screen-capture">'+
+'</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-primary user-feedback-button-screen-capture"\n\t\t\t\ttabindex="1">'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
@@ -191,9 +191,9 @@ __p+='<div class="user-feedback-modal user-feedback-modal-center" role="dialog">
 ((__t=( title ))==null?'':__t)+
 '</h3>\n\t</div>\n\t<div id="user-feedback-overview-description">\n\t\t<div id="user-feedback-overview-user">\n\t\t\t<img src="" width="40" height="40" alt="'+
 ((__t=( user.gravatarAlt ))==null?'':__t)+
-'" />\n\t\t\t<div>'+
+'" />\n\n\t\t\t<div>'+
 ((__t=( user.by ))==null?'':__t)+
-'</div>\n\t\t</div>\n\t\t<textarea id="user-feedback-overview-note" class="user-feedback-textarea"></textarea>\n\t\t<ul class="user-feedback-additional-notes">\n\t\t\t<li id="user-feedback-additional-theme">'+
+'</div>\n\t\t</div>\n\t\t<textarea id="user-feedback-overview-note" class="user-feedback-textarea" tabindex="1"></textarea>\n\t\t<ul class="user-feedback-additional-notes">\n\t\t\t<li id="user-feedback-additional-theme">'+
 ((__t=( details.theme ))==null?'':__t)+
 '</li>\n\t\t\t<li id="user-feedback-additional-browser">'+
 ((__t=( details.browser ))==null?'':__t)+
@@ -203,11 +203,11 @@ __p+='<div class="user-feedback-modal user-feedback-modal-center" role="dialog">
 ((__t=( details.language ))==null?'':__t)+
 '</li>\n\t\t</ul>\n\t</div>\n\t<div id="user-feedback-overview-screenshot">\n\t\t<img id="user-feedback-overview-screenshot-img" src="" alt="'+
 ((__t=( screenshotAlt ))==null?'':__t)+
-'" />\n\t</div>\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-next user-feedback-button-primary">'+
+'" />\n\t</div>\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t\t<button class="user-feedback-button user-feedback-button-previous user-feedback-button-secondary">'+
+'\n\t\t</button>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-previous user-feedback-button-secondary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.secondary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
@@ -222,11 +222,11 @@ __p+='<div class="user-feedback-modal user-feedback-modal-center" role="dialog">
 ((__t=( intro ))==null?'':__t)+
 '</p>\n\n\t<p>'+
 ((__t=( intro2 ))==null?'':__t)+
-'</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-done user-feedback-button-primary">'+
+'</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-done user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t\t<button class="user-feedback-button user-feedback-button-restart user-feedback-button-secondary">'+
+'\n\t\t</button>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-restart user-feedback-button-secondary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.secondary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
@@ -276,6 +276,9 @@ var AppView = Backbone.View.extend({
   el: '#user-feedback-container',
 
   initialize: function () {
+    // Change tabindex from admin bar skip link
+    jQuery('#wpadminbar .screen-reader-shortcut').first().attr('tabindex', '4');
+
     this.showInitButton = true;
     this.initButton = new UserFeedbackButton({model: userFeedbackModel});
     this.listenTo(this.initButton, 'toggleInitButton', this.toggleInitButton, this);
@@ -340,9 +343,6 @@ var AppView = Backbone.View.extend({
       if (this.showWizard) {
         this.$el.append(this.wizard.render().el);
       }
-
-      this.$el.attr('tabindex', 0);
-      this.$el.focus();
     }
 
     return this;
@@ -892,7 +892,7 @@ var UserFeedbackWizard = Backbone.View.extend({
     var currentStep = this.steps[this.model.get('currentWizardStep')];
     this.currentView = currentStep.view;
 
-    this.$el.html(this.currentView.render().el);
+    this.$el.html(this.currentView.render().el).focus();
 
     return this;
   },

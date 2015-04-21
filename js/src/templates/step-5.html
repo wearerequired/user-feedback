@@ -5,9 +5,10 @@
 	<div id="user-feedback-overview-description">
 		<div id="user-feedback-overview-user">
 			<img src="" width="40" height="40" alt="<%= user.gravatarAlt %>" />
+
 			<div><%= user.by %></div>
 		</div>
-		<textarea id="user-feedback-overview-note" class="user-feedback-textarea"></textarea>
+		<textarea id="user-feedback-overview-note" class="user-feedback-textarea" tabindex="1"></textarea>
 		<ul class="user-feedback-additional-notes">
 			<li id="user-feedback-additional-theme"><%= details.theme %></li>
 			<li id="user-feedback-additional-browser"><%= details.browser %></li>
@@ -19,7 +20,15 @@
 		<img id="user-feedback-overview-screenshot-img" src="" alt="<%= screenshotAlt %>" />
 	</div>
 	<div class="user-feedback-modal__bottombar">
-		<button class="user-feedback-button user-feedback-button-next user-feedback-button-primary"><%= button.primary %></button>
-		<button class="user-feedback-button user-feedback-button-previous user-feedback-button-secondary"><%= button.secondary %></button>
+		<button
+				class="user-feedback-button user-feedback-button-next user-feedback-button-primary"
+				tabindex="1">
+			<%= button.primary %>
+		</button>
+		<button
+				class="user-feedback-button user-feedback-button-previous user-feedback-button-secondary"
+				tabindex="1">
+			<%= button.secondary %>
+		</button>
 	</div>
 </div>
