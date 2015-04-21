@@ -11,6 +11,8 @@ var UserFeedbackBar = require('views/bottombar');
 // Wizard view that holds the individual view for each step
 var UserFeedbackWizard = require('views/wizard');
 
+window.navigator.saysWho = require('utils/browsername');
+
 var AppView = Backbone.View.extend({
   el: '#user-feedback-container',
 
@@ -99,7 +101,7 @@ var AppView = Backbone.View.extend({
     // Set up initial post data to be sent
     var post = {};
     post.browser = {};
-    post.browser.name = navigator.sayswho;
+    post.browser.name = navigator.saysWho;
     post.browser.cookieEnabled = navigator.cookieEnabled;
     post.browser.platform = navigator.platform;
     post.browser.userAgent = navigator.userAgent;

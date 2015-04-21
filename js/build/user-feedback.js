@@ -3086,7 +3086,7 @@ if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
 
 // Load required modules
 var userFeedbackModel = require(2);
-var AppView = require(12);
+var AppView = require(13);
 
 jQuery(document).ready(function ($) {
   // Only run if Canvas is supported
@@ -3096,7 +3096,7 @@ jQuery(document).ready(function ($) {
     appView.render();
   }
 });
-},{"12":12,"2":2}],2:[function(require,module,exports){
+},{"13":13,"2":2}],2:[function(require,module,exports){
 'use strict';
 
 var UserFeedbackModel = Backbone.Model.extend({});
@@ -3307,18 +3307,45 @@ return __p;
 };
 
 },{}],12:[function(require,module,exports){
+/**
+ * Detect browser name + version. Example: Chrome 40, Internet Explorer 12.
+ *
+ * A utility function we need later on.
+ *
+ * @see http://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser
+ */
+var saysWho = function () {
+  var ua = navigator.userAgent, tem,
+      M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+  if (/trident/i.test(M[1])) {
+    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+    return 'Internet Explorer ' + (tem[1] || '');
+  }
+  if (M[1] === 'Chrome') {
+    tem = ua.match(/\bOPR\/(\d+)/)
+    if (tem != null) return 'Opera ' + tem[1];
+  }
+  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+  if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+  return M.join(' ');
+};
+
+module.exports = saysWho;
+},{}],13:[function(require,module,exports){
 'use strict';
 
 var userFeedbackModel = require(2);
 
 // Create the view for our feedback button
-var UserFeedbackButton = require(14);
+var UserFeedbackButton = require(15);
 
 // Create the view for the bar at the bottom of the screen
-var UserFeedbackBar = require(13);
+var UserFeedbackBar = require(14);
 
 // Wizard view that holds the individual view for each step
-var UserFeedbackWizard = require(23);
+var UserFeedbackWizard = require(24);
+
+window.navigator.saysWho = require(12);
 
 var AppView = Backbone.View.extend({
   el: '#user-feedback-container',
@@ -3408,7 +3435,7 @@ var AppView = Backbone.View.extend({
     // Set up initial post data to be sent
     var post = {};
     post.browser = {};
-    post.browser.name = navigator.sayswho;
+    post.browser.name = navigator.saysWho;
     post.browser.cookieEnabled = navigator.cookieEnabled;
     post.browser.platform = navigator.platform;
     post.browser.userAgent = navigator.userAgent;
@@ -3440,7 +3467,7 @@ var AppView = Backbone.View.extend({
 });
 
 module.exports = AppView;
-},{"13":13,"14":14,"2":2,"23":23}],13:[function(require,module,exports){
+},{"12":12,"14":14,"15":15,"2":2,"24":24}],14:[function(require,module,exports){
 'use strict';
 
 var template = require(4);
@@ -3480,7 +3507,7 @@ var UserFeedbackBar = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackBar;
-},{"4":4}],14:[function(require,module,exports){
+},{"4":4}],15:[function(require,module,exports){
 'use strict';
 
 var template = require(5);
@@ -3508,7 +3535,7 @@ var UserFeedbackButton = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackButton;
-},{"5":5}],15:[function(require,module,exports){
+},{"5":5}],16:[function(require,module,exports){
 'use strict';
 
 var template = require(3);
@@ -3714,10 +3741,10 @@ var CanvasView = Backbone.View.extend({
 });
 
 module.exports = CanvasView;
-},{"3":3}],16:[function(require,module,exports){
+},{"3":3}],17:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(22);
+var WizardStep = require(23);
 var template = require(6);
 
 var WizardStep1 = WizardStep.extend({
@@ -3732,10 +3759,10 @@ var WizardStep1 = WizardStep.extend({
 });
 
 module.exports = WizardStep1;
-},{"22":22,"6":6}],17:[function(require,module,exports){
+},{"23":23,"6":6}],18:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(22);
+var WizardStep = require(23);
 var template = require(7);
 
 var WizardStep2 = WizardStep.extend({
@@ -3758,10 +3785,10 @@ var WizardStep2 = WizardStep.extend({
 });
 
 module.exports = WizardStep2;
-},{"22":22,"7":7}],18:[function(require,module,exports){
+},{"23":23,"7":7}],19:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(22);
+var WizardStep = require(23);
 var template = require(8);
 
 var WizardStep3 = WizardStep.extend({
@@ -3774,11 +3801,11 @@ var WizardStep3 = WizardStep.extend({
 });
 
 module.exports = WizardStep3;
-},{"22":22,"8":8}],19:[function(require,module,exports){
+},{"23":23,"8":8}],20:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(22);
-var CanvasView = require(15);
+var WizardStep = require(23);
+var CanvasView = require(16);
 var userFeedbackModel = require(2);
 var template = require(9);
 
@@ -3829,34 +3856,11 @@ var WizardStep4 = WizardStep.extend({
 });
 
 module.exports = WizardStep4;
-},{"15":15,"2":2,"22":22,"9":9}],20:[function(require,module,exports){
+},{"16":16,"2":2,"23":23,"9":9}],21:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(22);
+var WizardStep = require(23);
 var template = require(10);
-
-/**
- * Detect browser name + version. Example: Chrome 40, Internet Explorer 12.
- *
- * A utility function we need later on.
- *
- * @see http://stackoverflow.com/questions/5916900/how-can-you-detect-the-version-of-a-browser
- */
-navigator.saysWho = (function () {
-  var ua = navigator.userAgent, tem,
-      M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-  if (/trident/i.test(M[1])) {
-    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-    return 'Internet Explorer ' + (tem[1] || '');
-  }
-  if (M[1] === 'Chrome') {
-    tem = ua.match(/\bOPR\/(\d+)/)
-    if (tem != null) return 'Opera ' + tem[1];
-  }
-  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-  if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
-  return M.join(' ');
-})();
 
 var WizardStep5 = WizardStep.extend({
   className: 'user-feedback-wizard-step-5',
@@ -3893,10 +3897,10 @@ var WizardStep5 = WizardStep.extend({
 });
 
 module.exports = WizardStep5;
-},{"10":10,"22":22}],21:[function(require,module,exports){
+},{"10":10,"23":23}],22:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(22);
+var WizardStep = require(23);
 var template = require(11);
 
 var WizardStep6 = WizardStep.extend({
@@ -3905,7 +3909,7 @@ var WizardStep6 = WizardStep.extend({
 });
 
 module.exports = WizardStep6;
-},{"11":11,"22":22}],22:[function(require,module,exports){
+},{"11":11,"23":23}],23:[function(require,module,exports){
 'use strict';
 
 var WizardStep = Backbone.View.extend({
@@ -3921,15 +3925,15 @@ var WizardStep = Backbone.View.extend({
 });
 
 module.exports = WizardStep;
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 'use strict';
 
-var WizardStep1 = require(16);
-var WizardStep2 = require(17);
-var WizardStep3 = require(18);
-var WizardStep4 = require(19);
-var WizardStep5 = require(20);
-var WizardStep6 = require(21);
+var WizardStep1 = require(17);
+var WizardStep2 = require(18);
+var WizardStep3 = require(19);
+var WizardStep4 = require(20);
+var WizardStep5 = require(21);
+var WizardStep6 = require(22);
 var userFeedbackModel = require(2);
 
 var UserFeedbackWizard = Backbone.View.extend({
@@ -4067,4 +4071,4 @@ var UserFeedbackWizard = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackWizard;
-},{"16":16,"17":17,"18":18,"19":19,"2":2,"20":20,"21":21}]},{},[1]);
+},{"17":17,"18":18,"19":19,"2":2,"20":20,"21":21,"22":22}]},{},[1]);

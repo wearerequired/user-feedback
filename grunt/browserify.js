@@ -31,6 +31,11 @@ module.exports = {
             cwd   : 'js/src/templates',
             src   : '**/*.html',
             expose: 'templates'
+          },
+          {
+            cwd   : 'js/src/utils',
+            src   : '**/*.js',
+            expose: 'utils'
           }
         ]);
       }
