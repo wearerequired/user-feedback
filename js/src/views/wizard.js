@@ -5,7 +5,6 @@ var WizardStep2 = require('steps/2');
 var WizardStep3 = require('steps/3');
 var WizardStep4 = require('steps/4');
 var WizardStep5 = require('steps/5');
-var WizardStep6 = require('steps/6');
 var userFeedbackModel = require('models/model');
 
 var UserFeedbackWizard = Backbone.View.extend({
@@ -27,9 +26,6 @@ var UserFeedbackWizard = Backbone.View.extend({
     },
     {
       view: new WizardStep5({model: userFeedbackModel})
-    },
-    {
-      view: new WizardStep6({model: userFeedbackModel})
     }
   ],
 
@@ -63,7 +59,7 @@ var UserFeedbackWizard = Backbone.View.extend({
     var currentStep = this.steps[this.model.get('currentWizardStep')];
     this.currentView = currentStep.view;
 
-    this.$el.html(this.currentView.render().el);
+    this.$el.html(this.currentView.render().el).focus();
 
     return this;
   },

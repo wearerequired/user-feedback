@@ -102,6 +102,8 @@
 
 .user-feedback-modal__bottombar {
 	clear: both;
+	overflow: hidden;
+	margin-top: 20px;
 
 	.user-feedback-button {
 		float: left;

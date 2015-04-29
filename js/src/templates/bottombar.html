@@ -1,8 +1,12 @@
 <div id="user-feedback-bottombar">
 	<ul id="user-feedback-bar-steps">
-		<li class="user-feedback-bar-step" data-step="1"><%= step.one %></li>
+		<li class="user-feedback-bar-step" data-step="0"><%= step.one %></li>
 		<li class="user-feedback-bar-step hidden" data-step="2"><%= step.two %></li>
 		<li class="user-feedback-bar-step hidden" data-step="3"><%= step.three %></li>
 	</ul>
-	<button class="user-feedback-button user-feedback-button-help" title="<%= button.helpAria %>" aria-label="<%= button.helpAria %>"><%= button.help %></button>
+	<button
+			class="user-feedback-button user-feedback-button-help"
+			title="<%= button.helpAria %>"
+			aria-label="<%= button.helpAria %>"
+			tabindex="3"><%= button.help %></button>
 </div>

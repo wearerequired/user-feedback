@@ -17,6 +17,9 @@ var AppView = Backbone.View.extend({
   el: '#user-feedback-container',
 
   initialize: function () {
+    // Change tabindex from admin bar skip link
+    jQuery('#wpadminbar .screen-reader-shortcut').first().attr('tabindex', '4');
+
     this.showInitButton = true;
     this.initButton = new UserFeedbackButton({model: userFeedbackModel});
     this.listenTo(this.initButton, 'toggleInitButton', this.toggleInitButton, this);
@@ -81,9 +84,6 @@ var AppView = Backbone.View.extend({
       if (this.showWizard) {
         this.$el.append(this.wizard.render().el);
       }
-
-      this.$el.attr('tabindex', 0);
-      this.$el.focus();
     }
 
     return this;

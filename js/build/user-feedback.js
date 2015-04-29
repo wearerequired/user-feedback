@@ -11,7 +11,7 @@
 
 // Load required modules
 var userFeedbackModel = require(2);
-var AppView = require(13);
+var AppView = require(12);
 
 jQuery(document).ready(function ($) {
   // Only run if Canvas is supported
@@ -21,7 +21,7 @@ jQuery(document).ready(function ($) {
     appView.render();
   }
 });
-},{"13":13,"2":2}],2:[function(require,module,exports){
+},{"12":12,"2":2}],2:[function(require,module,exports){
 'use strict';
 
 var UserFeedbackModel = Backbone.Model.extend({});
@@ -57,17 +57,17 @@ return __p;
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div id="user-feedback-bottombar">\n\t<ul id="user-feedback-bar-steps">\n\t\t<li class="user-feedback-bar-step" data-step="1">'+
+__p+='<div id="user-feedback-bottombar">\n\t<ul id="user-feedback-bar-steps">\n\t\t<li class="user-feedback-bar-step" data-step="0">'+
 ((__t=( step.one ))==null?'':__t)+
 '</li>\n\t\t<li class="user-feedback-bar-step hidden" data-step="2">'+
 ((__t=( step.two ))==null?'':__t)+
 '</li>\n\t\t<li class="user-feedback-bar-step hidden" data-step="3">'+
 ((__t=( step.three ))==null?'':__t)+
-'</li>\n\t</ul>\n\t<button class="user-feedback-button user-feedback-button-help" title="'+
+'</li>\n\t</ul>\n\t<button\n\t\t\tclass="user-feedback-button user-feedback-button-help"\n\t\t\ttitle="'+
 ((__t=( button.helpAria ))==null?'':__t)+
-'" aria-label="'+
+'"\n\t\t\taria-label="'+
 ((__t=( button.helpAria ))==null?'':__t)+
-'">'+
+'"\n\t\t\ttabindex="3">'+
 ((__t=( button.help ))==null?'':__t)+
 '</button>\n</div>';
 }
@@ -78,7 +78,7 @@ return __p;
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<button\n\t\tid="user-feedback-init-button"\n\t\tclass="user-feedback-button user-feedback-button-gray"\n\t\taccesskey="u">\n\t'+
+__p+='<button\n\t\tid="user-feedback-init-button"\n\t\tclass="user-feedback-button user-feedback-button-gray"\n\t\taccesskey="u"\n\t\ttabindex="1">\n\t'+
 ((__t=( label ))==null?'':__t)+
 '\n</button>';
 }
@@ -91,25 +91,25 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
-'</h3>\n\t\t<button class="user-feedback-button user-feedback-button-close" title="'+
+'</h3>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-close"\n\t\t\t\ttitle="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'" aria-label="'+
+'"\n\t\t\t\taria-label="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'">'+
+'"\n\t\t\t\ttabindex="2">\n\t\t\t'+
 ((__t=( button.close ))==null?'':__t)+
-'</button>\n\t</div>\n\t<p>'+
+'\n\t\t</button>\n\t</div>\n\t<p>'+
 ((__t=( salutation ))==null?'':__t)+
 '</p>\n\n\t<p>'+
 ((__t=( intro ))==null?'':__t)+
-'</p>\n\n\t<p>\n\t\t<input type="text" class="user-feedback-input" id="user-feedback-user-name" placeholder="'+
+'</p>\n\n\t<p>\n\t\t<input\n\t\t\t\ttype="text"\n\t\t\t\tclass="user-feedback-input"\n\t\t\t\tid="user-feedback-user-name"\n\t\t\t\tplaceholder="'+
 ((__t=( placeholder.name ))==null?'':__t)+
-'">\n\t\t<input type="email" class="user-feedback-input" id="user-feedback-user-email" placeholder="'+
+'"\n\t\t\t\ttabindex="1">\n\t\t<input\n\t\t\t\ttype="email"\n\t\t\t\tclass="user-feedback-input"\n\t\t\t\tid="user-feedback-user-email"\n\t\t\t\tplaceholder="'+
 ((__t=( placeholder.email ))==null?'':__t)+
-'">\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-next user-feedback-button-primary">'+
+'"\n\t\t\t\ttabindex="1">\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t\t<button class="user-feedback-button user-feedback-button-next user-feedback-button-secondary">'+
+'\n\t\t</button>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-secondary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.secondary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
@@ -120,23 +120,23 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
-'</h3>\n\t\t<button class="user-feedback-button user-feedback-button-close" title="'+
+'</h3>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-close"\n\t\t\t\ttitle="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'" aria-label="'+
+'"\n\t\t\t\taria-label="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'">'+
+'"\n\t\t\t\ttabindex="2">\n\t\t\t'+
 ((__t=( button.close ))==null?'':__t)+
-'</button>\n\t</div>\n\t<p>'+
+'\n\t\t</button>\n\t</div>\n\t<p>'+
 ((__t=( salutation ))==null?'':__t)+
 '</p>\n\n\t<p>'+
 ((__t=( intro ))==null?'':__t)+
 '</p>\n\n\t<p>'+
 ((__t=( intro2 ))==null?'':__t)+
-'</p>\n\n\t<p>\n\t\t<input type="checkbox" value="1" id="user-feedback-do-not-show-again" />\n\t\t<label for="user-feedback-do-not-show-again">'+
+'</p>\n\n\t<p>\n\t\t<input type="checkbox" value="1" id="user-feedback-do-not-show-again" tabindex="1" />\n\t\t<label for="user-feedback-do-not-show-again">'+
 ((__t=( inputLabel ))==null?'':__t)+
-'</label>\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-next user-feedback-button-primary">'+
+'</label>\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
@@ -147,17 +147,17 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
-'</h3>\n\t\t<button class="user-feedback-button user-feedback-button-close" title="'+
+'</h3>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-close"\n\t\t\t\ttitle="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'" aria-label="'+
+'"\n\t\t\t\taria-label="'+
 ((__t=( button.closeAria ))==null?'':__t)+
-'">'+
+'"\n\t\t\t\ttabindex="2">\n\t\t\t'+
 ((__t=( button.close ))==null?'':__t)+
-'</button>\n\t</div>\n\t<p>\n\t\t<textarea id="user-feedback-message" class="user-feedback-textarea" placeholder="'+
-((__t=( placeholder.message ))==null?'':__t)+
-'"></textarea>\n\t</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-next user-feedback-button-primary">'+
+'\n\t\t</button>\n\t</div>\n\t<p>'+
+((__t=( intro ))==null?'':__t)+
+'</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-primary user-feedback-button-screen-capture"\n\t\t\t\ttabindex="1">'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
@@ -166,19 +166,29 @@ return __p;
 module.exports = function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="user-feedback-modal user-feedback-modal-pointer" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
+__p+='<div class="user-feedback-modal user-feedback-modal-center" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
-'</h3>\n\t\t<button class="user-feedback-button user-feedback-button-close" title="'+
-((__t=( button.closeAria ))==null?'':__t)+
-'" aria-label="'+
-((__t=( button.closeAria ))==null?'':__t)+
-'">'+
-((__t=( button.close ))==null?'':__t)+
-'</button>\n\t</div>\n\t<p>'+
-((__t=( intro ))==null?'':__t)+
-'</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-primary user-feedback-button-screen-capture">'+
+'</h3>\n\t</div>\n\t<div id="user-feedback-overview-description">\n\t\t<div id="user-feedback-overview-user">\n\t\t\t<img src="" width="40" height="40" alt="'+
+((__t=( user.gravatarAlt ))==null?'':__t)+
+'" />\n\n\t\t\t<div>'+
+((__t=( user.by ))==null?'':__t)+
+'</div>\n\t\t</div>\n\t\t<textarea\n\t\t\t\tid="user-feedback-overview-note"\n\t\t\t\tclass="user-feedback-textarea"\n\t\t\t\ttabindex="1"\n\t\t\t\tplaceholder="'+
+((__t=( placeholder.message ))==null?'':__t)+
+'"></textarea>\n\t\t<ul class="user-feedback-additional-notes">\n\t\t\t<li id="user-feedback-additional-theme">'+
+((__t=( details.theme ))==null?'':__t)+
+'</li>\n\t\t\t<li id="user-feedback-additional-browser">'+
+((__t=( details.browser ))==null?'':__t)+
+'</li>\n\t\t\t<li id="user-feedback-additional-template">'+
+((__t=( details.template ))==null?'':__t)+
+'</li>\n\t\t\t<li id="user-feedback-additional-language">'+
+((__t=( details.language ))==null?'':__t)+
+'</li>\n\t\t</ul>\n\t</div>\n\t<div id="user-feedback-overview-screenshot">\n\t\t<img id="user-feedback-overview-screenshot-img" src="" alt="'+
+((__t=( screenshotAlt ))==null?'':__t)+
+'" />\n\t</div>\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-next user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-previous user-feedback-button-secondary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
+((__t=( button.secondary ))==null?'':__t)+
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
@@ -189,49 +199,20 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="user-feedback-modal user-feedback-modal-center" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
-'</h3>\n\t</div>\n\t<div id="user-feedback-overview-description">\n\t\t<div id="user-feedback-overview-user">\n\t\t\t<img src="" width="40" height="40" alt="'+
-((__t=( user.gravatarAlt ))==null?'':__t)+
-'" />\n\t\t\t<div>'+
-((__t=( user.by ))==null?'':__t)+
-'</div>\n\t\t</div>\n\t\t<textarea id="user-feedback-overview-note" class="user-feedback-textarea"></textarea>\n\t\t<ul class="user-feedback-additional-notes">\n\t\t\t<li id="user-feedback-additional-theme">'+
-((__t=( details.theme ))==null?'':__t)+
-'</li>\n\t\t\t<li id="user-feedback-additional-browser">'+
-((__t=( details.browser ))==null?'':__t)+
-'</li>\n\t\t\t<li id="user-feedback-additional-template">'+
-((__t=( details.template ))==null?'':__t)+
-'</li>\n\t\t\t<li id="user-feedback-additional-language">'+
-((__t=( details.language ))==null?'':__t)+
-'</li>\n\t\t</ul>\n\t</div>\n\t<div id="user-feedback-overview-screenshot">\n\t\t<img id="user-feedback-overview-screenshot-img" src="" alt="'+
-((__t=( screenshotAlt ))==null?'':__t)+
-'" />\n\t</div>\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-next user-feedback-button-primary">'+
+'</h3>\n\t</div>\n\t<p>'+
+((__t=( intro ))==null?'':__t)+
+'</p>\n\n\t<p>'+
+((__t=( intro2 ))==null?'':__t)+
+'</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-done user-feedback-button-primary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t\t<button class="user-feedback-button user-feedback-button-previous user-feedback-button-secondary">'+
+'\n\t\t</button>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-restart user-feedback-button-secondary"\n\t\t\t\ttabindex="1">\n\t\t\t'+
 ((__t=( button.secondary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
+'\n\t\t</button>\n\t</div>\n</div>';
 }
 return __p;
 };
 
 },{}],11:[function(require,module,exports){
-module.exports = function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<div class="user-feedback-modal user-feedback-modal-center" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
-((__t=( title ))==null?'':__t)+
-'</h3>\n\t</div>\n\t<p>'+
-((__t=( intro ))==null?'':__t)+
-'</p>\n\n\t<p>'+
-((__t=( intro2 ))==null?'':__t)+
-'</p>\n\n\t<div class="user-feedback-modal__bottombar">\n\t\t<button class="user-feedback-button user-feedback-button-done user-feedback-button-primary">'+
-((__t=( button.primary ))==null?'':__t)+
-'</button>\n\t\t<button class="user-feedback-button user-feedback-button-restart user-feedback-button-secondary">'+
-((__t=( button.secondary ))==null?'':__t)+
-'</button>\n\t</div>\n</div>';
-}
-return __p;
-};
-
-},{}],12:[function(require,module,exports){
 /**
  * Detect browser name + version. Example: Chrome 40, Internet Explorer 12.
  *
@@ -256,26 +237,29 @@ var saysWho = function () {
 };
 
 module.exports = saysWho;
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 var userFeedbackModel = require(2);
 
 // Create the view for our feedback button
-var UserFeedbackButton = require(15);
+var UserFeedbackButton = require(14);
 
 // Create the view for the bar at the bottom of the screen
-var UserFeedbackBar = require(14);
+var UserFeedbackBar = require(13);
 
 // Wizard view that holds the individual view for each step
-var UserFeedbackWizard = require(24);
+var UserFeedbackWizard = require(22);
 
-window.navigator.saysWho = require(12);
+window.navigator.saysWho = require(11);
 
 var AppView = Backbone.View.extend({
   el: '#user-feedback-container',
 
   initialize: function () {
+    // Change tabindex from admin bar skip link
+    jQuery('#wpadminbar .screen-reader-shortcut').first().attr('tabindex', '4');
+
     this.showInitButton = true;
     this.initButton = new UserFeedbackButton({model: userFeedbackModel});
     this.listenTo(this.initButton, 'toggleInitButton', this.toggleInitButton, this);
@@ -340,9 +324,6 @@ var AppView = Backbone.View.extend({
       if (this.showWizard) {
         this.$el.append(this.wizard.render().el);
       }
-
-      this.$el.attr('tabindex', 0);
-      this.$el.focus();
     }
 
     return this;
@@ -392,7 +373,7 @@ var AppView = Backbone.View.extend({
 });
 
 module.exports = AppView;
-},{"12":12,"14":14,"15":15,"2":2,"24":24}],14:[function(require,module,exports){
+},{"11":11,"13":13,"14":14,"2":2,"22":22}],13:[function(require,module,exports){
 'use strict';
 
 var template = require(4);
@@ -432,7 +413,7 @@ var UserFeedbackBar = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackBar;
-},{"4":4}],15:[function(require,module,exports){
+},{"4":4}],14:[function(require,module,exports){
 'use strict';
 
 var template = require(5);
@@ -460,13 +441,13 @@ var UserFeedbackButton = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackButton;
-},{"5":5}],16:[function(require,module,exports){
+},{"5":5}],15:[function(require,module,exports){
 'use strict';
 
 var template = require(3);
 
 var CanvasView = Backbone.View.extend({
-  className: 'user-feedback-wizard-step-4-canvas',
+  className: 'user-feedback-wizard-step-3-canvas',
   template : _.template('<canvas id="user-feedback-canvas"></canvas><div id="user-feedback-annotations"></div>'),
 
   initialize: function () {
@@ -531,8 +512,8 @@ var CanvasView = Backbone.View.extend({
       left     : dleft,
       width    : dwidth,
       height   : dheight,
-      close    : user_feedback.templates.wizardStep4Annotation.close,
-      closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
+      close    : user_feedback.templates.wizardStep3Annotation.close,
+      closeAria: user_feedback.templates.wizardStep3Annotation.closeAria
     }));
     this.annotationCount++;
 
@@ -552,19 +533,9 @@ var CanvasView = Backbone.View.extend({
     this.redraw();
     var tmpHighlighted = [];
 
-    jQuery(this.canvas).css('cursor', 'crosshair');
-
-    _.each(jQuery('* :not(body,script,iframe,div,section,.user-feedback-button,.user-feedback-modal *, #user-feedback-canvas)'), function (el) {
-      if (e.pageX > jQuery(el).offset().left && e.pageX < jQuery(el).offset().left + jQuery(el).width() && e.pageY > jQuery(el).offset().top + parseInt(jQuery(el).css('padding-top'), 10) && e.pageY < jQuery(el).offset().top + jQuery(el).height() + parseInt(jQuery(el).css('padding-top'), 10)) {
-        tmpHighlighted.push(jQuery(el));
-      }
-    }, this);
-
     var $toHighlight = tmpHighlighted[tmpHighlighted.length - 1];
 
     if ($toHighlight && !this.drag) {
-      jQuery(this.canvas).css('cursor', 'pointer');
-
       var _x = $toHighlight.offset().left - 2,
           _y = $toHighlight.offset().top - 2,
           _w = $toHighlight.width() + parseInt($toHighlight.css('padding-left'), 10) + parseInt($toHighlight.css('padding-right'), 10) + 6,
@@ -576,26 +547,9 @@ var CanvasView = Backbone.View.extend({
       _.each(jQuery('.user-feedback-annotation'), function (el) {
         this.clearRect(parseInt(jQuery(el).css('left'), 10), parseInt(jQuery(el).css('top'), 10), jQuery(el).width(), jQuery(el).height());
       }, this);
-
-      if (e.type == 'click' && e.pageX == this.rect.startX && e.pageY == this.rect.startY) {
-        jQuery('#user-feedback-annotations').append(template({
-          id       : this.annotationCount,
-          top      : _y,
-          left     : _x,
-          width    : _w,
-          height   : _h,
-          close    : user_feedback.templates.wizardStep4Annotation.close,
-          closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
-        }));
-        this.highlighted.push(this.annotationCount);
-        this.annotationCount++;
-        this.redraw();
-      }
     }
 
     if (this.drag && e.type == 'mousemove') {
-      jQuery('#user-feedback-highlighter').css('cursor', 'default');
-
       this.rect.w = (e.pageX - jQuery('#user-feedback-canvas').offset().left) - this.rect.startX;
       this.rect.h = (e.pageY - jQuery('#user-feedback-canvas').offset().top) - this.rect.startY;
 
@@ -647,7 +601,7 @@ var CanvasView = Backbone.View.extend({
     this.ctx.lineWidth = 1;
   },
 
-  clearRect: function(x, y, w, h) {
+  clearRect: function (x, y, w, h) {
     this.ctx.shadowColor = "transparent";
     this.ctx.strokeStyle = "transparent";
     this.ctx.clearRect(x, y, w, h);
@@ -666,10 +620,10 @@ var CanvasView = Backbone.View.extend({
 });
 
 module.exports = CanvasView;
-},{"3":3}],17:[function(require,module,exports){
+},{"3":3}],16:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(23);
+var WizardStep = require(21);
 var template = require(6);
 
 var WizardStep1 = WizardStep.extend({
@@ -684,10 +638,10 @@ var WizardStep1 = WizardStep.extend({
 });
 
 module.exports = WizardStep1;
-},{"23":23,"6":6}],18:[function(require,module,exports){
+},{"21":21,"6":6}],17:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(23);
+var WizardStep = require(21);
 var template = require(7);
 
 var WizardStep2 = WizardStep.extend({
@@ -710,34 +664,18 @@ var WizardStep2 = WizardStep.extend({
 });
 
 module.exports = WizardStep2;
-},{"23":23,"7":7}],19:[function(require,module,exports){
+},{"21":21,"7":7}],18:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(23);
+var WizardStep = require(21);
+var CanvasView = require(15);
+var userFeedbackModel = require(2);
 var template = require(8);
+window.html2canvas = require(35); // Apparently needs to be globally accessible
 
 var WizardStep3 = WizardStep.extend({
   className: 'user-feedback-wizard-step-3',
   template : template(user_feedback.templates.wizardStep3),
-
-  nextStep: function () {
-    this.model.set('userMessage', jQuery(document.getElementById('user-feedback-message')).val());
-  }
-});
-
-module.exports = WizardStep3;
-},{"23":23,"8":8}],20:[function(require,module,exports){
-'use strict';
-
-var WizardStep = require(23);
-var CanvasView = require(16);
-var userFeedbackModel = require(2);
-var template = require(9);
-window.html2canvas = require(37); // Apparently needs to be globally accessible
-
-var WizardStep4 = WizardStep.extend({
-  className: 'user-feedback-wizard-step-4',
-  template : template(user_feedback.templates.wizardStep4),
 
   events: {
     'click .user-feedback-button-screen-capture': 'screenCapture'
@@ -781,17 +719,17 @@ var WizardStep4 = WizardStep.extend({
   }
 });
 
-module.exports = WizardStep4;
-},{"16":16,"2":2,"23":23,"37":37,"9":9}],21:[function(require,module,exports){
+module.exports = WizardStep3;
+},{"15":15,"2":2,"21":21,"35":35,"8":8}],19:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(23);
-var template = require(10);
-var md5 = require(25);
+var WizardStep = require(21);
+var template = require(9);
+var md5 = require(23);
 
-var WizardStep5 = WizardStep.extend({
-  className: 'user-feedback-wizard-step-5',
-  template : template(user_feedback.templates.wizardStep5),
+var WizardStep4 = WizardStep.extend({
+  className: 'user-feedback-wizard-step-4',
+  template : template(user_feedback.templates.wizardStep4),
 
   render: function () {
     this.$el.html(this.template);
@@ -824,20 +762,20 @@ var WizardStep5 = WizardStep.extend({
   }
 });
 
-module.exports = WizardStep5;
-},{"10":10,"23":23,"25":25}],22:[function(require,module,exports){
+module.exports = WizardStep4;
+},{"21":21,"23":23,"9":9}],20:[function(require,module,exports){
 'use strict';
 
-var WizardStep = require(23);
-var template = require(11);
+var WizardStep = require(21);
+var template = require(10);
 
-var WizardStep6 = WizardStep.extend({
-  className: 'user-feedback-wizard-step-6',
-  template : template(user_feedback.templates.wizardStep6)
+var WizardStep5 = WizardStep.extend({
+  className: 'user-feedback-wizard-step-5',
+  template : template(user_feedback.templates.wizardStep5)
 });
 
-module.exports = WizardStep6;
-},{"11":11,"23":23}],23:[function(require,module,exports){
+module.exports = WizardStep5;
+},{"10":10,"21":21}],21:[function(require,module,exports){
 'use strict';
 
 var WizardStep = Backbone.View.extend({
@@ -853,15 +791,14 @@ var WizardStep = Backbone.View.extend({
 });
 
 module.exports = WizardStep;
-},{}],24:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
-var WizardStep1 = require(17);
-var WizardStep2 = require(18);
-var WizardStep3 = require(19);
-var WizardStep4 = require(20);
-var WizardStep5 = require(21);
-var WizardStep6 = require(22);
+var WizardStep1 = require(16);
+var WizardStep2 = require(17);
+var WizardStep3 = require(18);
+var WizardStep4 = require(19);
+var WizardStep5 = require(20);
 var userFeedbackModel = require(2);
 
 var UserFeedbackWizard = Backbone.View.extend({
@@ -883,9 +820,6 @@ var UserFeedbackWizard = Backbone.View.extend({
     },
     {
       view: new WizardStep5({model: userFeedbackModel})
-    },
-    {
-      view: new WizardStep6({model: userFeedbackModel})
     }
   ],
 
@@ -919,7 +853,7 @@ var UserFeedbackWizard = Backbone.View.extend({
     var currentStep = this.steps[this.model.get('currentWizardStep')];
     this.currentView = currentStep.view;
 
-    this.$el.html(this.currentView.render().el);
+    this.$el.html(this.currentView.render().el).focus();
 
     return this;
   },
@@ -999,12 +933,12 @@ var UserFeedbackWizard = Backbone.View.extend({
 });
 
 module.exports = UserFeedbackWizard;
-},{"17":17,"18":18,"19":19,"2":2,"20":20,"21":21,"22":22}],25:[function(require,module,exports){
+},{"16":16,"17":17,"18":18,"19":19,"2":2,"20":20}],23:[function(require,module,exports){
 (function (Buffer){
 (function(){
-  var crypt = require(27),
-      utf8 = require(26).utf8,
-      bin = require(26).bin,
+  var crypt = require(25),
+      utf8 = require(24).utf8,
+      bin = require(24).bin,
 
   // The core
   md5 = function (message, options) {
@@ -1162,8 +1096,8 @@ module.exports = UserFeedbackWizard;
 
 })();
 
-}).call(this,require(28).Buffer)
-},{"26":26,"27":27,"28":28}],26:[function(require,module,exports){
+}).call(this,require(26).Buffer)
+},{"24":24,"25":25,"26":26}],24:[function(require,module,exports){
 var charenc = {
   // UTF-8 encoding
   utf8: {
@@ -1198,7 +1132,7 @@ var charenc = {
 
 module.exports = charenc;
 
-},{}],27:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function() {
   var base64map
       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
@@ -1296,7 +1230,7 @@ module.exports = charenc;
   module.exports = crypt;
 })();
 
-},{}],28:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -1304,9 +1238,9 @@ module.exports = charenc;
  * @license  MIT
  */
 
-var base64 = require(29)
-var ieee754 = require(30)
-var isArray = require(31)
+var base64 = require(27)
+var ieee754 = require(28)
+var isArray = require(29)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -2632,7 +2566,7 @@ function decodeUtf8Char (str) {
   }
 }
 
-},{"29":29,"30":30,"31":31}],29:[function(require,module,exports){
+},{"27":27,"28":28,"29":29}],27:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -2758,7 +2692,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],30:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 exports.read = function(buffer, offset, isLE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -2844,7 +2778,7 @@ exports.write = function(buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],31:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 
 /**
  * isArray
@@ -2879,7 +2813,7 @@ module.exports = isArray || function (val) {
   return !! val && '[object Array]' == str.call(val);
 };
 
-},{}],32:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2939,7 +2873,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],33:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 (function (global){
 /*! http://mths.be/punycode v1.2.4 by @mathias */
 ;(function(root) {
@@ -3450,7 +3384,7 @@ process.umask = function() { return 0; };
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],34:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 (function (process,global){
 /*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
@@ -4410,10 +4344,10 @@ process.umask = function() { return 0; };
 }).call(this);
 
 
-}).call(this,require(32),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"32":32}],35:[function(require,module,exports){
-var log = require(46);
-var Promise = require(49);
+}).call(this,require(30),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"30":30}],33:[function(require,module,exports){
+var log = require(44);
+var Promise = require(47);
 
 var html2canvasCanvasCloneAttribute = "data-html2canvas-canvas-clone";
 var html2canvasCanvasCloneIndex = 0;
@@ -4538,7 +4472,7 @@ module.exports = function(ownerDocument, containerDocument, width, height, optio
     });
 };
 
-},{"46":46,"49":49}],36:[function(require,module,exports){
+},{"44":44,"47":47}],34:[function(require,module,exports){
 // http://dev.w3.org/csswg/css-color/
 
 function Color(value) {
@@ -4811,17 +4745,17 @@ var colors = {
 
 module.exports = Color;
 
-},{}],37:[function(require,module,exports){
-var Promise = require(49);
-var Support = require(56);
-var CanvasRenderer = require(54);
-var ImageLoader = require(44);
-var NodeParser = require(48);
-var NodeContainer = require(47);
-var log = require(46);
-var utils = require(60);
-var createWindowClone = require(35);
-var loadUrlDocument = require(50).loadUrlDocument;
+},{}],35:[function(require,module,exports){
+var Promise = require(47);
+var Support = require(54);
+var CanvasRenderer = require(52);
+var ImageLoader = require(42);
+var NodeParser = require(46);
+var NodeContainer = require(45);
+var log = require(44);
+var utils = require(58);
+var createWindowClone = require(33);
+var loadUrlDocument = require(48).loadUrlDocument;
 var getBounds = utils.getBounds;
 
 var html2canvasNodeAttribute = "data-html2canvas-node";
@@ -4960,10 +4894,10 @@ function absoluteUrl(url) {
     return link;
 }
 
-},{"35":35,"44":44,"46":46,"47":47,"48":48,"49":49,"50":50,"54":54,"56":56,"60":60}],38:[function(require,module,exports){
-var Promise = require(49);
-var log = require(46);
-var smallImage = require(60).smallImage;
+},{"33":33,"42":42,"44":44,"45":45,"46":46,"47":47,"48":48,"52":52,"54":54,"58":58}],36:[function(require,module,exports){
+var Promise = require(47);
+var log = require(44);
+var smallImage = require(58).smallImage;
 
 function DummyImageContainer(src) {
     this.src = src;
@@ -4985,8 +4919,8 @@ function DummyImageContainer(src) {
 
 module.exports = DummyImageContainer;
 
-},{"46":46,"49":49,"60":60}],39:[function(require,module,exports){
-var smallImage = require(60).smallImage;
+},{"44":44,"47":47,"58":58}],37:[function(require,module,exports){
+var smallImage = require(58).smallImage;
 
 function Font(family, size) {
     var container = document.createElement('div'),
@@ -5039,8 +4973,8 @@ function Font(family, size) {
 
 module.exports = Font;
 
-},{"60":60}],40:[function(require,module,exports){
-var Font = require(39);
+},{"58":58}],38:[function(require,module,exports){
+var Font = require(37);
 
 function FontMetrics() {
     this.data = {};
@@ -5055,11 +4989,11 @@ FontMetrics.prototype.getMetrics = function(family, size) {
 
 module.exports = FontMetrics;
 
-},{"39":39}],41:[function(require,module,exports){
-var utils = require(60);
-var Promise = require(49);
+},{"37":37}],39:[function(require,module,exports){
+var utils = require(58);
+var Promise = require(47);
 var getBounds = utils.getBounds;
-var loadUrlDocument = require(50).loadUrlDocument;
+var loadUrlDocument = require(48).loadUrlDocument;
 
 function FrameContainer(container, sameOrigin, options) {
     this.image = null;
@@ -5075,7 +5009,7 @@ function FrameContainer(container, sameOrigin, options) {
             resolve(container);
         }
     })).then(function(container) {
-        var html2canvas = require(37);
+        var html2canvas = require(35);
         return html2canvas(container.contentWindow.document.documentElement, {type: 'view', width: container.width, height: container.height, proxy: options.proxy, javascriptEnabled: options.javascriptEnabled, removeContainer: options.removeContainer, allowTaint: options.allowTaint, imageTimeout: options.imageTimeout / 2});
     }).then(function(canvas) {
         return self.image = canvas;
@@ -5089,8 +5023,8 @@ FrameContainer.prototype.proxyLoad = function(proxy, bounds, options) {
 
 module.exports = FrameContainer;
 
-},{"37":37,"49":49,"50":50,"60":60}],42:[function(require,module,exports){
-var Promise = require(49);
+},{"35":35,"47":47,"48":48,"58":58}],40:[function(require,module,exports){
+var Promise = require(47);
 
 function GradientContainer(imageData) {
     this.src = imageData.value;
@@ -5110,8 +5044,8 @@ GradientContainer.prototype.TYPES = {
 
 module.exports = GradientContainer;
 
-},{"49":49}],43:[function(require,module,exports){
-var Promise = require(49);
+},{"47":47}],41:[function(require,module,exports){
+var Promise = require(47);
 
 function ImageContainer(src, cors) {
     this.src = src;
@@ -5133,18 +5067,18 @@ function ImageContainer(src, cors) {
 
 module.exports = ImageContainer;
 
-},{"49":49}],44:[function(require,module,exports){
-var Promise = require(49);
-var log = require(46);
-var ImageContainer = require(43);
-var DummyImageContainer = require(38);
-var ProxyImageContainer = require(51);
-var FrameContainer = require(41);
-var SVGContainer = require(57);
-var SVGNodeContainer = require(58);
-var LinearGradientContainer = require(45);
-var WebkitGradientContainer = require(61);
-var bind = require(60).bind;
+},{"47":47}],42:[function(require,module,exports){
+var Promise = require(47);
+var log = require(44);
+var ImageContainer = require(41);
+var DummyImageContainer = require(36);
+var ProxyImageContainer = require(49);
+var FrameContainer = require(39);
+var SVGContainer = require(55);
+var SVGNodeContainer = require(56);
+var LinearGradientContainer = require(43);
+var WebkitGradientContainer = require(59);
+var bind = require(58).bind;
 
 function ImageLoader(options, support) {
     this.link = null;
@@ -5293,9 +5227,9 @@ ImageLoader.prototype.timeout = function(container, timeout) {
 
 module.exports = ImageLoader;
 
-},{"38":38,"41":41,"43":43,"45":45,"46":46,"49":49,"51":51,"57":57,"58":58,"60":60,"61":61}],45:[function(require,module,exports){
-var GradientContainer = require(42);
-var Color = require(36);
+},{"36":36,"39":39,"41":41,"43":43,"44":44,"47":47,"49":49,"55":55,"56":56,"58":58,"59":59}],43:[function(require,module,exports){
+var GradientContainer = require(40);
+var Color = require(34);
 
 function LinearGradientContainer(imageData) {
     GradientContainer.apply(this, arguments);
@@ -5373,16 +5307,16 @@ LinearGradientContainer.prototype.stepRegExp = /((?:rgb|rgba)\(\d{1,3},\s\d{1,3}
 
 module.exports = LinearGradientContainer;
 
-},{"36":36,"42":42}],46:[function(require,module,exports){
+},{"34":34,"40":40}],44:[function(require,module,exports){
 module.exports = function() {
     if (window.html2canvas.logging && window.console && window.console.log) {
         Function.prototype.bind.call(window.console.log, (window.console)).apply(window.console, [(Date.now() - window.html2canvas.start) + "ms", "html2canvas:"].concat([].slice.call(arguments, 0)));
     }
 };
 
-},{}],47:[function(require,module,exports){
-var Color = require(36);
-var utils = require(60);
+},{}],45:[function(require,module,exports){
+var Color = require(34);
+var utils = require(58);
 var getBounds = utils.getBounds;
 var parseBackgrounds = utils.parseBackgrounds;
 var offsetBounds = utils.offsetBounds;
@@ -5673,17 +5607,17 @@ function asFloat(str) {
 
 module.exports = NodeContainer;
 
-},{"36":36,"60":60}],48:[function(require,module,exports){
-var log = require(46);
-var punycode = require(33);
-var NodeContainer = require(47);
-var TextContainer = require(59);
-var PseudoElementContainer = require(52);
-var FontMetrics = require(40);
-var Color = require(36);
-var Promise = require(49);
-var StackingContext = require(55);
-var utils = require(60);
+},{"34":34,"58":58}],46:[function(require,module,exports){
+var log = require(44);
+var punycode = require(31);
+var NodeContainer = require(45);
+var TextContainer = require(57);
+var PseudoElementContainer = require(50);
+var FontMetrics = require(38);
+var Color = require(34);
+var Promise = require(47);
+var StackingContext = require(53);
+var utils = require(58);
 var bind = utils.bind;
 var getBounds = utils.getBounds;
 var parseBackgrounds = utils.parseBackgrounds;
@@ -6545,15 +6479,15 @@ function hasUnicode(string) {
 
 module.exports = NodeParser;
 
-},{"33":33,"36":36,"40":40,"46":46,"47":47,"49":49,"52":52,"55":55,"59":59,"60":60}],49:[function(require,module,exports){
-module.exports = require(34).Promise;
+},{"31":31,"34":34,"38":38,"44":44,"45":45,"47":47,"50":50,"53":53,"57":57,"58":58}],47:[function(require,module,exports){
+module.exports = require(32).Promise;
 
-},{"34":34}],50:[function(require,module,exports){
-var Promise = require(49);
-var XHR = require(62);
-var utils = require(60);
-var log = require(46);
-var createWindowClone = require(35);
+},{"32":32}],48:[function(require,module,exports){
+var Promise = require(47);
+var XHR = require(60);
+var utils = require(58);
+var log = require(44);
+var createWindowClone = require(33);
 var decode64 = utils.decode64;
 
 function Proxy(src, proxyUrl, document) {
@@ -6646,9 +6580,9 @@ exports.Proxy = Proxy;
 exports.ProxyURL = ProxyURL;
 exports.loadUrlDocument = loadUrlDocument;
 
-},{"35":35,"46":46,"49":49,"60":60,"62":62}],51:[function(require,module,exports){
-var ProxyURL = require(50).ProxyURL;
-var Promise = require(49);
+},{"33":33,"44":44,"47":47,"58":58,"60":60}],49:[function(require,module,exports){
+var ProxyURL = require(48).ProxyURL;
+var Promise = require(47);
 
 function ProxyImageContainer(src, proxy) {
     var link = document.createElement("a");
@@ -6670,8 +6604,8 @@ function ProxyImageContainer(src, proxy) {
 
 module.exports = ProxyImageContainer;
 
-},{"49":49,"50":50}],52:[function(require,module,exports){
-var NodeContainer = require(47);
+},{"47":47,"48":48}],50:[function(require,module,exports){
+var NodeContainer = require(45);
 
 function PseudoElementContainer(node, parent, type) {
     NodeContainer.call(this, node, parent);
@@ -6710,8 +6644,8 @@ PseudoElementContainer.prototype.PSEUDO_HIDE_ELEMENT_CLASS_AFTER = "___html2canv
 
 module.exports = PseudoElementContainer;
 
-},{"47":47}],53:[function(require,module,exports){
-var log = require(46);
+},{"45":45}],51:[function(require,module,exports){
+var log = require(44);
 
 function Renderer(width, height, images, options, document) {
     this.width = width;
@@ -6820,10 +6754,10 @@ Renderer.prototype.renderBackgroundRepeating = function(container, bounds, image
 
 module.exports = Renderer;
 
-},{"46":46}],54:[function(require,module,exports){
-var Renderer = require(53);
-var LinearGradientContainer = require(45);
-var log = require(46);
+},{"44":44}],52:[function(require,module,exports){
+var Renderer = require(51);
+var LinearGradientContainer = require(43);
+var log = require(44);
 
 function CanvasRenderer(width, height) {
     Renderer.apply(this, arguments);
@@ -7003,8 +6937,8 @@ function hasEntries(array) {
 
 module.exports = CanvasRenderer;
 
-},{"45":45,"46":46,"53":53}],55:[function(require,module,exports){
-var NodeContainer = require(47);
+},{"43":43,"44":44,"51":51}],53:[function(require,module,exports){
+var NodeContainer = require(45);
 
 function StackingContext(hasOwnStacking, opacity, element, parent) {
     NodeContainer.call(this, element, parent);
@@ -7023,7 +6957,7 @@ StackingContext.prototype.getParentStack = function(context) {
 
 module.exports = StackingContext;
 
-},{"47":47}],56:[function(require,module,exports){
+},{"45":45}],54:[function(require,module,exports){
 function Support(document) {
     this.rangeBounds = this.testRangeBounds(document);
     this.cors = this.testCORS();
@@ -7076,10 +7010,10 @@ Support.prototype.testSVG = function() {
 
 module.exports = Support;
 
-},{}],57:[function(require,module,exports){
-var Promise = require(49);
-var XHR = require(62);
-var decode64 = require(60).decode64;
+},{}],55:[function(require,module,exports){
+var Promise = require(47);
+var XHR = require(60);
+var decode64 = require(58).decode64;
 
 function SVGContainer(src) {
     this.src = src;
@@ -7131,9 +7065,9 @@ SVGContainer.prototype.decode64 = function(str) {
 
 module.exports = SVGContainer;
 
-},{"49":49,"60":60,"62":62}],58:[function(require,module,exports){
-var SVGContainer = require(57);
-var Promise = require(49);
+},{"47":47,"58":58,"60":60}],56:[function(require,module,exports){
+var SVGContainer = require(55);
+var Promise = require(47);
 
 function SVGNodeContainer(node, _native) {
     this.src = node;
@@ -7159,8 +7093,8 @@ SVGNodeContainer.prototype = Object.create(SVGContainer.prototype);
 
 module.exports = SVGNodeContainer;
 
-},{"49":49,"57":57}],59:[function(require,module,exports){
-var NodeContainer = require(47);
+},{"47":47,"55":55}],57:[function(require,module,exports){
+var NodeContainer = require(45);
 
 function TextContainer(node, parent) {
     NodeContainer.call(this, node, parent);
@@ -7194,7 +7128,7 @@ function capitalize(m, p1, p2) {
 
 module.exports = TextContainer;
 
-},{"47":47}],60:[function(require,module,exports){
+},{"45":45}],58:[function(require,module,exports){
 exports.smallImage = function smallImage() {
     return "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 };
@@ -7365,8 +7299,8 @@ exports.parseBackgrounds = function(backgroundImage) {
     return results;
 };
 
-},{}],61:[function(require,module,exports){
-var GradientContainer = require(42);
+},{}],59:[function(require,module,exports){
+var GradientContainer = require(40);
 
 function WebkitGradientContainer(imageData) {
     GradientContainer.apply(this, arguments);
@@ -7377,8 +7311,8 @@ WebkitGradientContainer.prototype = Object.create(GradientContainer.prototype);
 
 module.exports = WebkitGradientContainer;
 
-},{"42":42}],62:[function(require,module,exports){
-var Promise = require(49);
+},{"40":40}],60:[function(require,module,exports){
+var Promise = require(47);
 
 function XHR(url) {
     return new Promise(function(resolve, reject) {
@@ -7403,4 +7337,4 @@ function XHR(url) {
 
 module.exports = XHR;
 
-},{"49":49}]},{},[1]);
+},{"47":47}]},{},[1]);

@@ -8,7 +8,7 @@
  * Buttons
  */
 .user-feedback-button, .user-feedback-annotation-close {
-  outline: 0;
+  outline: none;
   cursor: pointer;
   background-clip: padding-box;
   display: block;
@@ -67,7 +67,7 @@
   background-clip: padding-box;
   border-radius: 2px;
   padding: 5px 15px;
-  outline: 0;
+  outline: none;
   position: fixed;
   bottom: -3px;
   right: 60px;
@@ -90,7 +90,8 @@
   #user-feedback-container * {
     box-sizing: border-box; }
   #user-feedback-container p {
-    font-size: 16px; }
+    font-size: 16px;
+    margin: 0 0 16px; }
   #user-feedback-container .hidden {
     display: none !important; }
 
@@ -296,7 +297,9 @@
     border-radius: 100%; }
 
 .user-feedback-modal__bottombar {
-  clear: both; }
+  clear: both;
+  overflow: hidden;
+  margin-top: 20px; }
   .user-feedback-modal__bottombar .user-feedback-button, .user-feedback-modal__bottombar .user-feedback-annotation-close {
     float: left;
     margin-right: 15px; }
@@ -384,7 +387,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100000; }
+  z-index: 100000;
+  cursor: crosshair; }
 
 .user-feedback-annotation {
   position: absolute;
