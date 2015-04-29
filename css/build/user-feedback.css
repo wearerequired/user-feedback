@@ -91,7 +91,7 @@
     box-sizing: border-box; }
   #user-feedback-container p {
     font-size: 16px;
-    margin: 0 0 10px; }
+    margin: 0 0 16px; }
   #user-feedback-container .hidden {
     display: none !important; }
 
@@ -297,7 +297,9 @@
     border-radius: 100%; }
 
 .user-feedback-modal__bottombar {
-  clear: both; }
+  clear: both;
+  overflow: hidden;
+  margin-top: 20px; }
   .user-feedback-modal__bottombar .user-feedback-button, .user-feedback-modal__bottombar .user-feedback-annotation-close {
     float: left;
     margin-right: 15px; }

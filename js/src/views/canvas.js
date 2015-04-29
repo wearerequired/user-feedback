@@ -3,7 +3,7 @@
 var template = require('templates/annotation');
 
 var CanvasView = Backbone.View.extend({
-  className: 'user-feedback-wizard-step-4-canvas',
+  className: 'user-feedback-wizard-step-3-canvas',
   template : _.template('<canvas id="user-feedback-canvas"></canvas><div id="user-feedback-annotations"></div>'),
 
   initialize: function () {
@@ -68,8 +68,8 @@ var CanvasView = Backbone.View.extend({
       left     : dleft,
       width    : dwidth,
       height   : dheight,
-      close    : user_feedback.templates.wizardStep4Annotation.close,
-      closeAria: user_feedback.templates.wizardStep4Annotation.closeAria
+      close    : user_feedback.templates.wizardStep3Annotation.close,
+      closeAria: user_feedback.templates.wizardStep3Annotation.closeAria
     }));
     this.annotationCount++;
 

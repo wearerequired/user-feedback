@@ -203,7 +203,7 @@ final class User_Feedback {
 		 * @param bool $load_user_feedback Whether the user feedback script should be loaded or not.
 		 *                                 Defaults to true for logged in users.
 		 */
-		$load_user_feedback = apply_filters( 'user_feedback_load', is_user_logged_in() );
+		$load_user_feedback = apply_filters( 'user_feedback_load', true );
 
 		/** @var bool $load_user_feedback */
 		if ( ! $load_user_feedback ) {
@@ -286,8 +286,8 @@ final class User_Feedback {
 				'bottombar'             => array(
 					'step'   => array(
 						'one'   => _x( 'Feedback', 'step 1', 'user-feedback' ),
-						'two'   => _x( 'Leave a message', 'step 2', 'user-feedback' ),
-						'three' => _x( 'Highlight area', 'step 3', 'user-feedback' ),
+						'two'   => _x( 'Highlight area', 'step 3', 'user-feedback' ),
+						'three' => _x( 'Leave a message', 'step 2', 'user-feedback' ),
 					),
 					'button' => array(
 						'help'     => _x( '?', 'help button label', 'user-feedback' ),
@@ -322,17 +322,6 @@ final class User_Feedback {
 					),
 				),
 				'wizardStep3'           => array(
-					'title'       => _x( 'Leave a message', 'modal title', 'user-feedback' ),
-					'placeholder' => array(
-						'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
-					),
-					'button'      => array(
-						'primary'   => __( 'Next', 'user-feedback' ),
-						'close'     => _x( '&times;', 'close button', 'user-feedback' ),
-						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
-					),
-				),
-				'wizardStep4'           => array(
 					'title'  => _x( 'Highlight area', 'modal title', 'user-feedback' ),
 					'intro'  => __( 'Highlight the areas relevant to your feedback.', 'user-feedback' ),
 					'button' => array(
@@ -341,16 +330,19 @@ final class User_Feedback {
 						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
-				'wizardStep4Annotation' => array(
+				'wizardStep3Annotation' => array(
 					'close'     => _x( '&times', 'close button', 'user-feedback' ),
 					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 				),
-				'wizardStep5'           => array(
+				'wizardStep4'           => array(
 					'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
 					'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
 					'user'          => array(
 						'by'          => _x( 'From ', 'by user xy', 'user-feebdack' ),
 						'gravatarAlt' => _x( 'Gravatar', 'alt text', 'user-feedback' )
+					),
+					'placeholder'   => array(
+						'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
 					),
 					'details'       => array(
 						'theme'    => __( 'Theme: ', 'user-feedback' ),
@@ -363,7 +355,7 @@ final class User_Feedback {
 						'secondary' => __( 'Back', 'user-feedback' ),
 					),
 				),
-				'wizardStep6'           => array(
+				'wizardStep5'           => array(
 					'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
 					'intro'  => __( 'Thank you for taking your time to give us feedback. We will examine it and get back to as quickly as possible.', 'user-feedback' ),
 					'intro2' => __( '&ndash; Your required+ support team', 'user-feedback' ),
