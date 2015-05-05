@@ -414,7 +414,8 @@
   .user-feedback-annotation-close:focus, .user-feedback-annotation-close:hover {
     display: block;
     background: #13C7F4;
-    color: #fff; }
+    color: #fff;
+    border-radius: 0; }
 
 /**
  * Intro Template
