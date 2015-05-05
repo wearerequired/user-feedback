@@ -225,6 +225,9 @@
       -ms-user-select: none;
           user-select: none; }
 
+#user-feedback-container.toggled .user-feedback-modal {
+  display: none; }
+
 .user-feedback-modal-center {
   position: fixed;
   top: 50%;

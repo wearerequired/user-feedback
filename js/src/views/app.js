@@ -29,7 +29,6 @@ var AppView = Backbone.View.extend({
     this.listenTo(this.bottomBar, 'toggleBottomBar', this.toggleBottomBar, this);
     this.listenTo(this.bottomBar, 'toggleWizard', this.toggleWizard, this);
 
-    this.showWizard = true;
     this.wizard = new UserFeedbackWizard({model: userFeedbackModel});
     this.listenTo(this.wizard, 'toggleBottomBar', this.toggleBottomBar, this);
     this.listenTo(this.wizard, 'reInitialize', this.reInitialize, this);
@@ -57,12 +56,10 @@ var AppView = Backbone.View.extend({
   },
 
   toggleWizard: function () {
-    this.showWizard = !this.showWizard;
-    this.render();
+    this.$el.toggleClass('toggled');
   },
 
   reInitialize: function () {
-    this.showWizard = true;
     this.showBottomBar = true;
     this.showInitButton = true;
     this.render();
@@ -81,9 +78,7 @@ var AppView = Backbone.View.extend({
         this.$el.append(this.bottomBar.render().el)
       }
 
-      if (this.showWizard) {
-        this.$el.append(this.wizard.render().el);
-      }
+      this.$el.append(this.wizard.render().el);
     }
 
     return this;
