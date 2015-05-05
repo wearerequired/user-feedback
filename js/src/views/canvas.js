@@ -14,8 +14,7 @@ var CanvasView = Backbone.View.extend({
   events: {
     'mouseup #user-feedback-canvas'        : 'mouseUp',
     'mousedown #user-feedback-canvas'      : 'mouseDown',
-    'mousemove #user-feedback-canvas'      : 'mouseMoveClick',
-    'click #user-feedback-canvas'          : 'mouseMoveClick',
+    'mousemove'                            : 'mouseMove',
     'click .user-feedback-annotation-close': 'removeAnnotation',
     'mouseleave #user-feedback-canvas'     : 'redraw'
   },
@@ -85,7 +84,7 @@ var CanvasView = Backbone.View.extend({
     this.drag = true;
   },
 
-  mouseMoveClick: function (e) {
+  mouseMove: function (e) {
     this.redraw();
     var tmpHighlighted = [];
 
