@@ -353,6 +353,8 @@ final class User_Feedback {
 					'button'        => array(
 						'primary'   => __( 'Send', 'user-feedback' ),
 						'secondary' => __( 'Back', 'user-feedback' ),
+						'close'     => _x( '&times', 'close button', 'user-feedback' ),
+						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
 					),
 				),
 				'wizardStep5'           => array(
