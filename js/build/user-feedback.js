@@ -168,7 +168,13 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div id="user-feedback-overlay"></div>\n<div class="user-feedback-modal user-feedback-modal-center" role="dialog">\n\t<div class="user-feedback-modal__topbar">\n\t\t<h3 class="user-feedback-modal-title">'+
 ((__t=( title ))==null?'':__t)+
-'</h3>\n\t</div>\n\t<div id="user-feedback-overview-description">\n\t\t<div id="user-feedback-overview-user">\n\t\t\t<img src="" width="40" height="40" alt="'+
+'</h3>\n\t\t<button\n\t\t\t\tclass="user-feedback-button user-feedback-button-close"\n\t\t\t\ttitle="'+
+((__t=( button.closeAria ))==null?'':__t)+
+'"\n\t\t\t\taria-label="'+
+((__t=( button.closeAria ))==null?'':__t)+
+'"\n\t\t\t\ttabindex="2">\n\t\t\t'+
+((__t=( button.close ))==null?'':__t)+
+'\n\t\t</button>\n\t</div>\n\t<div id="user-feedback-overview-description">\n\t\t<div id="user-feedback-overview-user">\n\t\t\t<img src="" width="40" height="40" alt="'+
 ((__t=( user.gravatarAlt ))==null?'':__t)+
 '" />\n\n\t\t\t<div>'+
 ((__t=( user.by ))==null?'':__t)+
@@ -280,7 +286,7 @@ var AppView = Backbone.View.extend({
   },
 
   keydownHandler: function (e) {
-    if (!e.keyCode || e.keyCode === 27) {
+    if (e.keyCode === 27 || e.which === 27) {
       this.reInitialize();
     }
   },
@@ -302,6 +308,9 @@ var AppView = Backbone.View.extend({
   reInitialize: function () {
     this.showBottomBar = true;
     this.showInitButton = true;
+    this.model.set('userName', '');
+    this.model.set('userEmail', '');
+    this.model.set('userMessage', '');
     this.render();
   },
 
@@ -836,7 +845,7 @@ var UserFeedbackWizard = Backbone.View.extend({
     }
 
     // If the cookie is set, let's go straight to the next step
-    if (this.initialStep == 1 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
+    if (this.initialStep === 1 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
       this.initialStep++;
     }
 
@@ -844,7 +853,12 @@ var UserFeedbackWizard = Backbone.View.extend({
   },
 
   render: function () {
-    var currentStep = this.steps[this.model.get('currentWizardStep')];
+    var wizardStep = this.model.get('currentWizardStep');
+    // If the cookie is set, let's go straight to the next step
+    if (wizardStep <= 1 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
+      wizardStep = 2;
+    }
+    var currentStep = this.steps[wizardStep];
     this.currentView = currentStep.view;
 
     this.$el.html(this.currentView.render().el).focus();

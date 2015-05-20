@@ -48,7 +48,7 @@ var UserFeedbackWizard = Backbone.View.extend({
     }
 
     // If the cookie is set, let's go straight to the next step
-    if (this.initialStep == 1 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
+    if (this.initialStep === 1 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
       this.initialStep++;
     }
 
@@ -56,7 +56,12 @@ var UserFeedbackWizard = Backbone.View.extend({
   },
 
   render: function () {
-    var currentStep = this.steps[this.model.get('currentWizardStep')];
+    var wizardStep = this.model.get('currentWizardStep');
+    // If the cookie is set, let's go straight to the next step
+    if (wizardStep <= 1 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
+      wizardStep = 2;
+    }
+    var currentStep = this.steps[wizardStep];
     this.currentView = currentStep.view;
 
     this.$el.html(this.currentView.render().el).focus();

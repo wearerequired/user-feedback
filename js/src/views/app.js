@@ -40,7 +40,7 @@ var AppView = Backbone.View.extend({
   },
 
   keydownHandler: function (e) {
-    if (!e.keyCode || e.keyCode === 27) {
+    if (e.keyCode === 27 || e.which === 27) {
       this.reInitialize();
     }
   },
@@ -62,6 +62,9 @@ var AppView = Backbone.View.extend({
   reInitialize: function () {
     this.showBottomBar = true;
     this.showInitButton = true;
+    this.model.set('userName', '');
+    this.model.set('userEmail', '');
+    this.model.set('userMessage', '');
     this.render();
   },
 
