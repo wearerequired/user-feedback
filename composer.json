@@ -1,18 +1,17 @@
 {
   "name": "wearerequired/user-feedback",
-  "description": "Allows users to submit feedback and bug reports  anywhere on the site using an interactive feedback button.",
-  "version": "1.0.0",
+  "description": "Allows users to submit feedback and bug reports anywhere on the site using an interactive feedback button.",
+  "version": "0.1.0",
   "type": "wordpress-plugin",
-  "license": "GPL-3.0",
+  "license": "GPL-2.0+",
   "authors": [
-    {
-      "name": "Pascal Birchler",
-      "email": "pascal@required.ch",
-      "homepage": "http://required.ch",
-      "role": "Developer"
-    }
+	{
+	  "name": "required+",
+	  "email": "support@required.ch",
+	  "homepage": "http://required.ch",
+	  "role": "Developer"
+	}
   ],
   "require": {
   }
 }
-

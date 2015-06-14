@@ -1,383 +1,50 @@
 <?php
 /**
- * User Feedback Plugin
- *
- * @package   User_Feedback
- * @author    Pascal Birchler <pascal@required.ch>
- * @license   GPL-2.0+
- * @link      https://github.com/wearerequired/user-feedback/
- * @copyright 2015 required gmbh
- *
- * @wordpress-plugin
  * Plugin Name: User Feedback
- * Plugin URI:  https://github.com/wearerequired/user-feedback
+ * Plugin URI:  https://github.com/wearerequired/user-feedback/
  * Description: Allows users to submit feedback and bug reports anywhere on the site using an interactive feedback button.
  * Version:     1.0.0
  * Author:      required+
  * Author URI:  http://required.ch
+ * License:     GPLv2+
  * Text Domain: user-feedback
- * License:     GPL-2.0+
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path: /languages
  */
 
-// Don't call this file directly
-defined( 'ABSPATH' ) or die;
-
 /**
- * Class User_Feedback
+ * Copyright (c) 2015 required+ (email : support@required.ch)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2 or, at
+ * your discretion, any later version, as published by the Free
+ * Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-final class User_Feedback {
 
-	/**
-	 * Add all hooks on init
-	 */
-	public static function init() {
-		// Load the scripts & styles
-		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_scripts' ) );
+defined( 'WPINC' ) or die;
 
-		add_action( 'wp_footer', array( __CLASS__, 'print_templates' ) );
+include( dirname( __FILE__ ) . '/lib/requirements-check.php' );
 
-		// Ajax callbacks
-		add_action( 'wp_ajax_user_feedback', array( __CLASS__, 'ajax_callback' ) );
-		add_action( 'wp_ajax_nopriv_user_feedback', array( __CLASS__, 'ajax_callback' ) );
+$user_feedback_requirements_check = new User_Feedback_Requirements_Check( array(
+	'title' => 'User Feedback',
+	'php'   => '5.3',
+	'wp'    => '4.0',
+	'file'  => __FILE__,
+));
 
-		// Send feedback emails
-		add_action( 'user_feedback_received', array( __CLASS__, 'process_feedback' ) );
-	}
-
-	/**
-	 * Ajax callback for user feedback.
-	 */
-	public static function ajax_callback() {
-		if ( ! isset( $_POST['data'] ) ) {
-			echo 0;
-			wp_die();
-		}
-
-		/**
-		 * This action is run whenever there's new user feedback.
-		 *
-		 * The variable contains all the data received via the ajax request.
-		 *
-		 * @param array $feedback {
-		 *
-		 * @type array  $browser  Contains useful browser information like user agent, platform, and online status.
-		 * @type string $url      The URL from where the user submitted the feedback.
-		 * @type string $html     Contains the complete HTML output of $url.
-		 * @type string $img      Base64 encoded screenshot of the page.
-		 * @type string $note     Additional notes from the user.
-		 * }
-		 *
-		 */
-		do_action( 'user_feedback_received', $_POST['data'] );
-
-		echo 1;
-		wp_die(); // this is required to terminate immediately and return a proper response
-	}
-
-	/**
-	 * Save the submitted image as media item.
-	 *
-	 * @param string $img Base64 encoded image.
-	 *
-	 * @return int|WP_Error
-	 */
-	public static function save_image( $img ) {
-		// Strip the "data:image/png;base64," part and decode the image
-		$img = explode( ',', $img );
-		$img = base64_decode( $img[1] );
-
-		if ( ! $img ) {
-			return false;
-		}
-
-		// Upload to tmp folder
-		$filename = 'user-feedback-' . date( 'Y-m-d-H-i' ) . '.png';
-		// todo: Use WP_Filesystem class
-		$file = file_put_contents( '/tmp/' . $filename, $img );
-
-		if ( ! $file ) {
-			return false;
-		}
-
-		return '/tmp/' . $filename;
-	}
-
-	/**
-	 * This function runs whenever new feedback is submitted.
-	 *
-	 * What it does:
-	 * - uploading the image in the WordPress uploads folder
-	 * - store the feedback as a custom post
-	 * - send an email to the admin
-	 *
-	 * @param array $feedback {
-	 *
-	 * @type array  $browser  Contains useful browser information like user agent, platform, and online status.
-	 * @type string $url      The URL from where the user submitted the feedback.
-	 * @type string $html     Contains the complete HTML output of $url.
-	 * @type string $img      Base64 encoded screenshot of the page.
-	 * @type string $message  Additional notes from the user.
-	 * }
-	 */
-	public static function process_feedback( $feedback ) {
-
-		$attachments = array();
-		$img         = self::save_image( $feedback['img'] );
-		if ( $img ) {
-			$attachments[] = $img;
-		}
-
-		$user_name  = stripslashes( $feedback['user']['name'] );
-		$user_email = stripslashes( $feedback['user']['email'] );
-
-		if ( empty( $user_name ) ) {
-			$user_name = __( 'Anonymous', 'user-feedback' );
-		}
-
-		if ( empty( $user_email ) ) {
-			$user_email = __( '(not provided)', 'user-feedback' );
-		}
-
-		$message = __( 'Howdy,', 'user-feedback' ) . "\r\n\r\n";
-		$message .= __( 'You just received a new user feedback regarding your website!', 'user-feedback' ) . "\r\n\r\n";
-		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
-		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
-		$message .= sprintf( __( 'Browser: %s (%s)', 'user-feedback' ), $feedback['browser']['name'], $feedback['browser']['userAgent'] ) . "\r\n";
-		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $feedback['url'] ) . "\r\n";
-		$message .= sprintf( __( 'Site Language: %s', 'user-feedback' ), $feedback['language'] ) . "\r\n";
-		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
-		$message .= stripslashes( $feedback['message'] ) . "\r\n\r\n";
-		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
-
-		// Send email to the blog admin
-		wp_mail(
-			apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) ),
-			apply_filters( 'user_feedback_email_subject',
-				sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_option( 'blogname' ) )
-			),
-			apply_filters( 'user_feedback_email_message', $message ),
-			'',
-			$img
-		);
-
-		if ( ! is_email( $user_email ) ) {
-			return;
-		}
-
-		$message = __( 'Howdy,', 'user-feedback' ) . "\r\n\r\n";
-		$message .= __( 'We just received the following feedback from you and will get in touch shortly. Thank you.', 'user-feedback' ) . "\r\n\r\n";
-		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
-		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
-		$message .= sprintf( __( 'Browser: %s', 'user-feedback' ), $feedback['browser']['name'] ) . "\r\n";
-		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $feedback['url'] ) . "\r\n";
-		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
-		$message .= stripslashes( $feedback['message'] ) . "\r\n\r\n";
-		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
-
-		// Send email to the submitting user
-		wp_mail(
-			apply_filters( 'user_feedback_email_copy_address', $user_email ),
-			apply_filters( 'user_feedback_email_copy_subject',
-				sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_option( 'blogname' ) )
-			),
-			apply_filters( 'user_feedback_email_copy_message', $message ),
-			'',
-			$img
-		);
-	}
-
-	/**
-	 * Register JavaScript files
-	 */
-	public static function enqueue_scripts() {
-		// Use minified libraries if SCRIPT_DEBUG is turned off
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
-		/**
-		 * Allow others to enable/disable the plugin's functionality at will.
-		 *
-		 * For example, you could also load the plugin for non-logged-in users.
-		 *
-		 * @param bool $load_user_feedback Whether the user feedback script should be loaded or not.
-		 *                                 Defaults to true for logged in users.
-		 */
-		$load_user_feedback = apply_filters( 'user_feedback_load', true );
-
-		/** @var bool $load_user_feedback */
-		if ( ! $load_user_feedback ) {
-			remove_action( 'wp_footer', array( __CLASS__, 'print_templates' ) );
-
-			return;
-		}
-
-		wp_enqueue_style(
-			'user-feedback',
-			plugin_dir_url( __FILE__ ) . 'css/build/user-feedback' . $suffix . '.css',
-			array(),
-			'1.0.0'
-		);
-
-		wp_enqueue_script(
-			'user-feedback',
-			plugin_dir_url( __FILE__ ) . 'js/build/user-feedback' . $suffix . ' .js',
-			array( 'underscore', 'backbone' ),
-			'1.0.0',
-			true
-		);
-
-		/**
-		 * Get current user data.
-		 *
-		 * If the user isn't logged in, a fake object is created
-		 */
-		$userdata = get_userdata( get_current_user_id() );
-
-		if ( ! $userdata ) {
-			$userdata               = new stdClass();
-			$userdata->display_name = __( 'Anonymous', 'user-feedback' );
-			$userdata->user_email   = '';
-		}
-
-		/**
-		 * Get theme data.
-		 *
-		 * Store the theme's name and the currently used template, e.g. index.php
-		 *
-		 * @todo: Maybe use {@link get_included_files()} if necessary
-		 */
-		$theme = wp_get_theme();
-		global $template;
-		$current_template = basename( str_replace( $theme->theme_root . '/' . $theme->stylesheet . '/', '', $template ) );
-
-		/**
-		 * Get the current language.
-		 *
-		 * Uses the WordPress locale setting, but also checks for WPML and Polylang.
-		 */
-		$language = get_bloginfo( 'language' );
-
-		if ( defined( 'ICL_LANGUAGE_CODE' ) ) {
-			$language = ICL_LANGUAGE_CODE;
-		}
-
-		if ( function_exists( 'pll_current_language' ) ) {
-			$language = pll_current_language( 'slug' );
-		}
-
-		wp_localize_script( 'user-feedback', 'user_feedback', apply_filters( 'user_feedback_script_data', array(
-			'ajax_url'  => admin_url( 'admin-ajax.php' ),
-			'theme'     => array(
-				'name'             => $theme->Name,
-				'stylesheet'       => $theme->stylesheet,
-				'current_template' => $current_template
-			),
-			'user'      => array(
-				'logged_in' => is_user_logged_in(),
-				'name'      => $userdata->display_name,
-				'email'     => $userdata->user_email,
-			),
-			'language'  => $language,
-			'templates' => array(
-				'button'                => array(
-					'label' => __( 'Feedback', 'user-feedback' ),
-				),
-				'bottombar'             => array(
-					'step'   => array(
-						'one'   => _x( 'Feedback', 'step 1', 'user-feedback' ),
-						'two'   => _x( 'Highlight area', 'step 3', 'user-feedback' ),
-						'three' => _x( 'Leave a message', 'step 2', 'user-feedback' ),
-					),
-					'button' => array(
-						'help'     => _x( '?', 'help button label', 'user-feedback' ),
-						'helpAria' => _x( 'Submit Feedback', 'help button title text and aria label', 'user-feedback' ),
-					),
-				),
-				'wizardStep1'           => array(
-					'title'       => _x( 'Feedback', 'modal title', 'user-feedback' ),
-					'salutation'  => __( 'Howdy stranger,', 'user-feedback' ),
-					'intro'       => __( 'Please let us know who you are. This way we will get back to you as soon as the issue is resolved:', 'user-feedback' ),
-					'placeholder' => array(
-						'name'  => _x( 'Your name', 'input field placeholder', 'user-feedback' ),
-						'email' => _x( 'Email address', 'input field placeholder', 'user-feedback' ),
-					),
-					'button'      => array(
-						'primary'   => __( 'Next', 'user-feedback' ),
-						'secondary' => __( 'Stay anonymous', 'user-feedback' ),
-						'close'     => _x( '&times;', 'close button', 'user-feedback' ),
-						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
-					),
-				),
-				'wizardStep2'           => array(
-					'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
-					'salutation' => __( 'Hello ', 'user-feedback' ),
-					'intro'      => __( 'Please help us understand your feedback better!', 'user-feedback' ),
-					'intro2'     => __( 'You can not only leave us a message but also highlight areas relevant to your feedback.', 'user-feedback' ),
-					'inputLabel' => __( 'Don\'t show me this again', 'user-feedback' ),
-					'button'     => array(
-						'primary'   => __( 'Next', 'user-feedback' ),
-						'close'     => _x( '&times;', 'close button', 'user-feedback' ),
-						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
-					),
-				),
-				'wizardStep3'           => array(
-					'title'  => _x( 'Highlight area', 'modal title', 'user-feedback' ),
-					'intro'  => __( 'Highlight the areas relevant to your feedback.', 'user-feedback' ),
-					'button' => array(
-						'primary'   => __( 'Take screenshot', 'user-feedback' ),
-						'close'     => _x( '&times', 'close button', 'user-feedback' ),
-						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
-					),
-				),
-				'wizardStep3Annotation' => array(
-					'close'     => _x( '&times', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
-				),
-				'wizardStep4'           => array(
-					'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
-					'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
-					'user'          => array(
-						'by'          => _x( 'From ', 'by user xy', 'user-feebdack' ),
-						'gravatarAlt' => _x( 'Gravatar', 'alt text', 'user-feedback' )
-					),
-					'placeholder'   => array(
-						'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
-					),
-					'details'       => array(
-						'theme'    => __( 'Theme: ', 'user-feedback' ),
-						'template' => __( 'Page: ', 'user-feedback' ),
-						'browser'  => __( 'Browser: ', 'user-feedback' ),
-						'language' => __( 'Language: ', 'user-feedback' ),
-					),
-					'button'        => array(
-						'primary'   => __( 'Send', 'user-feedback' ),
-						'secondary' => __( 'Back', 'user-feedback' ),
-						'close'     => _x( '&times', 'close button', 'user-feedback' ),
-						'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' )
-					),
-				),
-				'wizardStep5'           => array(
-					'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
-					'intro'  => __( 'Thank you for taking your time to give us feedback. We will examine it and get back to as quickly as possible.', 'user-feedback' ),
-					'intro2' => __( '&ndash; Your required+ support team', 'user-feedback' ),
-					'button' => array(
-						'primary'   => __( 'Done', 'user-feedback' ),
-						'secondary' => __( 'Leave another message', 'user-feedback' ),
-					),
-				)
-			),
-		) ) );
-	}
-
-	/**
-	 * Prints the HTML templates used by the feedback JavaScript.
-	 */
-	public static function print_templates() {
-		// Our main container
-		echo '<div id="user-feedback-container"></div>';
-	}
-
+if ( $user_feedback_requirements_check->passes() ) {
+	// Pull in the plugin classes and initialize
+	include( dirname( __FILE__ ) . '/lib/wp-stack-plugin.php' );
+	include( dirname( __FILE__ ) . '/classes/plugin.php' );
+	User_Feedback_Plugin::start( __FILE__ );
 }
 
-add_action( 'plugins_loaded', array( 'User_Feedback', 'init' ) );
+unset( $user_feedback_requirements_check );

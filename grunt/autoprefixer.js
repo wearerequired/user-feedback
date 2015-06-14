@@ -1,16 +1,15 @@
 module.exports = {
-  dist: {
-    options: {
-      browsers: [
-        'last 2 versions',
-        '> 5%',
-        'ie 9'
-      ],
-      map     : true
-    },
-    expand : true,
-    flatten: true,
-    src    : 'css/build/**/*.css',
-    dest   : 'css/build/'
-  }
-};
+	dist: {
+		options: {
+			browsers: [
+				'last 2 versions',
+				'> 5%',
+				'ie 9'
+			]
+		},
+		expand : true,
+		flatten: true,
+		src    : 'css/user-feedback.css',
+		dest   : 'css/'
+	}
+}

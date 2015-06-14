@@ -44,7 +44,9 @@ var CanvasView = Backbone.View.extend({
         dwidth = this.rect.w,
         dheight = this.rect.h;
 
-    if (dwidth == 0 || dheight == 0) return;
+    if (dwidth === 0 || dheight === 0) {
+			return;
+		}
 
     if (dwidth < 0) {
       dleft += dwidth;
@@ -55,11 +57,12 @@ var CanvasView = Backbone.View.extend({
       dheight *= -1;
     }
 
-    if (dtop + dheight > jQuery(document).height())
-      dheight = jQuery(document).height() - dtop;
-    if (dleft + dwidth > jQuery(document).width())
-      dwidth = jQuery(document).width() - dleft;
-
+    if (dtop + dheight > jQuery(document).height()) {
+			dheight = jQuery(document).height() - dtop;
+		}
+    if (dleft + dwidth > jQuery(document).width()) {
+			dwidth = jQuery(document).width() - dleft;
+		}
 
     jQuery('#user-feedback-annotations').append(template({
       id       : this.annotationCount,
@@ -104,7 +107,7 @@ var CanvasView = Backbone.View.extend({
       }, this);
     }
 
-    if (this.drag && e.type == 'mousemove') {
+    if (this.drag && e.type === 'mousemove') {
       this.rect.w = (e.pageX - jQuery('#user-feedback-canvas').offset().left) - this.rect.startX;
       this.rect.h = (e.pageY - jQuery('#user-feedback-canvas').offset().top) - this.rect.startY;
 

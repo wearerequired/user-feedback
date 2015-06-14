@@ -107,14 +107,14 @@ var UserFeedbackWizard = Backbone.View.extend({
       this.currentView.nextStep();
 
       // If the cookie is set, let's go straight to the next step
-      if (step == 1 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
+      if (step === 1 && document.cookie.indexOf('user_feedback_do_not_show_again') >= 0) {
         step++;
       }
 
       this.model.set('currentWizardStep', step);
 
       // todo: make more flexible
-      if (this.model.get('currentWizardStep') == 4) {
+      if (this.model.get('currentWizardStep') === 4) {
         this.trigger('toggleBottomBar');
       }
 
@@ -124,21 +124,21 @@ var UserFeedbackWizard = Backbone.View.extend({
 
   goToPreviousStep: function () {
     if (!this.isFirstStep()) {
-      if (this.model.get('currentWizardStep') == 4) {
+      if (this.model.get('currentWizardStep') === 4) {
         this.trigger('toggleBottomBar');
       }
 
-      this.model.set('currentWizardStep', this.model.get('currentWizardStep') - 1)
+      this.model.set('currentWizardStep', this.model.get('currentWizardStep') - 1);
       this.render();
     }
   },
 
   isFirstStep: function () {
-    return (this.model.get('currentWizardStep') == 0);
+    return (this.model.get('currentWizardStep') === 0);
   },
 
   isLastStep: function () {
-    return (this.model.get('currentWizardStep') == this.steps.length - 1);
+    return (this.model.get('currentWizardStep') === this.steps.length - 1);
   }
 
 });

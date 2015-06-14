@@ -18,8 +18,8 @@ var WizardStep4 = WizardStep.extend({
   },
 
   fillInTheData: function () {
-    var email = ( this.model.get('userEmail') != '' ) ? this.model.get('userEmail') : user_feedback.user.email;
-    var name = ( this.model.get('userName') != '' ) ? this.model.get('userName') : user_feedback.user.name;
+    var email = ( this.model.get('userEmail') !== '' ) ? this.model.get('userEmail') : user_feedback.user.email;
+    var name = ( this.model.get('userName') !== '' ) ? this.model.get('userName') : user_feedback.user.name;
     this.$el.find('#user-feedback-overview-user img').attr('src', 'https://secure.gravatar.com/avatar/' + md5(email) + '?d=monsterid&s=90');
     this.$el.find('#user-feedback-overview-user div').append(name);
     this.$el.find('#user-feedback-overview-note').val(this.model.get('userMessage'));

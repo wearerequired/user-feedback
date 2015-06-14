@@ -1,11 +1,20 @@
 # General
 .DS_Store
 
+# npm
+/node_modules
+
+# Release task
+/release
+
+# Build files
+/js/*.js
+/js/*.map
+/css/*.css
+/css/*.map
+
 # Sass
 .sass-cache
-
-# npm
-node_modules
 
 # Vendor (e.g. Composer)
 vendor/*

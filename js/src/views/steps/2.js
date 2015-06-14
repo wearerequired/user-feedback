@@ -11,7 +11,7 @@ var WizardStep2 = WizardStep.extend({
     this.$el.html(this.template);
     this.delegateEvents();
 
-    var name = ( this.model.get('userName') != '' ) ? this.model.get('userName') : user_feedback.user.name;
+    var name = ( this.model.get('userName') !== '' ) ? this.model.get('userName') : user_feedback.user.name;
     this.$el.find('p:first-of-type').append(name);
 
     return this;

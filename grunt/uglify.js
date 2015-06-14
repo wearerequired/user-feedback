@@ -1,24 +1,18 @@
 module.exports = {
-  options: {
-    banner   : '/*! <%= package.name %> - v<%= package.version %> - ' +
-    '<%= grunt.template.today("yyyy-mm-dd") %> */\n',
-    mangle   : {
-      except: ['jQuery', 'Backbone']
-    },
-    sourceMap: true,
-    compress : {
-      global_defs : {
-        "DEBUG": false
-      },
-      dead_code   : true,
-      drop_console: true
-    },
-    beautify : false
-  },
-
-  dist: {
-    files: {
-      'js/build/user-feedback.min.js': ['js/build/user-feedback.js']
-    }
-  }
-};
+	all: {
+		files  : {
+			'js/user-feedback.min.js': ['js/user-feedback.js']
+		},
+		options: {
+			banner   : '/*! <%= package.title %> - v<%= package.version %>\n' +
+			' * <%= package.homepage %>\n' +
+			' * Copyright (c) <%= grunt.template.today("yyyy") %>;' +
+			' * Licensed GPLv2+' +
+			' */\n',
+			sourceMap: true,
+			mangle   : {
+				except: ['jQuery']
+			}
+		}
+	}
+}

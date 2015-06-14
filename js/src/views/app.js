@@ -78,7 +78,7 @@ var AppView = Backbone.View.extend({
       this.$el.append(this.initButton.render().el);
     } else {
       if (this.showBottomBar) {
-        this.$el.append(this.bottomBar.render().el)
+        this.$el.append(this.bottomBar.render().el);
       }
 
       this.$el.append(this.wizard.render().el);
