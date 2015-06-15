@@ -173,25 +173,6 @@
 	border: 1px solid $color-light-gray;
 }
 
-.user-feedback-additional-notes {
-	margin: 5px 0 0 0;
-	overflow: hidden;
-	list-style: none;
-	color: $color-gray;
-
-	li {
-		float: left;
-		width: 50%;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
-
-		#user-feedback-overview-screenshot & {
-			float: none;
-		}
-	}
-}
-
 .user-feedback-wizard-step-5:before,
 .user-feedback-wizard-step-6:before {
 	content: "";
