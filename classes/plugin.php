@@ -84,31 +84,44 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	}
 
 	/**
-	 * Save the submitted image as media item.
+	 * Save the submitted image as a temporary file.
 	 *
 	 * @param string $img Base64 encoded image.
 	 *
-	 * @return int|WP_Error
+	 * @return bool|string File name on success, false on failure.
 	 */
 	public function save_image( $img ) {
 		// Strip the "data:image/png;base64," part and decode the image
 		$img = explode( ',', $img );
-		$img = base64_decode( $img[1] );
+		$img = isset( $img[1] ) ? base64_decode( $img[1] ) : base64_decode( $img[0] );
 
 		if ( ! $img ) {
 			return false;
 		}
 
 		// Upload to tmp folder
-		$filename = 'user-feedback-' . date( 'Y-m-d-H-i' ) . '.png';
-		// todo: Use WP_Filesystem class
-		$file = file_put_contents( '/tmp/' . $filename, $img );
+		$filename = wp_tempnam( 'user-feedback-' . date( 'Y-m-d-H-i' ) . '.png' );
 
-		if ( ! $file ) {
+		if ( ! $filename ) {
 			return false;
 		}
 
-		return '/tmp/' . $filename;
+		if ( ! WP_Filesystem( request_filesystem_credentials( '' ) ) ) {
+			return false;
+		}
+
+		/** @var WP_Filesystem_Base $wp_filesystem */
+		global $wp_filesystem;
+		$success = $wp_filesystem->put_contents(
+			$filename,
+			$img
+		);
+
+		if ( ! $success ) {
+			return false;
+		}
+
+		return $filename;
 	}
 
 	/**
