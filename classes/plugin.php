@@ -26,17 +26,15 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	public function add_hooks() {
 		$this->hook( 'init' );
 
+		// Support third-party plugins
+		$this->hook( 'user_feedback_init' );
+
 		// Load the scripts & styles
+		$this->hook( 'wp_enqueue_scripts', 'enqueue_scripts' );
+		$this->hook( 'wp_footer', 'print_templates' );
 
-		if ( apply_filters( 'user_feedback_load_on_frontend', true ) ) {
-			$this->hook( 'wp_enqueue_scripts', 'enqueue_scripts' );
-			$this->hook( 'wp_footer', 'print_templates' );
-		}
-
-		if ( apply_filters( 'user_feedback_load_on_backend', false ) ) {
-			$this->hook( 'admin_enqueue_scripts', 'enqueue_scripts' );
-			$this->hook( 'admin_footer', 'print_templates' );
-		}
+		$this->hook( 'admin_enqueue_scripts', 'enqueue_scripts' );
+		$this->hook( 'admin_footer', 'print_templates' );
 
 		// Ajax callbacks
 		$this->hook( 'wp_ajax_user_feedback', 'ajax_callback' );
@@ -203,12 +201,12 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		/**
 		 * Allow others to enable/disable the plugin's functionality at will.
 		 *
-		 * For example, you could also load the plugin for non-logged-in users.
+		 * For example, you could also load the plugin for non-logged-in users or on your plugin's admin screen.
 		 *
 		 * @param bool $load_user_feedback Whether the user feedback script should be loaded or not.
-		 *                                 Defaults to true for logged in users.
+		 *                                 Defaults to true for logged in users on the front-end.
 		 */
-		$load_user_feedback = apply_filters( 'user_feedback_load', true );
+		$load_user_feedback = apply_filters( 'load_user_feedback', ! is_admin() && is_user_logged_in() && ! is_customize_preview() );
 
 		/** @var bool $load_user_feedback */
 		if ( ! $load_user_feedback ) {
@@ -272,19 +270,20 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		}
 
 		wp_localize_script( 'user-feedback', 'user_feedback', apply_filters( 'user_feedback_script_data', array(
-			'ajax_url'  => admin_url( 'admin-ajax.php' ),
-			'theme'     => array(
+			'third_party' => array(),
+			'ajax_url'    => admin_url( 'admin-ajax.php' ),
+			'theme'       => array(
 				'name'             => $theme->Name,
 				'stylesheet'       => $theme->stylesheet,
 				'current_template' => $current_template,
 			),
-			'user'      => array(
+			'user'        => array(
 				'logged_in' => is_user_logged_in(),
 				'name'      => $userdata->display_name,
 				'email'     => $userdata->user_email,
 			),
-			'language'  => $language,
-			'templates' => array(
+			'language'    => $language,
+			'templates'   => array(
 				'button'                => array(
 					'label' => __( 'Feedback', 'user-feedback' ),
 				),
@@ -381,5 +380,48 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	public function print_templates() {
 		// Our main container
 		echo '<div id="user-feedback-container"></div>';
+	}
+
+	/**
+	 * This functions is hooked to the `user_feedback_init` action.
+	 *
+	 * Developers can use this action to enable User Feedback in their plugins.
+	 * They can pass additional data that should be processed and even an email address.
+	 *
+	 * @param array $args      {
+	 *                         Hook arguments.
+	 *
+	 * @type string $name      Name of the plugin.
+	 * @type array  $data      Additional debug data that is sent along with the plugin.
+	 * @type string $recipient Email address of the recipient.
+	 * }
+	 */
+	public function user_feedback_init( $args ) {
+		$defaults = array(
+			'name'      => '',
+			'data'      => array(),
+			'recipient' => get_option( 'admin_email' ),
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		// Load user feedback on the current screen
+		add_filter( 'load_user_feedback', '__return_true' );
+
+
+		// Change email address
+		add_filter( 'user_feedback_email_address', function () use ( $args ) {
+			return $args['recipient'];
+		} );
+
+		// Add plugin's data array to our JS data.
+		// todo: Use something like `json_decode(json_encode($obj), true)` to make sure it's an array
+		add_filter( 'user_feedback_script_data', function ( $data ) use ( $args ) {
+			$data['third_party'][ sanitize_title( $args['name'] ) ] = $args['data'];
+
+			return $data;
+		} );
+
+		$this->enqueue_scripts();
 	}
 }
