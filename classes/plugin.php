@@ -64,13 +64,17 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		 *
 		 * The variable contains all the data received via the ajax request.
 		 *
-		 * @param array $feedback {
+		 * @param array $feedback          {
 		 *
-		 * @type array  $browser  Contains useful browser information like user agent, platform, and online status.
-		 * @type string $url      The URL from where the user submitted the feedback.
-		 * @type string $html     Contains the complete HTML output of $url.
-		 * @type string $img      Base64 encoded screenshot of the page.
-		 * @type string $note     Additional notes from the user.
+		 * @type array  $browser           Contains useful browser information like user agent, platform, and online status.
+		 * @type string $url               The URL from where the user submitted the feedback.
+		 * @type string $theme             The active theme.
+		 * @type string $site_language     Current language setting of WordPress (or any multilingual plugin).
+		 * @type string $browser_languages Current language setting of the visitor.
+		 * @type string $third_party       Any data added by third party plugins.
+		 * @type string $message           Additional notes from the user.
+		 * @type string $img               Base64 encoded screenshot of the page.
+		 * @type string $user              Name and email address of the user (if provided).
 		 * }
 		 *
 		 */
@@ -270,20 +274,20 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		}
 
 		wp_localize_script( 'user-feedback', 'user_feedback', apply_filters( 'user_feedback_script_data', array(
-			'third_party' => array(),
-			'ajax_url'    => admin_url( 'admin-ajax.php' ),
-			'theme'       => array(
+			'third_party'   => array(),
+			'ajax_url'      => admin_url( 'admin-ajax.php' ),
+			'theme'         => array(
 				'name'             => $theme->Name,
 				'stylesheet'       => $theme->stylesheet,
 				'current_template' => $current_template,
 			),
-			'user'        => array(
+			'user'          => array(
 				'logged_in' => is_user_logged_in(),
 				'name'      => $userdata->display_name,
 				'email'     => $userdata->user_email,
 			),
-			'site_language'    => $language,
-			'templates'   => array(
+			'site_language' => $language,
+			'templates'     => array(
 				'button'                => array(
 					'label' => __( 'Feedback', 'user-feedback' ),
 				),
