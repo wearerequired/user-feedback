@@ -282,7 +282,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 				'name'      => $userdata->display_name,
 				'email'     => $userdata->user_email,
 			),
-			'language'    => $language,
+			'site_language'    => $language,
 			'templates'   => array(
 				'button'                => array(
 					'label' => __( 'Feedback', 'user-feedback' ),
