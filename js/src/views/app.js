@@ -98,20 +98,20 @@ var AppView = Backbone.View.extend({
 
 		// Set up initial post data to be sent
 		var post = {
-			browser          : {
+			browser    : {
 				name         : navigator.saysWho,
 				cookieEnabled: navigator.cookieEnabled,
 				platform     : navigator.platform,
 				userAgent    : navigator.userAgent,
+				languages    : window.navigator.languages || [window.navigator.language || window.navigator.userLanguage],
 			},
-			url              : document.URL,
-			theme            : user_feedback.theme,
-			site_language    : user_feedback.site_language,
-			browser_languages: window.navigator.languages || [window.navigator.language || window.navigator.userLanguage],
-			third_party      : user_feedback.third_party,
-			message          : this.model.get('userMessage'),
-			img              : this.model.get('userScreenshot'),
-			user             : {
+			url        : document.URL,
+			theme      : user_feedback.theme,
+			language   : user_feedback.site_language,
+			third_party: user_feedback.third_party,
+			message    : this.model.get('userMessage'),
+			img        : this.model.get('userScreenshot'),
+			user       : {
 				name : this.model.get('userName'),
 				email: this.model.get('userEmail')
 			}
