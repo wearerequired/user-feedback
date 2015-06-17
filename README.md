@@ -8,13 +8,22 @@ Stable tag:        0.1.0
 License:           GPLv2 or later  
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html  
 
-Allows users to submit feedback and bug reports anywhere on the site using an interactive feedback button.
+Allow users to submit feedback and bug reports anywhere on the site using an interactive feedback button.
 
 ## Description ##
 
-Currently, logged-in users can send feedback using a dedicated feedback button on the front-end. They can highlight or black out parts of the page and write some additional notes.
+With this plugin, logged-in users can send feedback using a dedicated feedback button on the front-end. For example, when you find a bug you can highlight the relevant part of the page and write some additional notes to it.
 
-This information (screenshot, notes, user agent, URL) is sent via email to the blog administrator. The screenshot is also uploaded to WordPress for later use.
+This information is sent via email to the blog administrator, including a screenshot of your annotated page and helpful debugging data.
+
+**Demo:** [Watch video](https://cloudup.com/iUtCz3UGF7e)
+
+The plugin is highly flexible, you can adjust almost anything via filters & hooks. We also plan to release a couple of extensions for various use cases:
+
+* Stylish HTML emails
+* GitHub and HelpScout integration
+* An admin dashboard to store all sent feedback in the back-end.
+* Detailed usage analytics
 
 ## Installation ##
 
@@ -27,24 +36,64 @@ This information (screenshot, notes, user agent, URL) is sent via email to the b
 
 ## Frequently Asked Questions ##
 
-### Question ###
+### How can I enable the plugin for guests too? ###
 
-Answer
+You can use the `load_user_feedback` hook to conditionally load the plugin when you need it.
+
+```
+/**
+ * Load the User Feedback plugin for guests too.
+ *
+ * @param bool $should_load Whether to load the plugin or not.
+ *
+ * @return bool
+ */
+function custom_load_feedback_on_frontend( $should_load ) {
+	// Return true for guests
+	if ( ! is_user_logged_in() ) {
+		$should_load = true;
+	}
+
+	// Return the default value
+	return $should_load;
+}
+```
+
+### How can I leverage this tool in my own plugin? ###
+If you’re a developer, you may want to support User Feedback in your own plugin. For example, if you have a custom settings page and want to load the plugin there, just add the following snippet on that screen:
+
+```
+do_action( 'user_feedback_init', array(
+	'name'      => 'My Awesome Plugin',
+	'data'      => array(), /* some additional debug data */
+	'recipient' => 'support@example.com', /* your email address */
+) );
+```
+
+This snippet registers your plugin properly so the User Feedback plugin gets loaded on that screen. If the user now submits some feedback, the email gets sent to you, including the debug data you provide. How awesome is that!
+
+### What else can I do with this plugin? ###
+
+You can dig into the source code and the wiki [on GitHub](https://github.com/wearerequired/user-feedback) if you’re interested in that.
 
 ## Screenshots ##
 
-1. Description of first screenshot
+1. The unobtrusive feedback button added by the plugin.
+2. Users can highlight specific areas and leave a message.
+3. This is how the email sent to the blog admin looks like.
 
 ## Contribute ##
 
 Here is how you can contribute:
 
+We develop everything [on GitHub](https://github.com/wearerequired/user-feedback). There you can submit bug reports and pull requests.
+
 ## Changelog ##
 
-### 0.1 ###
+### 1.0.0 ###
 * First release
 
 ## Upgrade Notice ##
 
-### 0.1.0 ###
+### 1.0.0 ###
 First release
