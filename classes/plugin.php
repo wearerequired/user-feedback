@@ -461,7 +461,9 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		add_filter( 'user_feedback_email_message', function ( $message, $feedback ) use ( $args ) {
 			$data = ( isset( $feedback['third_party'][ $args['slug'] ] ) ) ? $feedback['third_party'][ $args['slug'] ] : '';
 
-			$message .= sprintf( __( "%s:\r\n\r\rn %s\r\n\r\rn", 'user-feedback' ), $args['name'], json_encode( $data ) ) . "\r\n";
+			if ( ! empty( $data ) ) {
+				$message .= sprintf( __( "%s:\r\n\r\rn %s\r\n\r\r\n", 'user-feedback' ), $args['name'], json_encode( $data ) );
+			}
 
 			return $message;
 		} );
