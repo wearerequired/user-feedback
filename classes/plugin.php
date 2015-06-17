@@ -286,7 +286,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		 */
 		$theme = wp_get_theme();
 		global $template;
-		$current_template = basename( str_replace( $theme->theme_root . '/' . $theme->stylesheet . '/', '', $template ) );
+		$current_template = basename( str_replace( $theme->get_theme_root() . '/' . $theme->get_stylesheet() . '/', '', $template ) );
 
 		/**
 		 * Get the current language.
@@ -307,8 +307,8 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			'third_party' => array(),
 			'ajax_url'    => admin_url( 'admin-ajax.php' ),
 			'theme'       => array(
-				'name'             => $theme->Name,
-				'stylesheet'       => $theme->stylesheet,
+				'name'             => $theme->get( 'Name' ),
+				'stylesheet'       => $theme->get_stylesheet(),
 				'current_template' => $current_template,
 			),
 			'user'        => array(
@@ -444,7 +444,6 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 
 		// Load user feedback on the current screen
 		add_filter( 'load_user_feedback', '__return_true' );
-
 
 		// Change email address
 		add_filter( 'user_feedback_email_address', function () use ( $args ) {
