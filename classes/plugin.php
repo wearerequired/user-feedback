@@ -175,15 +175,22 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
 
 		// Send email to the blog admin
-		wp_mail(
-			apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) ),
-			apply_filters( 'user_feedback_email_subject',
-				sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_option( 'blogname' ) )
-			),
-			apply_filters( 'user_feedback_email_message', $message, $feedback ),
-			'',
-			$img
+		$to            = apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) );
+		$subject       = apply_filters( 'user_feedback_email_subject',
+			sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_option( 'blogname' ) )
 		);
+		$email_message = apply_filters( 'user_feedback_email_message', $message, $feedback );
+
+		$success = wp_mail( $to, $subject, $email_message, '', $img );
+
+		do_action_ref_array( 'user_feedback_email_sent', array(
+			'to'         => $to,
+			'subject'    => $subject,
+			'message'    => $email_message,
+			'attachment' => $img,
+			'feedback'   => $feedback,
+			'success'    => $success,
+		) );
 
 		if ( ! is_email( $user_email ) ) {
 			return;
@@ -200,15 +207,22 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
 
 		// Send email to the submitting user
-		wp_mail(
-			apply_filters( 'user_feedback_email_copy_address', $user_email ),
-			apply_filters( 'user_feedback_email_copy_subject',
-				sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_option( 'blogname' ) )
-			),
-			apply_filters( 'user_feedback_email_copy_message', $message, $feedback ),
-			'',
-			$img
+		$to            = apply_filters( 'user_feedback_email_copy_address', $user_email );
+		$subject       = apply_filters( 'user_feedback_email_copy_subject',
+			sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_option( 'blogname' ) )
 		);
+		$email_message = apply_filters( 'user_feedback_email_copy_message', $message, $feedback );
+
+		$success = wp_mail( $to, $subject, $email_message, '', $img );
+
+		do_action_ref_array( 'user_feedback_email_copy_sent', array(
+			'to'         => $to,
+			'subject'    => $subject,
+			'message'    => $email_message,
+			'attachment' => $img,
+			'feedback'   => $feedback,
+			'success'    => $success,
+		) );
 	}
 
 	/**
