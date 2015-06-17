@@ -59,26 +59,29 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			die( 0 );
 		}
 
+		$img = ( isset ( $_POST['data']['img'] ) ) ? $this->save_temp_image( (string) $_POST['data']['img'] ) : false;
+
 		/**
 		 * This action is run whenever there's new user feedback.
 		 *
 		 * The variable contains all the data received via the ajax request.
 		 *
-		 * @param array $feedback          {
+		 * @param array       $feedback          {
 		 *
-		 * @type array  $browser           Contains useful browser information like user agent, platform, and online status.
-		 * @type string $url               The URL from where the user submitted the feedback.
-		 * @type string $theme             The active theme.
-		 * @type string $site_language     Current language setting of WordPress (or any multilingual plugin).
-		 * @type string $browser_languages Current language setting of the visitor.
-		 * @type string $third_party       Any data added by third party plugins.
-		 * @type string $message           Additional notes from the user.
-		 * @type string $img               Base64 encoded screenshot of the page.
-		 * @type string $user              Name and email address of the user (if provided).
+		 * @type array        $browser           Contains useful browser information like user agent, platform, and online status.
+		 * @type string       $url               The URL from where the user submitted the feedback.
+		 * @type string       $theme             The active theme.
+		 * @type string       $site_language     Current language setting of WordPress (or any multilingual plugin).
+		 * @type string       $browser_languages Current language setting of the visitor.
+		 * @type string       $third_party       Any data added by third party plugins.
+		 * @type string       $message           Additional notes from the user.
+		 * @type string       $img               Base64 encoded screenshot of the page.
+		 * @type string       $user              Name and email address of the user (if provided).
 		 * }
 		 *
+		 * @param string|bool $img               Temporary file name of the screenshot or false if saving wasn't possible.
 		 */
-		do_action( 'user_feedback_received', $_POST['data'] );
+		do_action( 'user_feedback_received', $_POST['data'], $img );
 
 		die( 1 );
 	}
@@ -90,7 +93,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	 *
 	 * @return bool|string File name on success, false on failure.
 	 */
-	public function save_image( $img ) {
+	public function save_temp_image( $img ) {
 		// Strip the "data:image/png;base64," part and decode the image
 		$img = explode( ',', $img );
 		$img = isset( $img[1] ) ? base64_decode( $img[1] ) : base64_decode( $img[0] );
@@ -132,25 +135,18 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	 * - store the feedback as a custom post
 	 * - send an email to the admin
 	 *
-	 * @param array $feedback {
-	 *
-	 * @type array  $browser  Contains useful browser information like user agent, platform, and online status.
-	 * @type string $url      The URL from where the user submitted the feedback.
-	 * @type string $html     Contains the complete HTML output of $url.
-	 * @type string $img      Base64 encoded screenshot of the page.
-	 * @type string $message  Additional notes from the user.
-	 * }
+	 * @param array       $feedback Feedback data.
+	 * @param string|bool $img      Temporary file name of the screenshot or false if saving wasn't possible.
 	 */
-	public function process_feedback( $feedback ) {
+	public function process_feedback( $feedback, $img ) {
 
 		$attachments = array();
-		$img         = self::save_image( $feedback['img'] );
 		if ( $img ) {
 			$attachments[] = $img;
 		}
 
-		$user_name  = stripslashes( $feedback['user']['name'] );
-		$user_email = stripslashes( $feedback['user']['email'] );
+		$user_name  = sanitize_text_field( $feedback['user']['name'] );
+		$user_email = sanitize_email( $feedback['user']['email'] );
 
 		if ( empty( $user_name ) ) {
 			$user_name = __( 'Anonymous', 'user-feedback' );
@@ -160,15 +156,22 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			$user_email = __( '(not provided)', 'user-feedback' );
 		}
 
+		$user_message = sanitize_text_field( $feedback['message'] );
+		$visited_url  = esc_url( $feedback['url'] );
+
+		$cookies_enabled = (bool) $feedback['browser']['cookieEnabled'] ? __( 'Yes', 'user-feedback' ) : __( 'No', 'user-feedback' );
+
 		$message = __( 'Howdy,', 'user-feedback' ) . "\r\n\r\n";
 		$message .= __( 'You just received a new user feedback regarding your website!', 'user-feedback' ) . "\r\n\r\n";
 		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
 		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
-		$message .= sprintf( __( 'Browser: %s (%s)', 'user-feedback' ), $feedback['browser']['name'], $feedback['browser']['userAgent'] ) . "\r\n";
-		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $feedback['url'] ) . "\r\n";
-		$message .= sprintf( __( 'Site Language: %s', 'user-feedback' ), $feedback['language'] ) . "\r\n";
+		$message .= sprintf( __( 'Browser: %s (%s)', 'user-feedback' ), sanitize_text_field( $feedback['browser']['name'] ), sanitize_text_field( $feedback['browser']['userAgent'] ) ) . "\r\n";
+		$message .= sprintf( __( 'Cookies enabled: %s', 'user-feedback' ), $cookies_enabled ) . "\r\n";
+		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $visited_url ) . "\r\n";
+		$message .= sprintf( __( 'Site Language: %s', 'user-feedback' ), sanitize_text_field( $feedback['language'] ) ) . "\r\n";
+		$message .= sprintf( __( 'User Languages: %s', 'user-feedback' ), sanitize_text_field( implode( ', ', $feedback['browser']['languages'] ) ) ) . "\r\n";
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
-		$message .= stripslashes( $feedback['message'] ) . "\r\n\r\n";
+		$message .= $user_message . "\r\n\r\n";
 		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
 
 		// Send email to the blog admin
@@ -177,7 +180,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			apply_filters( 'user_feedback_email_subject',
 				sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_option( 'blogname' ) )
 			),
-			apply_filters( 'user_feedback_email_message', $message ),
+			apply_filters( 'user_feedback_email_message', $message, $feedback ),
 			'',
 			$img
 		);
@@ -190,10 +193,10 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		$message .= __( 'We just received the following feedback from you and will get in touch shortly. Thank you.', 'user-feedback' ) . "\r\n\r\n";
 		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
 		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
-		$message .= sprintf( __( 'Browser: %s', 'user-feedback' ), $feedback['browser']['name'] ) . "\r\n";
-		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $feedback['url'] ) . "\r\n";
+		$message .= sprintf( __( 'Browser: %s', 'user-feedback' ), sanitize_text_field( $feedback['browser']['name'] ) ) . "\r\n";
+		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $visited_url ) . "\r\n";
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
-		$message .= stripslashes( $feedback['message'] ) . "\r\n\r\n";
+		$message .= $user_message . "\r\n\r\n";
 		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
 
 		// Send email to the submitting user
@@ -202,7 +205,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			apply_filters( 'user_feedback_email_copy_subject',
 				sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_option( 'blogname' ) )
 			),
-			apply_filters( 'user_feedback_email_copy_message', $message ),
+			apply_filters( 'user_feedback_email_copy_message', $message, $feedback ),
 			'',
 			$img
 		);
@@ -287,20 +290,20 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		}
 
 		wp_localize_script( 'user-feedback', 'user_feedback', apply_filters( 'user_feedback_script_data', array(
-			'third_party'   => array(),
-			'ajax_url'      => admin_url( 'admin-ajax.php' ),
-			'theme'         => array(
+			'third_party' => array(),
+			'ajax_url'    => admin_url( 'admin-ajax.php' ),
+			'theme'       => array(
 				'name'             => $theme->Name,
 				'stylesheet'       => $theme->stylesheet,
 				'current_template' => $current_template,
 			),
-			'user'          => array(
+			'user'        => array(
 				'logged_in' => is_user_logged_in(),
 				'name'      => $userdata->display_name,
 				'email'     => $userdata->user_email,
 			),
-			'site_language' => $language,
-			'templates'     => array(
+			'language'    => $language,
+			'templates'   => array(
 				'button'                => array(
 					'label' => __( 'Feedback', 'user-feedback' ),
 				),
@@ -422,6 +425,9 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 
 		$args = wp_parse_args( $args, $defaults );
 
+		$args['name'] = sanitize_text_field( $args['name'] );
+		$args['slug'] = sanitize_title( $args['name'] );
+
 		// Load user feedback on the current screen
 		add_filter( 'load_user_feedback', '__return_true' );
 
@@ -434,9 +440,17 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		// Add plugin's data array to our JS data.
 		// todo: Use something like `json_decode(json_encode($obj), true)` to make sure it's an array
 		add_filter( 'user_feedback_script_data', function ( $data ) use ( $args ) {
-			$data['third_party'][ sanitize_title( $args['name'] ) ] = $args['data'];
+			$data['third_party'][ $args['slug'] ] = $args['data'];
 
 			return $data;
+		} );
+
+		add_filter( 'user_feedback_email_message', function ( $message, $feedback ) use ( $args ) {
+			$data = ( isset( $feedback['third_party'][ $args['slug'] ] ) ) ? $feedback['third_party'][ $args['slug'] ] : '';
+
+			$message .= sprintf( __( "%s:\r\n\r\rn %s\r\n\r\rn", 'user-feedback' ), $args['name'], json_encode( $data ) ) . "\r\n";
+
+			return $message;
 		} );
 
 		$this->enqueue_scripts();
