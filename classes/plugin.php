@@ -103,10 +103,16 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		}
 
 		// Upload to tmp folder
-		$filename = wp_tempnam( 'user-feedback-' . date( 'Y-m-d-H-i' ) . '.png' );
+		$filename = 'user-feedback-' . date( 'Y-m-d-H-i' );
+		$tempfile = wp_tempnam( $filename );
 
-		if ( ! $filename ) {
+		if ( ! $tempfile ) {
 			return false;
+		}
+
+		// WordPress adds a .tmp file extension, but we want .png
+		if ( rename( $tempfile, $filename . '.png' ) ) {
+			$tempfile = $filename . '.png';
 		}
 
 		if ( ! WP_Filesystem( request_filesystem_credentials( '' ) ) ) {
@@ -116,7 +122,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		/** @var WP_Filesystem_Base $wp_filesystem */
 		global $wp_filesystem;
 		$success = $wp_filesystem->put_contents(
-			$filename,
+			$tempfile,
 			$img
 		);
 
@@ -124,7 +130,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			return false;
 		}
 
-		return $filename;
+		return $tempfile;
 	}
 
 	/**
