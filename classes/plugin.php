@@ -398,7 +398,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 				'wizardStep5'           => array(
 					'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
 					'intro'  => __( 'Thank you for taking your time to give us feedback. We will examine it and get back to as quickly as possible.', 'user-feedback' ),
-					'intro2' => __( '&ndash; Your required+ support team', 'user-feedback' ),
+					'intro2' => sprintf( __( '&ndash; %s', 'user-feedback' ), get_bloginfo( 'name' ) ),
 					'button' => array(
 						'primary'   => __( 'Done', 'user-feedback' ),
 						'secondary' => __( 'Leave another message', 'user-feedback' ),
