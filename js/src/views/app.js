@@ -107,7 +107,7 @@ var AppView = Backbone.View.extend({
 			},
 			url        : document.URL,
 			theme      : user_feedback.theme,
-			language   : user_feedback.site_language,
+			language   : user_feedback.language,
 			third_party: user_feedback.third_party,
 			message    : this.model.get('userMessage'),
 			img        : this.model.get('userScreenshot'),
