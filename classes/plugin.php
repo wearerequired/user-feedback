@@ -177,7 +177,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		// Send email to the blog admin
 		$to            = apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) );
 		$subject       = apply_filters( 'user_feedback_email_subject',
-			sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_option( 'blogname' ) )
+			sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
 		);
 		$email_message = apply_filters( 'user_feedback_email_message', $message, $feedback );
 
@@ -209,7 +209,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		// Send email to the submitting user
 		$to            = apply_filters( 'user_feedback_email_copy_address', $user_email );
 		$subject       = apply_filters( 'user_feedback_email_copy_subject',
-			sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_option( 'blogname' ) )
+			sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
 		);
 		$email_message = apply_filters( 'user_feedback_email_copy_message', $message, $feedback );
 
