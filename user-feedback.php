@@ -9,6 +9,8 @@
  * License:     GPLv2+
  * Text Domain: user-feedback
  * Domain Path: /languages
+ *
+ * @package User_Feedback
  */
 
 /**
@@ -38,10 +40,10 @@ $user_feedback_requirements_check = new User_Feedback_Requirements_Check( array(
 	'php'   => '5.3',
 	'wp'    => '4.0',
 	'file'  => __FILE__,
-));
+) );
 
 if ( $user_feedback_requirements_check->passes() ) {
-	// Pull in the plugin classes and initialize
+	// Pull in the plugin classes and initialize.
 	include( dirname( __FILE__ ) . '/lib/wp-stack-plugin.php' );
 	include( dirname( __FILE__ ) . '/classes/plugin.php' );
 	User_Feedback_Plugin::start( __FILE__ );
