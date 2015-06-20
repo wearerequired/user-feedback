@@ -231,16 +231,16 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
 
 		// Send email to the submitting user.
-		$to            = apply_filters( 'user_feedback_email_copy_address', $user_email );
+		$recipient     = apply_filters( 'user_feedback_email_copy_address', $user_email );
 		$subject       = apply_filters( 'user_feedback_email_copy_subject',
 			sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
 		);
 		$email_message = apply_filters( 'user_feedback_email_copy_message', $message, $feedback );
 
-		$success = wp_mail( $to, $subject, $email_message, '', $img );
+		$success = wp_mail( $recipient, $subject, $email_message, '', $img );
 
 		do_action_ref_array( 'user_feedback_email_copy_sent', array(
-			'to'         => $to,
+			'to'         => $recipient,
 			'subject'    => $subject,
 			'message'    => $email_message,
 			'attachment' => $img,
