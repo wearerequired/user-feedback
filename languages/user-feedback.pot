@@ -24,179 +24,180 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 
-#: classes/plugin.php:152 classes/plugin.php:278
+#: classes/plugin.php:176 classes/plugin.php:352
 msgid "Anonymous"
 msgstr ""
 
-#: classes/plugin.php:156
+#: classes/plugin.php:180
 msgid "(not provided)"
 msgstr ""
 
-#: classes/plugin.php:164
+#: classes/plugin.php:186
 msgid "Yes"
 msgstr ""
 
-#: classes/plugin.php:164
+#: classes/plugin.php:186
 msgid "No"
 msgstr ""
 
-#: classes/plugin.php:166 classes/plugin.php:201
+#: classes/plugin.php:188 classes/plugin.php:223
 msgid "Howdy,"
 msgstr ""
 
-#: classes/plugin.php:167
+#: classes/plugin.php:189
 msgid "You just received a new user feedback regarding your website!"
 msgstr ""
 
-#: classes/plugin.php:168 classes/plugin.php:203
+#: classes/plugin.php:190 classes/plugin.php:225
 msgid "Name: %s"
 msgstr ""
 
-#: classes/plugin.php:169 classes/plugin.php:204
+#: classes/plugin.php:191 classes/plugin.php:226
 msgid "Email: %s"
 msgstr ""
 
-#: classes/plugin.php:170
+#: classes/plugin.php:192
 msgid "Browser: %s (%s)"
 msgstr ""
 
-#: classes/plugin.php:171
+#: classes/plugin.php:193
 msgid "Cookies enabled: %s"
 msgstr ""
 
-#: classes/plugin.php:172 classes/plugin.php:206
+#: classes/plugin.php:194 classes/plugin.php:228
 msgid "Visited URL: %s"
 msgstr ""
 
-#: classes/plugin.php:173
+#: classes/plugin.php:195
 msgid "Site Language: %s"
 msgstr ""
 
-#: classes/plugin.php:174
+#: classes/plugin.php:196
 msgid "User Languages: %s"
 msgstr ""
 
-#: classes/plugin.php:175 classes/plugin.php:207
+#: classes/plugin.php:197 classes/plugin.php:229
 msgid "Additional Notes:"
 msgstr ""
 
-#: classes/plugin.php:177 classes/plugin.php:209
+#: classes/plugin.php:199 classes/plugin.php:231
 msgid "A screenshot of the visited page is attached."
 msgstr ""
 
-#: classes/plugin.php:182
+#: classes/plugin.php:204
 msgid "[%s] New User Feedback"
 msgstr ""
 
-#: classes/plugin.php:202
+#: classes/plugin.php:224
 msgid ""
 "We just received the following feedback from you and will get in touch "
 "shortly. Thank you."
 msgstr ""
 
-#: classes/plugin.php:205
+#: classes/plugin.php:227
 msgid "Browser: %s"
 msgstr ""
 
-#: classes/plugin.php:214
+#: classes/plugin.php:236
 msgid "[%s] Your Feedback"
 msgstr ""
 
-#: classes/plugin.php:324
+#: classes/plugin.php:371
 msgid "Feedback"
 msgstr ""
 
-#: classes/plugin.php:339
+#: classes/plugin.php:386
 msgid "Howdy stranger,"
 msgstr ""
 
-#: classes/plugin.php:340
+#: classes/plugin.php:387
 msgid ""
 "Please let us know who you are. This way we will get back to you as soon as "
 "the issue is resolved:"
 msgstr ""
 
-#: classes/plugin.php:346 classes/plugin.php:359
+#: classes/plugin.php:393 classes/plugin.php:406
 msgid "Next"
 msgstr ""
 
-#: classes/plugin.php:347
+#: classes/plugin.php:394
 msgid "Stay anonymous"
 msgstr ""
 
-#: classes/plugin.php:354
+#: classes/plugin.php:401
 msgid "Hello "
 msgstr ""
 
-#: classes/plugin.php:355
+#: classes/plugin.php:402
 msgid "Please help us understand your feedback better!"
 msgstr ""
 
-#: classes/plugin.php:356
+#: classes/plugin.php:403
 msgid ""
 "You can not only leave us a message but also highlight areas relevant to "
 "your feedback."
 msgstr ""
 
-#: classes/plugin.php:357
+#: classes/plugin.php:404
 msgid "Don't show me this again"
 msgstr ""
 
-#: classes/plugin.php:366
+#: classes/plugin.php:413
 msgid "Highlight the areas relevant to your feedback."
 msgstr ""
 
-#: classes/plugin.php:368
+#: classes/plugin.php:415
 msgid "Take screenshot"
 msgstr ""
 
-#: classes/plugin.php:388
+#: classes/plugin.php:435
 msgid "Theme: "
 msgstr ""
 
-#: classes/plugin.php:389
+#: classes/plugin.php:436
 msgid "Page: "
 msgstr ""
 
-#: classes/plugin.php:390
+#: classes/plugin.php:437
 msgid "Browser: "
 msgstr ""
 
-#: classes/plugin.php:391
+#: classes/plugin.php:438
 msgid "Language: "
 msgstr ""
 
-#: classes/plugin.php:394
+#: classes/plugin.php:441
 msgid "Send"
 msgstr ""
 
-#: classes/plugin.php:395
+#: classes/plugin.php:442
 msgid "Back"
 msgstr ""
 
-#: classes/plugin.php:402
+#: classes/plugin.php:449
 msgid ""
 "Thank you for taking your time to give us feedback. We will examine it and "
 "get back to as quickly as possible."
 msgstr ""
 
-#: classes/plugin.php:403
+#: classes/plugin.php:450
 msgid "&ndash; %s"
 msgstr ""
 
-#: classes/plugin.php:405
+#: classes/plugin.php:452
 msgid "Done"
 msgstr ""
 
-#: classes/plugin.php:406
+#: classes/plugin.php:453
 msgid "Leave another message"
 msgstr ""
 
-#: classes/plugin.php:466
+#: classes/plugin.php:515
 msgid ""
 "%s:\r\n"
-"\r\rn %s\r\n"
-"\r\rn"
+"\r\n"
+" %s\r\n"
+"\r\n"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -221,84 +222,84 @@ msgstr ""
 msgid "http://required.ch"
 msgstr ""
 
-#: classes/plugin.php:328
+#: classes/plugin.php:375
 msgctxt "step 1"
 msgid "Feedback"
 msgstr ""
 
-#: classes/plugin.php:329
+#: classes/plugin.php:376
 msgctxt "step 3"
 msgid "Highlight area"
 msgstr ""
 
-#: classes/plugin.php:330
+#: classes/plugin.php:377
 msgctxt "step 2"
 msgid "Leave a message"
 msgstr ""
 
-#: classes/plugin.php:333
+#: classes/plugin.php:380
 msgctxt "help button label"
 msgid "?"
 msgstr ""
 
-#: classes/plugin.php:334
+#: classes/plugin.php:381
 msgctxt "help button title text and aria label"
 msgid "Submit Feedback"
 msgstr ""
 
-#: classes/plugin.php:338 classes/plugin.php:353 classes/plugin.php:378
-#: classes/plugin.php:401
+#: classes/plugin.php:385 classes/plugin.php:400 classes/plugin.php:425
+#: classes/plugin.php:448
 msgctxt "modal title"
 msgid "Feedback"
 msgstr ""
 
-#: classes/plugin.php:365
+#: classes/plugin.php:412
 msgctxt "modal title"
 msgid "Highlight area"
 msgstr ""
 
-#: classes/plugin.php:342
+#: classes/plugin.php:389
 msgctxt "input field placeholder"
 msgid "Your name"
 msgstr ""
 
-#: classes/plugin.php:343
+#: classes/plugin.php:390
 msgctxt "input field placeholder"
 msgid "Email address"
 msgstr ""
 
-#: classes/plugin.php:348 classes/plugin.php:360
+#: classes/plugin.php:395 classes/plugin.php:407
 msgctxt "close button"
 msgid "&times;"
 msgstr ""
 
-#: classes/plugin.php:369 classes/plugin.php:374 classes/plugin.php:396
+#: classes/plugin.php:416 classes/plugin.php:421 classes/plugin.php:443
 msgctxt "close button"
 msgid "&times"
 msgstr ""
 
-#: classes/plugin.php:349 classes/plugin.php:361 classes/plugin.php:370
-#: classes/plugin.php:375 classes/plugin.php:397
+#: classes/plugin.php:396 classes/plugin.php:408 classes/plugin.php:417
+#: classes/plugin.php:422 classes/plugin.php:444
 msgctxt "close button title text and aria label"
 msgid "Close"
 msgstr ""
 
-#: classes/plugin.php:379
+#: classes/plugin.php:426
 msgctxt "alt text"
 msgid "Annotated Screenshot"
 msgstr ""
 
-#: classes/plugin.php:382
+#: classes/plugin.php:429
 msgctxt "alt text"
 msgid "Gravatar"
 msgstr ""
 
-#: classes/plugin.php:381
+#: classes/plugin.php:428
 msgctxt "by user xy"
 msgid "From "
 msgstr ""
 
-#: classes/plugin.php:385
+#: classes/plugin.php:432
 msgctxt "textarea placeholder"
 msgid "Tell us what we should improve or fix &hellip;"
 msgstr ""
