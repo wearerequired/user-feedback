@@ -19,7 +19,8 @@ module.exports = {
       '!bin/**',
       '!.travis.yml',
       '!phpunit.xml',
-      '!composer.lock'
+      '!composer.lock',
+      '!vendor/**'
     ],
     dest: 'release/<%= package.version %>/'
   },
