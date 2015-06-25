@@ -16,6 +16,7 @@
 	box-sizing: border-box;
 	transform: translatez(0);
 	user-select: none;
+	border-top: 1px solid $color-gray;
 }
 
 #user-feedback-bar-steps {
@@ -55,9 +56,12 @@
 	background: $color-blue;
 	color: $color-white;
 	border-radius: 100%;
-	padding: 0 12px;
+	border: 1px solid $color-blue;
+	width: 30px;
 
+	&:focus,
 	&:hover {
+		border-color: $color-blue-hover;
 		background: $color-blue-hover;
 	}
 }

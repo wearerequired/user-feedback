@@ -3,12 +3,13 @@
  */
 
 .user-feedback-button {
-	outline: 0;
+	outline: none;
 	cursor: pointer;
 	background-clip: padding-box;
 	display: block;
 	font-size: 16px;
 	line-height: 30px;
+	margin: 0;
 	padding: 0 5px;
 	border: 1px solid transparent;
 
@@ -76,13 +77,14 @@
 	background-clip: padding-box;
 	border-radius: 2px;
 	padding: 5px 15px;
-	outline: 0;
+	outline: none;
 	position: fixed;
 	bottom: -3px;
 	right: 60px;
 	z-index: 100000;
 	cursor: pointer;
 
+	&:focus,
 	&:hover {
 		background: $color-blue-hover;
 		border: 1px solid $color-blue-hover;

@@ -1,19 +1,27 @@
 module.exports = {
-  options: {
-    livereload: true
-  },
+	options: {
+		livereload: true
+	},
 
-  config: {
-    files: 'grunt/watch.js'
-  },
+	config: {
+		files: 'grunt/watch.js'
+	},
 
-  css: {
-    files: 'css/src/**/*.scss',
-    tasks: ['sass', 'cssmin', 'autoprefixer']
-  },
+	sass: {
+		files: ['css/src/*.scss'],
+		tasks: ['sass', 'autoprefixer', 'cssmin']
+	},
 
-  jsminify: {
-    files: 'js/src/**/*.js',
-    tasks: ['concat', 'uglify']
-  }
-};
+	php: {
+		files  : ['**/*.php'],
+		tasks  : ['checktextdomain', 'phpunit'],
+		options: {
+			debounceDelay: 5000
+		}
+	},
+
+	scripts: {
+		files: 'js/src/**/*.*',
+		tasks: ['jshint', 'browserify', 'uglify', 'clean:js']
+	}
+}

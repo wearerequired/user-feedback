@@ -7,6 +7,7 @@
 	top: 0;
 	left: 0;
 	z-index: 100000; // just behind our UI
+	cursor: crosshair;
 }
 
 // A helper is a rectangle drawn by the user
@@ -42,5 +43,6 @@
 		display: block;
 		background: $color-blue-hover;
 		color: $color-white;
+		border-radius: 0;
 	}
 }

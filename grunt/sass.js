@@ -1,11 +1,7 @@
 module.exports = {
-  dist: {
-    files: [{
-      expand: true,
-      cwd   : 'css/src',
-      src   : ['*.scss'],
-      dest  : 'css/build',
-      ext   : '.css'
-    }]
-  }
-};
+	dist: {
+		files: {
+			'css/user-feedback.css': 'css/src/user-feedback.scss'
+		}
+	}
+}
