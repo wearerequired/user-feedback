@@ -120,7 +120,7 @@ var AppView = Backbone.View.extend({
 		jQuery.post(
 				user_feedback.ajax_url,
 				{
-					'action': 'user_feedback',
+					'action': 'user_feedback_submit',
 					'data'  : post
 				}
 		)

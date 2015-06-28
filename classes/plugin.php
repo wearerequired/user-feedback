@@ -48,8 +48,8 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		$this->hook( 'admin_footer', 'print_templates' );
 
 		// Ajax callbacks.
-		$this->hook( 'wp_ajax_user_feedback', 'ajax_callback' );
-		$this->hook( 'wp_ajax_nopriv_user_feedback', 'ajax_callback' );
+		$this->hook( 'wp_ajax_user_feedback_submit', 'ajax_submit' );
+		$this->hook( 'wp_ajax_nopriv_user_feedback_submit', 'ajax_submit' );
 
 		// Send feedback emails.
 		$this->hook( 'user_feedback_received', 'process_feedback' );
@@ -65,7 +65,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	/**
 	 * Ajax callback for user feedback.
 	 */
-	public function ajax_callback() {
+	public function ajax_submit() {
 		if ( ! isset( $_POST['data'] ) ) {
 			die( 0 );
 		}
