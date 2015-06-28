@@ -72,6 +72,29 @@ do_action( 'user_feedback_init', array(
 
 This snippet registers your plugin properly so the User Feedback plugin gets loaded on that screen. If the user now submits some feedback, the email gets sent to you, including the debug data you provide. How awesome is that!
 
+### How can I change the wording inside the tool? ###
+
+This is possible by leveraging the `user_feedback_script_data` filter. For example, you can change the message after submitting the feedback like this:
+
+```
+/**
+ * Modify the script data passed to the user feedback tool.
+ *
+ * This example function changes the message shown after submitting feedback.
+ *
+ * @param array $data User Feedback script data.
+ *
+ * @return array
+ */
+function custom_user_feedback_script_data( $data ) {
+	$data['templates']['wizardStep5']['intro2'] = '&ndash; awesome company';
+
+	return $data;
+}
+
+add_filter( 'user_feedback_script_data', 'custom_user_feedback_script_data' );
+```
+
 ### What else can I do with this plugin? ###
 
 You can dig into the source code and the wiki [on GitHub](https://github.com/wearerequired/user-feedback) if you’re interested in that.
