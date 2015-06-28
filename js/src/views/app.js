@@ -98,39 +98,39 @@ var AppView = Backbone.View.extend({
 
 		// Set up initial post data to be sent
 		var post = {
-			browser    : {
-				name         : navigator.saysWho,
+			browser: {
+				name: navigator.saysWho,
 				cookieEnabled: navigator.cookieEnabled,
-				platform     : navigator.platform,
-				userAgent    : navigator.userAgent,
-				languages    : window.navigator.languages || [window.navigator.language || window.navigator.userLanguage],
+				platform: navigator.platform,
+				userAgent: navigator.userAgent,
+				languages: window.navigator.languages || [window.navigator.language || window.navigator.userLanguage],
 			},
-			url        : document.URL,
-			theme      : user_feedback.theme,
-			language   : user_feedback.language,
+			url: document.URL,
+			theme: user_feedback.theme,
+			language: user_feedback.language,
 			third_party: user_feedback.third_party,
-			message    : this.model.get('userMessage'),
-			img        : this.model.get('userScreenshot'),
-			user       : {
-				name : this.model.get('userName'),
+			message: this.model.get('userMessage'),
+			img: this.model.get('userScreenshot'),
+			user: {
+				name: this.model.get('userName'),
 				email: this.model.get('userEmail')
 			}
 		};
 
 		jQuery.post(
-				user_feedback.ajax_url,
-				{
-					'action': 'user_feedback_submit',
-					'data'  : post
-				}
+			user_feedback.ajax_url,
+			{
+				'action': 'user_feedback_submit',
+				'data': post
+			}
 		)
-				.done(function () {
-					// todo: success view
-					// this.model.set(...);
-				})
-				.fail(function () {
-					// todo: failure view
-				});
+			.done(function () {
+					  // todo: success view
+					  // this.model.set(...);
+				  })
+			.fail(function () {
+					  // todo: failure view
+				  });
 	}
 });
 
