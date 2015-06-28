@@ -51,6 +51,9 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		$this->hook( 'wp_ajax_user_feedback_submit', 'ajax_submit' );
 		$this->hook( 'wp_ajax_nopriv_user_feedback_submit', 'ajax_submit' );
 
+		$this->hook( 'wp_ajax_user_feedback_avatar', 'ajax_avatar' );
+		$this->hook( 'wp_ajax_nopriv_user_feedback_avatar', 'ajax_avatar' );
+
 		// Send feedback emails.
 		$this->hook( 'user_feedback_received', 'process_feedback' );
 	}
@@ -60,6 +63,13 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	 */
 	public function init() {
 		$this->load_textdomain( 'user-feedback', '/languages' );
+	}
+
+	/**
+	 * Ajax callback for avatar request
+	 */
+	public function ajax_avatar() {
+		die( get_avatar( sanitize_email( $_GET['email'] ), 40 ) );
 	}
 
 	/**
@@ -425,8 +435,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 				'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
 				'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
 				'user'          => array(
-					'by'          => _x( 'From ', 'by user xy', 'user-feedback' ),
-					'gravatarAlt' => _x( 'Gravatar', 'alt text', 'user-feedback' ),
+					'by' => _x( 'From ', 'by user xy', 'user-feedback' ),
 				),
 				'placeholder'   => array(
 					'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),

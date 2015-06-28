@@ -34,7 +34,6 @@
     "grunt-wp-deploy": "~1.0.3",
     "html2canvas": "*",
     "load-grunt-config": "~0.16.0",
-    "MD5": "~1.2.0",
     "node-underscorify": "~0.0.14",
     "remapify": "~2.0",
     "time-grunt": "~1.1.0"
