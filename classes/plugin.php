@@ -72,7 +72,8 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	 * Ajax callback for avatar request
 	 */
 	public function ajax_avatar() {
-		die( get_avatar( sanitize_email( $_GET['email'] ), 40 ) );
+		$email = isset( $_GET['email'] ) ? $_GET['email'] : '';
+		die( get_avatar( sanitize_email( $email ), 40 ) );
 	}
 
 	/**
