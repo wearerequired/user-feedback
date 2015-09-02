@@ -570,7 +570,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			'user_feedback',
 			__( 'User Feedback', 'user-feedback' ),
 			function () {
-				esc_html_e( 'Here you can configure where the User Feedback tool should be loaded.', 'user-feedback' );
+				esc_html_e( 'Configure where the User Feedback tool should be loaded.', 'user-feedback' );
 			},
 			'general'
 		);
