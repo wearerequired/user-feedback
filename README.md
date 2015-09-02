@@ -95,10 +95,16 @@ We develop everything [on GitHub](https://github.com/wearerequired/user-feedback
 
 ## Changelog ##
 
+### 1.1.0 ###
+* New: Configure where the User Feedback tool should be loaded under 'Settings' -> 'General'
+
 ### 1.0.0 ###
 * First release
 
 ## Upgrade Notice ##
+
+### 1.1.0 ###
+100% compatible with WordPress 4.3, this version adds a settings section for the User Feedback tool.
 
 ### 1.0.0 ###
 First release
