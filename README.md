@@ -3,7 +3,7 @@ Contributors:      wearerequired, swissspidy, karinchristen, neverything
 Donate link:       http://required.ch  
 Tags:              users, feedback, email, media, support  
 Requires at least: 4.0  
-Tested up to:      4.2  
+Tested up to:      4.3  
 Stable tag:        0.1.0  
 License:           GPLv2 or later  
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html  
@@ -85,6 +85,7 @@ You can dig into the source code and the wiki [on GitHub](https://github.com/wea
 1. The unobtrusive feedback button added by the plugin.
 2. Users can highlight specific areas and leave a message.
 3. This is how the email sent to the blog admin looks like.
+4. The settings section under 'Settings' -> 'General'.
 
 ## Contribute ##
 
@@ -94,10 +95,16 @@ We develop everything [on GitHub](https://github.com/wearerequired/user-feedback
 
 ## Changelog ##
 
+### 1.1.0 ###
+* New: Configure where the User Feedback tool should be loaded under 'Settings' -> 'General'
+
 ### 1.0.0 ###
 * First release
 
 ## Upgrade Notice ##
+
+### 1.1.0 ###
+100% compatible with WordPress 4.3, this version adds a settings section for the User Feedback tool.
 
 ### 1.0.0 ###
 First release
