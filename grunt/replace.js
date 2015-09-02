@@ -46,6 +46,10 @@ module.exports = {
 			{
 				from: /^Stable tag:(\s*?)[\w.-]+(\s*?)$/mi,
 				to  : 'Stable tag:$1<%= package.version %>$2'
+			},
+			{
+				from: /^```$([^`]*)^```$/mg,
+				to  : '<pre><code>$1</code></pre>'
 			}
 		]
 	}

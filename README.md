@@ -43,13 +43,13 @@ You can configure where the User Feedback tool should be loaded in 'Settings' ->
 ### How can I leverage this tool in my own plugin? ###
 If you’re a developer, you may want to support User Feedback in your own plugin. For example, if you have a custom settings page and want to load the plugin there, just add the following snippet on that screen:
 
-`
-do_action( 'user_feedback_init', array(  
-	'name'      => 'My Awesome Plugin',  
-	'data'      => array(), /* some additional debug data */  
+```
+do_action( 'user_feedback_init', array(
+	'name'      => 'My Awesome Plugin',
+	'data'      => array(), /* some additional debug data */
 	'recipient' => 'support@example.com', /* your email address */  
 ) );
-`
+```
 
 This snippet registers your plugin properly so the User Feedback plugin gets loaded on that screen. If the user now submits some feedback, the email gets sent to you, including the debug data you provide. How awesome is that!
 
@@ -57,24 +57,24 @@ This snippet registers your plugin properly so the User Feedback plugin gets loa
 
 This is possible by leveraging the `user_feedback_script_data` filter. For example, you can change the message after submitting the feedback like this:
 
-`
-/**  
- * Modify the script data passed to the user feedback tool.  
-  *  
- * This example function changes the message shown after submitting feedback.  
-  *  
- * @param array $data User Feedback script data.  
-  *  
- * @return array  
-*/  
+```
+/**
+ * Modify the script data passed to the user feedback tool.
+ *
+ * This example function changes the message shown after submitting feedback.
+ *
+ * @param array $data User Feedback script data.
+ *
+ * @return array
+ */
 function custom_user_feedback_script_data( $data ) {  
 	$data['templates']['wizardStep5']['intro2'] = '&ndash; awesome company';  
 
-	return $data;  
-}  
+	return $data;
+}
 
-add_filter( 'user_feedback_script_data', 'custom_user_feedback_script_data' );  
-`
+add_filter( 'user_feedback_script_data', 'custom_user_feedback_script_data' );
+```
 
 ### What else can I do with this plugin? ###
 
