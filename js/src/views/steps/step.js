@@ -1,15 +1,15 @@
 'use strict';
 
 var WizardStep = Backbone.View.extend({
-  render: function () {
-    this.$el.html(this.template);
-    this.delegateEvents();
+	render: function () {
+		this.$el.html(this.template);
+		this.delegateEvents();
 
-    return this;
-  },
+		return this;
+	},
 
-  nextStep: function () {
-  }
+	nextStep: function () {
+	}
 });
 
 module.exports = WizardStep;

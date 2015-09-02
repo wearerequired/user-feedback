@@ -3,7 +3,7 @@ Contributors:      wearerequired, swissspidy, karinchristen, neverything
 Donate link:       http://required.ch  
 Tags:              users, feedback, email, media, support  
 Requires at least: 4.0  
-Tested up to:      4.2  
+Tested up to:      4.3  
 Stable tag:        0.1.0  
 License:           GPLv2 or later  
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html  
@@ -38,26 +38,7 @@ The plugin is highly flexible, you can adjust almost anything via filters & hook
 
 ### How can I enable the plugin for guests too? ###
 
-You can use the `load_user_feedback` hook to conditionally load the plugin when you need it.
-
-```
-/**
- * Load the User Feedback plugin for guests too.
- *
- * @param bool $should_load Whether to load the plugin or not.
- *
- * @return bool
- */
-function custom_load_feedback_on_frontend( $should_load ) {
-	// Return true for guests
-	if ( ! is_user_logged_in() ) {
-		$should_load = true;
-	}
-
-	// Return the default value
-	return $should_load;
-}
-```
+You can configure where the User Feedback tool should be loaded in 'Settings' -> 'General'. It’s possible to show it for guests and also inside the WordPress admin.
 
 ### How can I leverage this tool in my own plugin? ###
 If you’re a developer, you may want to support User Feedback in your own plugin. For example, if you have a custom settings page and want to load the plugin there, just add the following snippet on that screen:
@@ -66,11 +47,34 @@ If you’re a developer, you may want to support User Feedback in your own plugi
 do_action( 'user_feedback_init', array(
 	'name'      => 'My Awesome Plugin',
 	'data'      => array(), /* some additional debug data */
-	'recipient' => 'support@example.com', /* your email address */
+	'recipient' => 'support@example.com', /* your email address */  
 ) );
 ```
 
 This snippet registers your plugin properly so the User Feedback plugin gets loaded on that screen. If the user now submits some feedback, the email gets sent to you, including the debug data you provide. How awesome is that!
+
+### How can I change the wording inside the tool? ###
+
+This is possible by leveraging the `user_feedback_script_data` filter. For example, you can change the message after submitting the feedback like this:
+
+```
+/**
+ * Modify the script data passed to the user feedback tool.
+ *
+ * This example function changes the message shown after submitting feedback.
+ *
+ * @param array $data User Feedback script data.
+ *
+ * @return array
+ */
+function custom_user_feedback_script_data( $data ) {  
+	$data['templates']['wizardStep5']['intro2'] = '&ndash; awesome company';  
+
+	return $data;
+}
+
+add_filter( 'user_feedback_script_data', 'custom_user_feedback_script_data' );
+```
 
 ### What else can I do with this plugin? ###
 
@@ -81,6 +85,7 @@ You can dig into the source code and the wiki [on GitHub](https://github.com/wea
 1. The unobtrusive feedback button added by the plugin.
 2. Users can highlight specific areas and leave a message.
 3. This is how the email sent to the blog admin looks like.
+4. The settings section under 'Settings' -> 'General'.
 
 ## Contribute ##
 
@@ -90,10 +95,16 @@ We develop everything [on GitHub](https://github.com/wearerequired/user-feedback
 
 ## Changelog ##
 
+### 1.1.0 ###
+* New: Configure where the User Feedback tool should be loaded under 'Settings' -> 'General'
+
 ### 1.0.0 ###
 * First release
 
 ## Upgrade Notice ##
+
+### 1.1.0 ###
+100% compatible with WordPress 4.3, this version adds a settings section for the User Feedback tool.
 
 ### 1.0.0 ###
 First release

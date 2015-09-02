@@ -22,7 +22,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	/**
 	 * Plugin version.
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '1.1.0';
 
 	/**
 	 * Constructs the object, hooks in to `plugins_loaded`.
@@ -40,6 +40,9 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		// Support third-party plugins.
 		$this->hook( 'user_feedback_init' );
 
+		// Settings screen.
+		$this->hook( 'admin_init', 'add_settings' );
+
 		// Load the scripts & styles.
 		$this->hook( 'wp_enqueue_scripts', 'enqueue_scripts' );
 		$this->hook( 'wp_footer', 'print_templates' );
@@ -48,8 +51,11 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		$this->hook( 'admin_footer', 'print_templates' );
 
 		// Ajax callbacks.
-		$this->hook( 'wp_ajax_user_feedback', 'ajax_callback' );
-		$this->hook( 'wp_ajax_nopriv_user_feedback', 'ajax_callback' );
+		$this->hook( 'wp_ajax_user_feedback_submit', 'ajax_submit' );
+		$this->hook( 'wp_ajax_nopriv_user_feedback_submit', 'ajax_submit' );
+
+		$this->hook( 'wp_ajax_user_feedback_avatar', 'ajax_avatar' );
+		$this->hook( 'wp_ajax_nopriv_user_feedback_avatar', 'ajax_avatar' );
 
 		// Send feedback emails.
 		$this->hook( 'user_feedback_received', 'process_feedback' );
@@ -63,9 +69,17 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	}
 
 	/**
+	 * Ajax callback for avatar request
+	 */
+	public function ajax_avatar() {
+		$email = isset( $_GET['email'] ) ? $_GET['email'] : '';
+		die( get_avatar( sanitize_email( $email ), 40 ) );
+	}
+
+	/**
 	 * Ajax callback for user feedback.
 	 */
-	public function ajax_callback() {
+	public function ajax_submit() {
 		if ( ! isset( $_POST['data'] ) ) {
 			die( 0 );
 		}
@@ -253,15 +267,27 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 	 * Register JavaScript files
 	 */
 	public function enqueue_scripts() {
+		$options = $this->get_display_options();
+
+		$load_user_feedback = ! is_customize_preview();
+
+		if ( ! $options['anonymous'] && ! is_user_logged_in() ) {
+			$load_user_feedback = false;
+		}
+
+		if ( ! $options['backend'] && is_admin() ) {
+			$load_user_feedback = false;
+		}
+
 		/**
 		 * Allow others to enable/disable the plugin's functionality at will.
 		 *
-		 * For example, you could also load the plugin for non-logged-in users or on your plugin's admin screen.
+		 * For example, you could also load the plugin for non-logged in users or on your plugin's admin screen.
 		 *
 		 * @param bool $load_user_feedback Whether the user feedback script should be loaded or not.
 		 *                                 Defaults to true for logged in users on the front-end.
 		 */
-		$load_user_feedback = (bool) apply_filters( 'load_user_feedback', ! is_admin() && is_user_logged_in() && ! is_customize_preview() );
+		$load_user_feedback = (bool) apply_filters( 'load_user_feedback', $load_user_feedback );
 
 		if ( ! $load_user_feedback ) {
 			remove_action( 'wp_footer', array( __CLASS__, 'print_templates' ) );
@@ -425,8 +451,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 				'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
 				'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
 				'user'          => array(
-					'by'          => _x( 'From ', 'by user xy', 'user-feedback' ),
-					'gravatarAlt' => _x( 'Gravatar', 'alt text', 'user-feedback' ),
+					'by' => _x( 'From ', 'by user xy', 'user-feedback' ),
 				),
 				'placeholder'   => array(
 					'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
@@ -446,7 +471,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			),
 			'wizardStep5'           => array(
 				'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'intro'  => __( 'Thank you for taking your time to give us feedback. We will examine it and get back to as quickly as possible.', 'user-feedback' ),
+				'intro'  => __( 'Thank you for taking your time to give us feedback. We will consider it and get back to you as quickly as possible.', 'user-feedback' ),
 				'intro2' => sprintf( __( '&ndash; %s', 'user-feedback' ), get_bloginfo( 'name' ) ),
 				'button' => array(
 					'primary'   => __( 'Done', 'user-feedback' ),
@@ -520,5 +545,113 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		);
 
 		$this->enqueue_scripts();
+	}
+
+	/**
+	 * Returns the display options for this plugin.
+	 *
+	 * @return array
+	 */
+	public function get_display_options() {
+		$defaults = array(
+			'anonymous' => false,
+			'backend'   => false,
+		);
+		$options  = get_option( 'user_feedback_display', $defaults );
+
+		return wp_parse_args( $options, $defaults );
+	}
+
+	/**
+	 * Create settings sections and fields.
+	 */
+	public function add_settings() {
+		add_settings_section(
+			'user_feedback',
+			__( 'User Feedback', 'user-feedback' ),
+			function () {
+				esc_html_e( 'Configure where the User Feedback tool should be loaded.', 'user-feedback' );
+			},
+			'general'
+		);
+
+		add_settings_field(
+			'user_feedback_display',
+			__( 'Display Options', 'user-feedback' ),
+			array( $this, 'settings_field_display' ),
+			'general',
+			'user_feedback'
+		);
+
+		register_setting( 'general', 'user_feedback_display', array( $this, 'sanitize_display_option' ) );
+	}
+
+	/**
+	 * Settings field callback that prints the actual input fields.
+	 */
+	public function settings_field_display() {
+		$options = $this->get_display_options();
+		?>
+		<p>
+			<input <?php checked( $options['anonymous'] ); ?> type="checkbox" value="false"
+			                                                  name="user_feedback_display[anonymous]"
+			                                                  id="user_feedback_display_anonymous"/>
+			<label for="user_feedback_display_anonymous">
+				<?php esc_html_e( 'Load for non-logged in users', 'user-feedback' ); ?>
+			</label>
+		</p>
+		<p>
+			<input <?php checked( $options['backend'] ); ?> type="checkbox" value="false"
+			                                                name="user_feedback_display[backend]"
+			                                                id="user_feedback_display_backend"/>
+			<label for="user_feedback_display_backend">
+				<?php esc_html_e( 'Load in the WordPress admin', 'user-feedback' ); ?>
+			</label>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Sanitize the display option.
+	 *
+	 * @param array $options The POST data.
+	 *
+	 * @return array The sanitized display option.
+	 */
+	public function sanitize_display_option( $options ) {
+		$defaults = array(
+			'anonymous' => false,
+			'backend'   => false,
+		);
+
+		if ( ! isset( $options ) ) {
+			return array();
+		}
+
+		foreach ( $options as $key => $option ) {
+			$defaults[ $key ] = (bool) $option;
+		}
+
+		return $defaults;
+	}
+
+	/**
+	 * Add settings action link to the plugins page.
+	 *
+	 * @param array $links Plugin action links.
+	 *
+	 * @return array The modified plugin action links
+	 */
+	public function plugin_action_links( array $links ) {
+		return array_merge(
+			array(
+				'settings' => sprintf(
+					'<a href="%s">%s</a>',
+					esc_url( admin_url( 'options-general.php' ) ),
+					__( 'Settings', 'user-feedback' )
+				),
+			),
+			$links
+		);
 	}
 }
