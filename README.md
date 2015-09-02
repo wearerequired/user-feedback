@@ -85,6 +85,7 @@ You can dig into the source code and the wiki [on GitHub](https://github.com/wea
 1. The unobtrusive feedback button added by the plugin.
 2. Users can highlight specific areas and leave a message.
 3. This is how the email sent to the blog admin looks like.
+4. The settings section under 'Settings' -> 'General'.
 
 ## Contribute ##
 
