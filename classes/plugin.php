@@ -290,7 +290,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		$load_user_feedback = (bool) apply_filters( 'load_user_feedback', $load_user_feedback );
 
 		if ( ! $load_user_feedback ) {
-			remove_action( 'wp_footer', array( __CLASS__, 'print_templates' ) );
+			remove_action( 'wp_footer', array( $this, 'print_templates' ) );
 
 			return;
 		}
