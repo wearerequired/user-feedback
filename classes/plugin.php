@@ -307,7 +307,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 
 		wp_enqueue_script(
 			'user-feedback',
-			$this->get_url() . 'js/user-feedback' . $suffix . ' .js',
+			$this->get_url() . 'js/user-feedback' . $suffix . '.js',
 			array( 'underscore', 'backbone' ),
 			'1.0.0',
 			true
