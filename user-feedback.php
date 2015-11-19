@@ -10,7 +10,7 @@
  * Text Domain: user-feedback
  * Domain Path: /languages
  *
- * @package User_Feedback
+ * @package Required\User_Feedback
  */
 
 /**
@@ -31,9 +31,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-defined( 'WPINC' ) or die;
-
-include( dirname( __FILE__ ) . '/lib/requirements-check.php' );
+include( 'lib/requirements-check.php' );
 
 $user_feedback_requirements_check = new User_Feedback_Requirements_Check( array(
 	'title' => 'User Feedback',
@@ -43,10 +41,29 @@ $user_feedback_requirements_check = new User_Feedback_Requirements_Check( array(
 ) );
 
 if ( $user_feedback_requirements_check->passes() ) {
-	// Pull in the plugin classes and initialize.
-	include( dirname( __FILE__ ) . '/lib/wp-stack-plugin.php' );
-	include( dirname( __FILE__ ) . '/classes/plugin.php' );
-	User_Feedback_Plugin::start( __FILE__ );
+	if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+		include( __DIR__ . '/vendor/autoload.php' );
+	}
+
+	/**
+	 * Get the User Feedback controller instance.
+	 *
+	 * @return \Required\User_Feedback\Controller
+	 */
+	function user_feedback() {
+		static $controller = null;
+
+		if ( null === $controller ) {
+			$controller = new \Required\User_Feedback\Controller();
+		}
+
+		return $controller;
+	}
+
+	// Initialize the plugin.
+	add_action( 'plugins_loaded', function () {
+		user_feedback()->add_hooks();
+	} );
 }
 
 unset( $user_feedback_requirements_check );
