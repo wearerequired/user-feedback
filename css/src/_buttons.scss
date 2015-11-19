@@ -65,10 +65,16 @@
 	}
 }
 
+.user-feedback-bubble {
+  @extend .user-feedback-button;
+
+  position: absolute !important;
+}
+
 /**
  * Feedback Button at the beginning
  */
-#user-feedback-init-button {
+#user-feedback-button {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	font-weight: normal;
@@ -94,4 +100,8 @@
 	&.hidden {
 		display: none;
 	}
+
+  &.user-feedback-bubble {
+	bottom: 20px;
+  }
 }

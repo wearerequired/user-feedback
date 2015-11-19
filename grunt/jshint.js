@@ -18,6 +18,7 @@ module.exports = {
 			Backbone     : false,
 			_            : false,
 			ajaxurl      : false,
+			wp           : false,
 			user_feedback: false,
 			html2canvas  : false
 		}

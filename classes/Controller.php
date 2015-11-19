@@ -239,7 +239,7 @@ class Controller {
 		wp_enqueue_script(
 			'user-feedback',
 			$this->get_url() . 'js/user-feedback' . $suffix . '.js',
-			array( 'underscore', 'backbone' ),
+			array( 'underscore', 'wp-backbone' ),
 			'1.0.0',
 			true
 		);
@@ -264,87 +264,43 @@ class Controller {
 	 */
 	protected function get_template_vars() {
 		return array(
-			'button'                => array(
+			'button' => array(
 				'label' => __( 'Feedback', 'user-feedback' ),
 			),
-			'bottombar'             => array(
-				'step'   => array(
-					'one'   => _x( 'Feedback', 'step 1', 'user-feedback' ),
-					'two'   => _x( 'Highlight area', 'step 3', 'user-feedback' ),
-					'three' => _x( 'Leave a message', 'step 2', 'user-feedback' ),
-				),
-				'button' => array(
+			'bubble' => array(
+				'label' => __( '?', 'user-feedback' ),
+			),
+			'intro'  => array(
+				'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
+				'subtitle'   => __( 'Howdy,', 'user-feedback' ),
+				'message'    => __( 'Please let us know wh!', 'user-feedback' ),
+				'message2'   => __( 'Click on the relevant area and write a message to help us understand your feedback better.', 'user-feedback' ),
+				'inputLabel' => __( 'Do not show me this again', 'user-feedback' ),
+				'button'     => array(
 					'help'     => _x( '?', 'help button label', 'user-feedback' ),
 					'helpAria' => _x( 'Submit Feedback', 'help button title text and aria label', 'user-feedback' ),
 				),
 			),
-			'wizardStep1'           => array(
+			'form'   => array(
 				'title'       => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'salutation'  => __( 'Howdy stranger,', 'user-feedback' ),
-				'intro'       => __( 'Please let us know who you are. This way we will get back to you as soon as the issue is resolved:', 'user-feedback' ),
 				'placeholder' => array(
-					'name'  => _x( 'Your name', 'input field placeholder', 'user-feedback' ),
-					'email' => _x( 'Email address', 'input field placeholder', 'user-feedback' ),
+					'name'    => _x( 'Name (optional)', 'input field placeholder', 'user-feedback' ),
+					'email'   => _x( 'Email (optional)', 'input field placeholder', 'user-feedback' ),
+					'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
 				),
 				'button'      => array(
 					'primary'   => __( 'Next', 'user-feedback' ),
-					'secondary' => __( 'Stay anonymous', 'user-feedback' ),
 					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
 					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
 				),
 			),
-			'wizardStep2'           => array(
-				'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'salutation' => __( 'Hello ', 'user-feedback' ),
-				'intro'      => __( 'Please help us understand your feedback better!', 'user-feedback' ),
-				'intro2'     => __( 'You can not only leave us a message but also highlight areas relevant to your feedback.', 'user-feedback' ),
-				'inputLabel' => __( 'Don\'t show me this again', 'user-feedback' ),
-				'button'     => array(
-					'primary'   => __( 'Next', 'user-feedback' ),
-					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-				),
-			),
-			'wizardStep3'           => array(
-				'title'  => _x( 'Highlight area', 'modal title', 'user-feedback' ),
-				'intro'  => __( 'Highlight the areas relevant to your feedback.', 'user-feedback' ),
-				'button' => array(
-					'primary'   => __( 'Take screenshot', 'user-feedback' ),
-					'close'     => _x( '&times', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-				),
-			),
-			'wizardStep3Annotation' => array(
-				'close'     => _x( '&times', 'close button', 'user-feedback' ),
-				'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-			),
-			'wizardStep4'           => array(
-				'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
-				'user'          => array(
-					'by' => _x( 'From ', 'by user xy', 'user-feedback' ),
-				),
-				'placeholder'   => array(
-					'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
-				),
-				'details'       => array(
-					'theme'    => __( 'Theme: ', 'user-feedback' ),
-					'template' => __( 'Page: ', 'user-feedback' ),
-					'browser'  => __( 'Browser: ', 'user-feedback' ),
-					'language' => __( 'Language: ', 'user-feedback' ),
-				),
-				'button'        => array(
-					'primary'   => __( 'Send', 'user-feedback' ),
-					'secondary' => __( 'Back', 'user-feedback' ),
-					'close'     => _x( '&times', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-				),
-			),
-			'wizardStep5'           => array(
-				'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'intro'  => __( 'Thank you for taking your time to give us feedback. We will consider it and get back to you as quickly as possible.', 'user-feedback' ),
-				'intro2' => sprintf( __( '&ndash; %s', 'user-feedback' ), get_bloginfo( 'name' ) ),
-				'button' => array(
+			'done'   => array(
+				'title'        => _x( 'Feedback', 'modal title', 'user-feedback' ),
+				'subtitle'     => __( 'Successfully sent!', 'user-feedback' ),
+				'message'      => __( 'Thank you for taking your time to give us feedback. We will consider it and get back to you as quickly as possible.', 'user-feedback' ),
+				'errortitle'   => __( 'Oops, there was an error!', 'user-feedback' ),
+				'errormessage' => __( 'Your feedback could not be sent. Please try again!', 'user-feedback' ),
+				'button'       => array(
 					'primary'   => __( 'Done', 'user-feedback' ),
 					'secondary' => __( 'Leave another message', 'user-feedback' ),
 				),
@@ -357,7 +313,7 @@ class Controller {
 	 */
 	public function print_templates() {
 		// Our main container.
-		echo '<div id="user-feedback-container"></div>';
+		echo '<div id="user-feedback-container"><div id="user-feedback-button-view"></div></div>';
 	}
 
 	/**
