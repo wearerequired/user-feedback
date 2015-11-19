@@ -13,8 +13,20 @@
     }
   ],
   "require": {
+    "php": ">=5.3"
   },
   "require-dev": {
-    "phpmd/phpmd": "@stable"
+    "phpmd/phpmd": "@stable",
+    "phpunit/phpunit": "@stable",
+    "wp-coding-standards/wpcs": "dev-develop"
+  },
+  "scripts": {
+    "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
+    "post-update-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+  },
+  "autoload": {
+    "psr-4": {
+      "Required\\User_Feedback\\": "classes"
+    }
   }
 }
