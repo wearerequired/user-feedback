@@ -91,9 +91,6 @@ class Controller {
 		add_action( 'wp_ajax_user_feedback_submit', array( $this->ajaxHandler, 'handle_submission' ) );
 		add_action( 'wp_ajax_nopriv_user_feedback_submit', array( $this->ajaxHandler, 'handle_submission' ) );
 
-		add_action( 'wp_ajax_user_feedback_avatar', array( $this->ajaxHandler, 'get_avatar' ) );
-		add_action( 'wp_ajax_nopriv_user_feedback_avatar', array( $this->ajaxHandler, 'get_avatar' ) );
-
 		// Send feedback emails.
 		add_action( 'user_feedback_received', array( $this, 'process_feedback' ) );
 	}

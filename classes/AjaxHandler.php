@@ -12,17 +12,6 @@ namespace Required\User_Feedback;
  */
 class AjaxHandler {
 	/**
-	 * Ajax callback for avatar request
-	 */
-	public function get_avatar() {
-		$email = isset( $_GET['email'] ) ? sanitize_email( $_GET['email'] ) : '';
-
-		wp_send_json_success( array(
-			'avatar' => get_avatar( sanitize_email( $email ), 40 )
-		) );
-	}
-
-	/**
 	 * Ajax callback for user feedback.
 	 */
 	public function handle_submission() {
