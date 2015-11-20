@@ -270,10 +270,11 @@ class Controller {
 			'intro'  => array(
 				'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
 				'subtitle'   => __( 'Howdy,', 'user-feedback' ),
-				'message'    => __( 'Please let us know wh!', 'user-feedback' ),
+				'message'    => __( 'Please let us know what is going on!', 'user-feedback' ),
 				'message2'   => __( 'Click on the relevant area and write a message to help us understand your feedback better.', 'user-feedback' ),
 				'inputLabel' => __( 'Do not show me this again', 'user-feedback' ),
 				'button'     => array(
+					'primary'  => __( 'OK, I understand', 'user-feedback' ),
 					'help'     => _x( '?', 'help button label', 'user-feedback' ),
 					'helpAria' => _x( 'Submit Feedback', 'help button title text and aria label', 'user-feedback' ),
 				),
@@ -286,7 +287,7 @@ class Controller {
 					'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
 				),
 				'button'      => array(
-					'primary'   => __( 'Next', 'user-feedback' ),
+					'primary'   => __( 'Send feedback', 'user-feedback' ),
 					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
 					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
 				),
@@ -299,7 +300,6 @@ class Controller {
 				'errormessage' => __( 'Your feedback could not be sent. Please try again!', 'user-feedback' ),
 				'button'       => array(
 					'primary'   => __( 'Done', 'user-feedback' ),
-					'secondary' => __( 'Leave another message', 'user-feedback' ),
 				),
 			),
 		);
@@ -309,8 +309,11 @@ class Controller {
 	 * Prints the HTML templates used by the feedback JavaScript.
 	 */
 	public function print_templates() {
-		// Our main container.
-		echo '<div id="user-feedback-container"><div id="user-feedback-button-view"></div></div>';
+		?>
+		<div id="user-feedback-container">
+			<div class="user-feedback-sub-view"></div>
+		</div>
+		<?php
 	}
 
 	/**

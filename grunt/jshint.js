@@ -14,7 +14,7 @@ module.exports = {
 		devel     : true,
 		browserify: true,
 		globals   : {
-			jQuery       : true,
+			jQuery       : false,
 			Backbone     : false,
 			_            : false,
 			ajaxurl      : false,

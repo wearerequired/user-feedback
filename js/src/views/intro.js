@@ -5,8 +5,6 @@ var template = require( 'templates/intro' );
 var Intro = Backbone.View.extend(
 	{
 		template: template( user_feedback.templates.intro ),
-		isActive: false,
-		bubbleOffset: {},
 
 		render: function () {
 			this.$el.html( this.template );
@@ -16,21 +14,19 @@ var Intro = Backbone.View.extend(
 		},
 
 		events: {
-			'click .user-feedback-button-close': 'close',
-			'click .user-feedback-button-done': 'submit',
+			'click .user-feedback-button-next': 'setCookie',
 		},
 
-		close: function ( e ) {
-			e.preventDefault();
-			this.trigger( 'close' );
-		},
+		setCookie: function () {
+			var cookie = this.$el.find( 'user-feedback-do-not-show-again' ).is( ':checked' ),
+			    date   = new Date();
 
-		submit: function ( e ) {
-			e.preventDefault();
+			if ( cookie ) {
+				this.model.set( 'doNotShowInfoAgain', cookie );
 
-			this.model.set( 'doNotShowInfoAgain', this.$el.find( 'user-feedback-do-not-show-again' ).is( ':checked' ) );
-
-			this.trigger( 'submit' );
+				date.setDate( date.getDate() + 30 );
+				document.cookie = 'user_feedback_do_not_show_again=1; path=/;expires=' + date.toUTCString();
+			}
 		}
 	}
 );

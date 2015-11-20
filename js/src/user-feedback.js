@@ -6,14 +6,15 @@
  */
 
 // Load required modules
-var App = require( 'views/app' );
+var App           = require( 'views/app' ),
+    FeedbackModel = require( 'models/feedback' );
 
 (function ( $ ) {
 	$( function () {
 		'use strict';
 
 		// Run Boy Run
-		var app = new App();
+		var app = new App( { model: new FeedbackModel() } );
 		app.render();
 	} );
 })( jQuery, Backbone );

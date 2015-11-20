@@ -12,6 +12,7 @@
 	margin: 0;
 	padding: 0 5px;
 	border: 1px solid transparent;
+	text-transform: none;
 
 	&:focus {
 		background: inherit;
@@ -66,15 +67,30 @@
 }
 
 .user-feedback-bubble {
-  @extend .user-feedback-button;
+	@extend .user-feedback-button;
+	@extend .user-feedback-button-gray;
 
-  position: absolute !important;
+	position: relative !important;
+	bottom: 20px;
+	min-width: 50px;
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+	z-index: 100000;
+	color: $color-gray;
+	background: $color-light-gray;
+
+	&:focus,
+	&:hover {
+		color: $color-white;
+		background: $color-blue;
+	}
 }
 
 /**
  * Feedback Button at the beginning
  */
-#user-feedback-button {
+.user-feedback-button.user-feedback-button-init {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	font-weight: normal;
@@ -87,7 +103,7 @@
 	position: fixed;
 	bottom: -3px;
 	right: 60px;
-	z-index: 100000;
+	z-index: 100010;
 	cursor: pointer;
 
 	&:focus,
@@ -100,8 +116,4 @@
 	&.hidden {
 		display: none;
 	}
-
-  &.user-feedback-bubble {
-	bottom: 20px;
-  }
 }

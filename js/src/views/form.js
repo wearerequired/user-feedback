@@ -1,10 +1,12 @@
 'use strict';
 
-var template = require( 'templates/form' );
+var template       = require( 'templates/form' );
+window.html2canvas = require( 'html2canvas' ); // Apparently needs to be globally accessible.
+window.navigator.saysWho = require( 'utils/browsername' );
 
 var Form = Backbone.View.extend(
 	{
-		template: template( user_feedback.templates.form ),
+		template    : template( user_feedback.templates.form ),
 		isActive: false,
 		bubbleOffset: {},
 
@@ -17,12 +19,17 @@ var Form = Backbone.View.extend(
 
 		events: {
 			'click .user-feedback-button-close': 'close',
-			'click .user-feedback-button-done': 'submit',
+			'click .user-feedback-button-next' : 'submit'
 		},
 
 		close: function ( e ) {
 			e.preventDefault();
-			this.trigger( 'close' );
+			this.model.set( 'inProgress', false );
+		},
+
+		next: function ( e ) {
+			e.preventDefault();
+			this.trigger( 'next' );
 		},
 
 		submit: function ( e ) {
@@ -40,46 +47,52 @@ var Form = Backbone.View.extend(
 		},
 
 		fillInTheData: function () {
-			var name = this.$el.find( '#user-feedback-user-name' ).val(),
+			var name  = this.$el.find( '#user-feedback-user-name' ).val(),
 			    email = this.$el.find( '#user-feedback-user-email' ).val();
 
-			this.model.set( 'userName', name !== '' ? name : user_feedback.user.name );
-			this.model.set( 'userEmail', email !== '' ? email : user_feedback.user.email );
-			this.model.set( 'userMessage', this.$el.find( '#user-feedback-overview-note' ).val() );
-
-			this.$el.find( '#user-feedback-overview-user div' ).append( name );
-			this.$el.find( '#user-feedback-overview-note' ).val( this.model.get( 'userMessage' ) );
-
-			this.$el.find( '#user-feedback-additional-theme' ).append( user_feedback.theme.name );
-			this.$el.find( '#user-feedback-additional-browser' ).append( navigator.saysWho );
-			this.$el.find( '#user-feedback-additional-template' ).append( user_feedback.theme.current_template );
-			this.$el.find( '#user-feedback-additional-language' ).append( user_feedback.language );
+			this.model.set( 'formData', {
+				user       : {
+					name : name !== '' ? name : user_feedback.user.name,
+					email: email !== '' ? name : user_feedback.user.email
+				},
+				message: this.$el.find( '#user-feedback-overview-note' ).val(),
+				theme  : user_feedback.theme,
+				browser: {
+					name         : navigator.saysWho,
+					cookieEnabled: navigator.cookieEnabled,
+					platform     : navigator.platform,
+					userAgent    : navigator.userAgent,
+					languages    : window.navigator.languages || [ window.navigator.language || window.navigator.userLanguage ],
+				},
+				url    : document.URL,
+				language: user_feedback.language,
+				third_party: user_feedback.third_party
+			} );
 
 			var screenshot = ( this.model.get( 'userScreenshot' ) ) ? this.model.get( 'userScreenshot' ) : '';
 			this.$el.find( '#user-feedback-overview-screenshot-img' ).attr( 'src', screenshot );
 		},
 
-		screenCapture: function ( e ) {
-			var that = this;
-
+		screenCapture: function () {
 			// Hide UI before taking the screenshot.
 			jQuery( '.user-feedback-modal' ).hide();
 
 			html2canvas( document.body ).then( function ( canvas ) {
-				that.canvasView.redraw();
-				var _canvas = jQuery( '<canvas id="user-feedback-canvas-tmp" width="' + jQuery( document ).width() + '" height="' + jQuery( window ).height() + '"/>' ).hide().appendTo( 'body' );
-				var _ctx    = _canvas.get( 0 ).getContext( '2d' );
+				var _canvas = jQuery( '<canvas id="user-feedback-canvas-tmp" width="' + jQuery( document ).width() + '" height="' + jQuery( window ).height() + '"/>' ).hide().appendTo( 'body' ),
+				    _ctx    = _canvas.get( 0 ).getContext( '2d' );
+
 				_ctx.drawImage( canvas, 0, jQuery( document ).scrollTop(), jQuery( document ).width(), jQuery( window ).height(), 0, 0, jQuery( document ).width(), jQuery( window ).height() );
 
-				that.model.set( 'userScreenshot', _canvas.get( 0 ).toDataURL() );
+				this.model.set( 'formData', _.extend( this.model.get( 'formData' ), { screenshot: _canvas.get( 0 ).toDataURL() } ) );
+
 				jQuery( '#user-feedback-canvas-tmp' ).remove();
 
-				// Show UI again
+				// Show UI again.
 				jQuery( '.user-feedback-modal' ).show();
 
 				this.trigger( 'submit' );
 			}, function ( error ) {
-				// Handle error
+				// Handle error.
 			} );
 		}
 	}
