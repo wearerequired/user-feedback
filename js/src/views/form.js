@@ -27,13 +27,13 @@ var Form = wp.Backbone.View.extend(
 		},
 
 		events: {
-			'click .user-feedback-button-next': 'next'
+			'click .user-feedback-button-submit': 'submit'
 		},
 
 		/**
 		 * Save the form fields on submission.
 		 */
-		next: function () {
+		submit: function () {
 			var name  = this.$el.find( '#user-feedback-user-name' ).val(),
 			    email = this.$el.find( '#user-feedback-user-email' ).val();
 

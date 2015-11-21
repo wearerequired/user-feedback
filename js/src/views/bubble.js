@@ -18,6 +18,13 @@ var Bubble = wp.Backbone.View.extend(
 		offset   : {},
 
 		/**
+		 * View constructor.
+		 */
+		initialize: function () {
+			this.listenTo( this.model, 'sync', this.next );
+		},
+
+		/**
 		 * Render the individual steps.
 		 *
 		 * @returns {Bubble}
