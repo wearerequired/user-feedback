@@ -16,6 +16,9 @@ var App = wp.Backbone.View.extend(
 				// Button view.
 				this.views.set( '.user-feedback-sub-view', new Button( { model: this.model } ) );
 			} else {
+				// Clear everything from the model.
+				this.model.clear().set( this.model.defaults() );
+
 				// Bubble view that contains the individual steps.
 				this.views.set( '.user-feedback-sub-view', new Bubble( { model: this.model } ) );
 			}
