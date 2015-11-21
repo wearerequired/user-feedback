@@ -12,16 +12,6 @@ var Done = Backbone.View.extend(
 
 			return this;
 		},
-
-		events: {
-			'click .user-feedback-button-close': 'close',
-			'click .user-feedback-button-next' : 'close',
-		},
-
-		close: function ( e ) {
-			e.preventDefault();
-			this.model.set( 'inProgress', false );
-		},
 	}
 );
 
