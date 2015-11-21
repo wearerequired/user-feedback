@@ -85,6 +85,10 @@ var Form = Backbone.View.extend(
 
 				this.model.set( 'formData', _.extend( this.model.get( 'formData' ), { screenshot: _canvas.get( 0 ).toDataURL() } ) );
 
+				if ( console.image ) {
+					console.image( _canvas.get( 0 ).toDataURL() );
+				}
+
 				jQuery( '#user-feedback-canvas-tmp' ).remove();
 
 				// Show UI again.

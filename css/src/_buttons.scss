@@ -70,7 +70,7 @@
 	@extend .user-feedback-button;
 	@extend .user-feedback-button-gray;
 
-	position: relative !important;
+	position: absolute;
 	bottom: 20px;
 	min-width: 50px;
 	width: 50px;
@@ -79,11 +79,25 @@
 	z-index: 100000;
 	color: $color-gray;
 	background: $color-light-gray;
+	pointer-events: auto;
 
 	&:focus,
 	&:hover {
 		color: $color-white;
 		background: $color-blue;
+	}
+
+	&.top {
+		top: 0;
+	}
+	&.right {
+		right: 0;
+	}
+	&.bottom {
+		bottom: 0;
+	}
+	&.left {
+		left: 0;
 	}
 }
 

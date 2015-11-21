@@ -5,6 +5,7 @@ var template = require( 'templates/intro' );
 var Intro = Backbone.View.extend(
 	{
 		template: template( user_feedback.templates.intro ),
+		className: 'user-feedback-bubble-sub-view',
 
 		render: function () {
 			this.$el.html( this.template );

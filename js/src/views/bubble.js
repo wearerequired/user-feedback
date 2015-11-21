@@ -20,10 +20,15 @@ var Bubble = Backbone.View.extend(
 			}
 
 			if ( 0 === this.step ) {
-				this.views.set( '.user-feedback-bubble-sub-view', new Intro( { model: this.model } ) );
+				this.views.set( '.user-feedback-sub-view', new Intro( { model: this.model } ) );
 			} else if ( 1 === this.step ) {
-				this.views.set( '.user-feedback-bubble-sub-view', new Form( { model: this.model } ) );
+				this.views.set( '.user-feedback-sub-view', new Form( { model: this.model } ) );
 			} else if ( 2 === this.step ) {
+				this.views.set( '.user-feedback-sub-view', new Done( { model: this.model } ) );
+			}
+
+			if ( this.offset.top && this.offset.left ) {
+				this.moveBubbleToPosition( this.offset.top, this.offset.left );
 			}
 
 			this.delegateEvents();
@@ -33,9 +38,9 @@ var Bubble = Backbone.View.extend(
 
 		events: {
 			'click .user-feedback-bubble'      : 'toggleModal',
-			'click .user-feedback-overlay': 'moveBubble',
+			'click .user-feedback-overlay'     : 'moveBubble',
 			'click .user-feedback-button-close': 'close',
-			'click .user-feedback-button-next' : 'next',
+			'click .user-feedback-button-next' : 'next'
 		},
 
 		close: function ( e ) {
@@ -50,15 +55,10 @@ var Bubble = Backbone.View.extend(
 		},
 
 		toggleModal: function () {
-			this.$el.find( '.user-feedback-bubble-sub-view' ).toggleClass( 'hidden' );
+			this.$el.find( '.user-feedback-sub-view' ).toggleClass( 'hidden' );
 		},
 
 		moveBubble: function ( e ) {
-			var $container = this.$el.find( '.user-feedback-bubble-container' ),
-			    offsetLeft = e.pageX - $container.outerWidth() / 2,
-			    offsetTop  = e.pageY - $container.outerHeight() / 2;
-
-			//this.moveBubbleToPosition( offsetTop, offsetLeft );
 			this.moveBubbleToPosition( e.pageY, e.pageX );
 		},
 
@@ -66,36 +66,34 @@ var Bubble = Backbone.View.extend(
 			var $container = this.$el.find( '.user-feedback-bubble-container' ),
 			    $overlay   = this.$el.find( '.user-feedback-overlay' ),
 			    $bubble    = this.$el.find( '.user-feedback-bubble' ),
-			    $modal     = this.$el.find( '.user-feedback-modal' ),
-			    offsetTop  = $container.offset().top,
-			    offsetLeft = $container.offset().left;
+			    $modal     = this.$el.find( '.user-feedback-modal' );
+
+			$container.removeClass( 'user-feedback-bubble-container-initial' );
 
 			this.offset = {
 				top : top,
 				left: left
 			};
 
-			$container.removeClass( 'user-feedback-bubble-container-initial' );
-
-			console.log( 'top / left: ', top + ' / ' + left );
-			console.log( 'window size: ', $overlay.width() + 'x' + $overlay.height() );
-			console.log( 'container size: ', $container.width() + 'x' + $container.height() );
-			console.log( 'offset: ', offsetTop + 'x' + offsetLeft );
 			if ( left > ( $overlay.width() / 2 ) ) {
-				console.log( 'more on the right side, modal should be left' );
+				// More on the right hand side. The modal should be on the left.
+				left -= $modal.width();
 				$bubble.removeClass( 'left' ).addClass( 'right' );
 				$modal.removeClass( 'left' ).addClass( 'right' );
 			} else {
-				console.log( 'more on the left side, modal should be right' );
+				// More on the left hand side. The modal should be on the right.
+				left -= 25;
 				$bubble.removeClass( 'right' ).addClass( 'left' );
 				$modal.removeClass( 'right' ).addClass( 'left' );
 			}
 			if ( top > ( $overlay.height() / 2 ) ) {
-				console.log( 'more in the bottom of the screen' );
+				// More in the bottom of the screen.
+				top -= $modal.height();
 				$bubble.removeClass( 'top' ).addClass( 'bottom' );
 				$modal.removeClass( 'top' ).addClass( 'bottom' );
 			} else {
-				console.log( 'more in the top of the screen' );
+				// More in the top of the screen.
+				top -= 25;
 				$bubble.removeClass( 'bottom' ).addClass( 'top' );
 				$modal.removeClass( 'bottom' ).addClass( 'top' );
 			}
@@ -103,8 +101,8 @@ var Bubble = Backbone.View.extend(
 			this.$el.find( '.user-feedback-bubble-container' ).css(
 				{
 					top   : top,
-					left: left,
-					right: 'auto',
+					left  : left,
+					right : 'auto',
 					bottom: 'auto'
 				}
 			);
