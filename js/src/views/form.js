@@ -17,12 +17,10 @@ var Form = Backbone.View.extend(
 		},
 
 		events: {
-			'click .user-feedback-button-next': 'submit'
+			'click .user-feedback-button-next': 'next'
 		},
 
-		submit: function (e) {
-			//e.stopImmediatePropagation();
-
+		next: function () {
 			var name  = this.$el.find( '#user-feedback-user-name' ).val(),
 			    email = this.$el.find( '#user-feedback-user-email' ).val();
 
@@ -46,7 +44,7 @@ var Form = Backbone.View.extend(
 			// Hide UI before taking the screenshot.
 			jQuery( '.user-feedback-modal' ).hide();
 
-			html2canvas( document.body ).then( function ( canvas ) {
+			html2canvas( document.body ).then( _.bind( function ( canvas ) {
 				console.log( canvas.toDataURL() );
 				this.model.set( 'screenshot', canvas.toDataURL() );
 
@@ -54,9 +52,9 @@ var Form = Backbone.View.extend(
 				jQuery( '.user-feedback-modal' ).show();
 
 				this.sendData();
-			}, function ( error ) {
+			}, this ), _.bind( function ( error ) {
 				// Handle error.
-			} );
+			}, this ) );
 		},
 
 		sendData: function () {
