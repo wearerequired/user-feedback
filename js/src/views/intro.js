@@ -15,10 +15,10 @@ var Intro = Backbone.View.extend(
 		},
 
 		events: {
-			'click .user-feedback-button-next': 'setCookie',
+			'click .user-feedback-button-next': 'next',
 		},
 
-		setCookie: function () {
+		next: function () {
 			this.model.set( 'doNotShowInfoAgain', this.$el.find( '#user-feedback-do-not-show-again' ).is( ':checked' ) );
 		}
 	}
