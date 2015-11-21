@@ -2,10 +2,20 @@
 
 var template = require( 'templates/done' );
 
-var Done = Backbone.View.extend(
+/**
+ * Final view showing the success/error message.
+ *
+ * @type wp.Backbone.View
+ */
+var Done = wp.Backbone.View.extend(
 	{
 		template: template( user_feedback.templates.done ),
 
+		/**
+		 * Render the view.
+		 *
+		 * @returns {Done}
+		 */
 		render: function () {
 			this.$el.html( this.template );
 			this.delegateEvents();

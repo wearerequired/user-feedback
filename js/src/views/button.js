@@ -2,13 +2,23 @@
 
 var template = require( 'templates/button' );
 
-var Button = Backbone.View.extend(
+/**
+ * Feedback button view.
+ *
+ * @type wp.Backbone.View
+ */
+var Button = wp.Backbone.View.extend(
 	{
-		className: 'user-feedback-button-view',
-		template: template( user_feedback.templates.button ),
-		isActive: false,
+		className   : 'user-feedback-button-view',
+		template    : template( user_feedback.templates.button ),
+		isActive    : false,
 		bubbleOffset: {},
 
+		/**
+		 * Render the feedback button.
+		 *
+		 * @returns {Button}
+		 */
 		render: function () {
 			this.$el.html( this.template );
 			this.delegateEvents();
@@ -20,6 +30,9 @@ var Button = Backbone.View.extend(
 			'click .user-feedback-button': 'initFeedback'
 		},
 
+		/**
+		 * Run the wizard.
+		 */
 		initFeedback: function () {
 			this.isActive = true;
 			this.model.set( 'inProgress', true );

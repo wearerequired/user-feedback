@@ -5,13 +5,23 @@ var template = require( 'templates/bubble' ),
     Done     = require( 'views/done' ),
     Form     = require( 'views/form' );
 
-var Bubble = Backbone.View.extend(
+/**
+ * Bubble view.
+ *
+ * @type wp.Backbone.View
+ */
+var Bubble = wp.Backbone.View.extend(
 	{
 		className: 'user-feedback-bubble-view',
 		template : template( user_feedback.templates.bubble ),
 		step     : 0,
 		offset   : {},
 
+		/**
+		 * Render the individual steps.
+		 *
+		 * @returns {Bubble}
+		 */
 		render: function () {
 			this.$el.html( this.template );
 
@@ -44,29 +54,54 @@ var Bubble = Backbone.View.extend(
 			'keydown'                          : 'keydownHandler'
 		},
 
+		/**
+		 * Handle esc key presses.
+		 *
+		 * @param e Event object.
+		 */
 		keydownHandler: function ( e ) {
 			if ( e.keyCode === 27 || e.which === 27 ) {
 				this.model.set( 'inProgress', false );
 			}
 		},
 
+		/**
+		 * Close the sub views and go back to start.
+		 */
 		close: function () {
 			this.model.set( 'inProgress', false );
 		},
 
+		/**
+		 * Go to the next step.
+		 */
 		next: function () {
 			this.step++;
 			this.render();
 		},
 
+		/**
+		 * Show/hide the modal.
+		 */
 		toggleModal: function () {
 			this.$el.find( '.user-feedback-sub-view' ).toggleClass( 'hidden' );
 		},
 
+		/**
+		 * Click handler to move the bubble.
+		 *
+		 * @param e Event data.
+		 */
 		moveBubble: function ( e ) {
 			this.moveBubbleToPosition( e.pageY, e.pageX );
 		},
 
+		/**
+		 * Move the bubble to a specific position.
+		 *
+		 * @param int top Y offset.
+		 * @param int left X offset.
+		 */
 		moveBubbleToPosition: function ( top, left ) {
 			var $container = this.$el.find( '.user-feedback-bubble-container' ),
 			    $overlay   = this.$el.find( '.user-feedback-overlay' ),

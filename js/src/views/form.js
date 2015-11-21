@@ -3,12 +3,22 @@
 var template       = require( 'templates/form' );
 window.html2canvas = require( 'html2canvas' ); // Apparently needs to be globally accessible.
 
-var Form = Backbone.View.extend(
+/**
+ * Form view.
+ *
+ * @type wp.Backbone.View
+ */
+var Form = wp.Backbone.View.extend(
 	{
 		template    : template( user_feedback.templates.form ),
 		isActive    : false,
 		bubbleOffset: {},
 
+		/**
+		 * Render the view.
+		 *
+		 * @returns {Form}
+		 */
 		render: function () {
 			this.$el.html( this.template );
 			this.delegateEvents();
@@ -20,6 +30,9 @@ var Form = Backbone.View.extend(
 			'click .user-feedback-button-next': 'next'
 		},
 
+		/**
+		 * Save the form fields on submission.
+		 */
 		next: function () {
 			var name  = this.$el.find( '#user-feedback-user-name' ).val(),
 			    email = this.$el.find( '#user-feedback-user-email' ).val();
@@ -40,6 +53,9 @@ var Form = Backbone.View.extend(
 			}
 		},
 
+		/**
+		 * Capture the entire screen in a canvas.
+		 */
 		screenCapture: function () {
 			// Hide UI before taking the screenshot.
 			jQuery( '.user-feedback-modal' ).hide();
@@ -57,6 +73,9 @@ var Form = Backbone.View.extend(
 			}, this ) );
 		},
 
+		/**
+		 * Let the model send the data.
+		 */
 		sendData: function () {
 			this.model.save(
 				{

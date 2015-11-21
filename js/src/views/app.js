@@ -3,14 +3,27 @@
 var Button = require( 'views/button' ),
     Bubble = require( 'views/bubble' );
 
+/**
+ * Main View.
+ *
+ * @type wp.Backbone.View
+ */
 var App = wp.Backbone.View.extend(
 	{
 		el: '#user-feedback-container',
 
+		/**
+		 * View constructor.
+		 */
 		initialize: function () {
 			this.listenTo( this.model, 'change:inProgress', this.render );
 		},
 
+		/**
+		 * Render the apps' subviews.
+		 *
+		 * @returns {App}
+		 */
 		render: function () {
 			if ( !this.model.get( 'inProgress' ) ) {
 				// Button view.
