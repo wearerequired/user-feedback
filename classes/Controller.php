@@ -274,9 +274,9 @@ class Controller {
 				'message2'   => __( 'Click on the relevant area and write a message to help us understand your feedback better.', 'user-feedback' ),
 				'inputLabel' => __( 'Do not show me this again', 'user-feedback' ),
 				'button'     => array(
-					'primary'  => __( 'OK, I understand', 'user-feedback' ),
-					'help'     => _x( '?', 'help button label', 'user-feedback' ),
-					'helpAria' => _x( 'Submit Feedback', 'help button title text and aria label', 'user-feedback' ),
+					'primary'   => __( 'OK, I understand', 'user-feedback' ),
+					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
+					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
 				),
 			),
 			'form'   => array(
@@ -295,11 +295,11 @@ class Controller {
 			'done'   => array(
 				'title'        => _x( 'Feedback', 'modal title', 'user-feedback' ),
 				'subtitle'     => __( 'Successfully sent!', 'user-feedback' ),
-				'message'      => __( 'Thank you for taking your time to give us feedback. We will consider it and get back to you as quickly as possible.', 'user-feedback' ),
+				'message'      => __( 'Thanks for taking your time to send us your feedback. We will get back to you as quickly as possible.', 'user-feedback' ),
 				'errortitle'   => __( 'Oops, there was an error!', 'user-feedback' ),
 				'errormessage' => __( 'Your feedback could not be sent. Please try again!', 'user-feedback' ),
 				'button'       => array(
-					'primary'   => __( 'Done', 'user-feedback' ),
+					'primary' => __( 'Done', 'user-feedback' ),
 				),
 			),
 		);
