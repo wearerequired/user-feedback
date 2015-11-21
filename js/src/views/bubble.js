@@ -22,6 +22,7 @@ var Bubble = wp.Backbone.View.extend(
 		 */
 		initialize: function () {
 			this.listenTo( this.model, 'sync', this.next );
+			this.listenTo( this.model, 'error', this.next );
 		},
 
 		/**

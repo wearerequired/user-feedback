@@ -107,8 +107,8 @@ class Controller {
 	 */
 	public function process_feedback( $data ) {
 		$attachments = array();
-		if ( $data['img'] ) {
-			$attachments[] = $data['img'];
+		if ( $data['screenshot'] ) {
+			$attachments[] = $data['screenshot'];
 		}
 
 		$user_name  = sanitize_text_field( $data['user']['name'] );
@@ -131,11 +131,11 @@ class Controller {
 		$message .= __( 'You just received a new user feedback regarding your website!', 'user-feedback' ) . "\r\n\r\n";
 		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
 		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
-		$message .= sanitize_text_field( sprintf( __( 'Browser: %s (%s)', 'user-feedback' ), $data['browser']['name'], $data['browser']['userAgent'] ) ) . "\r\n";
+		$message .= sanitize_text_field( sprintf( __( 'Browser: %s', 'user-feedback' ), $data['browser']['userAgent'] ) ) . "\r\n";
 		$message .= sprintf( __( 'Cookies enabled: %s', 'user-feedback' ), $cookies_enabled ) . "\r\n";
 		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $visited_url ) . "\r\n";
-		$message .= sprintf( __( 'Site Language: %s', 'user-feedback' ), sanitize_text_field( $data['language'] ) ) . "\r\n";
-		$message .= sprintf( __( 'User Languages: %s', 'user-feedback' ), sanitize_text_field( implode( ', ', $data['browser']['languages'] ) ) ) . "\r\n";
+		$message .= sprintf( __( 'Site Language: %s', 'user-feedback' ), $data['language'] ) . "\r\n";
+		$message .= sprintf( __( 'User Languages: %s', 'user-feedback' ), implode( ', ', $data['browser']['languages'] ) ) . "\r\n";
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";
 		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
@@ -166,7 +166,7 @@ class Controller {
 		$message .= __( 'We just received the following feedback from you and will get in touch shortly. Thank you.', 'user-feedback' ) . "\r\n\r\n";
 		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
 		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
-		$message .= sprintf( __( 'Browser: %s', 'user-feedback' ), sanitize_text_field( $data['browser']['name'] ) ) . "\r\n";
+		$message .= sprintf( __( 'Browser: %s', 'user-feedback' ), $data['browser']['userAgent'] ) . "\r\n";
 		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $visited_url ) . "\r\n";
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";
@@ -284,7 +284,7 @@ class Controller {
 				'placeholder' => array(
 					'name'    => _x( 'Name (optional)', 'input field placeholder', 'user-feedback' ),
 					'email'   => _x( 'Email (optional)', 'input field placeholder', 'user-feedback' ),
-					'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
+					'message' => _x( 'Tell us what we should improve or fix&hellip;', 'textarea placeholder', 'user-feedback' ),
 				),
 				'button'      => array(
 					'primary'   => __( 'Send feedback', 'user-feedback' ),

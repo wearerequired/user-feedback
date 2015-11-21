@@ -9,15 +9,13 @@ var template = require( 'templates/done' );
  */
 var Done = wp.Backbone.View.extend(
 	{
-		template: template( user_feedback.templates.done ),
-
 		/**
 		 * Render the view.
 		 *
 		 * @returns {Done}
 		 */
 		render: function () {
-			this.$el.html( this.template );
+			this.$el.html( template( user_feedback.templates.done ) );
 			this.delegateEvents();
 
 			return this;

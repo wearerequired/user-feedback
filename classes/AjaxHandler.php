@@ -15,15 +15,18 @@ class AjaxHandler {
 	 * Ajax callback for user feedback.
 	 */
 	public function handle_submission() {
-		if ( ! isset( $_POST['data'] ) ) {
+		$data = json_decode( file_get_contents( 'php://input' ), true );
+
+		if ( ! $data ) {
 			wp_send_json_error( array(
-				'message' => __( 'No data provided', 'user-feedback' ),
+				'title'   => __( 'Oops, there was an error!', 'user-feedback' ),
+				'message' => __( 'Your feedback could not be sent. Please try again!', 'user-feedback' ),
 			) );
 		}
 
-		$data = array_map( 'sanitize_text_field', $_POST['data'] );
+		array_walk_recursive( $data, 'sanitize_text_field' );
 
-		$data['img'] = ( isset( $data['img'] ) ) ? $this->save_temp_image( (string) $data['img'] ) : false;
+		$data['screenshot'] = ( isset( $data['screenshot'] ) ) ? $this->save_temp_image( (string) $data['screenshot'] ) : false;
 
 		/**
 		 * Runs whenever there's new user feedback.
@@ -46,7 +49,12 @@ class AjaxHandler {
 		do_action( 'user_feedback_received', $data );
 
 		wp_send_json_success( array(
-			'message' => __( 'Submission successful!', 'user-feedback' ),
+			'title'   => __( 'Successfully sent!', 'user-feedback' ),
+			/* translators: %s: user's name */
+			'message' => sprintf(
+				__( 'Hi %s, thanks for taking your time to send us your feedback. We will get back to you as quickly as possible.', 'user-feedback' ),
+				esc_html( $data['user']['name'] )
+			),
 		) );
 	}
 
@@ -56,6 +64,7 @@ class AjaxHandler {
 	 * @todo Revisit file handling.
 	 *
 	 * @param string $img Base64 encoded image.
+	 *
 	 * @return false|string File name on success, false on failure.
 	 */
 	protected function save_temp_image( $img ) {

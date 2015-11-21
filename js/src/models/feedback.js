@@ -54,20 +54,6 @@ var Feedback = Backbone.Model.extend(
 				date.setDate( date.getDate() + 30 );
 				document.cookie = 'user_feedback_do_not_show_again=1; path=/;expires=' + date.toUTCString();
 			}
-		},
-
-		/**
-		 * Return a shallow copy of the model's attributes for JSON stringification.
-		 *
-		 * Removes the `doNotShowInfoAgain` attribute as it is not needed.
-		 *
-		 * @returns {*}
-		 */
-		toJSON: function () {
-			var attributes = this.attributes;
-			delete attributes.doNotShowInfoAgain;
-
-			return attributes;
 		}
 	}
 );

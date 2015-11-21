@@ -78,13 +78,28 @@ var Form = wp.Backbone.View.extend(
 		 */
 		sendData: function () {
 			this.model.save(
+				{ doNotShowInfoAgain: undefined },
 				{
-					success: function ( model, response, options ) {
-					},
-					error  : function ( model, response, options ) {
-					}
+					success: _.bind( function ( model, response, options ) {
+						if ( !response.data ) {
+							this.setError();
+							return;
+						}
+
+						// Personalize the message text.
+						user_feedback.templates.done.subtitle = response.data.title;
+						user_feedback.templates.done.message  = response.data.message;
+					}, this ),
+					error  : _.bind( function ( model, response, options ) {
+						this.setError();
+					}, this )
 				}
 			);
+		},
+
+		setError: function () {
+			user_feedback.templates.done.subtitle = user_feedback.templates.done.errortitle;
+			user_feedback.templates.done.message  = user_feedback.templates.done.errormessage;
 		}
 	}
 );
