@@ -75,10 +75,11 @@
 	min-width: 50px;
 	width: 50px;
 	height: 50px;
+	border: 1px solid transparent;
 	border-radius: 100%;
 	z-index: 100000;
-	color: $color-gray;
-	background: $color-light-gray;
+	color: $color-white;
+	background: $color-blue;
 	pointer-events: auto;
 
 	&:focus,
