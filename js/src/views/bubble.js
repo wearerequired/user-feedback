@@ -40,16 +40,21 @@ var Bubble = Backbone.View.extend(
 			'click .user-feedback-bubble'      : 'toggleModal',
 			'click .user-feedback-overlay'     : 'moveBubble',
 			'click .user-feedback-button-close': 'close',
-			'click .user-feedback-button-next' : 'next'
+			'click .user-feedback-button-next' : 'next',
+			'keydown'                          : 'keydownHandler'
 		},
 
-		close: function ( e ) {
-			e.preventDefault();
+		keydownHandler: function ( e ) {
+			if ( e.keyCode === 27 || e.which === 27 ) {
+				this.model.set( 'inProgress', false );
+			}
+		},
+
+		close: function () {
 			this.model.set( 'inProgress', false );
 		},
 
-		next: function ( e ) {
-			e.preventDefault();
+		next: function () {
 			this.step++;
 			this.render();
 		},
