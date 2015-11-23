@@ -19,6 +19,17 @@ var Done = wp.Backbone.View.extend(
 			this.delegateEvents();
 
 			return this;
+		},
+
+		events: {
+			'click .user-feedback-button-next': 'close'
+		},
+
+		/**
+		 * Close the sub views and go back to start.
+		 */
+		close: function () {
+			this.model.set( 'inProgress', false );
 		}
 	}
 );
