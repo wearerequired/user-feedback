@@ -68,7 +68,7 @@
 }
 
 .user-feedback-bubble-container {
-	position: absolute;
+	position: fixed;
 	top: 50%;
 	left: 50%;
 	z-index: 1000000;
