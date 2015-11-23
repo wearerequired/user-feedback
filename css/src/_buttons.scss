@@ -85,7 +85,11 @@
 	&:focus,
 	&:hover {
 		color: $color-white;
-		background: $color-blue;
+		background: $color-blue-hover;
+	}
+
+	&:hover {
+		border: 1px solid transparent;
 	}
 
 	&.top {
