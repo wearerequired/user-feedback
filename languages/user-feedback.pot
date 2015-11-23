@@ -122,10 +122,6 @@ msgstr ""
 msgid "Feedback"
 msgstr ""
 
-#: classes/Controller.php:268
-msgid "?"
-msgstr ""
-
 #: classes/Controller.php:273
 msgid "Please let us know what is going on!"
 msgstr ""
@@ -206,6 +202,11 @@ msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "http://required.ch"
+msgstr ""
+
+#: classes/Controller.php:268
+msgctxt "screen reader text"
+msgid "Toggle modal"
 msgstr ""
 
 #: classes/Controller.php:271 classes/Controller.php:283
