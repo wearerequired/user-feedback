@@ -32,7 +32,7 @@
 	&:focus,
 	&:hover {
 		color: inherit;
-		border: 1px solid #c6c6c6;
+		border: 1px solid $color-light-gray;
 		background-image: linear-gradient(to bottom, $color-light-gray, $color-white);
 	}
 }
@@ -67,9 +67,6 @@
 }
 
 .user-feedback-bubble {
-	@extend .user-feedback-button;
-	@extend .user-feedback-button-gray;
-
 	position: absolute;
 	bottom: 20px;
 	min-width: 50px;
@@ -79,18 +76,20 @@
 	border-radius: 100%;
 	z-index: 100000;
 	color: $color-white;
-	background: $color-blue;
+	background: rgba($color-blue, 0.75);
 	pointer-events: auto;
 	box-shadow: 0 0 20px rgba($color-blue-hover, 0.5);
+	transition: background 0.1s ease-in-out;
 
-	&:focus,
-	&:hover {
+	&:focus {
 		color: $color-white;
-		background: $color-blue-hover;
+		border: 1px solid rgba($color-light-gray, 0.75);
+		background: rgba($color-blue, 0.75);
 	}
 
 	&:hover {
-		border: 1px solid transparent;
+		color: $color-white;
+		background: $color-blue-hover;
 	}
 
 	&.top {
