@@ -81,6 +81,7 @@
 	color: $color-white;
 	background: $color-blue;
 	pointer-events: auto;
+	box-shadow: 0 0 20px rgba($color-blue-hover, 0.5);
 
 	&:focus,
 	&:hover {

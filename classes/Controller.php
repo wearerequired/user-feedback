@@ -265,7 +265,7 @@ class Controller {
 				'label' => __( 'Feedback', 'user-feedback' ),
 			),
 			'bubble' => array(
-				'label' => __( '?', 'user-feedback' ),
+				'label' => _x( 'Toggle modal', 'screen reader text', 'user-feedback' ),
 			),
 			'intro'  => array(
 				'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
