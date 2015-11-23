@@ -80,7 +80,7 @@ var Form = wp.Backbone.View.extend(
 			this.model.save(
 				{ doNotShowInfoAgain: undefined },
 				{
-					success: _.bind( function ( model, response, options ) {
+					success: _.bind( function ( model, response ) {
 						if ( !response.data ) {
 							this.setError();
 							return;
@@ -90,7 +90,7 @@ var Form = wp.Backbone.View.extend(
 						user_feedback.templates.done.subtitle = response.data.title;
 						user_feedback.templates.done.message  = response.data.message;
 					}, this ),
-					error  : _.bind( function ( model, response, options ) {
+					error  : _.bind( function () {
 						this.setError();
 					}, this )
 				}

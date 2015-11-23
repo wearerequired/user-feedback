@@ -39,7 +39,7 @@ var App = wp.Backbone.View.extend(
 			this.delegateEvents();
 
 			return this;
-		},
+		}
 	}
 );
 

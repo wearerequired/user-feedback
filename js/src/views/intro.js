@@ -25,7 +25,7 @@ var Intro = wp.Backbone.View.extend(
 		},
 
 		events: {
-			'click .user-feedback-button-next': 'next',
+			'click .user-feedback-button-next': 'next'
 		},
 
 		/**

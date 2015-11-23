@@ -19,7 +19,7 @@ var Done = wp.Backbone.View.extend(
 			this.delegateEvents();
 
 			return this;
-		},
+		}
 	}
 );
 
