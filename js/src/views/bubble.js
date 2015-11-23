@@ -114,7 +114,7 @@ var Bubble = wp.Backbone.View.extend(
 			var $container   = this.$el.find( '.user-feedback-bubble-container' ),
 			    $overlay     = this.$el.find( '.user-feedback-overlay' ),
 			    $bubble      = this.$el.find( '.user-feedback-bubble' ),
-			    bubbleRadius = $bubble.width() / 2,
+			    bubbleRadius = $bubble.height() / 2,
 			    $modal       = this.$el.find( '.user-feedback-modal' );
 
 			$container.removeClass( 'user-feedback-bubble-container-initial' );
