@@ -61,12 +61,7 @@ var Form = wp.Backbone.View.extend(
 			jQuery( '.user-feedback-modal' ).hide();
 
 			html2canvas( document.body ).then( _.bind( function ( canvas ) {
-				console.log( canvas.toDataURL() );
 				this.model.set( 'screenshot', canvas.toDataURL() );
-
-				// Show UI again.
-				jQuery( '.user-feedback-modal' ).show();
-
 				this.sendData();
 			}, this ), _.bind( function ( error ) {
 				// Handle error.
