@@ -72,10 +72,6 @@
 	top: 50%;
 	left: 50%;
 	z-index: 1000000;
-
-	&.user-feedback-bubble-container-initial {
-		transform: translateY(-50%) translateX(-50%);
-	}
 }
 
 .user-feedback-bubble-inner-wrap {

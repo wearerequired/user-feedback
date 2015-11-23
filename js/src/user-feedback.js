@@ -5,7 +5,7 @@
  * Licensed under the GPLv2+ license.
  */
 
-// Load required modules
+// Load required modules.
 var App           = require( 'views/app' ),
     FeedbackModel = require( 'models/feedback' );
 
@@ -13,7 +13,7 @@ var App           = require( 'views/app' ),
 	$( function () {
 		'use strict';
 
-		// Run Boy Run
+		// Run Boy Run.
 		var app = new App( { model: new FeedbackModel() } );
 		app.render();
 	} );

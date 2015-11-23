@@ -68,7 +68,7 @@ var Bubble = wp.Backbone.View.extend(
 		 * @param e Event object.
 		 */
 		keydownHandler: function ( e ) {
-			if ( e.keyCode === 27 || e.which === 27 ) {
+			if ( 27 === e.keyCode || 27 === e.which ) {
 				this.model.set( 'inProgress', false );
 			}
 		},
@@ -107,14 +107,15 @@ var Bubble = wp.Backbone.View.extend(
 		/**
 		 * Move the bubble to a specific position.
 		 *
-		 * @param int top Y offset.
-		 * @param int left X offset.
+		 * @param {int} top Y offset.
+		 * @param {int} left X offset.
 		 */
 		moveBubbleToPosition: function ( top, left ) {
-			var $container = this.$el.find( '.user-feedback-bubble-container' ),
-			    $overlay   = this.$el.find( '.user-feedback-overlay' ),
-			    $bubble    = this.$el.find( '.user-feedback-bubble' ),
-			    $modal     = this.$el.find( '.user-feedback-modal' );
+			var $container   = this.$el.find( '.user-feedback-bubble-container' ),
+			    $overlay     = this.$el.find( '.user-feedback-overlay' ),
+			    $bubble      = this.$el.find( '.user-feedback-bubble' ),
+			    bubbleRadius = $bubble.width() / 2,
+			    $modal       = this.$el.find( '.user-feedback-modal' );
 
 			$container.removeClass( 'user-feedback-bubble-container-initial' );
 
@@ -125,23 +126,23 @@ var Bubble = wp.Backbone.View.extend(
 
 			if ( left > ( $overlay.width() / 2 ) ) {
 				// More on the right hand side. The modal should be on the left.
-				left -= $modal.width();
+				left += bubbleRadius;
 				$bubble.removeClass( 'left' ).addClass( 'right' );
 				$modal.removeClass( 'left' ).addClass( 'right' );
 			} else {
 				// More on the left hand side. The modal should be on the right.
-				left -= 25;
+				left -= bubbleRadius;
 				$bubble.removeClass( 'right' ).addClass( 'left' );
 				$modal.removeClass( 'right' ).addClass( 'left' );
 			}
 			if ( top > ( $overlay.height() / 2 ) ) {
 				// More in the bottom of the screen.
-				top -= $modal.height();
+				top += bubbleRadius;
 				$bubble.removeClass( 'top' ).addClass( 'bottom' );
 				$modal.removeClass( 'top' ).addClass( 'bottom' );
 			} else {
 				// More in the top of the screen.
-				top -= 25;
+				top -= bubbleRadius;
 				$bubble.removeClass( 'bottom' ).addClass( 'top' );
 				$modal.removeClass( 'bottom' ).addClass( 'top' );
 			}
