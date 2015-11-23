@@ -64,7 +64,7 @@ var Form = wp.Backbone.View.extend(
 				this.model.set( 'screenshot', canvas.toDataURL() );
 				this.sendData();
 			}, this ), _.bind( function ( error ) {
-				// Handle error.
+				this.sendData();
 			}, this ) );
 		},
 
