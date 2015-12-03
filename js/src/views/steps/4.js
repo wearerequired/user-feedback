@@ -22,11 +22,6 @@ var WizardStep4 = WizardStep.extend({
 
 		var $userContainer = this.$el.find('#user-feedback-overview-user');
 
-		// Get avatar
-		jQuery.get(user_feedback.ajax_url + '?action=user_feedback_avatar&email=' + email, function (data) {
-			$userContainer.prepend(data);
-		});
-
 		this.$el.find('#user-feedback-overview-user div').append(name);
 		this.$el.find('#user-feedback-overview-note').val(this.model.get('userMessage'));
 

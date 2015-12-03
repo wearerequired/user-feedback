@@ -9,7 +9,7 @@ module.exports = {
       '!.sass-cache/**',
       '!css/src/**',
       '!js/src/**',
-      '!img/src/**',
+      /*'!img/src/**',*/
       '!Gruntfile.*',
       '!grunt/**',
       '!package.json',

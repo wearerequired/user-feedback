@@ -199,7 +199,9 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 
 		$cookies_enabled = (bool) $feedback['browser']['cookieEnabled'] ? __( 'Yes', 'user-feedback' ) : __( 'No', 'user-feedback' );
 
-		$message = __( 'Howdy,', 'user-feedback' ) . "\r\n\r\n";
+		$headers = 'From: AfriGIS Feedback <feedback@afrigis.co.za>' . "\r\n";
+
+		$message = __( 'Hello,', 'user-feedback' ) . "\r\n\r\n";
 		$message .= __( 'You just received a new user feedback regarding your website!', 'user-feedback' ) . "\r\n\r\n";
 		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
 		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
@@ -214,12 +216,10 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 
 		// Send email to the blog admin.
 		$recipient     = apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) );
-		$subject       = apply_filters( 'user_feedback_email_subject',
-			sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
-		);
+		$subject       = apply_filters( 'user_feedback_email_subject', 'AfriGIS New User Feedback', 'user-feedback');
 		$email_message = apply_filters( 'user_feedback_email_message', $message, $feedback );
 
-		$success = wp_mail( $recipient, $subject, $email_message, '', $img );
+		$success = wp_mail( $recipient, $subject, $email_message, $headers, $img );
 
 		do_action_ref_array( 'user_feedback_email_sent', array(
 			'to'         => $recipient,
@@ -234,8 +234,10 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			return;
 		}
 
-		$message = __( 'Howdy,', 'user-feedback' ) . "\r\n\r\n";
-		$message .= __( 'We just received the following feedback from you and will get in touch shortly. Thank you.', 'user-feedback' ) . "\r\n\r\n";
+		$headers = 'From: AfriGIS Feedback <feedback@afrigis.co.za>' . "\r\n";
+
+		$message = __( 'Hello,', 'user-feedback' ) . "\r\n\r\n";
+		$message .= __( 'Thank you for taking time to give us feedback. Your contribution to improving our product is much appreciated.', 'user-feedback' ) . "\r\n\r\n";
 		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
 		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
 		$message .= sprintf( __( 'Browser: %s', 'user-feedback' ), sanitize_text_field( $feedback['browser']['name'] ) ) . "\r\n";
@@ -243,15 +245,15 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";
 		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+		$message .= __( 'Regards,', 'user-feedback' ) . "\r\n";
+		$message .= __( 'Team AfriGIS,', 'user-feedback' ) . "\r\n";
 
 		// Send email to the submitting user.
 		$recipient     = apply_filters( 'user_feedback_email_copy_address', $user_email );
-		$subject       = apply_filters( 'user_feedback_email_copy_subject',
-			sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
-		);
+		$subject       = apply_filters( 'user_feedback_email_copy_subject', 'AfriGIS developers feedback' );
 		$email_message = apply_filters( 'user_feedback_email_copy_message', $message, $feedback );
 
-		$success = wp_mail( $recipient, $subject, $email_message, '', $img );
+		$success = wp_mail( $recipient, $subject, $email_message, $headers, $img );
 
 		do_action_ref_array( 'user_feedback_email_copy_sent', array(
 			'to'         => $recipient,
@@ -320,6 +322,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			'user'        => $this->get_user_data(),
 			'language'    => $this->get_site_language(),
 			'templates'   => $this->get_template_vars(),
+			'plugin_dir'   => plugins_url(),
 		) ) );
 	}
 
@@ -409,15 +412,14 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			),
 			'wizardStep1'           => array(
 				'title'       => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'salutation'  => __( 'Howdy stranger,', 'user-feedback' ),
-				'intro'       => __( 'Please let us know who you are. This way we will get back to you as soon as the issue is resolved:', 'user-feedback' ),
+				'salutation'  => __( 'Hello,', 'user-feedback' ),
+				'intro'       => __( 'In order to assist with your enquiry, please complete your details below:', 'user-feedback' ),
 				'placeholder' => array(
-					'name'  => _x( 'Your name', 'input field placeholder', 'user-feedback' ),
+					'name'  => _x( 'Name & Surname', 'input field placeholder', 'user-feedback' ),
 					'email' => _x( 'Email address', 'input field placeholder', 'user-feedback' ),
 				),
 				'button'      => array(
 					'primary'   => __( 'Next', 'user-feedback' ),
-					'secondary' => __( 'Stay anonymous', 'user-feedback' ),
 					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
 					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
 				),
@@ -425,8 +427,8 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			'wizardStep2'           => array(
 				'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
 				'salutation' => __( 'Hello ', 'user-feedback' ),
-				'intro'      => __( 'Please help us understand your feedback better!', 'user-feedback' ),
-				'intro2'     => __( 'You can not only leave us a message but also highlight areas relevant to your feedback.', 'user-feedback' ),
+				'intro'      => __( 'Please help us understand your feedback better.', 'user-feedback' ),
+				'intro2'     => __( 'You can leave us a message and highlight areas relevant to your feedback.', 'user-feedback' ),
 				'inputLabel' => __( 'Don\'t show me this again', 'user-feedback' ),
 				'button'     => array(
 					'primary'   => __( 'Next', 'user-feedback' ),
@@ -436,7 +438,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			),
 			'wizardStep3'           => array(
 				'title'  => _x( 'Highlight area', 'modal title', 'user-feedback' ),
-				'intro'  => __( 'Highlight the areas relevant to your feedback.', 'user-feedback' ),
+				'intro'  => __( 'Please highlight the areas relevant to your feedback.', 'user-feedback' ),
 				'button' => array(
 					'primary'   => __( 'Take screenshot', 'user-feedback' ),
 					'close'     => _x( '&times', 'close button', 'user-feedback' ),
@@ -454,7 +456,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 					'by' => _x( 'From ', 'by user xy', 'user-feedback' ),
 				),
 				'placeholder'   => array(
-					'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
+					'message' => _x( 'Please let us know what we should repair or where we can improve. Thank you!', 'textarea placeholder', 'user-feedback' ),
 				),
 				'details'       => array(
 					'theme'    => __( 'Theme: ', 'user-feedback' ),
@@ -471,11 +473,11 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 			),
 			'wizardStep5'           => array(
 				'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'intro'  => __( 'Thank you for taking your time to give us feedback. We will consider it and get back to you as quickly as possible.', 'user-feedback' ),
-				'intro2' => sprintf( __( '&ndash; %s', 'user-feedback' ), get_bloginfo( 'name' ) ),
+				'intro'  => __( 'Thank you for taking time to give us feedback. Your contribution to improving our product is much appreciated.', 'user-feedback' ),
+				'intro2' => __( 'Regards', 'user-feedback' ),
+				'intro3' => __( 'Team AfriGIS', 'user-feedback' ),
 				'button' => array(
 					'primary'   => __( 'Done', 'user-feedback' ),
-					'secondary' => __( 'Leave another message', 'user-feedback' ),
 				),
 			),
 		);
