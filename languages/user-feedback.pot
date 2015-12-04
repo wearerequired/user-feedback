@@ -99,7 +99,7 @@ msgid "Regards,"
 msgstr ""
 
 #: classes/plugin.php:249
-msgid "Team AfriGIS,"
+msgid "Team AfriGIS."
 msgstr ""
 
 #: classes/plugin.php:400

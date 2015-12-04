@@ -246,7 +246,7 @@ class User_Feedback_Plugin extends WP_Stack_Plugin2 {
 		$message .= $user_message . "\r\n\r\n";
 		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
 		$message .= __( 'Regards,', 'user-feedback' ) . "\r\n";
-		$message .= __( 'Team AfriGIS,', 'user-feedback' ) . "\r\n";
+		$message .= __( 'Team AfriGIS.', 'user-feedback' ) . "\r\n";
 
 		// Send email to the submitting user.
 		$recipient     = apply_filters( 'user_feedback_email_copy_address', $user_email );
