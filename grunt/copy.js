@@ -20,7 +20,9 @@ module.exports = {
       '!.travis.yml',
       '!phpunit.xml',
       '!composer.lock',
-      '!vendor/**'
+      '!vendor/**',
+      'vendor/composer/**',
+      'vendor/autoload.php'
     ],
     dest: 'release/<%= package.version %>/'
   },
