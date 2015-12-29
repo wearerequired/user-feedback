@@ -1,10 +1,10 @@
 # User Feedback #
 Contributors:      wearerequired, swissspidy, karinchristen, neverything  
-Donate link:       http://required.ch  
+Donate link:       https://required.ch  
 Tags:              users, feedback, email, media, support  
 Requires at least: 4.0  
-Tested up to:      4.3  
-Stable tag:        0.1.0  
+Tested up to:      4.4  
+Stable tag:        1.1.1  
 License:           GPLv2 or later  
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -95,6 +95,11 @@ We develop everything [on GitHub](https://github.com/wearerequired/user-feedback
 
 ## Changelog ##
 
+### 1.1.1 ###
+* Fixed: Don’t print templates when the plugin should not be loaded.
+* Fixed: Load JavaScript files correctly. Ensures compatibility with WordPress 4.4.
+* New: Modernized setup to pave the way for future versions.
+
 ### 1.1.0 ###
 * New: Configure where the User Feedback tool should be loaded under 'Settings' -> 'General'
 
@@ -102,6 +107,9 @@ We develop everything [on GitHub](https://github.com/wearerequired/user-feedback
 * First release
 
 ## Upgrade Notice ##
+
+### 1.1.1 ###
+100% compatible with WordPress 4.4, this version fixes some bugs related to loading the JavaScript.
 
 ### 1.1.0 ###
 100% compatible with WordPress 4.3, this version adds a settings section for the User Feedback tool.

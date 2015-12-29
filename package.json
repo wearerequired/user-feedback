@@ -2,7 +2,7 @@
   "name": "user-feedback",
   "title": "User Feedback",
   "description": "Allows users to submit feedback and bug reports  anywhere on the site using an interactive feedback button.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "homepage": "http://required.ch",
   "license": "GPL-2.0+",
   "author": {
