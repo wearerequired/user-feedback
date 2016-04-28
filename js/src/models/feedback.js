@@ -14,19 +14,19 @@ var Feedback = Backbone.Model.extend(
 		 */
 		defaults: function () {
 			return {
-				user              : user_feedback.user,
-				message           : '',
-				theme             : user_feedback.theme,
-				browser           : {
+				user:               user_feedback.user,
+				message:            '',
+				theme:              user_feedback.theme,
+				browser:            {
 					cookieEnabled: navigator.cookieEnabled,
-					platform     : navigator.platform,
-					userAgent    : navigator.userAgent,
-					languages    : window.navigator.languages || [ window.navigator.language || window.navigator.userLanguage ],
+					platform:      navigator.platform,
+					userAgent:     navigator.userAgent,
+					languages:     window.navigator.languages || [ window.navigator.language || window.navigator.userLanguage ],
 				},
-				url               : document.URL,
-				language          : user_feedback.language,
-				thirdParty        : user_feedback.third_party,
-				screenshot        : '',
+				url:                document.URL,
+				language:           user_feedback.language,
+				thirdParty:         user_feedback.third_party,
+				screenshot:         '',
 				doNotShowInfoAgain: document.cookie.indexOf( 'user_feedback_do_not_show_again' ) >= 0
 			};
 		},

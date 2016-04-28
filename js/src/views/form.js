@@ -10,8 +10,8 @@ window.html2canvas = require( 'html2canvas' ); // Apparently needs to be globall
  */
 var Form = wp.Backbone.View.extend(
 	{
-		template    : template( user_feedback.templates.form ),
-		isActive    : false,
+		template:     template( user_feedback.templates.form ),
+		isActive:     false,
 		bubbleOffset: {},
 
 		/**
@@ -85,7 +85,7 @@ var Form = wp.Backbone.View.extend(
 						user_feedback.templates.done.subtitle = response.data.title;
 						user_feedback.templates.done.message  = response.data.message;
 					}, this ),
-					error  : _.bind( function () {
+					error:   _.bind( function () {
 						this.setError();
 					}, this )
 				}

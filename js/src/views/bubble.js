@@ -13,9 +13,9 @@ var template = require( 'templates/bubble' ),
 var Bubble = wp.Backbone.View.extend(
 	{
 		className: 'user-feedback-bubble-view',
-		template : template( user_feedback.templates.bubble ),
-		step     : 0,
-		offset   : {},
+		template:  template( user_feedback.templates.bubble ),
+		step:      0,
+		offset:    {},
 
 		/**
 		 * View constructor.
@@ -55,11 +55,11 @@ var Bubble = wp.Backbone.View.extend(
 		},
 
 		events: {
-			'click .user-feedback-bubble'      : 'toggleModal',
-			'click .user-feedback-overlay'     : 'moveBubble',
+			'click .user-feedback-bubble':       'toggleModal',
+			'click .user-feedback-overlay':      'moveBubble',
 			'click .user-feedback-button-close': 'close',
-			'click .user-feedback-button-next' : 'next',
-			'keydown'                          : 'keydownHandler'
+			'click .user-feedback-button-next':  'next',
+			'keydown':                           'keydownHandler'
 		},
 
 		/**
@@ -120,7 +120,7 @@ var Bubble = wp.Backbone.View.extend(
 			$container.removeClass( 'user-feedback-bubble-container-initial' );
 
 			this.offset = {
-				top : top,
+				top:  top,
 				left: left
 			};
 
@@ -149,9 +149,9 @@ var Bubble = wp.Backbone.View.extend(
 
 			this.$el.find( '.user-feedback-bubble-container' ).css(
 				{
-					top   : top,
-					left  : left,
-					right : 'auto',
+					top:    top,
+					left:   left,
+					right:  'auto',
 					bottom: 'auto'
 				}
 			);

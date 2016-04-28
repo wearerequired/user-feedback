@@ -9,7 +9,7 @@ var template = require( 'templates/intro' );
  */
 var Intro = wp.Backbone.View.extend(
 	{
-		template : template( user_feedback.templates.intro ),
+		template:  template( user_feedback.templates.intro ),
 		className: 'user-feedback-bubble-sub-view',
 
 		/**

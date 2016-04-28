@@ -9,9 +9,9 @@ var template = require( 'templates/button' );
  */
 var Button = wp.Backbone.View.extend(
 	{
-		className   : 'user-feedback-button-view',
-		template    : template( user_feedback.templates.button ),
-		isActive    : false,
+		className:    'user-feedback-button-view',
+		template:     template( user_feedback.templates.button ),
+		isActive:     false,
 		bubbleOffset: {},
 
 		/**
