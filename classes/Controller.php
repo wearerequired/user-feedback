@@ -138,7 +138,10 @@ class Controller {
 		$message .= sprintf( __( 'User Languages: %s', 'user-feedback' ), implode( ', ', $data['browser']['languages'] ) ) . "\r\n";
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";
-		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+
+		if ( $attachments ) {
+			$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+		}
 
 		// Send email to the blog admin.
 		$recipient     = apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) );
@@ -170,7 +173,10 @@ class Controller {
 		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $visited_url ) . "\r\n";
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";
-		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+
+		if ( $attachments ) {
+			$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+		}
 
 		// Send email to the submitting user.
 		$recipient     = apply_filters( 'user_feedback_email_copy_address', $user_email );
