@@ -1,0 +1,354 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: User Feedback 1.1.1\n"
+"Report-Msgid-Bugs-To: http://required.ch\n"
+"POT-Creation-Date: 2015-05-20 17:47:28+00:00\n"
+"PO-Revision-Date: Thu Apr 28 2016 12:21:04 GMT+0300 (EEST)\n"
+"Last-Translator: Kadınlar Köşkü <kadinlarkosku@uludag.gen.tr>\n"
+"Language-Team: required+ <support@required.ch>\n"
+"Language: Turkish\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Loco - https://localise.biz/\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Poedit-Country: Switzerland\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+"X-Loco-Target-Locale: tr_TR"
+
+#: classes/AjaxHandler.php:31
+msgid "No data provided"
+msgstr "Veri sağlanmadı."
+
+#: classes/AjaxHandler.php:60
+msgid "Submission successful!"
+msgstr "Gönderim başarılı!"
+
+#: classes/Controller.php:121 classes/DataProvider.php:93
+msgid "Anonymous"
+msgstr "Gizli"
+
+#: classes/Controller.php:125
+msgid "(not provided)"
+msgstr "(verilmedi)"
+
+#: classes/Controller.php:131
+msgid "Yes"
+msgstr "Evet"
+
+#: classes/Controller.php:131
+msgid "No"
+msgstr "Hayır"
+
+#: classes/Controller.php:133 classes/Controller.php:168
+msgid "Howdy,"
+msgstr "Hey,"
+
+#: classes/Controller.php:134
+msgid "You just received a new user feedback regarding your website!"
+msgstr "Web sitene yönelik olarak yeni bir kullanıcı geri bildirimi aldın. "
+
+#: classes/Controller.php:135 classes/Controller.php:170
+#, c-format
+msgid "Name: %s"
+msgstr "İsim: %"
+
+#: classes/Controller.php:136 classes/Controller.php:171
+#, c-format
+msgid "Email: %s"
+msgstr "Eposta: %"
+
+#: classes/Controller.php:137
+#, c-format
+msgid "Browser: %s (%s)"
+msgstr "Tarayıcı: %s (%s)"
+
+#: classes/Controller.php:138
+#, c-format
+msgid "Cookies enabled: %s"
+msgstr "Çerezler aktif:%s"
+
+#: classes/Controller.php:139 classes/Controller.php:173
+#, c-format
+msgid "Visited URL: %s"
+msgstr "Ziyaret edilen link. %s"
+
+#: classes/Controller.php:140
+#, c-format
+msgid "Site Language: %s"
+msgstr "Site dili: %s"
+
+#: classes/Controller.php:141
+#, c-format
+msgid "User Languages: %s"
+msgstr "Kullanıcı dilleri: %s"
+
+#: classes/Controller.php:142 classes/Controller.php:174
+msgid "Additional Notes:"
+msgstr "Ek notlar:"
+
+#: classes/Controller.php:144 classes/Controller.php:176
+msgid "A screenshot of the visited page is attached."
+msgstr "Ziyaret edilen sayfanın ekran görüntüsü ekte"
+
+#: classes/Controller.php:149
+#, c-format
+msgid "[%s] New User Feedback"
+msgstr "[%s] Ziyaretçi geri bildirimi *yeni*"
+
+#: classes/Controller.php:169
+msgid ""
+"We just received the following feedback from you and will get in touch "
+"shortly. Thank you."
+msgstr "Sizden aşağıdaki geri bildirimi aldık ve geri dönüş yapacağız. Teşekkürler. "
+
+#: classes/Controller.php:172
+#, c-format
+msgid "Browser: %s"
+msgstr "Tarayıcı: %s"
+
+#: classes/Controller.php:181
+#, c-format
+msgid "[%s] Your Feedback"
+msgstr "[%s] Geri bildiriminiz"
+
+#: classes/Controller.php:268
+msgid "Feedback"
+msgstr "Geri bildirim"
+
+#: classes/Controller.php:283
+msgid "Howdy stranger,"
+msgstr "Selam yabancı,"
+
+#: classes/Controller.php:284
+msgid ""
+"Please let us know who you are. This way we will get back to you as soon as "
+"the issue is resolved:"
+msgstr ""
+"Kim oldugun hakkında biraz bilgiye ihtiyacımız var. Böylece, problem "
+"çözülünce sana geri dönüş yapabiliriz."
+
+#: classes/Controller.php:290 classes/Controller.php:303
+msgid "Next"
+msgstr "Sonraki"
+
+#: classes/Controller.php:291
+msgid "Stay anonymous"
+msgstr "Gizli kal"
+
+#: classes/Controller.php:298
+msgid "Hello "
+msgstr "Selam"
+
+#: classes/Controller.php:299
+msgid "Please help us understand your feedback better!"
+msgstr "Bize, geri bildirimini anlamak konusunda yardımcı ol."
+
+#: classes/Controller.php:300
+msgid ""
+"You can not only leave us a message but also highlight areas relevant to "
+"your feedback."
+msgstr ""
+"Bize sadece mesaj bırakmakla kalmayıp, aynı zamanda da geri bildiriminle "
+"alakalı alanları işaretleyebilirsin. "
+
+#: classes/Controller.php:301
+msgid "Don't show me this again"
+msgstr "Bunu bana tekrar gösterme."
+
+#: classes/Controller.php:310
+msgid "Highlight the areas relevant to your feedback."
+msgstr "Geri bildiriminle alakalı yerleri işaretle."
+
+#: classes/Controller.php:312
+msgid "Take screenshot"
+msgstr "Ekran görüntüsü al"
+
+#: classes/Controller.php:331
+msgid "Theme: "
+msgstr "Tema"
+
+#: classes/Controller.php:332
+msgid "Page: "
+msgstr "Sayfa"
+
+#: classes/Controller.php:333
+msgid "Browser: "
+msgstr "Tarayıcı"
+
+#: classes/Controller.php:334
+msgid "Language: "
+msgstr "Dil:"
+
+#: classes/Controller.php:337
+msgid "Send"
+msgstr "Yolla"
+
+#: classes/Controller.php:338
+msgid "Back"
+msgstr "Geri"
+
+#: classes/Controller.php:345
+msgid ""
+"Thank you for taking your time to give us feedback. We will consider it and "
+"get back to you as quickly as possible."
+msgstr ""
+"Bize geri bildirim için zaman ayırdığınızdan dolayı teşekkürler. "
+"Değerlendirip geri dönüş yapacağız."
+
+#: classes/Controller.php:346
+#, c-format
+msgid "&ndash; %s"
+msgstr "&ndash; %s"
+
+#: classes/Controller.php:348
+msgid "Done"
+msgstr "Tamam"
+
+#: classes/Controller.php:349
+msgid "Leave another message"
+msgstr "Başka mesaj bırak"
+
+#: classes/Controller.php:410
+#, c-format
+msgid ""
+"%s:\n"
+"\n"
+" %s\n"
+"\n"
+msgstr ""
+"%s:\n"
+"\n"
+" %s\n"
+
+#. Plugin Name of the plugin/theme
+msgid "User Feedback"
+msgstr "Ziyaretçi geri bildirimi"
+
+#: classes/SettingsController.php:37
+msgid "Configure where the User Feedback tool should be loaded."
+msgstr "Geri bildirim aracının nerede gözükmesi gerektiğini ayarlayın. "
+
+#: classes/SettingsController.php:44
+msgid "Display Options"
+msgstr "Gösterim seçenekleri"
+
+#: classes/SettingsController.php:64
+msgid "Load for non-logged in users"
+msgstr "Giriş yapmamış kullanıcılar için çağır"
+
+#: classes/SettingsController.php:72
+msgid "Load in the WordPress admin"
+msgstr "Wordpress admin de çağır"
+
+#: classes/SettingsController.php:114
+msgid "Settings"
+msgstr "Ayarlar"
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/wearerequired/user-feedback/"
+msgstr "https://github.com/wearerequired/user-feedback/"
+
+#. Description of the plugin/theme
+msgid ""
+"Allows users to submit feedback and bug reports anywhere on the site using "
+"an interactive feedback button."
+msgstr ""
+"İnteraktif geri bildirim butonu ile, ziyaretçilerin geri bildirim ve sitenin "
+"herhangi bir yerindeki hataya ilişkin raporlar göndermesini sağlar."
+
+#. Author of the plugin/theme
+msgid "required+"
+msgstr "required+"
+
+#. Author URI of the plugin/theme
+msgid "http://required.ch"
+msgstr "http://required.ch"
+
+#: classes/Controller.php:272
+msgctxt "step 1"
+msgid "Feedback"
+msgstr "Geri bildirim"
+
+#: classes/Controller.php:273
+msgctxt "step 3"
+msgid "Highlight area"
+msgstr "Alanı vurgula"
+
+#: classes/Controller.php:274
+msgctxt "step 2"
+msgid "Leave a message"
+msgstr "Mesaj bırak"
+
+#: classes/Controller.php:277
+msgctxt "help button label"
+msgid "?"
+msgstr "?"
+
+#: classes/Controller.php:278
+msgctxt "help button title text and aria label"
+msgid "Submit Feedback"
+msgstr "Geri bildirimi yolla"
+
+#: classes/Controller.php:282 classes/Controller.php:297
+#: classes/Controller.php:322 classes/Controller.php:344
+msgctxt "modal title"
+msgid "Feedback"
+msgstr "Geri bildirim"
+
+#: classes/Controller.php:309
+msgctxt "modal title"
+msgid "Highlight area"
+msgstr "Vurgulama Alanı"
+
+#: classes/Controller.php:286
+msgctxt "input field placeholder"
+msgid "Your name"
+msgstr "Adınız"
+
+#: classes/Controller.php:287
+msgctxt "input field placeholder"
+msgid "Email address"
+msgstr "Eposta adresiniz"
+
+#: classes/Controller.php:292 classes/Controller.php:304
+msgctxt "close button"
+msgid "&times;"
+msgstr "&times;"
+
+#: classes/Controller.php:313 classes/Controller.php:318
+#: classes/Controller.php:339
+msgctxt "close button"
+msgid "&times"
+msgstr "&times"
+
+#: classes/Controller.php:293 classes/Controller.php:305
+#: classes/Controller.php:314 classes/Controller.php:319
+#: classes/Controller.php:340
+msgctxt "close button title text and aria label"
+msgid "Close"
+msgstr "Kapat"
+
+#: classes/Controller.php:323
+msgctxt "alt text"
+msgid "Annotated Screenshot"
+msgstr "Alıntı yapılan ekran görüntüsü"
+
+#: classes/Controller.php:325
+msgctxt "by user xy"
+msgid "From "
+msgstr "Kimden"
+
+#: classes/Controller.php:328
+msgctxt "textarea placeholder"
+msgid "Tell us what we should improve or fix &hellip;"
+msgstr "Bize geliştirme veya düzeltmemiz gerekeni söyleyin &hellip;"
