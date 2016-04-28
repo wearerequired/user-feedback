@@ -13,7 +13,7 @@ class DataProvider extends \WP_UnitTestCase {
 	function test_should_return_the_ajax_url() {
 		$data = ( new \Required\User_Feedback\DataProvider() )->get_data();
 
-		$this->assertEquals( admin_url( 'admin-ajax.php' ), $data['ajax_url'] );
+		$this->assertEquals( admin_url( 'admin-ajax.php' ) . '?action=user_feedback_submit', $data['ajax_url'] );
 	}
 
 	function test_should_return_the_site_language() {

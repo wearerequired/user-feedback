@@ -26,7 +26,7 @@ class DataProvider {
 			 * @param array $data Support data.
 			 */
 			'third_party' => apply_filters( 'user_feedback_support_data', array() ),
-			'ajax_url'    => admin_url( 'admin-ajax.php' ),
+			'ajax_url'    => esc_url( add_query_arg( 'action', 'user_feedback_submit', admin_url( 'admin-ajax.php' ) ) ),
 			'theme'       => $this->get_theme_data(),
 			'user'        => $this->get_user_data(),
 			'language'    => $this->get_site_language(),
