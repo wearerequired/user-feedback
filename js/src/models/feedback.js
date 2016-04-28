@@ -21,6 +21,7 @@ var Feedback = Backbone.Model.extend(
 					languages:     window.navigator.languages || [ window.navigator.language || window.navigator.userLanguage ],
 				},
 				doNotShowInfoAgain: document.cookie.indexOf( 'user_feedback_do_not_show_again' ) >= 0,
+				doScreenCapture:    user_feedback.settings.screen_capture,
 				language:           user_feedback.language,
 				message:            '',
 				screenshot:         '',

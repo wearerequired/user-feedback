@@ -51,7 +51,7 @@ var Form = wp.Backbone.View.extend(
 			}
 
 			// Only run if Canvas is supported
-			if ( !!window.HTMLCanvasElement ) {
+			if ( !!window.HTMLCanvasElement && !! this.model.get( 'doScreenCapture' ) ) {
 				this.screenCapture();
 			} else {
 				this.sendData();

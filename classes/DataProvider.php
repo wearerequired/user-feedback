@@ -30,6 +30,7 @@ class DataProvider {
 			'theme'       => $this->get_theme_data(),
 			'user'        => $this->get_user_data(),
 			'language'    => $this->get_site_language(),
+			'settings'    => $this->get_app_settings(),
 			'templates'   => $this->get_template_vars(),
 		);
 	}
@@ -100,6 +101,17 @@ class DataProvider {
 			'logged_in' => is_user_logged_in(),
 			'name'      => $userdata->display_name,
 			'email'     => $userdata->user_email,
+		);
+	}
+
+	/**
+	 * Returns settings for the JS, such as if the screen should be captured or not.
+	 *
+	 * @return array Settings.
+	 */
+	protected function get_app_settings() {
+		return array(
+			'screen_capture' => true,
 		);
 	}
 

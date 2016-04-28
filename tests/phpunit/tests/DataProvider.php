@@ -73,6 +73,14 @@ class DataProvider extends \WP_UnitTestCase {
 		], $data['user'] );
 	}
 
+	function test_should_return_app_settings() {
+		$data = ( new \Required\User_Feedback\DataProvider() )->get_data();
+
+		$this->assertSame( [
+			'screen_capture' => true,
+		], $data['settings'] );
+	}
+
 	function test_should_return_get_template_vars() {
 		$data = ( new \Required\User_Feedback\DataProvider() )->get_data()['templates'];
 
