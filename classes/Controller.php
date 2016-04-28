@@ -111,8 +111,8 @@ class Controller {
 			$attachments[] = $data['screenshot'];
 		}
 
-		$user_name  = sanitize_text_field( $data['user']['name'] );
-		$user_email = sanitize_email( $data['user']['email'] );
+		$user_name  = $data['user']['name'];
+		$user_email = $data['user']['email'];
 
 		if ( empty( $user_name ) ) {
 			$user_name = __( 'Anonymous', 'user-feedback' );
@@ -123,7 +123,7 @@ class Controller {
 		}
 
 		$user_message = sanitize_text_field( $data['message'] );
-		$visited_url  = esc_url( $data['url'] );
+		$visited_url  = $data['url'];
 
 		$cookies_enabled = (bool) $data['browser']['cookieEnabled'] ? __( 'Yes', 'user-feedback' ) : __( 'No', 'user-feedback' );
 
