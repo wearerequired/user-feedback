@@ -35,7 +35,8 @@ var Form = wp.Backbone.View.extend(
 		 */
 		submit: function () {
 			var name  = this.$el.find( '#user-feedback-user-name' ).val(),
-			    email = this.$el.find( '#user-feedback-user-email' ).val();
+			    email = this.$el.find( '#user-feedback-user-email' ).val(),
+			    msg   = this.$el.find( '#user-feedback-overview-note' ).val();
 
 			if ( '' !== name ) {
 				this.model.set( 'name', name );
@@ -43,6 +44,10 @@ var Form = wp.Backbone.View.extend(
 
 			if ( '' !== email ) {
 				this.model.set( 'email', email );
+			}
+
+			if ( '' !== msg ) {
+				this.model.set( 'message', msg );
 			}
 
 			// Only run if Canvas is supported
