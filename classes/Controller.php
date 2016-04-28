@@ -14,7 +14,7 @@ class Controller {
 	/**
 	 * Plugin version.
 	 */
-	const VERSION = '1.1.0';
+	const VERSION = '2.0.0';
 
 	/**
 	 * Ajax handler.
@@ -230,14 +230,14 @@ class Controller {
 			'user-feedback',
 			$this->get_url() . 'css/user-feedback' . $suffix . '.css',
 			array(),
-			'1.0.0'
+			self::VERSION
 		);
 
 		wp_enqueue_script(
 			'user-feedback',
 			$this->get_url() . 'js/user-feedback' . $suffix . '.js',
 			array( 'underscore', 'wp-backbone' ),
-			'1.0.0',
+			self::VERSION,
 			true
 		);
 
