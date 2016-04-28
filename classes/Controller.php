@@ -244,64 +244,7 @@ class Controller {
 		wp_localize_script(
 			'user-feedback',
 			'user_feedback',
-			array_merge(
-				$this->dataProvider->get_data(),
-				array(
-					'ajax_url'  => admin_url( 'admin-ajax.php' ),
-					'templates' => $this->get_template_vars(),
-				)
-			)
-		);
-	}
-
-	/**
-	 * Get the template variables for use with `wp_localize_script`.
-	 *
-	 * @return array Template variables.
-	 */
-	protected function get_template_vars() {
-		return array(
-			'button' => array(
-				'label' => __( 'Feedback', 'user-feedback' ),
-			),
-			'bubble' => array(
-				'label' => _x( 'Toggle modal', 'screen reader text', 'user-feedback' ),
-			),
-			'intro'  => array(
-				'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'subtitle'   => __( 'Howdy,', 'user-feedback' ),
-				'message'    => __( 'Please let us know what is going on!', 'user-feedback' ),
-				'message2'   => __( 'Click on the relevant area and write a message to help us understand your feedback better.', 'user-feedback' ),
-				'inputLabel' => __( 'Do not show me this again', 'user-feedback' ),
-				'button'     => array(
-					'primary'   => __( 'OK, I understand', 'user-feedback' ),
-					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-				),
-			),
-			'form'   => array(
-				'title'       => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'placeholder' => array(
-					'name'    => _x( 'Name (optional)', 'input field placeholder', 'user-feedback' ),
-					'email'   => _x( 'Email (optional)', 'input field placeholder', 'user-feedback' ),
-					'message' => _x( 'Tell us what we should improve or fix&hellip;', 'textarea placeholder', 'user-feedback' ),
-				),
-				'button'      => array(
-					'primary'   => __( 'Send feedback', 'user-feedback' ),
-					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-				),
-			),
-			'done'   => array(
-				'title'        => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'subtitle'     => __( 'Successfully sent!', 'user-feedback' ),
-				'message'      => __( 'Thanks for taking your time to send us your feedback. We will get back to you as quickly as possible.', 'user-feedback' ),
-				'errortitle'   => __( 'Oops, there was an error!', 'user-feedback' ),
-				'errormessage' => __( 'Your feedback could not be sent. Please try again!', 'user-feedback' ),
-				'button'       => array(
-					'primary' => __( 'Done', 'user-feedback' ),
-				),
-			),
+			$this->dataProvider->get_data()
 		);
 	}
 

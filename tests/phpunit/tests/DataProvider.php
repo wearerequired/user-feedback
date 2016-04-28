@@ -72,4 +72,14 @@ class DataProvider extends \WP_UnitTestCase {
 			'email'     => false,
 		], $data['user'] );
 	}
+
+	function test_should_return_get_template_vars() {
+		$data = ( new \Required\User_Feedback\DataProvider() )->get_data()['templates'];
+
+		$this->assertArrayHasKey( 'button', $data );
+		$this->assertArrayHasKey( 'bubble', $data );
+		$this->assertArrayHasKey( 'intro', $data );
+		$this->assertArrayHasKey( 'form', $data );
+		$this->assertArrayHasKey( 'done', $data );
+	}
 }
