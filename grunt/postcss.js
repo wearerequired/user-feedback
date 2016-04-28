@@ -2,7 +2,7 @@ module.exports = {
 	options: {
 		// or
 		map: {
-			inline: false, // save all source maps as separate files...
+			inline:     false, // save all source maps as separate files...
 			annotation: 'css/' // ...to the specified directory
 		},
 
@@ -14,11 +14,13 @@ module.exports = {
 					'ie 9'
 				]
 			} ), // add vendor prefixes
-			require( 'cssnano' )() // minify the result
+			require( 'cssnano' )( {
+				'zindex': false
+			} ) // minify the result
 		]
 	},
-	dist: {
-		src: 'css/user-feedback.css',
+	dist:    {
+		src:  'css/user-feedback.css',
 		dest: 'css/user-feedback.min.css'
 	}
 };
