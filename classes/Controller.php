@@ -122,7 +122,7 @@ class Controller {
 			$user_email = __( '(not provided)', 'user-feedback' );
 		}
 
-		$user_message = sanitize_text_field( $data['message'] );
+		$user_message = $data['message'];
 		$visited_url  = $data['url'];
 
 		$cookies_enabled = (bool) $data['browser']['cookieEnabled'] ? __( 'Yes', 'user-feedback' ) : __( 'No', 'user-feedback' );

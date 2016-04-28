@@ -38,7 +38,7 @@ class AjaxHandler {
 		) );
 
 		$data['screenshot'] = $this->save_temp_image( (string) $data['screenshot'] );
-		$message            = esc_textarea( $data['message'] );
+		$message            = implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $data['message'] ) ) );
 
 		array_walk_recursive( $data, 'sanitize_text_field' );
 
