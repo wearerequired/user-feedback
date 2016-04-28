@@ -244,7 +244,12 @@ class Controller {
 		wp_localize_script(
 			'user-feedback',
 			'user_feedback',
-			$this->dataProvider->get_data()
+			/**
+			 * Filters the script data passed to the user feedback tool.
+			 *
+			 * @param array $data User Feedback script data.
+			 */
+			apply_filters( 'user_feedback_script_data', $this->dataProvider->get_data() )
 		);
 	}
 
