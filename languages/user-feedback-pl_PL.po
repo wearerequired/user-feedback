@@ -1,0 +1,356 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: User Feedback 1.1.1\n"
+"Report-Msgid-Bugs-To: http://required.ch\n"
+"POT-Creation-Date: 2015-05-20 17:47:28+00:00\n"
+"PO-Revision-Date: 2016-02-14 12:55+0100\n"
+"Last-Translator: Robert Palczewski <mail@robert-palczewski.eu>\n"
+"Language-Team: required+ <support@required.ch>\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 &&(n"
+"%100<10||n%100 >= 20)? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Textdomain-Support: yes\n"
+"X-Loco-Target-Locale: pl_PL\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: classes/AjaxHandler.php:60
+msgid "Submission successful!"
+msgstr "Złożenie zgłoszenia udane!"
+
+#: classes/Controller.php:121 classes/DataProvider.php:93
+msgid "Anonymous"
+msgstr "Anonimowy"
+
+#: classes/Controller.php:125
+msgid "(not provided)"
+msgstr "(nie dostarczono)"
+
+#: classes/Controller.php:134
+msgid "You just received a new user feedback regarding your website!"
+msgstr "Właśnie otrzymałeś/aś nową opinię użytkownika dotyczącą Twojej strony!"
+
+#: classes/Controller.php:137
+#, c-format
+msgid "Browser: %s (%s)"
+msgstr "Przeglądarka: %s (%s)"
+
+#: classes/Controller.php:138
+#, c-format
+msgid "Cookies enabled: %s"
+msgstr "Ciasteczka włączone: %s"
+
+#: classes/Controller.php:139 classes/Controller.php:173
+#, c-format
+msgid "Visited URL: %s"
+msgstr "Odwiedzony URL: %s"
+
+#: classes/Controller.php:140
+#, c-format
+msgid "Site Language: %s"
+msgstr "Język strony: %s"
+
+#: classes/Controller.php:141
+#, c-format
+msgid "User Languages: %s"
+msgstr "Języki użytkownika: %s"
+
+#: classes/Controller.php:149
+#, c-format
+msgid "[%s] New User Feedback"
+msgstr "[%s] Nowe Zgłoszenie Użytkownika"
+
+#: classes/Controller.php:172
+#, c-format
+msgid "Browser: %s"
+msgstr "Przeglądarka: %s"
+
+#: classes/Controller.php:284
+msgid ""
+"Please let us know who you are. This way we will get back to you as soon as "
+"the issue is resolved:"
+msgstr ""
+"Daj nam znać, kim jesteś. W ten sposób będziemy mogli Tobie odpowiedzieć tak "
+"szybko, jak tylko problem zostanie rozwiązany:"
+
+#: classes/SettingsController.php:37
+msgid "Configure where the User Feedback tool should be loaded."
+msgstr "Ustaw, gdzie narzędzie User Feedback powinno się pokazywać."
+
+#: classes/SettingsController.php:44
+msgid "Display Options"
+msgstr "Opcje wyświetlania"
+
+#: classes/SettingsController.php:64
+msgid "Load for non-logged in users"
+msgstr "Wyświetl  dla niezalogowanych użytkowników"
+
+#: classes/SettingsController.php:72
+msgid "Load in the WordPress admin"
+msgstr "Wyświetl w panelu administracyjnym"
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/wearerequired/user-feedback/"
+msgstr "https://github.com/wearerequired/user-feedback/"
+
+#. Description of the plugin/theme
+msgid ""
+"Allows users to submit feedback and bug reports anywhere on the site using "
+"an interactive feedback button."
+msgstr ""
+"Pozwala użytkownikom na przesyłanie informacji zwrotnych oraz raporty o "
+"błędach w dowolnym miejscu na stronie za pomocą interaktywnego przycisku."
+
+#. Author of the plugin/theme
+msgid "required+"
+msgstr "required+"
+
+#. Author URI of the plugin/theme
+msgid "http://required.ch"
+msgstr "http://required.ch"
+
+#: classes/Controller.php:286
+msgctxt "input field placeholder"
+msgid "Your name"
+msgstr "Twoje imię"
+
+#: classes/Controller.php:292 classes/Controller.php:304
+msgctxt "close button"
+msgid "&times;"
+msgstr ""
+
+#: classes/Controller.php:313 classes/Controller.php:318
+#: classes/Controller.php:339
+msgctxt "close button"
+msgid "&times"
+msgstr ""
+
+#: classes/Controller.php:323
+msgctxt "alt text"
+msgid "Annotated Screenshot"
+msgstr "Załączony zrzut ekranu"
+
+#: classes/AjaxHandler.php:31
+msgid "No data provided"
+msgstr "Brak danych"
+
+#: classes/Controller.php:131
+msgid "Yes"
+msgstr "Tak"
+
+#: classes/Controller.php:131
+msgid "No"
+msgstr "Nie"
+
+#: classes/Controller.php:133 classes/Controller.php:168
+msgid "Howdy,"
+msgstr "Cześć,"
+
+#: classes/Controller.php:135 classes/Controller.php:170
+#, c-format
+msgid "Name: %s"
+msgstr "Imię: %s"
+
+#: classes/Controller.php:136 classes/Controller.php:171
+#, c-format
+msgid "Email: %s"
+msgstr "E-mail: %s"
+
+#: classes/Controller.php:142 classes/Controller.php:174
+msgid "Additional Notes:"
+msgstr "Dodatkowe uwagi:"
+
+#: classes/Controller.php:144 classes/Controller.php:176
+msgid "A screenshot of the visited page is attached."
+msgstr "Zrzut ekranu został załączony"
+
+#: classes/Controller.php:169
+msgid ""
+"We just received the following feedback from you and will get in touch "
+"shortly. Thank you."
+msgstr "Otrzymaliśmy od Ciebie zgłoszenie. Dziękujemy."
+
+#: classes/Controller.php:181
+#, c-format
+msgid "[%s] Your Feedback"
+msgstr "[%s] Twoje zgłoszenie"
+
+#: classes/Controller.php:268
+msgid "Feedback"
+msgstr "Wyślij zgłoszenie"
+
+#: classes/Controller.php:283
+msgid "Howdy stranger,"
+msgstr "Witaj nieznajomy,"
+
+#: classes/Controller.php:290 classes/Controller.php:303
+msgid "Next"
+msgstr "Przejdź dalej"
+
+#: classes/Controller.php:291
+msgid "Stay anonymous"
+msgstr "Pozostań anonimowy"
+
+#: classes/Controller.php:298
+msgid "Hello "
+msgstr "Witaj "
+
+#: classes/Controller.php:299
+msgid "Please help us understand your feedback better!"
+msgstr "Pozwól nam lepiej zrozumieć Twoje zgłoszenie."
+
+#: classes/Controller.php:300
+msgid ""
+"You can not only leave us a message but also highlight areas relevant to "
+"your feedback."
+msgstr ""
+"Możesz nie tylko zostawić nam wiadomość, ale zaznaczyć obszar strony "
+"dotyczący Twojego zgłoszenia."
+
+#: classes/Controller.php:301
+msgid "Don't show me this again"
+msgstr "Nie pokazuj tego więcej."
+
+#: classes/Controller.php:310
+msgid "Highlight the areas relevant to your feedback."
+msgstr ""
+"Zaznacz obszar dotyczący zgłoszenia i naciśnij \"Zrób zrzut ekranu\". "
+"Następnie zaczekaj, chwilę potrwa zanim będziesz mógł kontynuować zgłoszenie."
+
+#: classes/Controller.php:312
+msgid "Take screenshot"
+msgstr "Zrób zrzut ekranu"
+
+#: classes/Controller.php:331
+msgid "Theme: "
+msgstr "Szablon: "
+
+#: classes/Controller.php:332
+msgid "Page: "
+msgstr "Strona: "
+
+#: classes/Controller.php:333
+msgid "Browser: "
+msgstr "Przeglądarka: "
+
+#: classes/Controller.php:334
+msgid "Language: "
+msgstr "Język:"
+
+#: classes/Controller.php:337
+msgid "Send"
+msgstr "Wyślij"
+
+#: classes/Controller.php:338
+msgid "Back"
+msgstr "Wróć"
+
+#: classes/Controller.php:345
+msgid ""
+"Thank you for taking your time to give us feedback. We will consider it and "
+"get back to you as quickly as possible."
+msgstr ""
+"Dziękujemy, że poświęciłeś swój czas na przesłanie zgłoszenia. Jeśli wymaga "
+"ono naszej odpowiedzi, skontaktujemy się najszybciej jak to możliwe."
+
+#: classes/Controller.php:346
+#, c-format
+msgid "&ndash; %s"
+msgstr "&ndash; %s"
+
+#: classes/Controller.php:348
+msgid "Done"
+msgstr "Zrobione"
+
+#: classes/Controller.php:349
+msgid "Leave another message"
+msgstr "Wyślij kolejne zgłoszenie"
+
+#: classes/Controller.php:410
+#, c-format
+msgid ""
+"%s:\n"
+"\n"
+" %s\n"
+"\n"
+msgstr ""
+"%s:\n"
+"\n"
+" %s\n"
+"\n"
+
+#. Plugin Name of the plugin/theme
+msgid "User Feedback"
+msgstr "User Feedback"
+
+#: classes/SettingsController.php:114
+msgid "Settings"
+msgstr "Opcje"
+
+#: classes/Controller.php:272
+msgctxt "step 1"
+msgid "Feedback"
+msgstr "Zgłoszenie"
+
+#: classes/Controller.php:273
+msgctxt "step 3"
+msgid "Highlight area"
+msgstr "Zaznaczanie obszaru"
+
+#: classes/Controller.php:274
+msgctxt "step 2"
+msgid "Leave a message"
+msgstr "Zostaw wiadomość"
+
+#: classes/Controller.php:277
+msgctxt "help button label"
+msgid "?"
+msgstr "?"
+
+#: classes/Controller.php:278
+msgctxt "help button title text and aria label"
+msgid "Submit Feedback"
+msgstr "Potwierdź zgłoszenie"
+
+#: classes/Controller.php:282 classes/Controller.php:297
+#: classes/Controller.php:322 classes/Controller.php:344
+msgctxt "modal title"
+msgid "Feedback"
+msgstr "Zgłoszenie"
+
+#: classes/Controller.php:309
+msgctxt "modal title"
+msgid "Highlight area"
+msgstr "Zaznaczanie obszaru"
+
+#: classes/Controller.php:287
+msgctxt "input field placeholder"
+msgid "Email address"
+msgstr "adres e-mail"
+
+#: classes/Controller.php:293 classes/Controller.php:305
+#: classes/Controller.php:314 classes/Controller.php:319
+#: classes/Controller.php:340
+msgctxt "close button title text and aria label"
+msgid "Close"
+msgstr "Zamknij"
+
+#: classes/Controller.php:325
+msgctxt "by user xy"
+msgid "From "
+msgstr "Od "
+
+#: classes/Controller.php:328
+msgctxt "textarea placeholder"
+msgid "Tell us what we should improve or fix &hellip;"
+msgstr "Napisz, co powinniśmy ulepszyć lub naprawić  &hellip;"
