@@ -25,7 +25,7 @@
  * Overlay Styling
  */
 
-#user-feedback-overlay {
+.user-feedback-overlay {
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -67,11 +67,21 @@
 	}
 }
 
-#user-feedback-user-name,
-#user-feedback-user-email {
-	width: 100%;
+.user-feedback-bubble-container {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 1000000;
 }
 
-#user-feedback-user-name {
-	margin-bottom: 15px;
+.user-feedback-bubble-inner-wrap {
+	position: relative;
+}
+
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	width: 1px;
 }

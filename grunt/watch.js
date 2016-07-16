@@ -14,7 +14,7 @@ module.exports = {
 
 	php: {
 		files  : ['**/*.php'],
-		tasks  : ['checktextdomain', 'phpunit'],
+		tasks  : ['checktextdomain'],
 		options: {
 			debounceDelay: 5000
 		}

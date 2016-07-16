@@ -12,6 +12,7 @@
 	margin: 0;
 	padding: 0 5px;
 	border: 1px solid transparent;
+	text-transform: none;
 
 	&:focus {
 		background: inherit;
@@ -31,7 +32,7 @@
 	&:focus,
 	&:hover {
 		color: inherit;
-		border: 1px solid #c6c6c6;
+		border: 1px solid $color-light-gray;
 		background-image: linear-gradient(to bottom, $color-light-gray, $color-white);
 	}
 }
@@ -65,10 +66,50 @@
 	}
 }
 
+.user-feedback-bubble {
+	position: absolute;
+	bottom: 20px;
+	min-width: 50px;
+	width: 50px;
+	height: 50px;
+	border: 1px solid transparent;
+	border-radius: 100%;
+	z-index: 100000;
+	color: $color-white;
+	background: rgba($color-blue, 0.75);
+	pointer-events: auto;
+	box-shadow: 0 0 20px rgba($color-blue-hover, 0.5);
+	transition: background 0.1s ease-in-out;
+
+	&:focus {
+		color: $color-white;
+		border: 1px solid rgba($color-light-gray, 0.75);
+		background: rgba($color-blue, 0.75);
+	}
+
+	&:hover {
+		color: $color-white;
+		background: $color-blue-hover;
+	}
+
+	&.top {
+		top: 0;
+	}
+	&.right {
+		right: 0;
+	}
+	&.bottom {
+		bottom: 0;
+	}
+	&.left {
+		left: 0;
+	}
+}
+
 /**
  * Feedback Button at the beginning
  */
-#user-feedback-init-button {
+.user-feedback-button.user-feedback-button-init {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	font-weight: normal;
@@ -81,7 +122,7 @@
 	position: fixed;
 	bottom: -3px;
 	right: 60px;
-	z-index: 100000;
+	z-index: 100010;
 	cursor: pointer;
 
 	&:focus,

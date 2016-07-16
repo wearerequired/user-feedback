@@ -14,7 +14,7 @@ class Controller {
 	/**
 	 * Plugin version.
 	 */
-	const VERSION = '1.1.0';
+	const VERSION = '2.0.0';
 
 	/**
 	 * Ajax handler.
@@ -91,9 +91,6 @@ class Controller {
 		add_action( 'wp_ajax_user_feedback_submit', array( $this->ajaxHandler, 'handle_submission' ) );
 		add_action( 'wp_ajax_nopriv_user_feedback_submit', array( $this->ajaxHandler, 'handle_submission' ) );
 
-		add_action( 'wp_ajax_user_feedback_avatar', array( $this->ajaxHandler, 'get_avatar' ) );
-		add_action( 'wp_ajax_nopriv_user_feedback_avatar', array( $this->ajaxHandler, 'get_avatar' ) );
-
 		// Send feedback emails.
 		add_action( 'user_feedback_received', array( $this, 'process_feedback' ) );
 	}
@@ -110,12 +107,12 @@ class Controller {
 	 */
 	public function process_feedback( $data ) {
 		$attachments = array();
-		if ( $data['img'] ) {
-			$attachments[] = $data['img'];
+		if ( $data['screenshot'] ) {
+			$attachments[] = $data['screenshot'];
 		}
 
-		$user_name  = sanitize_text_field( $data['user']['name'] );
-		$user_email = sanitize_email( $data['user']['email'] );
+		$user_name  = $data['user']['name'];
+		$user_email = $data['user']['email'];
 
 		if ( empty( $user_name ) ) {
 			$user_name = __( 'Anonymous', 'user-feedback' );
@@ -125,8 +122,8 @@ class Controller {
 			$user_email = __( '(not provided)', 'user-feedback' );
 		}
 
-		$user_message = sanitize_text_field( $data['message'] );
-		$visited_url  = esc_url( $data['url'] );
+		$user_message = $data['message'];
+		$visited_url  = $data['url'];
 
 		$cookies_enabled = (bool) $data['browser']['cookieEnabled'] ? __( 'Yes', 'user-feedback' ) : __( 'No', 'user-feedback' );
 
@@ -134,14 +131,17 @@ class Controller {
 		$message .= __( 'You just received a new user feedback regarding your website!', 'user-feedback' ) . "\r\n\r\n";
 		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
 		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
-		$message .= sanitize_text_field( sprintf( __( 'Browser: %s (%s)', 'user-feedback' ), $data['browser']['name'], $data['browser']['userAgent'] ) ) . "\r\n";
+		$message .= sanitize_text_field( sprintf( __( 'Browser: %s', 'user-feedback' ), $data['browser']['userAgent'] ) ) . "\r\n";
 		$message .= sprintf( __( 'Cookies enabled: %s', 'user-feedback' ), $cookies_enabled ) . "\r\n";
 		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $visited_url ) . "\r\n";
-		$message .= sprintf( __( 'Site Language: %s', 'user-feedback' ), sanitize_text_field( $data['language'] ) ) . "\r\n";
-		$message .= sprintf( __( 'User Languages: %s', 'user-feedback' ), sanitize_text_field( implode( ', ', $data['browser']['languages'] ) ) ) . "\r\n";
+		$message .= sprintf( __( 'Site Language: %s', 'user-feedback' ), $data['language'] ) . "\r\n";
+		$message .= sprintf( __( 'User Languages: %s', 'user-feedback' ), implode( ', ', $data['browser']['languages'] ) ) . "\r\n";
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";
-		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+
+		if ( $attachments ) {
+			$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+		}
 
 		// Send email to the blog admin.
 		$recipient     = apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) );
@@ -169,11 +169,14 @@ class Controller {
 		$message .= __( 'We just received the following feedback from you and will get in touch shortly. Thank you.', 'user-feedback' ) . "\r\n\r\n";
 		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
 		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
-		$message .= sprintf( __( 'Browser: %s', 'user-feedback' ), sanitize_text_field( $data['browser']['name'] ) ) . "\r\n";
+		$message .= sprintf( __( 'Browser: %s', 'user-feedback' ), $data['browser']['userAgent'] ) . "\r\n";
 		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $visited_url ) . "\r\n";
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";
-		$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+
+		if ( $attachments ) {
+			$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
+		}
 
 		// Send email to the submitting user.
 		$recipient     = apply_filters( 'user_feedback_email_copy_address', $user_email );
@@ -233,122 +236,26 @@ class Controller {
 			'user-feedback',
 			$this->get_url() . 'css/user-feedback' . $suffix . '.css',
 			array(),
-			'1.0.0'
+			self::VERSION
 		);
 
 		wp_enqueue_script(
 			'user-feedback',
 			$this->get_url() . 'js/user-feedback' . $suffix . '.js',
-			array( 'underscore', 'backbone' ),
-			'1.0.0',
+			array( 'underscore', 'wp-backbone' ),
+			self::VERSION,
 			true
 		);
 
 		wp_localize_script(
 			'user-feedback',
 			'user_feedback',
-			array_merge(
-				$this->dataProvider->get_data(),
-				array(
-					'ajax_url'  => admin_url( 'admin-ajax.php' ),
-					'templates' => $this->get_template_vars(),
-				)
-			)
-		);
-	}
-
-	/**
-	 * Get the template variables for use with `wp_localize_script`.
-	 *
-	 * @return array Template variables.
-	 */
-	protected function get_template_vars() {
-		return array(
-			'button'                => array(
-				'label' => __( 'Feedback', 'user-feedback' ),
-			),
-			'bottombar'             => array(
-				'step'   => array(
-					'one'   => _x( 'Feedback', 'step 1', 'user-feedback' ),
-					'two'   => _x( 'Highlight area', 'step 3', 'user-feedback' ),
-					'three' => _x( 'Leave a message', 'step 2', 'user-feedback' ),
-				),
-				'button' => array(
-					'help'     => _x( '?', 'help button label', 'user-feedback' ),
-					'helpAria' => _x( 'Submit Feedback', 'help button title text and aria label', 'user-feedback' ),
-				),
-			),
-			'wizardStep1'           => array(
-				'title'       => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'salutation'  => __( 'Howdy stranger,', 'user-feedback' ),
-				'intro'       => __( 'Please let us know who you are. This way we will get back to you as soon as the issue is resolved:', 'user-feedback' ),
-				'placeholder' => array(
-					'name'  => _x( 'Your name', 'input field placeholder', 'user-feedback' ),
-					'email' => _x( 'Email address', 'input field placeholder', 'user-feedback' ),
-				),
-				'button'      => array(
-					'primary'   => __( 'Next', 'user-feedback' ),
-					'secondary' => __( 'Stay anonymous', 'user-feedback' ),
-					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-				),
-			),
-			'wizardStep2'           => array(
-				'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'salutation' => __( 'Hello ', 'user-feedback' ),
-				'intro'      => __( 'Please help us understand your feedback better!', 'user-feedback' ),
-				'intro2'     => __( 'You can not only leave us a message but also highlight areas relevant to your feedback.', 'user-feedback' ),
-				'inputLabel' => __( 'Don\'t show me this again', 'user-feedback' ),
-				'button'     => array(
-					'primary'   => __( 'Next', 'user-feedback' ),
-					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-				),
-			),
-			'wizardStep3'           => array(
-				'title'  => _x( 'Highlight area', 'modal title', 'user-feedback' ),
-				'intro'  => __( 'Highlight the areas relevant to your feedback.', 'user-feedback' ),
-				'button' => array(
-					'primary'   => __( 'Take screenshot', 'user-feedback' ),
-					'close'     => _x( '&times', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-				),
-			),
-			'wizardStep3Annotation' => array(
-				'close'     => _x( '&times', 'close button', 'user-feedback' ),
-				'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-			),
-			'wizardStep4'           => array(
-				'title'         => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'screenshotAlt' => _x( 'Annotated Screenshot', 'alt text', 'user-feedback' ),
-				'user'          => array(
-					'by' => _x( 'From ', 'by user xy', 'user-feedback' ),
-				),
-				'placeholder'   => array(
-					'message' => _x( 'Tell us what we should improve or fix &hellip;', 'textarea placeholder', 'user-feedback' ),
-				),
-				'details'       => array(
-					'theme'    => __( 'Theme: ', 'user-feedback' ),
-					'template' => __( 'Page: ', 'user-feedback' ),
-					'browser'  => __( 'Browser: ', 'user-feedback' ),
-					'language' => __( 'Language: ', 'user-feedback' ),
-				),
-				'button'        => array(
-					'primary'   => __( 'Send', 'user-feedback' ),
-					'secondary' => __( 'Back', 'user-feedback' ),
-					'close'     => _x( '&times', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
-				),
-			),
-			'wizardStep5'           => array(
-				'title'  => _x( 'Feedback', 'modal title', 'user-feedback' ),
-				'intro'  => __( 'Thank you for taking your time to give us feedback. We will consider it and get back to you as quickly as possible.', 'user-feedback' ),
-				'intro2' => sprintf( __( '&ndash; %s', 'user-feedback' ), get_bloginfo( 'name' ) ),
-				'button' => array(
-					'primary'   => __( 'Done', 'user-feedback' ),
-					'secondary' => __( 'Leave another message', 'user-feedback' ),
-				),
-			),
+			/**
+			 * Filters the script data passed to the user feedback tool.
+			 *
+			 * @param array $data User Feedback script data.
+			 */
+			apply_filters( 'user_feedback_script_data', $this->dataProvider->get_data() )
 		);
 	}
 
@@ -356,8 +263,11 @@ class Controller {
 	 * Prints the HTML templates used by the feedback JavaScript.
 	 */
 	public function print_templates() {
-		// Our main container.
-		echo '<div id="user-feedback-container"></div>';
+		?>
+		<div id="user-feedback-container">
+			<div class="user-feedback-sub-view"></div>
+		</div>
+		<?php
 	}
 
 	/**
