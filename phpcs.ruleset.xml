@@ -8,11 +8,7 @@
 
     <!-- Include the WordPress ruleset, with exclusions. -->
     <rule ref="WordPress">
-        <exclude name="WordPress.XSS.EscapeOutput"/>
-        <exclude name="WordPress.VIP.SuperGlobalInputUsage"/>
-        <exclude name="WordPress.VIP.ValidatedSanitizedInput"/>
-        <exclude name="WordPress.Variables.GlobalVariables.OverrideProhibited"/>
-        <exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar"/>
-        <exclude name="Squiz.PHP.CommentedOutCode.Found"/>
+        <exclude name="WordPress.VIP.FileSystemWritesDisallow"/>
+        <exclude name="Generic.Files.LowercasedFilename"/>
     </rule>
 </ruleset>
