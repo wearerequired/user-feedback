@@ -17,7 +17,7 @@
             <directory suffix=".php">.</directory>
         </blacklist>
         <whitelist>
-            <directory suffix=".php">./includes</directory>
+            <directory suffix=".php">./classes</directory>
             <file>./init.php</file>
         </whitelist>
     </filter>
