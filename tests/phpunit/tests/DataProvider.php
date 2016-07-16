@@ -35,7 +35,7 @@ class DataProvider extends \WP_UnitTestCase {
 	function test_should_return_logged_in_user_data() {
 		$current_user = get_current_user_id();
 
-		wp_set_current_user( $this->factory->user->create( [
+		wp_set_current_user( $this->factory()->user->create( [
 			'display_name' => 'John Doe',
 			'user_email'   => 'johndoe@required.ch',
 			'role'         => 'administrator',
