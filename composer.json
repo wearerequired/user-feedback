@@ -24,9 +24,8 @@
 		"wearerequired/wp-requirements-check": "dev-master"
 	},
 	"require-dev":  {
-		"phpmd/phpmd":                   "@stable",
-		"wp-coding-standards/wpcs":      "dev-develop",
-		"codeclimate/php-test-reporter": "dev-master"
+		"phpmd/phpmd":              "@stable",
+		"wp-coding-standards/wpcs": "dev-develop"
 	},
 	"scripts":      {
 		"post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
