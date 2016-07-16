@@ -7,4 +7,4 @@ module.exports = {
 		'js/src/**/*.js',
 		'js/test/**/*.js'
 	]
-}
+};

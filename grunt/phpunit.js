@@ -1,6 +1,6 @@
 module.exports = {
 	default: {
-		cmd: 'phpunit',
+		cmd:  'phpunit',
 		args: [ '-c', 'phpunit.xml' ]
 	}
-}
+};
