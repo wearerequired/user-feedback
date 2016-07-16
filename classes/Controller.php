@@ -322,15 +322,17 @@ class Controller {
 			true
 		);
 
+		/**
+		 * Filters the script data passed to the user feedback tool.
+		 *
+		 * @param array $data User Feedback script data.
+		 */
+		$l10n = apply_filters( 'user_feedback_script_data', $this->data_provider->get_data() );
+
 		wp_localize_script(
 			'user-feedback',
 			'user_feedback',
-			/**
-			 * Filters the script data passed to the user feedback tool.
-			 *
-			 * @param array $data User Feedback script data.
-			 */
-			apply_filters( 'user_feedback_script_data', $this->data_provider->get_data() )
+			$l10n
 		);
 	}
 
