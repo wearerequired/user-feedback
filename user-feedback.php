@@ -31,39 +31,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-include( 'lib/requirements-check.php' );
+if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
+	require dirname( __FILE__ ) . '/vendor/autoload.php';
+}
 
-$user_feedback_requirements_check = new User_Feedback_Requirements_Check( array(
-	'title' => 'User Feedback',
-	'php'   => '5.3',
-	'wp'    => '4.0',
+$requirements_check = new WP_Requirements_Check( array(
+	'title' => 'Admin Menu Manager',
+	'php'   => '5.4',
+	'wp'    => '4.4',
 	'file'  => __FILE__,
 ) );
 
-if ( $user_feedback_requirements_check->passes() ) {
-	if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-		include( __DIR__ . '/vendor/autoload.php' );
-	}
-
-	/**
-	 * Get the User Feedback controller instance.
-	 *
-	 * @return \Required\User_Feedback\Controller
-	 */
-	function user_feedback() {
-		static $controller = null;
-
-		if ( null === $controller ) {
-			$controller = new \Required\User_Feedback\Controller();
-		}
-
-		return $controller;
-	}
-
-	// Initialize the plugin.
-	add_action( 'plugins_loaded', function () {
-		user_feedback()->add_hooks();
-	} );
+if ( $requirements_check->passes() ) {
+	include( dirname( __FILE__ ) . '/init.php' );
 }
 
-unset( $user_feedback_requirements_check );
+unset( $requirements_check );
