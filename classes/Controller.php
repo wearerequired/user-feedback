@@ -21,17 +21,21 @@ class Controller {
 	 *
 	 * @var \Required\User_Feedback\AjaxHandler
 	 */
-	protected $ajaxHandler;
+	protected $ajax_handler;
 
 	/**
+	 * Settings controller.
+	 *
 	 * @var \Required\User_Feedback\SettingsController
 	 */
-	protected $settingsController;
+	protected $settings_controller;
 
 	/**
+	 * Data provider.
+	 *
 	 * @var \Required\User_Feedback\DataProvider
 	 */
-	protected $dataProvider;
+	protected $data_provider;
 
 	/**
 	 * Controller constructor.
@@ -39,9 +43,9 @@ class Controller {
 	 * Initializes the ajax handler and settings controller.
 	 */
 	public function __construct() {
-		$this->ajaxHandler        = new AjaxHandler();
-		$this->settingsController = new SettingsController();
-		$this->dataProvider       = new DataProvider();
+		$this->ajax_handler        = new AjaxHandler();
+		$this->settings_controller = new SettingsController();
+		$this->data_provider       = new DataProvider();
 	}
 
 	/**
@@ -79,7 +83,7 @@ class Controller {
 		add_action( 'user_feedback_init', array( $this, 'user_feedback_init' ) );
 
 		// Settings screen.
-		add_action( 'admin_init', array( $this->settingsController, 'add_settings' ) );
+		add_action( 'admin_init', array( $this->settings_controller, 'add_settings' ) );
 
 		// Load the scripts & styles.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -88,8 +92,8 @@ class Controller {
 		add_action( 'admin_footer', array( $this, 'print_templates' ) );
 
 		// Ajax callbacks.
-		add_action( 'wp_ajax_user_feedback_submit', array( $this->ajaxHandler, 'handle_submission' ) );
-		add_action( 'wp_ajax_nopriv_user_feedback_submit', array( $this->ajaxHandler, 'handle_submission' ) );
+		add_action( 'wp_ajax_user_feedback_submit', array( $this->ajax_handler, 'handle_submission' ) );
+		add_action( 'wp_ajax_nopriv_user_feedback_submit', array( $this->ajax_handler, 'handle_submission' ) );
 
 		// Send feedback emails.
 		add_action( 'user_feedback_received', array( $this, 'process_feedback' ) );
@@ -107,10 +111,95 @@ class Controller {
 	 */
 	public function process_feedback( $data ) {
 		$attachments = array();
+
 		if ( $data['screenshot'] ) {
 			$attachments[] = $data['screenshot'];
 		}
 
+		$user_email = $data['user']['email'];
+
+		/**
+		 * Filters the recipient of the admin email.
+		 *
+		 * @param string $email The recipient's email address. Defaults to the blog admin.
+		 */
+		$recipient = apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) );
+
+		/**
+		 * Filters the subject of the admin email.
+		 *
+		 * @param string $subject The admin email subject.
+		 */
+		$subject = apply_filters( 'user_feedback_email_subject',
+			sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
+		);
+
+		/**
+		 * Filters the admin email before it is sent.
+		 *
+		 * @param string $message The email content.
+		 * @param array  $data    User feedback data.
+		 */
+		$email_message = apply_filters( 'user_feedback_email_message', $this->prepare_admin_email( $data ), $data );
+
+		$success = wp_mail( $recipient, $subject, $email_message, '', $attachments );
+
+		do_action_ref_array( 'user_feedback_email_sent', array(
+			'to'          => $recipient,
+			'subject'     => $subject,
+			'message'     => $email_message,
+			'attachments' => $attachments,
+			'feedback'    => $data,
+			'success'     => $success,
+		) );
+
+		if ( ! is_email( $user_email ) ) {
+			return;
+		}
+
+		/**
+		 * Filters the recipient of the user email.
+		 *
+		 * @param string $email The submitting user's email address.
+		 */
+		$recipient = apply_filters( 'user_feedback_email_copy_address', $user_email );
+
+		/**
+		 * Filters the subject of the user email.
+		 *
+		 * @param string $subject The user email subject.
+		 */
+		$subject = apply_filters( 'user_feedback_email_copy_subject',
+			sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
+		);
+
+		/**
+		 * Filters the user email before it is sent.
+		 *
+		 * @param string $message The email content.
+		 * @param array  $data    User feedback data.
+		 */
+		$email_message = apply_filters( 'user_feedback_email_copy_message', $this->prepare_user_email( $data ), $data );
+
+		$success = wp_mail( $recipient, $subject, $email_message, '', $attachments );
+
+		do_action_ref_array( 'user_feedback_email_copy_sent', array(
+			'to'          => $recipient,
+			'subject'     => $subject,
+			'message'     => $email_message,
+			'attachments' => $attachments,
+			'feedback'    => $data,
+			'success'     => $success,
+		) );
+	}
+
+	/**
+	 * Prepares the email that is being sent to the blog admin.
+	 *
+	 * @param array $data User Feedback data.
+	 * @return string The admin email message.
+	 */
+	protected function prepare_admin_email( $data ) {
 		$user_name  = $data['user']['name'];
 		$user_email = $data['user']['email'];
 
@@ -139,31 +228,33 @@ class Controller {
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";
 
-		if ( $attachments ) {
+		if ( $data['screenshot'] ) {
 			$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
 		}
 
-		// Send email to the blog admin.
-		$recipient     = apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) );
-		$subject       = apply_filters( 'user_feedback_email_subject',
-			sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
-		);
-		$email_message = apply_filters( 'user_feedback_email_message', $message, $data );
+		return $message;
+	}
 
-		$success = wp_mail( $recipient, $subject, $email_message, '', $attachments );
+	/**
+	 * Prepares the copy of the email that is being sent to the submitting user.
+	 *
+	 * @param array $data User Feedback data.
+	 * @return string The user email message.
+	 */
+	protected function prepare_user_email( $data ) {
+		$user_name  = $data['user']['name'];
+		$user_email = $data['user']['email'];
 
-		do_action_ref_array( 'user_feedback_email_sent', array(
-			'to'          => $recipient,
-			'subject'     => $subject,
-			'message'     => $email_message,
-			'attachments' => $attachments,
-			'feedback'    => $data,
-			'success'     => $success,
-		) );
-
-		if ( ! is_email( $user_email ) ) {
-			return;
+		if ( empty( $user_name ) ) {
+			$user_name = __( 'Anonymous', 'user-feedback' );
 		}
+
+		if ( empty( $user_email ) ) {
+			$user_email = __( '(not provided)', 'user-feedback' );
+		}
+
+		$user_message = $data['message'];
+		$visited_url  = $data['url'];
 
 		$message = __( 'Howdy,', 'user-feedback' ) . "\r\n\r\n";
 		$message .= __( 'We just received the following feedback from you and will get in touch shortly. Thank you.', 'user-feedback' ) . "\r\n\r\n";
@@ -174,27 +265,11 @@ class Controller {
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";
 
-		if ( $attachments ) {
+		if ( $data['screenshot'] ) {
 			$message .= __( 'A screenshot of the visited page is attached.', 'user-feedback' ) . "\r\n";
 		}
 
-		// Send email to the submitting user.
-		$recipient     = apply_filters( 'user_feedback_email_copy_address', $user_email );
-		$subject       = apply_filters( 'user_feedback_email_copy_subject',
-			sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
-		);
-		$email_message = apply_filters( 'user_feedback_email_copy_message', $message, $data );
-
-		$success = wp_mail( $recipient, $subject, $email_message, '', $attachments );
-
-		do_action_ref_array( 'user_feedback_email_copy_sent', array(
-			'to'          => $recipient,
-			'subject'     => $subject,
-			'message'     => $email_message,
-			'attachments' => $attachments,
-			'feedback'    => $data,
-			'success'     => $success,
-		) );
+		return $message;
 	}
 
 	/**
@@ -255,7 +330,7 @@ class Controller {
 			 *
 			 * @param array $data User Feedback script data.
 			 */
-			apply_filters( 'user_feedback_script_data', $this->dataProvider->get_data() )
+			apply_filters( 'user_feedback_script_data', $this->data_provider->get_data() )
 		);
 	}
 
@@ -317,7 +392,7 @@ class Controller {
 				$data = ( isset( $data['third_party'][ $args['slug'] ] ) ) ? $data['third_party'][ $args['slug'] ] : '';
 
 				if ( ! empty( $data ) ) {
-					$message .= sprintf( __( "%s:\r\n\r\n %s\r\n\r\n", 'user-feedback' ), $args['name'], wp_json_encode( $data ) );
+					$message .= sprintf( __( "%1\$s:\r\n\r\n %2\$s\r\n\r\n", 'user-feedback' ), $args['name'], wp_json_encode( $data ) );
 				}
 
 				return $message;
@@ -333,6 +408,6 @@ class Controller {
 	 * @return array
 	 */
 	public function get_display_options() {
-		return $this->settingsController->get_display_options();
+		return $this->settings_controller->get_display_options();
 	}
 }
