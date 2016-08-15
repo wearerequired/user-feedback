@@ -1,40 +1,40 @@
 {
-	"name":         "wearerequired/user-feedback",
-	"description":  "Allows users to submit feedback and bug reports anywhere on the site using an interactive feedback button.",
-	"version":      "1.1.1",
-	"type":         "wordpress-plugin",
-	"license":      "GPL-2.0+",
-	"authors":      [
-		{
-			"name":     "required+",
-			"email":    "support@required.ch",
-			"homepage": "http://required.ch",
-			"role":     "Developer"
-		}
-	],
-	"repositories": [
-		{
-			"type": "vcs",
-			"url":  "https://github.com/wearerequired/wp-requirements-check"
-		}
-	],
-	"require":      {
-		"php":                                 ">=5.4",
-		"composer/installers":                 "~1.0",
-		"wearerequired/wp-requirements-check": "dev-master"
-	},
-	"require-dev":  {
-		"phpmd/phpmd":              "@stable",
-		"wp-coding-standards/wpcs": "dev-develop"
-	},
-	"scripts":      {
-		"post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
-		"post-update-cmd":  "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
-	},
-	"autoload":     {
-		"psr-4": {
-			"Required\\User_Feedback\\":        "classes",
-			"Required\\User_Feedback\\Tests\\": "tests/phpunit/tests"
-		}
-	}
+  "name":         "wearerequired/user-feedback",
+  "description":  "Allows users to submit feedback and bug reports anywhere on the site using an interactive feedback button.",
+  "version":      "1.1.1",
+  "type":         "wordpress-plugin",
+  "license":      "GPL-2.0+",
+  "authors":      [
+    {
+      "name":     "required+",
+      "email":    "support@required.ch",
+      "homepage": "http://required.ch",
+      "role":     "Developer"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url":  "https://github.com/wearerequired/wp-requirements-check"
+    }
+  ],
+  "require":      {
+    "php":                                 ">=5.4",
+    "composer/installers":                 "~1.0",
+    "wearerequired/wp-requirements-check": "dev-master"
+  },
+  "require-dev":  {
+    "phpmd/phpmd":              "@stable",
+    "wp-coding-standards/wpcs": "dev-develop"
+  },
+  "scripts":      {
+    "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
+    "post-update-cmd":  "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+  },
+  "autoload":     {
+    "psr-4": {
+      "Required\\User_Feedback\\":        "classes",
+      "Required\\User_Feedback\\Tests\\": "tests/phpunit/tests"
+    }
+  }
 }
