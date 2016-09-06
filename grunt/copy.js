@@ -19,6 +19,7 @@ module.exports = {
 			'!bin/**',
 			'!.travis.yml',
 			'!phpunit.xml',
+			'!phpcs.ruleset.xml',
 			'!composer.lock',
 			'!vendor/**',
 			'vendor/composer/**',
