@@ -36,6 +36,8 @@ var Button = wp.Backbone.View.extend(
 		initFeedback: function () {
 			this.isActive = true;
 			this.model.set( 'inProgress', true );
+
+			jQuery( document ).trigger( 'user_feedback:init' );
 		}
 	}
 );

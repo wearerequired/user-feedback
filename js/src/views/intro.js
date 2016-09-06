@@ -33,6 +33,8 @@ var Intro = wp.Backbone.View.extend(
 		 */
 		next: function () {
 			this.model.set( 'doNotShowInfoAgain', this.$el.find( '#user-feedback-do-not-show-again' ).is( ':checked' ) );
+
+			jQuery( document ).trigger( 'user_feedback:next', { step: this.step } );
 		}
 	}
 );

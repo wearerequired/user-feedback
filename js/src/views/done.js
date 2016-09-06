@@ -30,6 +30,8 @@ var Done = wp.Backbone.View.extend(
 		 */
 		close: function () {
 			this.model.set( 'inProgress', false );
+
+			jQuery( document ).trigger( 'user_feedback:close' );
 		}
 	}
 );

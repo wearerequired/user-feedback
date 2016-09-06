@@ -84,6 +84,8 @@ var Bubble = wp.Backbone.View.extend(
 		 */
 		close: function () {
 			this.model.set( 'inProgress', false );
+
+			jQuery( document ).trigger( 'user_feedback:close' );
 		},
 
 		/**
@@ -118,6 +120,8 @@ var Bubble = wp.Backbone.View.extend(
 		next: function () {
 			this.step++;
 			this.render();
+
+			jQuery( document ).trigger( 'user_feedback:next', { step: this.step } );
 		},
 
 		/**
@@ -125,6 +129,8 @@ var Bubble = wp.Backbone.View.extend(
 		 */
 		toggleModal: function () {
 			this.$el.find( '.user-feedback-sub-view' ).toggleClass( 'hidden' );
+
+			jQuery( document ).trigger( 'user_feedback:bubble:toggle' );
 		},
 
 		/**

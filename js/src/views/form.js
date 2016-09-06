@@ -70,8 +70,11 @@ var Form = wp.Backbone.View.extend(
 
 			html2canvas( document.body ).then( _.bind( function ( canvas ) {
 				this.model.set( 'screenshot', canvas.toDataURL() );
+
+				jQuery( document ).trigger( 'user_feedback:screen_capture' );
+
 				this.sendData();
-			}, this ), _.bind( function ( error ) {
+			}, this ), _.bind( function () {
 				this.sendData();
 			}, this ) );
 		},
@@ -92,6 +95,8 @@ var Form = wp.Backbone.View.extend(
 						// Personalize the message text.
 						user_feedback.templates.done.subtitle = response.data.title;
 						user_feedback.templates.done.message  = response.data.message;
+
+						jQuery( document ).trigger( 'user_feedback:submit:success' );
 					}, this ),
 					error:   _.bind( function() {
 						this.setError();
@@ -103,6 +108,8 @@ var Form = wp.Backbone.View.extend(
 		setError: function () {
 			user_feedback.templates.done.subtitle = user_feedback.templates.done.errortitle;
 			user_feedback.templates.done.message  = user_feedback.templates.done.errormessage;
+
+			jQuery( document ).trigger( 'user_feedback:submit:error' );
 		}
 	}
 );
