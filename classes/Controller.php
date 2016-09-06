@@ -101,17 +101,10 @@ class Controller {
 		add_action( 'user_feedback_received', array( $this, 'filter_wp_mail_from' ) );
 	}
 
-	public function filter_wp_mail_from(  ) {
-
-	}
-
 	/**
-	 * This function runs whenever new feedback is submitted.
+	 * Sends emails upon feedback submission.
 	 *
-	 * What it does:
-	 * - uploading the image in the WordPress uploads folder
-	 * - store the feedback as a custom post
-	 * - send an email to the admin
+	 * @since 2.0.0
 	 *
 	 * @param array $data Feedback data.
 	 */
@@ -123,6 +116,13 @@ class Controller {
 		}
 	}
 
+	/**
+	 * Sends an email to the admin upon feedback submission.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param arry $data Feedback data.
+	 */
 	protected function send_email_to_admin( $data ) {
 		$attachments = array();
 
@@ -183,6 +183,13 @@ class Controller {
 		) );
 	}
 
+	/**
+	 * Sends an copy of the email to the user upon feedback submission.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param arry $data Feedback data.
+	 */
 	protected function send_email_to_user( $data ) {
 		$attachments = array();
 

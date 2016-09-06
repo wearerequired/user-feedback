@@ -23,7 +23,7 @@ class SettingsController {
 			'email'     => '',
 		);
 
-		$options  = get_option( 'user_feedback_display', $defaults );
+		$options = get_option( 'user_feedback_display', $defaults );
 
 		return wp_parse_args( $options, $defaults );
 	}
@@ -35,20 +35,21 @@ class SettingsController {
 	 *
 	 * @param string $name    Option name.
 	 * @param mixed  $default Optional. Default value if the option is empty. Default false.
+	 *
 	 * @return mixed Option value on success, null if the option does not exist.
 	 */
 	public function get_option( $name, $default = false ) {
 		$options = $this->get_options();
 
-		if ( ! isset( $options[ $name] ) ) {
+		if ( ! isset( $options[ $name ] ) ) {
 			return null;
 		}
 
-		if ( '' === $options[ $name] && false !== $default ) {
+		if ( '' === $options[ $name ] && false !== $default ) {
 			return $default;
 		}
 
-		return $options[ $name];
+		return $options[ $name ];
 	}
 
 	/**
@@ -111,7 +112,7 @@ class SettingsController {
 	public function settings_field_email() {
 		$email = $this->get_option( 'email' );
 		?>
-		<input type="text" value="<?php echo esc_attr( $email ); ?>" name="user_feedback_display[email]" id="user_feedback_email_address" class="regular-text" />
+		<input type="text" value="<?php echo esc_attr( $email ); ?>" name="user_feedback_display[email]" id="user_feedback_email_address" class="regular-text"/>
 		<p class="description"><?php _e( 'Email address to send feedback to. If left empty, the admin email address will be used.', 'user-feedback' ); ?></p>
 		<?php
 	}
@@ -135,13 +136,13 @@ class SettingsController {
 		}
 
 		foreach ( $defaults as $key => &$option ) {
-			if ( ! isset( $options[ $key] ) ) {
+			if ( ! isset( $options[ $key ] ) ) {
 				continue;
 			}
 
-			$option = $options[ $key];
+			$option = $options[ $key ];
 
-			switch( $key ) {
+			switch ( $key ) {
 				case 'anonymous':
 				case 'backend':
 					$option = (bool) $option;
