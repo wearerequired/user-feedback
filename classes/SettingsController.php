@@ -113,7 +113,7 @@ class SettingsController {
 		$email = $this->get_option( 'email' );
 		?>
 		<input type="text" value="<?php echo esc_attr( $email ); ?>" name="user_feedback_display[email]" id="user_feedback_email_address" class="regular-text"/>
-		<p class="description"><?php _e( 'Email address to send feedback to. If left empty, the admin email address will be used.', 'user-feedback' ); ?></p>
+		<p class="description"><?php _e( 'Email address to send feedback to. If left empty, the admin email address will be used.', 'user-feedback' ); // WPCS: XSS OK. ?></p>
 		<?php
 	}
 
