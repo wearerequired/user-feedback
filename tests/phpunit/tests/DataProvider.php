@@ -78,6 +78,7 @@ class DataProvider extends \WP_UnitTestCase {
 
 		$this->assertSame( [
 			'screen_capture' => true,
+			'is_rtl'         => is_rtl(),
 		], $data['settings'] );
 	}
 
