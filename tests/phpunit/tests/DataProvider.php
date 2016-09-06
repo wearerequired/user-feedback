@@ -3,7 +3,7 @@
 namespace Required\User_Feedback\Tests;
 
 class DataProvider extends \WP_UnitTestCase {
-	function _filter_user_feedback_support_data( $data ) {
+	function _filter_user_feedback_support_data() {
 		return [
 			'foo' => 'bar',
 			'bar' => [ 'baz' ],
