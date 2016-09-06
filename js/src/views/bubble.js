@@ -80,7 +80,7 @@ var Bubble = wp.Backbone.View.extend(
 		/**
 		 * Close the sub views and go back to start.
 		 */
-		close: function ( e ) {
+		close: function () {
 			this.model.set( 'inProgress', false );
 		},
 
