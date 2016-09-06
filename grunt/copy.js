@@ -22,6 +22,7 @@ module.exports = {
 			'!phpcs.ruleset.xml',
 			'!composer.lock',
 			'!vendor/**',
+			'vendor/wearerequired/**',
 			'vendor/composer/**',
 			'vendor/autoload.php'
 		],
