@@ -97,6 +97,12 @@ class Controller {
 
 		// Send feedback emails.
 		add_action( 'user_feedback_received', array( $this, 'process_feedback' ) );
+
+		add_action( 'user_feedback_received', array( $this, 'filter_wp_mail_from' ) );
+	}
+
+	public function filter_wp_mail_from(  ) {
+
 	}
 
 	/**
@@ -110,20 +116,26 @@ class Controller {
 	 * @param array $data Feedback data.
 	 */
 	public function process_feedback( $data ) {
+		$this->send_email_to_admin( $data );
+
+		if ( is_email( $data['user']['email'] ) ) {
+			$this->send_email_to_user( $data );
+		}
+	}
+
+	protected function send_email_to_admin( $data ) {
 		$attachments = array();
 
 		if ( $data['screenshot'] ) {
 			$attachments[] = $data['screenshot'];
 		}
 
-		$user_email = $data['user']['email'];
-
 		/**
 		 * Filters the recipient of the admin email.
 		 *
 		 * @param string $email The recipient's email address. Defaults to the blog admin.
 		 */
-		$recipient = apply_filters( 'user_feedback_email_address', get_option( 'admin_email' ) );
+		$recipient = apply_filters( 'user_feedback_email_address', $this->settings_controller->get_option( 'email', get_option( 'admin_email' ) ) );
 
 		/**
 		 * Filters the subject of the admin email.
@@ -142,7 +154,24 @@ class Controller {
 		 */
 		$email_message = apply_filters( 'user_feedback_email_message', $this->prepare_admin_email( $data ), $data );
 
+		$user_name  = function ( $value ) use ( $data ) {
+			if ( empty( $data['user']['email'] ) ) {
+				return $value;
+			}
+
+			return empty( $data['user']['name'] ) ? __( 'Anonymous', 'user-feedback' ) : $data['user']['name'];
+		};
+		$user_email = function ( $value ) use ( $data ) {
+			return empty( $data['user']['email'] ) ? $value : $data['user']['email'];
+		};
+
+		add_filter( 'wp_mail_from_name', $user_name );
+		add_filter( 'wp_mail_from', $user_email );
+
 		$success = wp_mail( $recipient, $subject, $email_message, '', $attachments );
+
+		remove_filter( 'wp_mail_from_name', $user_name );
+		remove_filter( 'wp_mail_from', $user_email );
 
 		do_action_ref_array( 'user_feedback_email_sent', array(
 			'to'          => $recipient,
@@ -152,9 +181,13 @@ class Controller {
 			'feedback'    => $data,
 			'success'     => $success,
 		) );
+	}
 
-		if ( ! is_email( $user_email ) ) {
-			return;
+	protected function send_email_to_user( $data ) {
+		$attachments = array();
+
+		if ( $data['screenshot'] ) {
+			$attachments[] = $data['screenshot'];
 		}
 
 		/**
@@ -162,7 +195,7 @@ class Controller {
 		 *
 		 * @param string $email The submitting user's email address.
 		 */
-		$recipient = apply_filters( 'user_feedback_email_copy_address', $user_email );
+		$recipient = apply_filters( 'user_feedback_email_copy_address', $data['user']['email'] );
 
 		/**
 		 * Filters the subject of the user email.
@@ -276,7 +309,7 @@ class Controller {
 	 * Register JavaScript files
 	 */
 	public function enqueue_scripts() {
-		$options = $this->get_display_options();
+		$options = $this->settings_controller->get_options();
 
 		$load_user_feedback = ! is_customize_preview();
 
@@ -402,14 +435,5 @@ class Controller {
 		);
 
 		$this->enqueue_scripts();
-	}
-
-	/**
-	 * Returns the display options for this plugin.
-	 *
-	 * @return array
-	 */
-	public function get_display_options() {
-		return $this->settings_controller->get_display_options();
 	}
 }
