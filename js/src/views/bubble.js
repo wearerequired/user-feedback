@@ -45,6 +45,8 @@ var Bubble = wp.Backbone.View.extend(
 				this.views.set( '.user-feedback-sub-view', new Done( { model: this.model } ) );
 			}
 
+			this.$el.find( '.user-feedback-bubble' ).focus();
+
 			if ( this.offset.top && this.offset.left ) {
 				this.moveBubbleToPosition( this.offset.top, this.offset.left );
 			}
@@ -65,19 +67,47 @@ var Bubble = wp.Backbone.View.extend(
 		/**
 		 * Handle esc key presses.
 		 *
-		 * @param e Event object.
+		 * @param {Event} e Event object.
 		 */
 		keydownHandler: function ( e ) {
-			if ( 27 === e.keyCode || 27 === e.which ) {
-				this.model.set( 'inProgress', false );
+			if ( 27 === e.keyCode ) {
+				this.close();
+			} else if ( 9 === e.keyCode ) {
+				this.constrainTabbing( e );
 			}
 		},
 
 		/**
 		 * Close the sub views and go back to start.
 		 */
-		close: function () {
+		close: function ( e ) {
 			this.model.set( 'inProgress', false );
+		},
+
+		/**
+		 * Constrain tabbing within the feedback modal.
+		 *
+		 * @param {Event} e Event object.
+		 */
+		constrainTabbing: function( e ) {
+			var bubble        = this.$el.find( '.user-feedback-bubble' ),
+			    primaryButton = this.$el.find( '.user-feedback-button-primary' ),
+			    closeButton   = this.$el.find( '.user-feedback-button-close' );
+
+			if ( closeButton[ 0 ] === e.target ) {
+				if ( e.shiftKey ) {
+					primaryButton.focus();
+				} else {
+					bubble.focus();
+				}
+				e.preventDefault();
+			} else if ( bubble[ 0 ] === e.target && e.shiftKey ) {
+				closeButton.focus();
+				e.preventDefault();
+			} else if ( primaryButton[ 0 ] === e.target && !e.shiftKey ) {
+				closeButton.focus();
+				e.preventDefault();
+			}
 		},
 
 		/**
