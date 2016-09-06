@@ -34,6 +34,7 @@ var App = wp.Backbone.View.extend(
 
 				// Bubble view that contains the individual steps.
 				this.views.set( '.user-feedback-sub-view', new Bubble( { model: this.model } ) );
+				this.$el.find( '.user-feedback-bubble' ).focus();
 			}
 
 			this.delegateEvents();

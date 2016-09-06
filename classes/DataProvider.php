@@ -123,38 +123,48 @@ class DataProvider {
 	protected function get_template_vars() {
 		return array(
 			'button' => array(
-				'label' => __( 'Feedback', 'user-feedback' ),
+				'label'     => __( 'Feedback', 'user-feedback' ),
+				'labelAria' => __( 'Leave feedback', 'user-feedback' ),
 			),
 			'bubble' => array(
-				'label' => _x( 'Toggle modal', 'screen reader text', 'user-feedback' ),
+				/* translators: assistive text */
+				'label' => __( 'Toggle modal', 'user-feedback' ),
 			),
 			'intro'  => array(
-				'title'      => _x( 'Feedback', 'modal title', 'user-feedback' ),
+				/* translators: modal title */
+				'title'      => __( 'Feedback', 'user-feedback' ),
 				'subtitle'   => __( 'Howdy,', 'user-feedback' ),
 				'message'    => __( 'Please let us know what is going on!', 'user-feedback' ),
 				'message2'   => __( 'Click on the relevant area and write a message to help us understand your feedback better.', 'user-feedback' ),
 				'inputLabel' => __( 'Do not show me this again', 'user-feedback' ),
 				'button'     => array(
 					'primary'   => __( 'OK, I understand', 'user-feedback' ),
-					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
+					/* translators: close button */
+					'close'     => __( '&times;', 'user-feedback' ),
+					'closeAria' => __( 'Close feedback form', 'user-feedback' ),
 				),
 			),
 			'form'   => array(
-				'title'       => _x( 'Feedback', 'modal title', 'user-feedback' ),
+				/* translators: modal title */
+				'title'       => __( 'Feedback', 'user-feedback' ),
 				'placeholder' => array(
-					'name'    => _x( 'Name (optional)', 'input field placeholder', 'user-feedback' ),
-					'email'   => _x( 'Email (optional)', 'input field placeholder', 'user-feedback' ),
-					'message' => _x( 'Tell us what we should improve or fix&hellip;', 'textarea placeholder', 'user-feedback' ),
+					/* translators: input field placeholder */
+					'name'    => __( 'Name (optional)', 'user-feedback' ),
+					/* translators: input field placeholder */
+					'email'   => __( 'Email (optional)', 'user-feedback' ),
+					/* translators: input field placeholder */
+					'message' => __( 'Tell us what we should improve or fix&hellip;', 'user-feedback' ),
 				),
 				'button'      => array(
 					'primary'   => __( 'Send feedback', 'user-feedback' ),
-					'close'     => _x( '&times;', 'close button', 'user-feedback' ),
-					'closeAria' => _x( 'Close', 'close button title text and aria label', 'user-feedback' ),
+					/* translators: close button */
+					'close'     => __( '&times;', 'user-feedback' ),
+					'closeAria' => __( 'Close feedback form', 'user-feedback' ),
 				),
 			),
 			'done'   => array(
-				'title'        => _x( 'Feedback', 'modal title', 'user-feedback' ),
+				/* translators: modal title */
+				'title'        => __( 'Feedback', 'user-feedback' ),
 				'subtitle'     => __( 'Successfully sent!', 'user-feedback' ),
 				'message'      => __( 'Thanks for taking your time to send us your feedback. We will get back to you as quickly as possible.', 'user-feedback' ),
 				'errortitle'   => __( 'Oops, there was an error!', 'user-feedback' ),
