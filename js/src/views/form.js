@@ -34,21 +34,24 @@ var Form = wp.Backbone.View.extend(
 		 * Save the form fields on submission.
 		 */
 		submit: function () {
-			var name  = this.$el.find( '#user-feedback-user-name' ).val(),
-			    email = this.$el.find( '#user-feedback-user-email' ).val(),
-			    msg   = this.$el.find( '#user-feedback-overview-note' ).val();
+			var name    = this.$el.find( '#user-feedback-user-name' ).val(),
+			    email   = this.$el.find( '#user-feedback-user-email' ).val(),
+			    message = this.$el.find( '#user-feedback-overview-note' ).val(),
+			    user    = this.model.get( 'user' );
 
 			if ( '' !== name ) {
-				this.model.set( 'name', name );
+				user.name = name;
 			}
 
 			if ( '' !== email ) {
-				this.model.set( 'email', email );
+				user.email = email;
 			}
 
-			if ( '' !== msg ) {
-				this.model.set( 'message', msg );
+			if ( '' !== message ) {
+				user.message = message;
 			}
+
+			this.model.set( 'user', user );
 
 			// Only run if Canvas is supported
 			if ( !!window.HTMLCanvasElement && !! this.model.get( 'doScreenCapture' ) ) {
@@ -78,9 +81,9 @@ var Form = wp.Backbone.View.extend(
 		 */
 		sendData: function () {
 			this.model.save(
-				{ doNotShowInfoAgain: undefined },
+				{},
 				{
-					success: _.bind( function ( model, response ) {
+					success: _.bind( function( model, response ) {
 						if ( !response.data ) {
 							this.setError();
 							return;
@@ -90,7 +93,7 @@ var Form = wp.Backbone.View.extend(
 						user_feedback.templates.done.subtitle = response.data.title;
 						user_feedback.templates.done.message  = response.data.message;
 					}, this ),
-					error:   _.bind( function () {
+					error:   _.bind( function() {
 						this.setError();
 					}, this )
 				}
