@@ -39,16 +39,16 @@ var Form = wp.Backbone.View.extend(
 			    message = this.$el.find( '#user-feedback-overview-note' ).val(),
 			    user    = this.model.get( 'user' );
 
-			if ( '' !== name ) {
+			if ( !! name ) {
 				user.name = name;
 			}
 
-			if ( '' !== email ) {
+			if ( !! email ) {
 				user.email = email;
 			}
 
-			if ( '' !== message ) {
-				user.message = message;
+			if ( !!message ) {
+				this.model.set( 'message', message );
 			}
 
 			this.model.set( 'user', user );
