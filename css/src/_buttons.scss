@@ -135,4 +135,9 @@
 	&.hidden {
 		display: none;
 	}
+
+	.rtl & {
+		left: 60px;
+		right: auto;
+	}
 }

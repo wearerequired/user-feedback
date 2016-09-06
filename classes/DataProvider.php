@@ -112,6 +112,7 @@ class DataProvider {
 	protected function get_app_settings() {
 		return array(
 			'screen_capture' => true,
+			'is_rtl'         => is_rtl(),
 		);
 	}
 

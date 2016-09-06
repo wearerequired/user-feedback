@@ -49,6 +49,8 @@ var Bubble = wp.Backbone.View.extend(
 
 			if ( this.offset.top && this.offset.left ) {
 				this.moveBubbleToPosition( this.offset.top, this.offset.left );
+			} else {
+				this.setInitialBubblePosition();
 			}
 
 			this.delegateEvents();
@@ -132,6 +134,18 @@ var Bubble = wp.Backbone.View.extend(
 		 */
 		moveBubble: function ( e ) {
 			this.moveBubbleToPosition( e.pageY, e.pageX );
+		},
+
+		setInitialBubblePosition: function() {
+			var $bubble = this.$el.find( '.user-feedback-bubble' ),
+			    $modal       = this.$el.find( '.user-feedback-modal' );
+
+			if ( user_feedback.settings.is_rtl ) {
+				$bubble.addClass( 'top right' );
+				$modal.addClass( 'top right' );
+			} else {
+				$modal.addClass( 'top left' );
+			}
 		},
 
 		/**

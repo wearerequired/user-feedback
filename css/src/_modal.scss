@@ -92,6 +92,10 @@
 	line-height: 30px;
 	font-weight: lighter;
 	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+
+	.rtl & {
+		float: right;
+	}
 }
 
 // Close button in the upper right corner
@@ -117,6 +121,10 @@
 		color: $color-blue-hover;
 		border: 1px solid;
 		border-radius: 100%;
+	}
+
+	.rtl & {
+		float: left;
 	}
 }
 
