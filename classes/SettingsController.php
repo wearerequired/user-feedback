@@ -58,7 +58,7 @@ class SettingsController {
 	public function add_settings() {
 		add_settings_section(
 			'user_feedback',
-			__( 'User Feedback', 'user-feedback' ),
+			sprintf( '<span id="user_feedback">%s</span>', __( 'User Feedback', 'user-feedback' ) ),
 			'__return_empty_string',
 			'general'
 		);
@@ -162,7 +162,6 @@ class SettingsController {
 	 * Add settings action link to the plugins page.
 	 *
 	 * @param array $links Plugin action links.
-	 *
 	 * @return array The modified plugin action links
 	 */
 	public function plugin_action_links( array $links ) {
@@ -170,7 +169,7 @@ class SettingsController {
 			array(
 				'settings' => sprintf(
 					'<a href="%s">%s</a>',
-					esc_url( admin_url( 'options-general.php' ) ),
+					esc_url( admin_url( 'options-general.php#user_feedback' ) ),
 					__( 'Settings', 'user-feedback' )
 				),
 			),
