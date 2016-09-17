@@ -63,7 +63,12 @@ var Bubble = wp.Backbone.View.extend(
 			'click .user-feedback-overlay':      'moveBubble',
 			'click .user-feedback-button-close': 'close',
 			'click .user-feedback-button-next':  'next',
-			'keydown':                           'keydownHandler'
+			'keydown':                           'keydownHandler',
+			'drag .user-feedback-bubble':        'moveBubble',
+			'dragover .user-feedback-bubble':    'preventDrag',
+			'drop .user-feedback-bubble':        'preventDrag',
+			'dragstart .user-feedback-bubble':   'dragStart',
+			'dragend .user-feedback-bubble':     'dragEnd'
 		},
 
 		/**
@@ -134,12 +139,33 @@ var Bubble = wp.Backbone.View.extend(
 		},
 
 		/**
+		 * Hides the modal on drag start.
+		 */
+		dragStart: function( e ) {
+			this.$el.find( '.user-feedback-sub-view' ).addClass( 'hidden' );
+			e.dataTransfer.effectAllowed = 'move';
+		},
+
+		/**
+		 * Shows the modal again on drag end.
+		 */
+		dragEnd: function() {
+			this.$el.find( '.user-feedback-sub-view' ).removeClass( 'hidden' );
+		},
+
+		preventDrag: function( e ) {
+			e.preventDefault();
+		},
+
+		/**
 		 * Click handler to move the bubble.
 		 *
-		 * @param e Event data.
+		 * @param {Event} e Event data.
 		 */
 		moveBubble: function ( e ) {
-			this.moveBubbleToPosition( e.pageY, e.pageX );
+			if ( e.pageX > 0 && e.pageY > 0 ) {
+				this.moveBubbleToPosition( e.pageY, e.pageX );
+			}
 		},
 
 		setInitialBubblePosition: function() {
