@@ -163,8 +163,8 @@ var Bubble = wp.Backbone.View.extend(
 		 * @param {Event} e Event data.
 		 */
 		moveBubble: function ( e ) {
-			if ( e.pageX > 0 && e.pageY > 0 ) {
-				this.moveBubbleToPosition( e.pageY, e.pageX );
+			if ( e.clientX > 0 && e.clientY > 0 ) {
+				this.moveBubbleToPosition( e.clientY, e.clientX );
 			}
 		},
 
