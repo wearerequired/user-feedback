@@ -72,6 +72,7 @@
 	top: 50%;
 	left: 50%;
 	z-index: 1000000;
+	pointer-events: none;
 }
 
 .user-feedback-bubble-inner-wrap {
@@ -84,4 +85,84 @@
 	overflow: hidden;
 	position: absolute !important;
 	width: 1px;
+}
+
+/**
+ * Intro Template
+ */
+#user-feedback-welcome {
+	top: 50%;
+	left: 50%;
+	position: fixed;
+	transform: translate(-50%, -50%)
+}
+
+#user-feedback-message {
+	width: 100%;
+	height: auto;
+	min-height: 90px;
+	outline: none;
+	margin-bottom: 10px;
+	padding: 4px;
+}
+
+label[for=user-feedback-do-not-show-again] {
+	cursor: pointer;
+	color: $color-gray;
+}
+
+/**
+ * Highlighting Template
+ */
+
+#user-feedback-welcome-error,
+#user-feedback-overview-error {
+	color: $color-red;
+	float: right;
+	margin-right: 30px;
+	margin-bottom: 10px;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+#user-feedback-overview-error {
+	margin-top: 20px
+}
+
+/**
+ * Annotation Template pinned to the bottom
+ */
+
+#user-feedback-highlighter {
+	right: 0;
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	width: 100%;
+	padding: 20px !important;
+	text-align: center;
+}
+
+#user-feedback-overview {
+	top: 10%;
+	left: 50%;
+	margin-left: -420px;
+	position: fixed;
+	width: 840px !important;
+	height: auto;
+}
+
+#user-feedback-submit-error,
+#user-feedback-submit-success {
+	top: 30%;
+	left: 50%;
+	margin-left: -300px;
+	display: block;
+	position: fixed;
+	width: 600px;
+	height: auto;
+}
+
+.user-feedback-additional {
+	margin-bottom: 20px !important
 }
