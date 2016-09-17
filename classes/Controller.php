@@ -84,7 +84,10 @@ class Controller {
 
 		// Settings screen.
 		add_action( 'admin_init', array( $this->settings_controller, 'add_settings' ) );
-		add_action( 'plugin_action_links_'  . plugin_basename( $this->get_path() . '/user-feedback.php' ), array( $this->settings_controller, 'plugin_action_links' ) );
+		add_action( 'plugin_action_links_' . plugin_basename( $this->get_path() . '/user-feedback.php' ), array(
+			$this->settings_controller,
+			'plugin_action_links',
+		) );
 
 		// Load the scripts & styles.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
