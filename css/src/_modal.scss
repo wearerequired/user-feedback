@@ -15,19 +15,13 @@
 	margin-right: -15px;
 	pointer-events: auto;
 
-	&:after, &:before {
+	&:before {
 		content: "";
 		position: absolute;
 		height: 0;
 		width: 0;
 		border: solid transparent;
 		pointer-events: none;
-	}
-
-	&:after {
-		border-width: 15px;
-		border-color: rgba($color-white, 0);
-		margin-right: 1px;
 	}
 
 	&:before {
@@ -38,7 +32,7 @@
 	&.top {
 		top: -10px;
 
-		&:after, &:before {
+		&:before {
 			top: 15px;
 		}
 	}
@@ -47,9 +41,6 @@
 
 		&:before {
 			margin-right: -16px;
-		}
-
-		&:after, &:before {
 			right: -15px;
 			border-left-color: $color-white;
 		}
@@ -57,7 +48,7 @@
 	&.bottom {
 		bottom: -10px;
 
-		&:after, &:before {
+		&:before {
 			bottom: 15px;
 		}
 	}
@@ -68,7 +59,8 @@
 			margin-left: -16px;
 		}
 
-		&:after, &:before {
+		&:before {
+			margin-left: -16px;
 			left: -15px;
 			border-right-color: $color-white;
 		}
