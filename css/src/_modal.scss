@@ -58,6 +58,11 @@
 		&:before {
 			margin-left: -16px;
 		}
+	}
+	&.middle {
+		left: 0;
+		right: 0;
+		top: 75px;
 
 		&:before {
 			margin-left: -16px;

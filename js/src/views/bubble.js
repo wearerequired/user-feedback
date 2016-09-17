@@ -170,7 +170,7 @@ var Bubble = wp.Backbone.View.extend(
 
 		setInitialBubblePosition: function() {
 			var $bubble = this.$el.find( '.user-feedback-bubble' ),
-			    $modal       = this.$el.find( '.user-feedback-modal' );
+			    $modal  = this.$el.find( '.user-feedback-modal' );
 
 			if ( user_feedback.settings.is_rtl ) {
 				$bubble.addClass( 'top right' );
@@ -201,33 +201,40 @@ var Bubble = wp.Backbone.View.extend(
 
 			$container.removeClass( 'user-feedback-bubble-container-initial' );
 
+			$bubble.removeClass( 'left' ).removeClass( 'middle' ).removeClass( 'right' ).removeClass( 'top' ).removeClass( 'bottom' );
+			$modal.removeClass( 'left' ).removeClass( 'middle' ).removeClass( 'right' ).removeClass( 'top' ).removeClass( 'bottom' );
+
+			if ( $overlay.width() < 400 ) {
+				$bubble.addClass( 'middle' );
+				$modal.addClass( 'middle' );
+			} else if ( left > ( $overlay.width() / 2 ) ) {
+				// More on the right hand side. The modal should be on the left.
+				left += bubbleRadius;
+				$bubble.addClass( 'right' );
+				$modal.addClass( 'right' );
+			} else {
+				// More on the left hand side. The modal should be on the right.
+				left -= bubbleRadius;
+				$bubble.addClass( 'left' );
+				$modal.addClass( 'left' );
+			}
+
+			if ( top > ( $overlay.height() / 2 ) ) {
+				// More in the bottom of the screen.
+				top += bubbleRadius;
+				$bubble.addClass( 'bottom' );
+				$modal.addClass( 'bottom' );
+			} else {
+				// More in the top of the screen.
+				top -= bubbleRadius;
+				$bubble.addClass( 'top' );
+				$modal.addClass( 'top' );
+			}
+
 			this.offset = {
 				top:  top,
 				left: left
 			};
-
-			if ( left > ( $overlay.width() / 2 ) ) {
-				// More on the right hand side. The modal should be on the left.
-				left += bubbleRadius;
-				$bubble.removeClass( 'left' ).addClass( 'right' );
-				$modal.removeClass( 'left' ).addClass( 'right' );
-			} else {
-				// More on the left hand side. The modal should be on the right.
-				left -= bubbleRadius;
-				$bubble.removeClass( 'right' ).addClass( 'left' );
-				$modal.removeClass( 'right' ).addClass( 'left' );
-			}
-			if ( top > ( $overlay.height() / 2 ) ) {
-				// More in the bottom of the screen.
-				top += bubbleRadius;
-				$bubble.removeClass( 'top' ).addClass( 'bottom' );
-				$modal.removeClass( 'top' ).addClass( 'bottom' );
-			} else {
-				// More in the top of the screen.
-				top -= bubbleRadius;
-				$bubble.removeClass( 'bottom' ).addClass( 'top' );
-				$modal.removeClass( 'bottom' ).addClass( 'top' );
-			}
 
 			this.$el.find( '.user-feedback-bubble-container' ).css(
 				{
