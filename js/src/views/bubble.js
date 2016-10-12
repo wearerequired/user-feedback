@@ -201,8 +201,8 @@ var Bubble = wp.Backbone.View.extend(
 
 			$container.removeClass( 'user-feedback-bubble-container-initial' );
 
-			$bubble.removeClass( 'left' ).removeClass( 'middle' ).removeClass( 'right' ).removeClass( 'top' ).removeClass( 'bottom' );
-			$modal.removeClass( 'left' ).removeClass( 'middle' ).removeClass( 'right' ).removeClass( 'top' ).removeClass( 'bottom' );
+			$bubble.removeClass( 'left middle right top bottom' );
+			$modal.removeClass( 'left middle right top bottom' );
 
 			if ( $overlay.width() < 400 ) {
 				$bubble.addClass( 'middle' );
