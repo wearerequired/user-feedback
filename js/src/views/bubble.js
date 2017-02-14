@@ -68,7 +68,8 @@ var Bubble = wp.Backbone.View.extend(
 			'dragover .user-feedback-bubble':    'preventDrag',
 			'drop .user-feedback-bubble':        'preventDrag',
 			'dragstart .user-feedback-bubble':   'dragStart',
-			'dragend .user-feedback-bubble':     'dragEnd'
+			'dragend .user-feedback-bubble':     'dragEnd',
+			'touchmove .user-feedback-bubble':   'moveBubble'
 		},
 
 		/**
@@ -143,7 +144,9 @@ var Bubble = wp.Backbone.View.extend(
 		 */
 		dragStart: function( e ) {
 			this.$el.find( '.user-feedback-sub-view' ).addClass( 'hidden' );
-			e.originalEvent.dataTransfer.effectAllowed = 'move';
+			if ( e.originalEvent.dataTransfer ) {
+				e.originalEvent.dataTransfer.effectAllowed = 'move';
+			}
 		},
 
 		/**
@@ -163,8 +166,15 @@ var Bubble = wp.Backbone.View.extend(
 		 * @param {Event} e Event data.
 		 */
 		moveBubble: function ( e ) {
+			e.preventDefault();
+
 			if ( e.clientX > 0 && e.clientY > 0 ) {
 				this.moveBubbleToPosition( e.clientY, e.clientX );
+			} else if ( e.originalEvent.touches ) {
+				var $bubble = this.$el.find( '.user-feedback-bubble' ),
+				    touch = e.originalEvent.touches[ 0 ] || e.originalEvent.changedTouches[ 0 ];
+
+				this.moveBubbleToPosition( touch.pageY - $bubble.height() / 2, touch.pageX - $bubble.width() / 2 );
 			}
 		},
 
@@ -200,7 +210,7 @@ var Bubble = wp.Backbone.View.extend(
 			$bubble.removeClass( 'left middle right top bottom' );
 			$modal.removeClass( 'left middle right top bottom' );
 
-			if ( $overlay.width() < 400 ) {
+			if ( $overlay.width() < 450 ) {
 				left += bubbleRadius;
 				$bubble.addClass( 'middle' );
 				$modal.addClass( 'middle' );
