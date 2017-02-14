@@ -57,6 +57,8 @@
 
 		&:before {
 			margin-left: -16px;
+			left: -15px;
+			border-right-color: $color-white;
 		}
 	}
 	&.middle {
