@@ -187,17 +187,13 @@ var Bubble = wp.Backbone.View.extend(
 			}
 		},
 
+		/**
+		 * Initially sets the bubble to the center of the page.
+		 */
 		setInitialBubblePosition: function() {
-			var $bubble = this.$el.find( '.user-feedback-bubble' ),
-			    $modal  = this.$el.find( '.user-feedback-modal' );
+			var $overlay = this.$el.find( '.user-feedback-overlay' );
 
-			if ( user_feedback.settings.is_rtl ) {
-				$bubble.addClass( 'top right' );
-				$modal.addClass( 'top right' );
-			} else {
-				$bubble.addClass( 'top left' );
-				$modal.addClass( 'top left' );
-			}
+			this.moveBubbleToPosition( $overlay.height() / 2, $overlay.width() / 2 );
 		},
 
 		/**
@@ -219,20 +215,20 @@ var Bubble = wp.Backbone.View.extend(
 			$bubble.removeClass( 'left middle right top bottom' );
 			$modal.removeClass( 'left middle right top bottom' );
 
-			if ( $overlay.width() < 450 ) {
-				left += bubbleRadius;
-				$bubble.addClass( 'middle' );
-				$modal.addClass( 'middle' );
-			} else if ( left > ( $overlay.width() / 2 ) ) {
+			if ( left + $modal.width() > $overlay.width() && left - $modal.width() - $bubble.width() > 0 ) {
 				// More on the right hand side. The modal should be on the left.
 				left += bubbleRadius;
 				$bubble.addClass( 'right' );
 				$modal.addClass( 'right' );
-			} else {
+			} else if ( left + $modal.width() + $bubble.width() < $overlay.width() && left - $modal.width() < 0 ) {
 				// More on the left hand side. The modal should be on the right.
 				left -= bubbleRadius;
 				$bubble.addClass( 'left' );
 				$modal.addClass( 'left' );
+			} else {
+				left += bubbleRadius;
+				$bubble.addClass( 'middle' );
+				$modal.addClass( 'middle' );
 			}
 
 			if ( top > ( $overlay.height() / 2 ) ) {
