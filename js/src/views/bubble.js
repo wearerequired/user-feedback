@@ -178,12 +178,6 @@ var Bubble = wp.Backbone.View.extend(
 			} else {
 				$modal.addClass( 'top left' );
 			}
-
-			// Initially hide modal.
-			if ( this.$el.find( '.user-feedback-overlay' ).width() < 400 ) {
-				this.toggleModal();
-				// Todo: Show tooltip.
-			}
 		},
 
 		/**
