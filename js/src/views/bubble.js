@@ -49,13 +49,17 @@ var Bubble = wp.Backbone.View.extend(
 
 			if ( this.offset.top && this.offset.left ) {
 				this.moveBubbleToPosition( this.offset.top, this.offset.left );
-			} else {
-				this.setInitialBubblePosition();
 			}
 
 			this.delegateEvents();
 
 			return this;
+		},
+
+		ready: function() {
+			if ( !this.offset.top && !this.offset.left ) {
+				this.setInitialBubblePosition();
+			}
 		},
 
 		events: {
