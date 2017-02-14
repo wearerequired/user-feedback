@@ -143,7 +143,7 @@ var Bubble = wp.Backbone.View.extend(
 		 */
 		dragStart: function( e ) {
 			this.$el.find( '.user-feedback-sub-view' ).addClass( 'hidden' );
-			e.dataTransfer.effectAllowed = 'move';
+			e.originalEvent.dataTransfer.effectAllowed = 'move';
 		},
 
 		/**
