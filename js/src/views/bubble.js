@@ -192,7 +192,8 @@ var Bubble = wp.Backbone.View.extend(
 			    $overlay     = this.$el.find( '.user-feedback-overlay' ),
 			    $bubble      = this.$el.find( '.user-feedback-bubble' ),
 			    bubbleRadius = $bubble.height() / 2,
-			    $modal       = this.$el.find( '.user-feedback-modal' );
+			    $modal       = this.$el.find( '.user-feedback-modal' ),
+				$modalArrow  = this.$el.find( '.user-feedback-modal__arrow' );
 
 			$container.removeClass( 'user-feedback-bubble-container-initial' );
 
@@ -200,6 +201,7 @@ var Bubble = wp.Backbone.View.extend(
 			$modal.removeClass( 'left middle right top bottom' );
 
 			if ( $overlay.width() < 400 ) {
+				left += bubbleRadius;
 				$bubble.addClass( 'middle' );
 				$modal.addClass( 'middle' );
 			} else if ( left > ( $overlay.width() / 2 ) ) {
@@ -231,14 +233,25 @@ var Bubble = wp.Backbone.View.extend(
 				left: left
 			};
 
-			this.$el.find( '.user-feedback-bubble-container' ).css(
-				{
-					top:    top,
-					left:   left,
-					right:  'auto',
-					bottom: 'auto'
-				}
-			);
+			this.$el.find( '.user-feedback-bubble-container' ).css( {
+				top:    top,
+				left:   left,
+				right:  'auto',
+				bottom: 'auto'
+			} );
+
+			$modal.removeAttr( 'style' );
+			$modalArrow.removeAttr( 'style' );
+
+			if ( $modal.hasClass( 'middle' ) ) {
+				$modal.css( {
+					left: -left
+				} );
+
+				$modalArrow.css( {
+					left: left - ( $bubble.width() + $bubble.height() ) / 2
+				} );
+			}
 		}
 	}
 );
