@@ -108,9 +108,10 @@
 	padding: 4px;
 }
 
-label[for=user-feedback-do-not-show-again] {
+label[for="user-feedback-do-not-show-again"] {
 	cursor: pointer;
 	color: $color-gray;
+	display:inline;
 }
 
 /**
