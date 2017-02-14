@@ -73,7 +73,8 @@ var Bubble = wp.Backbone.View.extend(
 			'drop .user-feedback-bubble':        'preventDrag',
 			'dragstart .user-feedback-bubble':   'dragStart',
 			'dragend .user-feedback-bubble':     'dragEnd',
-			'touchmove .user-feedback-bubble':   'moveBubble'
+			'touchmove .user-feedback-bubble':   'moveBubble',
+			'touchend .user-feedback-bubble':    'dragEnd'
 		},
 
 		/**
@@ -171,6 +172,10 @@ var Bubble = wp.Backbone.View.extend(
 		 */
 		moveBubble: function ( e ) {
 			e.preventDefault();
+
+			if ( !this.$el.find( '.user-feedback-sub-view' ).hasClass( 'hidden' ) ) {
+				this.$el.find( '.user-feedback-sub-view' ).addClass( 'hidden' );
+			}
 
 			if ( e.clientX > 0 && e.clientY > 0 ) {
 				this.moveBubbleToPosition( e.clientY, e.clientX );
