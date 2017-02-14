@@ -1,7 +1,7 @@
 /**
  * User Feedback
  *
- * Copyright (c) 2015 required+
+ * Copyright (c) 2015-2017 required
  * Licensed under the GPLv2+ license.
  */
 

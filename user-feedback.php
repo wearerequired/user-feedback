@@ -4,7 +4,7 @@
  * Plugin URI:  https://github.com/wearerequired/user-feedback/
  * Description: Allows users to submit feedback and bug reports anywhere on the site using an interactive feedback button.
  * Version:     2.0.0
- * Author:      required+
+ * Author:      required
  * Author URI:  http://required.ch
  * License:     GPLv2+
  * Text Domain: user-feedback
@@ -14,7 +14,7 @@
  */
 
 /**
- * Copyright (c) 2015 required+ (email : support@required.ch)
+ * Copyright (c) 2015-2017 required (email : support@required.ch)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at
