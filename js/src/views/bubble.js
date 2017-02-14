@@ -259,7 +259,7 @@ var Bubble = wp.Backbone.View.extend(
 				} );
 
 				$modalArrow.css( {
-					left: left - ( $bubble.width() + $bubble.height() ) / 2
+					left: Math.max( 0, Math.min( left - ( $bubble.width() + $bubble.height() ) / 2, $modal.width() - 2 ) )
 				} );
 			}
 		}
