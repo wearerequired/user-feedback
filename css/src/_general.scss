@@ -47,6 +47,8 @@
 	background: $color-light-gray;
 	border: 1px solid $color-light-gray;
 	user-select: text;
+	width: 100%;
+	min-height: 6em;
 
 	&:focus {
 		border: 1px solid #64b7cc;
