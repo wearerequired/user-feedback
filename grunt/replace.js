@@ -16,15 +16,5 @@ module.exports = {
 				to:   "$1const$2VERSION$3=$4'<%= package.version %>';"
 			}
 		]
-	},
-	composer: {
-		src:          [ 'composer.json' ],
-		overwrite:    true,
-		replacements: [ // "version": "1.0.0",
-			{
-				from: /^(\s*?)"version":(\s*?)"[^"]+",/m,
-				to:   '$1"version":$2"<%= package.version %>",'
-			}
-		]
 	}
 };
