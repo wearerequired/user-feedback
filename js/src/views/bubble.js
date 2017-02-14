@@ -170,9 +170,9 @@ var Bubble = wp.Backbone.View.extend(
 
 			if ( e.clientX > 0 && e.clientY > 0 ) {
 				this.moveBubbleToPosition( e.clientY, e.clientX );
-			} else if ( e.originalEvent.touches ) {
+			} else if ( e.originalEvent.targetTouches ) {
 				var $bubble = this.$el.find( '.user-feedback-bubble' ),
-				    touch = e.originalEvent.touches[ 0 ] || e.originalEvent.changedTouches[ 0 ];
+				    touch = e.originalEvent.targetTouches[ 0 ];
 
 				this.moveBubbleToPosition( touch.pageY - $bubble.height() / 2, touch.pageX - $bubble.width() / 2 );
 			}
