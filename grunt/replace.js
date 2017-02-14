@@ -8,7 +8,7 @@ module.exports = {
 		} ]
 	},
 	plugin:   {
-		src:          [ 'classes/plugin.php' ],
+		src:          [ 'classes/Controller.php' ],
 		overwrite:    true,
 		replacements: [
 			{
