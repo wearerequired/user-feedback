@@ -70,7 +70,7 @@ class Controller {
 	 * Initializes the plugin, registers textdomain, etc.
 	 */
 	public function load_textdomain() {
-		load_plugin_textdomain( 'user-feedback', false, $this->get_path() . '/languages' );
+		load_plugin_textdomain( 'user-feedback' );
 	}
 
 	/**
