@@ -176,6 +176,7 @@ var Bubble = wp.Backbone.View.extend(
 				$bubble.addClass( 'top right' );
 				$modal.addClass( 'top right' );
 			} else {
+				$bubble.addClass( 'top left' );
 				$modal.addClass( 'top left' );
 			}
 		},
