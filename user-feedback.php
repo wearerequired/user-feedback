@@ -31,12 +31,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+defined( 'ABSPATH' ) or die;
+
 if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 	require dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
 $requirements_check = new WP_Requirements_Check( array(
-	'title' => 'Admin Menu Manager',
+	'title' => 'User Feedback',
 	'php'   => '5.4',
 	'wp'    => '4.4',
 	'file'  => __FILE__,
