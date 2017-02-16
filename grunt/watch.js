@@ -22,6 +22,6 @@ module.exports = {
 
 	scripts: {
 		files: 'js/src/**/*.*',
-		tasks: [ 'jshint', 'browserify', 'uglify', 'clean:js' ]
+		tasks: [ 'jshint', 'browserify', 'uglify' ]
 	}
 };
