@@ -173,13 +173,13 @@ var Bubble = wp.Backbone.View.extend(
 		moveBubble: function ( e ) {
 			e.preventDefault();
 
-			if ( !this.$el.find( '.user-feedback-sub-view' ).hasClass( 'hidden' ) ) {
-				this.$el.find( '.user-feedback-sub-view' ).addClass( 'hidden' );
-			}
-
 			if ( e.clientX > 0 && e.clientY > 0 ) {
 				this.moveBubbleToPosition( e.clientY, e.clientX );
 			} else if ( e.originalEvent.targetTouches ) {
+				if ( !this.$el.find( '.user-feedback-sub-view' ).hasClass( 'hidden' ) ) {
+					this.$el.find( '.user-feedback-sub-view' ).addClass( 'hidden' );
+				}
+
 				var $bubble = this.$el.find( '.user-feedback-bubble' ),
 				    touch = e.originalEvent.targetTouches[ 0 ];
 
