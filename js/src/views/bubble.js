@@ -260,11 +260,11 @@ var Bubble = wp.Backbone.View.extend(
 
 			if ( $modal.hasClass( 'middle' ) ) {
 				$modal.css( {
-					left: -left
+					left: -left / 2
 				} );
 
 				$modalArrow.css( {
-					left: Math.max( 0, Math.min( left - ( $bubble.width() + $bubble.height() ) / 2, $modal.width() - 2 ) )
+					left: Math.max( 0, Math.min( left / 2 - ( $bubble.width() + $bubble.height() ) / 2, $modal.width() - 2 ) )
 				} );
 			}
 		}
