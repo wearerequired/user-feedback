@@ -20,7 +20,7 @@ var Bubble = wp.Backbone.View.extend(
 		/**
 		 * View constructor.
 		 */
-		initialize: function () {
+		initialize: function() {
 			this.listenTo( this.model, 'sync', this.next );
 			this.listenTo( this.model, 'error', this.next );
 		},
@@ -30,7 +30,7 @@ var Bubble = wp.Backbone.View.extend(
 		 *
 		 * @returns {Bubble}
 		 */
-		render: function () {
+		render: function() {
 			this.$el.html( this.template );
 
 			if ( 0 === this.step && !!this.model.get( 'doNotShowInfoAgain' ) ) {
@@ -82,7 +82,7 @@ var Bubble = wp.Backbone.View.extend(
 		 *
 		 * @param {Event} e Event object.
 		 */
-		keydownHandler: function ( e ) {
+		keydownHandler: function( e ) {
 			if ( 27 === e.keyCode ) {
 				this.close();
 			} else if ( 9 === e.keyCode ) {
@@ -93,7 +93,7 @@ var Bubble = wp.Backbone.View.extend(
 		/**
 		 * Close the sub views and go back to start.
 		 */
-		close: function () {
+		close: function() {
 			this.model.set( 'inProgress', false );
 
 			jQuery( document ).trigger( 'user_feedback:close' );
@@ -128,7 +128,7 @@ var Bubble = wp.Backbone.View.extend(
 		/**
 		 * Go to the next step.
 		 */
-		next: function () {
+		next: function() {
 			this.step++;
 			this.render();
 
@@ -138,7 +138,7 @@ var Bubble = wp.Backbone.View.extend(
 		/**
 		 * Show/hide the modal.
 		 */
-		toggleModal: function () {
+		toggleModal: function() {
 			this.$el.find( '.user-feedback-sub-view' ).toggleClass( 'hidden' );
 
 			jQuery( document ).trigger( 'user_feedback:bubble:toggle' );
@@ -170,7 +170,7 @@ var Bubble = wp.Backbone.View.extend(
 		 *
 		 * @param {Event} e Event data.
 		 */
-		moveBubble: function ( e ) {
+		moveBubble: function( e ) {
 			e.preventDefault();
 
 			if ( e.clientX > 0 && e.clientY > 0 ) {
@@ -181,7 +181,7 @@ var Bubble = wp.Backbone.View.extend(
 				}
 
 				var $bubble = this.$el.find( '.user-feedback-bubble' ),
-				    touch = e.originalEvent.targetTouches[ 0 ];
+				    touch   = e.originalEvent.targetTouches[ 0 ];
 
 				this.moveBubbleToPosition( touch.pageY - $bubble.height() / 2, touch.pageX - $bubble.width() / 2 );
 			}
@@ -202,13 +202,13 @@ var Bubble = wp.Backbone.View.extend(
 		 * @param {int} top Y offset.
 		 * @param {int} left X offset.
 		 */
-		moveBubbleToPosition: function ( top, left ) {
+		moveBubbleToPosition: function( top, left ) {
 			var $container   = this.$el.find( '.user-feedback-bubble-container' ),
 			    $overlay     = this.$el.find( '.user-feedback-overlay' ),
 			    $bubble      = this.$el.find( '.user-feedback-bubble' ),
 			    bubbleRadius = $bubble.height() / 2,
 			    $modal       = this.$el.find( '.user-feedback-modal' ),
-				$modalArrow  = this.$el.find( '.user-feedback-modal__arrow' );
+			    $modalArrow  = this.$el.find( '.user-feedback-modal__arrow' );
 
 			$container.removeClass( 'user-feedback-bubble-container-initial' );
 
