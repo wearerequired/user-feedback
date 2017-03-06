@@ -99,9 +99,15 @@ class AjaxHandler {
 		$filename = 'user-feedback-' . date( 'Y-m-d-H-i' );
 		$tempfile = wp_tempnam( $filename );
 
-		if ( ! $tempfile ) {
+		$fp = fopen( $tempfile, 'r' );
+
+		if ( ! $fp ) {
+			@unlink( $tempfile );
+
 			return false;
 		}
+
+		fclose( $fp );
 
 		// WordPress adds a .tmp file extension, but we want .png.
 		if ( rename( $tempfile, $tempfile . '.png' ) ) {
