@@ -104,8 +104,8 @@ class AjaxHandler {
 		}
 
 		// WordPress adds a .tmp file extension, but we want .png.
-		if ( rename( $tempfile, $filename . '.png' ) ) {
-			$tempfile = $filename . '.png';
+		if ( rename( $tempfile, $tempfile . '.png' ) ) {
+			$tempfile = $tempfile . '.png';
 		}
 
 		if ( ! WP_Filesystem( request_filesystem_credentials( '' ) ) ) {
