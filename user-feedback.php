@@ -5,7 +5,7 @@
  * Description: Allows users to submit feedback and bug reports anywhere on the site using an interactive feedback button.
  * Version:     2.0.0-beta
  * Author:      required
- * Author URI:  http://required.com
+ * Author URI:  https://required.com
  * License:     GPLv2+
  * Text Domain: user-feedback
  * Domain Path: /languages
