@@ -3,6 +3,7 @@
 
 # npm
 /node_modules
+package-lock.json
 
 # Release task
 /release
