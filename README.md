@@ -1,6 +1,5 @@
 # User Feedback
 Contributors:      wearerequired, swissspidy, karinchristen, neverything  
-Donate link:       https://required.com  
 Tags:              users, feedback, email, media, support  
 Requires at least: 4.0  
 Tested up to:      4.8  
