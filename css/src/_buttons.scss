@@ -13,6 +13,8 @@
 	padding: 0 5px;
 	border: 1px solid transparent;
 	text-transform: none;
+	transform: none;
+	transition: none;
 
 	&:focus {
 		background: inherit;
