@@ -15,6 +15,11 @@
 	text-transform: none;
 	transform: none;
 	transition: none;
+	border-radius: 0;
+
+	&:active {
+		transform: none;
+	}
 
 	&:focus {
 		background: inherit;
@@ -51,6 +56,7 @@
 	&:hover {
 		color: $color-white;
 		background: $color-blue-hover;
+		border: 1px solid transparent;
 	}
 }
 

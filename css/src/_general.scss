@@ -43,14 +43,20 @@
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	line-height: 1.5;
+	color: $color-black;
 	resize: none;
 	background: $color-light-gray;
 	border: 1px solid $color-light-gray;
 	user-select: text;
 	width: 100%;
 	min-height: 6em;
+	height: auto;
+	padding: 0.5em;
+	box-shadow: none;
+	border-radius: 0;
 
 	&:focus {
+		box-shadow: none;
 		border: 1px solid #64b7cc;
 	}
 }
