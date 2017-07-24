@@ -226,7 +226,7 @@ var Bubble = wp.Backbone.View.extend(
 				$bubble.addClass( 'left' );
 				$modal.addClass( 'left' );
 			} else {
-				left += bubbleRadius;
+				left -= bubbleRadius;
 				$bubble.addClass( 'middle' );
 				$modal.addClass( 'middle' );
 			}
