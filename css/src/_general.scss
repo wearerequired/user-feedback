@@ -3,7 +3,7 @@
  */
 
 #user-feedback-container {
-	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	font-family: $font-stack;
 	font-size: 16px;
 	line-height: 1.5;
 
@@ -40,7 +40,7 @@
  */
 
 .user-feedback-textarea {
-	font-family: 'Open Sans', sans-serif;
+	font-family: $font-stack;
 	font-size: 16px;
 	line-height: 1.5;
 	color: $color-black;
@@ -62,7 +62,7 @@
 }
 
 .user-feedback-input {
-	font-family: 'Open Sans', sans-serif;
+	font-family: $font-stack;
 	font-size: 16px;
 	line-height: 1.5;
 	resize: none;
