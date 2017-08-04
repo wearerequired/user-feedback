@@ -148,6 +148,13 @@ var Bubble = wp.Backbone.View.extend(
 		 * Hides the modal on drag start.
 		 */
 		dragStart: function( e ) {
+			var self = this;
+
+			// Hide the original element after the browser has copied it.
+			setTimeout( function() {
+				self.$el.find( '.user-feedback-bubble' ).addClass( 'hidden' );
+			}, 1 );
+
 			this.$el.find( '.user-feedback-sub-view' ).addClass( 'hidden' );
 			if ( e.originalEvent.dataTransfer ) {
 				e.originalEvent.dataTransfer.effectAllowed = 'move';
@@ -158,6 +165,7 @@ var Bubble = wp.Backbone.View.extend(
 		 * Shows the modal again on drag end.
 		 */
 		dragEnd: function() {
+			this.$el.find( '.user-feedback-bubble' ).removeClass( 'hidden' );
 			this.$el.find( '.user-feedback-sub-view' ).removeClass( 'hidden' );
 		},
 

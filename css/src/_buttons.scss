@@ -115,6 +115,10 @@
 	&.middle {
 		right: 0;
 	}
+
+	&.hidden {
+		display: none;
+	}
 }
 
 /**
@@ -141,10 +145,6 @@
 		background: $color-blue-hover;
 		border: 1px solid $color-blue-hover;
 		color: $color-white;
-	}
-
-	&.hidden {
-		display: none;
 	}
 
 	.rtl & {
