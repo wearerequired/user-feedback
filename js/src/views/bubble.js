@@ -16,13 +16,25 @@ var Bubble = wp.Backbone.View.extend(
 		template:  template( user_feedback.templates.bubble ),
 		step:      0,
 		offset:    {},
+		clientX:   0,
+		clientY:   0,
 
 		/**
 		 * View constructor.
 		 */
 		initialize: function() {
+			var self = this, $document = jQuery( document );
+
 			this.listenTo( this.model, 'sync', this.next );
 			this.listenTo( this.model, 'error', this.next );
+
+			// Populate current mouse position on document to workaround
+			// an issue in Firefox where the position is not exposed on
+			// a child element.
+			$document.on( 'dragover.user-feedback mousemove.user-feedback', function( e ) {
+				self.clientX = e.clientX;
+				self.clientY = e.clientY;
+			} );
 		},
 
 		/**
@@ -71,6 +83,8 @@ var Bubble = wp.Backbone.View.extend(
 			'drag .user-feedback-bubble':        'moveBubble',
 			'dragover .user-feedback-bubble':    'preventDrag',
 			'drop .user-feedback-bubble':        'preventDrag',
+			'dragleave .user-feedback-bubble':   'preventDrag',
+			'dragexit .user-feedback-bubble':    'preventDrag',
 			'dragstart .user-feedback-bubble':   'dragStart',
 			'dragend .user-feedback-bubble':     'dragEnd',
 			'touchmove .user-feedback-bubble':   'moveBubble',
@@ -146,6 +160,8 @@ var Bubble = wp.Backbone.View.extend(
 
 		/**
 		 * Hides the modal on drag start.
+		 *
+		 * @param {Event} e Event data.
 		 */
 		dragStart: function( e ) {
 			var self = this;
@@ -158,6 +174,7 @@ var Bubble = wp.Backbone.View.extend(
 			this.$el.find( '.user-feedback-sub-view' ).addClass( 'hidden' );
 			if ( e.originalEvent.dataTransfer ) {
 				e.originalEvent.dataTransfer.effectAllowed = 'move';
+				e.originalEvent.dataTransfer.setData( 'text', ' ' );
 			}
 		},
 
@@ -169,7 +186,16 @@ var Bubble = wp.Backbone.View.extend(
 			this.$el.find( '.user-feedback-sub-view' ).removeClass( 'hidden' );
 		},
 
+		/**
+		 * Prevents default action of the drag event.
+		 *
+		 * @param {Event} e Event data.
+		 */
 		preventDrag: function( e ) {
+			if ( e.stopPropagation ) {
+				e.stopPropagation(); // Stops some browsers from redirecting.
+			}
+
 			e.preventDefault();
 		},
 
@@ -181,8 +207,8 @@ var Bubble = wp.Backbone.View.extend(
 		moveBubble: function( e ) {
 			e.preventDefault();
 
-			if ( e.clientX > 0 && e.clientY > 0 ) {
-				this.moveBubbleToPosition( e.clientY, e.clientX );
+			if ( this.clientY > 0 && this.clientX > 0 ) {
+				this.moveBubbleToPosition( this.clientY, this.clientX );
 			} else if ( e.originalEvent.targetTouches ) {
 				if ( !this.$el.find( '.user-feedback-sub-view' ).hasClass( 'hidden' ) ) {
 					this.$el.find( '.user-feedback-sub-view' ).addClass( 'hidden' );
