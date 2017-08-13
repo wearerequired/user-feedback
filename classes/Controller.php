@@ -14,7 +14,7 @@ class Controller {
 	/**
 	 * Plugin version.
 	 */
-	const VERSION = '2.0.0-beta';
+	const VERSION = '2.0.0-beta.2';
 
 	/**
 	 * Ajax handler.
