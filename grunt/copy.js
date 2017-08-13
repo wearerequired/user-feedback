@@ -13,6 +13,7 @@ module.exports = {
 			'!Gruntfile.*',
 			'!grunt/**',
 			'!package.json',
+			'!package-lock.json',
 			'!.gitignore',
 			'!.gitmodules',
 			'!tests/**',
