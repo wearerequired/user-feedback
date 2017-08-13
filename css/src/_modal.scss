@@ -74,15 +74,12 @@
 }
 
 .user-feedback-modal__arrow {
-	content: "";
 	position: absolute;
-	height: 0;
-	width: 0;
-	border: solid transparent;
+	height: 16px;
+	width: 32px;
+	display: block;
 	pointer-events: none;
-}
-
-.user-feedback-modal__arrow {
+	border: solid transparent;
 	border-width: 16px;
 	border-color: rgba($color-gray, 0);
 }

@@ -236,36 +236,42 @@ var Bubble = wp.Backbone.View.extend(
 		 * @param {int} top Y offset.
 		 * @param {int} left X offset.
 		 */
-		moveBubbleToPosition: function( top, left ) {
-			var $container   = this.$el.find( '.user-feedback-bubble-container' ),
-			    $overlay     = this.$el.find( '.user-feedback-overlay' ),
-			    $bubble      = this.$el.find( '.user-feedback-bubble' ),
-			    bubbleRadius = $bubble.height() / 2,
-			    $modal       = this.$el.find( '.user-feedback-modal' ),
-			    $modalArrow  = this.$el.find( '.user-feedback-modal__arrow' );
+		moveBubbleToPosition: _.throttle( function( top, left ) {
+			var $container = this.$el.find( '.user-feedback-bubble-container' ),
+				$overlay = this.$el.find( '.user-feedback-overlay' ),
+				$bubble = this.$el.find( '.user-feedback-bubble' ),
+				$modal = this.$el.find( '.user-feedback-modal' ),
+				$modalArrow = this.$el.find( '.user-feedback-modal__arrow' ),
+				bubbleWidth = $bubble.width(),
+				bubbleHeight = $bubble.height(),
+				bubbleRadius = bubbleHeight / 2,
+				modalInnerWidth = $modal.innerWidth(),
+				modalWidth = $modal.width(),
+				overlayHeight = $overlay.height(),
+				overlayWidth = $overlay.width();
 
 			$container.removeClass( 'user-feedback-bubble-container-initial' );
 
 			$bubble.removeClass( 'left middle right top bottom' );
 			$modal.removeClass( 'left middle right top bottom' );
 
-			if ( left + $modal.width() > $overlay.width() && left - $modal.width() - $bubble.width() > 0 ) {
+			if ( left + modalInnerWidth >= overlayWidth && left - modalInnerWidth - bubbleWidth > 0 ) {
 				// More on the right hand side. The modal should be on the left.
 				left += bubbleRadius;
 				$bubble.addClass( 'right' );
 				$modal.addClass( 'right' );
-			} else if ( left + $modal.width() + $bubble.width() < $overlay.width() && left - $modal.width() < 0 ) {
+			} else if ( left + modalInnerWidth + bubbleWidth <= overlayWidth && left - modalInnerWidth < 0 ) {
 				// More on the left hand side. The modal should be on the right.
 				left -= bubbleRadius;
 				$bubble.addClass( 'left' );
 				$modal.addClass( 'left' );
 			} else {
-				left -= bubbleRadius;
+				left += bubbleRadius;
 				$bubble.addClass( 'middle' );
 				$modal.addClass( 'middle' );
 			}
 
-			if ( top > ( $overlay.height() / 2 ) ) {
+			if ( top > ( overlayHeight / 2 ) ) {
 				// More in the bottom of the screen.
 				top += bubbleRadius;
 				$bubble.addClass( 'bottom' );
@@ -293,15 +299,24 @@ var Bubble = wp.Backbone.View.extend(
 			$modalArrow.removeAttr( 'style' );
 
 			if ( $modal.hasClass( 'middle' ) ) {
+				var modalLeft = left,
+					modalArrowWidth = parseInt( $modalArrow.css( 'border-left-width' ), 10 );
+
+				if ( modalLeft > overlayWidth / 2 ) {
+					modalLeft = modalLeft - overlayWidth / 2;
+				} else {
+					modalLeft = modalLeft - bubbleWidth - bubbleWidth - bubbleRadius;
+				}
+
 				$modal.css( {
-					left: -left / 2
+					left: ( -modalLeft / 2 ) - bubbleWidth,
 				} );
 
 				$modalArrow.css( {
-					left: Math.max( 0, Math.min( left / 2 - ( $bubble.width() + $bubble.height() ) / 2, $modal.width() - 2 ) )
+					left: Math.max( 0, Math.min( modalLeft / 2 - ( bubbleWidth / 2 ) / 2 + modalArrowWidth / 2, modalWidth - 2 ) ),
 				} );
 			}
-		}
+		}, 100 ),
 	}
 );
 
