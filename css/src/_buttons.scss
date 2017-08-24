@@ -16,9 +16,15 @@
 	transform: none;
 	transition: none;
 	border-radius: 0;
+	box-shadow: none;
+	text-shadow: none;
 
-	&:active {
+	&:active,
+	&:hover {
 		transform: none;
+		box-shadow: none;
+		text-shadow: none;
+		border: 1px solid transparent;
 	}
 
 	&:focus {
