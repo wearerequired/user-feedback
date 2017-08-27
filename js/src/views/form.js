@@ -68,7 +68,9 @@ var Form = wp.Backbone.View.extend(
 			// Hide UI before taking the screenshot.
 			jQuery( '.user-feedback-modal' ).hide();
 
-			html2canvas( document.body ).then( _.bind( function ( canvas ) {
+			html2canvas( document.documentElement, {
+				type: 'view',
+			} ).then( _.bind( function ( canvas ) {
 				this.model.set( 'screenshot', canvas.toDataURL() );
 
 				jQuery( document ).trigger( 'user_feedback:screen_capture' );
