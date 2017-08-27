@@ -11,7 +11,7 @@ module.exports = {
 			           ' */\n',
 			sourceMap: true,
 			mangle:    {
-				except: [ 'jQuery' ]
+				reserved: [ 'jQuery' ]
 			}
 		}
 	}
