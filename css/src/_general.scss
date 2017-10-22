@@ -6,9 +6,11 @@
 	font-family: $font-stack;
 	font-size: 16px;
 	line-height: 1.5;
+	font-weight: 400;
 
 	* {
 		box-sizing: border-box;
+		-webkit-font-smoothing: subpixel-antialiased;
 	}
 
 	p {
@@ -120,6 +122,7 @@ label[for="user-feedback-do-not-show-again"] {
 	cursor: pointer;
 	color: $color-gray;
 	display:inline;
+	vertical-align: middle;
 }
 
 /**
