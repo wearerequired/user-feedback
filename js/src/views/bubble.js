@@ -18,6 +18,7 @@ var Bubble = wp.Backbone.View.extend(
 		offset:    {},
 		clientX:   0,
 		clientY:   0,
+		isRtl:     user_feedback.isRtl,
 
 		/**
 		 * View constructor.
@@ -308,13 +309,17 @@ var Bubble = wp.Backbone.View.extend(
 					modalLeft = modalLeft - bubbleWidth - bubbleWidth - bubbleRadius;
 				}
 
-				$modal.css( {
-					left: ( -modalLeft / 2 ) - bubbleWidth,
-				} );
+				var direction = this.isRtl ? 'right' : 'left';
 
-				$modalArrow.css( {
-					left: Math.max( 0, Math.min( modalLeft / 2 - ( bubbleWidth / 2 ) / 2 + modalArrowWidth / 2, modalWidth - 2 ) ),
-				} );
+				var modalCSS = {};
+				modalCSS[ direction ] = ( -modalLeft / 2 ) - bubbleWidth;
+
+				$modal.css( modalCSS );
+
+				var modalArrowCSS = {};
+				modalArrowCSS[ direction ] = Math.max( 0, Math.min( modalLeft / 2 - ( bubbleWidth / 2 ) / 2 + modalArrowWidth / 2, modalWidth - 2 ) );
+
+				$modalArrow.css( modalArrowCSS );
 			}
 		}, 100 ),
 	}

@@ -101,10 +101,6 @@
 	font-size: 20px;
 	line-height: 30px;
 	font-weight: 400;
-
-	.rtl & {
-		float: right;
-	}
 }
 
 // Close button in the upper right corner
@@ -130,9 +126,5 @@
 		color: $color-blue-hover;
 		border: 1px solid;
 		border-radius: 100%;
-	}
-
-	.rtl & {
-		float: left;
 	}
 }

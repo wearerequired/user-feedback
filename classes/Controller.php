@@ -372,6 +372,8 @@ class Controller {
 			[],
 			self::VERSION
 		);
+		wp_style_add_data( 'user-feedback', 'rtl', 'replace' );
+		wp_style_add_data( 'user-feedback', 'suffix', $suffix );
 
 		wp_enqueue_script(
 			'user-feedback',
@@ -381,17 +383,20 @@ class Controller {
 			true
 		);
 
+		$localize_data = $this->data_provider->get_data();
+		$localize_data['isRtl'] = is_rtl();
+
 		/**
 		 * Filters the script data passed to the user feedback tool.
 		 *
 		 * @param array $data User Feedback script data.
 		 */
-		$l10n = apply_filters( 'user_feedback_script_data', $this->data_provider->get_data() );
+		$localize_data = apply_filters( 'user_feedback_script_data', $localize_data );
 
 		wp_localize_script(
 			'user-feedback',
 			'user_feedback',
-			$l10n
+			$localize_data
 		);
 	}
 
