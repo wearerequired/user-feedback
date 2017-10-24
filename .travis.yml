@@ -51,7 +51,7 @@ before_install:
 
 # Clones WordPress and configures our testing environment.
 before_script:
-  - composer install --no-interaction
+  - composer install --no-interaction --prefer-dist
   - |
      if [[ "$WP_TRAVISCI" == "travis:checktextdomain" ]] ; then
        grunt checktextdomain
