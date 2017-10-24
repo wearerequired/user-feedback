@@ -77,32 +77,32 @@ class Controller {
 	 * Adds hooks.
 	 */
 	public function add_hooks() {
-		add_action( 'init', array( $this, 'load_textdomain' ) );
+		add_action( 'init', [ $this, 'load_textdomain' ] );
 
 		// Support third-party plugins.
-		add_action( 'user_feedback_init', array( $this, 'user_feedback_init' ) );
+		add_action( 'user_feedback_init', [ $this, 'user_feedback_init' ] );
 
 		// Settings screen.
-		add_action( 'admin_init', array( $this->settings_controller, 'add_settings' ) );
-		add_action( 'plugin_action_links_' . plugin_basename( $this->get_path() . '/user-feedback.php' ), array(
+		add_action( 'admin_init', [ $this->settings_controller, 'add_settings' ] );
+		add_action( 'plugin_action_links_' . plugin_basename( $this->get_path() . '/user-feedback.php' ), [
 			$this->settings_controller,
 			'plugin_action_links',
-		) );
+		] );
 
 		// Load the scripts & styles.
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'wp_footer', array( $this, 'print_templates' ) );
-		add_action( 'admin_footer', array( $this, 'print_templates' ) );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+		add_action( 'wp_footer', [ $this, 'print_templates' ] );
+		add_action( 'admin_footer', [ $this, 'print_templates' ] );
 
 		// Ajax callbacks.
-		add_action( 'wp_ajax_user_feedback_submit', array( $this->ajax_handler, 'handle_submission' ) );
-		add_action( 'wp_ajax_nopriv_user_feedback_submit', array( $this->ajax_handler, 'handle_submission' ) );
+		add_action( 'wp_ajax_user_feedback_submit', [ $this->ajax_handler, 'handle_submission' ] );
+		add_action( 'wp_ajax_nopriv_user_feedback_submit', [ $this->ajax_handler, 'handle_submission' ] );
 
 		// Send feedback emails.
-		add_action( 'user_feedback_received', array( $this, 'process_feedback' ) );
+		add_action( 'user_feedback_received', [ $this, 'process_feedback' ] );
 
-		add_action( 'user_feedback_received', array( $this, 'filter_wp_mail_from' ) );
+		add_action( 'user_feedback_received', [ $this, 'filter_wp_mail_from' ] );
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Controller {
 	 * @param arry $data Feedback data.
 	 */
 	protected function send_email_to_admin( $data ) {
-		$attachments = array();
+		$attachments = [];
 
 		if ( $data['screenshot'] ) {
 			$attachments[] = $data['screenshot'];
@@ -177,14 +177,14 @@ class Controller {
 		remove_filter( 'wp_mail_from_name', $user_name );
 		remove_filter( 'wp_mail_from', $user_email );
 
-		do_action_ref_array( 'user_feedback_email_sent', array(
+		do_action_ref_array( 'user_feedback_email_sent', [
 			'to'          => $recipient,
 			'subject'     => $subject,
 			'message'     => $email_message,
 			'attachments' => $attachments,
 			'feedback'    => $data,
 			'success'     => $success,
-		) );
+		] );
 	}
 
 	/**
@@ -195,7 +195,7 @@ class Controller {
 	 * @param arry $data Feedback data.
 	 */
 	protected function send_email_to_user( $data ) {
-		$attachments = array();
+		$attachments = [];
 
 		if ( $data['screenshot'] ) {
 			$attachments[] = $data['screenshot'];
@@ -227,14 +227,14 @@ class Controller {
 
 		$success = wp_mail( $recipient, $subject, $email_message, '', $attachments );
 
-		do_action_ref_array( 'user_feedback_email_copy_sent', array(
+		do_action_ref_array( 'user_feedback_email_copy_sent', [
 			'to'          => $recipient,
 			'subject'     => $subject,
 			'message'     => $email_message,
 			'attachments' => $attachments,
 			'feedback'    => $data,
 			'success'     => $success,
-		) );
+		] );
 	}
 
 	/**
@@ -343,7 +343,7 @@ class Controller {
 		$load_user_feedback = (bool) apply_filters( 'load_user_feedback', $load_user_feedback );
 
 		if ( ! $load_user_feedback ) {
-			remove_action( 'wp_footer', array( $this, 'print_templates' ) );
+			remove_action( 'wp_footer', [ $this, 'print_templates' ] );
 
 			return;
 		}
@@ -354,14 +354,14 @@ class Controller {
 		wp_enqueue_style(
 			'user-feedback',
 			$this->get_url() . 'css/user-feedback' . $suffix . '.css',
-			array(),
+			[],
 			self::VERSION
 		);
 
 		wp_enqueue_script(
 			'user-feedback',
 			$this->get_url() . 'js/user-feedback' . $suffix . '.js',
-			array( 'underscore', 'wp-backbone' ),
+			[ 'underscore', 'wp-backbone' ],
 			self::VERSION,
 			true
 		);
@@ -406,11 +406,11 @@ class Controller {
 	 * }
 	 */
 	public function user_feedback_init( $args ) {
-		$defaults = array(
+		$defaults = [
 			'name'      => '',
-			'data'      => array(),
+			'data'      => [],
 			'recipient' => get_option( 'admin_email' ),
-		);
+		];
 
 		$args = wp_parse_args( $args, $defaults );
 

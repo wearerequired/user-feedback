@@ -17,11 +17,11 @@ class SettingsController {
 	 * @return array
 	 */
 	public function get_options() {
-		$defaults = array(
+		$defaults = [
 			'anonymous' => false,
 			'backend'   => false,
 			'email'     => '',
-		);
+		];
 
 		$options = get_option( 'user_feedback_display', $defaults );
 
@@ -66,7 +66,7 @@ class SettingsController {
 		add_settings_field(
 			'user_feedback_display',
 			__( 'Display Options', 'user-feedback' ),
-			array( $this, 'settings_field_display' ),
+			[ $this, 'settings_field_display' ],
 			'general',
 			'user_feedback'
 		);
@@ -77,12 +77,12 @@ class SettingsController {
 				'<label for="user_feedback_email_address">%s</label>',
 				__( 'Email Address', 'user-feedback' )
 			),
-			array( $this, 'settings_field_email' ),
+			[ $this, 'settings_field_email' ],
 			'general',
 			'user_feedback'
 		);
 
-		register_setting( 'general', 'user_feedback_display', array( $this, 'sanitize_options' ) );
+		register_setting( 'general', 'user_feedback_display', [ $this, 'sanitize_options' ] );
 	}
 
 	/**
@@ -125,14 +125,14 @@ class SettingsController {
 	 * @return array The sanitized display option.
 	 */
 	public function sanitize_options( $options ) {
-		$defaults = array(
+		$defaults = [
 			'anonymous' => false,
 			'backend'   => false,
 			'email'     => '',
-		);
+		];
 
 		if ( ! isset( $options ) ) {
-			return array();
+			return [];
 		}
 
 		foreach ( $defaults as $key => &$option ) {
@@ -166,13 +166,13 @@ class SettingsController {
 	 */
 	public function plugin_action_links( array $links ) {
 		return array_merge(
-			array(
+			[
 				'settings' => sprintf(
 					'<a href="%s">%s</a>',
 					esc_url( admin_url( 'options-general.php#user_feedback' ) ),
 					__( 'Settings', 'user-feedback' )
 				),
-			),
+			],
 			$links
 		);
 	}

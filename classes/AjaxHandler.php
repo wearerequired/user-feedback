@@ -18,15 +18,15 @@ class AjaxHandler {
 		$data = json_decode( file_get_contents( 'php://input' ), true );
 
 		if ( ! $data ) {
-			wp_send_json_error( array(
+			wp_send_json_error( [
 				'title'   => __( 'Oops, there was an error!', 'user-feedback' ),
 				'message' => __( 'Your feedback could not be sent. Please try again!', 'user-feedback' ),
-			) );
+			] );
 		}
 
 		$defaults = ( new DataProvider() )->get_data();
 
-		$data = wp_parse_args( $data, array(
+		$data = wp_parse_args( $data, [
 			'browser'     => false,
 			'language'    => $defaults['language'],
 			'message'     => '',
@@ -35,7 +35,7 @@ class AjaxHandler {
 			'theme'       => $defaults['theme'],
 			'third_party' => $defaults['third_party'],
 			'user'        => $defaults['user'],
-		) );
+		] );
 
 		$data['screenshot'] = $this->save_temp_image( (string) $data['screenshot'] );
 		$message            = implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $data['message'] ) ) );
@@ -67,14 +67,14 @@ class AjaxHandler {
 		 */
 		do_action( 'user_feedback_received', $data );
 
-		wp_send_json_success( array(
+		wp_send_json_success( [
 			'title'   => __( 'Successfully sent!', 'user-feedback' ),
 			/* translators: %s: user's name */
 			'message' => sprintf(
 				__( 'Hi %s, thanks for taking your time to send us your feedback. We will get back to you as quickly as possible.', 'user-feedback' ),
 				esc_html( $data['user']['name'] )
 			),
-		) );
+		] );
 	}
 
 	/**
