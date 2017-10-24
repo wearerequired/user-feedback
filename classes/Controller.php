@@ -146,9 +146,11 @@ class Controller {
 		 *
 		 * @param string $subject The admin email subject.
 		 */
-		$subject = apply_filters( 'user_feedback_email_subject',
-			sprintf( __( '[%s] New User Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
-		);
+		$subject = apply_filters( 'user_feedback_email_subject', sprintf(
+			/* translators: %s: site name */
+			__( '[%s] New User Feedback', 'user-feedback' ),
+			wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES )
+		) );
 
 		/**
 		 * Filters the admin email before it is sent.
@@ -213,9 +215,11 @@ class Controller {
 		 *
 		 * @param string $subject The user email subject.
 		 */
-		$subject = apply_filters( 'user_feedback_email_copy_subject',
-			sprintf( __( '[%s] Your Feedback', 'user-feedback' ), get_bloginfo( 'name' ) )
-		);
+		$subject = apply_filters( 'user_feedback_email_copy_subject', sprintf(
+			/* translators: %s: site name */
+			__( '[%s] Your Feedback', 'user-feedback' ),
+			wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES )
+		) );
 
 		/**
 		 * Filters the user email before it is sent.
@@ -262,12 +266,19 @@ class Controller {
 
 		$message = __( 'Howdy,', 'user-feedback' ) . "\r\n\r\n";
 		$message .= __( 'You just received a new user feedback regarding your website!', 'user-feedback' ) . "\r\n\r\n";
+		/* translators: %s: user's name */
 		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
+		/* translators: %s: user's email address */
 		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
+		/* translators: %s: browser user agent */
 		$message .= sanitize_text_field( sprintf( __( 'Browser: %s', 'user-feedback' ), $data['browser']['userAgent'] ) ) . "\r\n";
+		/* translators: %s: yes/no */
 		$message .= sprintf( __( 'Cookies enabled: %s', 'user-feedback' ), $cookies_enabled ) . "\r\n";
+		/* translators: %s: visited URL */
 		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $visited_url ) . "\r\n";
+		/* translators: %s: site language */
 		$message .= sprintf( __( 'Site Language: %s', 'user-feedback' ), $data['language'] ) . "\r\n";
+		/* translators: %s: browser languages */
 		$message .= sprintf( __( 'User Languages: %s', 'user-feedback' ), implode( ', ', $data['browser']['languages'] ) ) . "\r\n";
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";
@@ -302,9 +313,13 @@ class Controller {
 
 		$message = __( 'Howdy,', 'user-feedback' ) . "\r\n\r\n";
 		$message .= __( 'We just received the following feedback from you and will get in touch shortly. Thank you.', 'user-feedback' ) . "\r\n\r\n";
+		/* translators: %s: user's name */
 		$message .= sprintf( __( 'Name: %s', 'user-feedback' ), $user_name ) . "\r\n";
+		/* translators: %s: user's email address */
 		$message .= sprintf( __( 'Email: %s', 'user-feedback' ), $user_email ) . "\r\n";
+		/* translators: %s: browser user agent */
 		$message .= sprintf( __( 'Browser: %s', 'user-feedback' ), $data['browser']['userAgent'] ) . "\r\n";
+		/* translators: %s: visited URL */
 		$message .= sprintf( __( 'Visited URL: %s', 'user-feedback' ), $visited_url ) . "\r\n";
 		$message .= __( 'Additional Notes:', 'user-feedback' ) . "\r\n";
 		$message .= $user_message . "\r\n\r\n";

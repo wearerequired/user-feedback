@@ -69,8 +69,8 @@ class AjaxHandler {
 
 		wp_send_json_success( [
 			'title'   => __( 'Successfully sent!', 'user-feedback' ),
-			/* translators: %s: user's name */
 			'message' => sprintf(
+				/* translators: %s: user's name */
 				__( 'Hi %s, thanks for taking your time to send us your feedback. We will get back to you as quickly as possible.', 'user-feedback' ),
 				esc_html( $data['user']['name'] )
 			),
@@ -101,8 +101,8 @@ class AjaxHandler {
 
 		$fp = fopen( $tempfile, 'r' );
 
-		if ( ! $fp ) {
-			@unlink( $tempfile );
+		if ( ! $fp && is_file( $tempfile ) ) {
+			unlink( $tempfile );
 
 			return false;
 		}
