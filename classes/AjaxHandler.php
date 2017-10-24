@@ -53,16 +53,17 @@ class AjaxHandler {
 		 *
 		 * The variable contains all the sanitized data received via the ajax request.
 		 *
-		 * @param array       $feedback    {
+		 * @param array $feedback {
+		 *     An array of feedback data.
 		 *
-		 * @type array        $browser     Contains useful browser information like user agent, platform, and language.
-		 * @type string       $language    Current language setting of WordPress (or any multilingual plugin).
-		 * @type string       $message     Additional notes from the user.
-		 * @type string|false $screenshot  File name of the screenshot or false if none was provided.
-		 * @type string       $url         The URL from where the user submitted the feedback.
-		 * @type string       $theme       The active theme.
-		 * @type string       $third_party Any data added by third party plugins.
-		 * @type string       $user        Name and email address of the user (if provided) and his login status.
+		 *     @type array        $browser     Contains useful browser information like user agent, platform, and language.
+		 *     @type string       $language    Current language setting of WordPress (or any multilingual plugin).
+		 *     @type string       $message     Additional notes from the user.
+		 *     @type string|false $screenshot  File name of the screenshot or false if none was provided.
+		 *     @type string       $url         The URL from where the user submitted the feedback.
+		 *     @type string       $theme       The active theme.
+		 *     @type string       $third_party Any data added by third party plugins.
+		 *     @type string       $user        Name and email address of the user (if provided) and his login status.
 		 * }
 		 */
 		do_action( 'user_feedback_received', $data );

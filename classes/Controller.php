@@ -412,12 +412,12 @@ class Controller {
 	 * Developers can use this action to enable User Feedback in their plugins.
 	 * They can pass additional data that should be processed and even an email address.
 	 *
-	 * @param array $args      {
-	 *                         Hook arguments.
+	 * @param array $args {
+	 *     Hook arguments.
 	 *
-	 * @type string $name      Name of the plugin.
-	 * @type array  $data      Additional debug data that is sent along with the plugin.
-	 * @type string $recipient Email address of the recipient.
+	 *     @type string $name      Name of the plugin.
+	 *     @type array  $data      Additional debug data that is sent along with the plugin.
+	 *     @type string $recipient Email address of the recipient.
 	 * }
 	 */
 	public function user_feedback_init( $args ) {
