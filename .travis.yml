@@ -47,7 +47,6 @@ before_install:
   - node --version
   - npm --version
   - grunt --version
-  - composer self-update
 
 # Clones WordPress and configures our testing environment.
 before_script:
