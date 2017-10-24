@@ -45,7 +45,7 @@ $requirements_check = new WP_Requirements_Check( array(
 ) );
 
 if ( $requirements_check->passes() ) {
-	include( dirname( __FILE__ ) . '/init.php' );
+	include dirname( __FILE__ ) . '/init.php';
 }
 
 unset( $requirements_check );
