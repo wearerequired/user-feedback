@@ -125,7 +125,7 @@ class Controller {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param arry $data Feedback data.
+	 * @param array $data Feedback data.
 	 */
 	protected function send_email_to_admin( $data ) {
 		$attachments = [];
@@ -194,7 +194,7 @@ class Controller {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @param arry $data Feedback data.
+	 * @param array $data Feedback data.
 	 */
 	protected function send_email_to_user( $data ) {
 		$attachments = [];
