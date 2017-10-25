@@ -289,6 +289,13 @@ var Bubble = wp.Backbone.View.extend(
 				$modal.addClass( 'top' );
 			}
 
+			// Limit position to max width and height of screen size.
+			top = Math.max( 0, top );
+			top = Math.min( overlayHeight, top );
+
+			left = Math.max( 0, left );
+			left = Math.min( overlayWidth, left );
+
 			this.offset = {
 				top:  top,
 				left: left
