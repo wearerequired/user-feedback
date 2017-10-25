@@ -4,30 +4,6 @@ language: php
 
 sudo: false
 
-matrix:
-  include:
-  - php: 7.0
-    env: WP_TRAVISCI=travis:phpvalidate
-  - php: 7.0
-    env: WP_TRAVISCI=travis:codecoverage
-  - php: 7.0
-    env: WP_TRAVISCI=travis:jshint
-  - php: 7.2
-    env: WP_TRAVISCI=travis:phpunit WP_VERSION=nightly
-  - php: 7.1
-    env: WP_TRAVISCI=travis:phpunit WP_VERSION=latest
-  - php: 7.1
-    env: WP_TRAVISCI=travis:phpunit WP_VERSION=nightly
-  - php: 7.0
-    env: WP_TRAVISCI=travis:phpunit WP_VERSION=nightly
-  - php: 5.6
-    env: WP_TRAVISCI=travis:phpunit WP_VERSION=nightly
-  - php: 5.5
-    env: WP_TRAVISCI=travis:phpunit WP_VERSION=nightly
-  - php: 5.4
-    env: WP_TRAVISCI=travis:phpunit WP_VERSION=nightly
-  fast_finish: true
-
 cache:
   apt: true
   bundler: true
@@ -36,48 +12,100 @@ cache:
   - $HOME/.composer/cache
   - node_modules
 
-before_install:
-  - bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 $WP_VERSION
+_envs:
+  - &stage_unit
+    before_install:
+      - bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 $WP_VERSION
+    before_script:
+      - composer install --no-interaction --prefer-dist
+    script:
+      - phpunit
 
-  - cd $TRAVIS_BUILD_DIR
-  - npm --version
-  - node --version
-  - nvm install 6.9.1
-  - npm install -g grunt-cli
-  - npm install
-  - npm prune
-  - node --version
-  - npm --version
-  - grunt --version
+jobs:
+  fast_finish: true
+  include:
+    # phpmd + phpcs
+    - stage: lint
+      php: 7.0
+      before_script:
+        - composer install --no-interaction --prefer-dist
+      script:
+        - vendor/bin/phpmd classes text codesize,naming,unusedcode
+        - vendor/bin/phpcs -n --report=emacs --standard=phpcs.ruleset.xml
 
-# Clones WordPress and configures our testing environment.
-before_script:
-  - composer install --no-interaction --prefer-dist
+    # jshint
+    - stage: lint
+      php: 7.0
+      before_install:
+        - cd $TRAVIS_BUILD_DIR
+        - npm --version
+        - node --version
+        - nvm install 6.9.1
+        - npm install -g grunt-cli
+        - npm install
+        - npm prune
+        - node --version
+        - npm --version
+        - grunt --version
+      script:
+        - grunt jshint
 
-script:
-  - |
-    if [[ "$WP_TRAVISCI" == "travis:phpvalidate" ]] ; then
-      vendor/bin/phpmd classes text codesize,naming,unusedcode
-      vendor/bin/phpcs -n --report=emacs --standard=phpcs.ruleset.xml
-    fi
-  - |
-     if [[ "$WP_TRAVISCI" == "travis:codecoverage" ]] ; then
-       phpunit --coverage-clover build/logs/clover.xml
-     fi
-  - |
-     if [[ "$WP_TRAVISCI" == "travis:jshint" ]] ; then
-       grunt jshint
-     fi
-  - phpunit
+    # Unit tests for PHP 5.4-7.2
+    - stage: unit
+      php: 7.2
+      env: WP_VERSION=nightly
+      <<: *stage_unit
 
-after_script:
-  # Push coverage off to Codecov
-- |
-  if [[ "$WP_TRAVISCI" == "travis:codecoverage" ]] ; then
-    bash <(curl -s https://codecov.io/bash)
-  fi
+    - stage: unit
+      php: 7.1
+      env: WP_VERSION=latest
+      <<: *stage_unit
+
+    - stage: unit
+      php: 7.1
+      env: WP_VERSION=nightly
+      <<: *stage_unit
+
+    - stage: unit
+      php: 7.0
+      env: WP_VERSION=nightly
+      <<: *stage_unit
+
+    - stage: unit
+      php: 5.6
+      env: WP_VERSION=nightly
+      <<: *stage_unit
+
+    - stage: unit
+      php: 5.5
+      env: WP_VERSION=nightly
+      <<: *stage_unit
+
+    - stage: unit
+      php: 5.4
+      env: WP_VERSION=nightly
+      <<: *stage_unit
+
+    # Code coverage
+    - stage: coverage
+      php: 7.0
+      before_install:
+        - bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 $WP_VERSION
+      before_script:
+        - composer install --no-interaction --prefer-dist
+      script:
+        - phpunit --coverage-clover build/logs/clover.xml
+      after_script:
+        - bash <(curl -s https://codecov.io/bash)
+
+stages:
+  - lint
+  - unit
+  - name: coverage
+    if: branch = master
 
 notifications:
+  email: false
   slack:
     rooms:
       secure: XK3DU/7AhU/Wg84DRaGGh5XzVzqcTFlQYhDvdA3/29aLj6CVGEfuIKiuDhMsdIr0+lZRWMu3waFIWS9G277hwl1ff+uDB5ptx4/J7sYKK8UmhW7KMWBzg2dkBDdIN9oC8cY2l3Zfe+an/6yHoCL7xc5PeWZFzzvXdo426z/fGl4TJmdpukhAghhWS9FwlIN7IpiIl5sfy6kIk00vp55OU1I220MuHLrV44DaVOkXoa0LHLaw1ovnyFMS1gRNGjtzCtsd78lO6ddiYkJf6fTYC7+H3Kt0FX0wGW+WhlscEaG9rBrB0CRT9KLqB3UUsuc5hRy7+NHOM584RkiyH9I7+aFOgJTeeFIOiwi9eQU3q9soBJLq6B7TL8CMg4mfV+mSFnvsxhPzHhCEjO1ohzBUriPt/8xw5ku8aMP2coxXhAR9j/6bcpF0zp2Q2iImvU32Fy84dtU9ANu+KFN83KADtIA9qBrgGfTKkboLQ5JMJuNhmp/YC6p2PDWfpyMP35+VYLgqy9XgyUixbFt24i/wUJHouMVblsS4dgAJ6ZvoJUUbYoiDxV8imQkCh2HzhSjv1d2/xi7duDS0gAfUVqHxXyCh4Hddt5g3xSHekzEIKv5tIr+/SO2FtfYePeCmdVzcV4H9Wb/WzOB3zctaVmt9HenWwrMj6OYd8kLnTOVWjbc=
