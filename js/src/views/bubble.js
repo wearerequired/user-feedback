@@ -259,15 +259,20 @@ var Bubble = wp.Backbone.View.extend(
 			if ( left + modalInnerWidth >= overlayWidth && left - modalInnerWidth - bubbleWidth > 0 ) {
 				// More on the right hand side. The modal should be on the left.
 				left += bubbleRadius;
-				$bubble.addClass( 'right' );
-				$modal.addClass( 'right' );
+				$bubble.addClass( this.isRtl ? 'left' : 'right' );
+				$modal.addClass( this.isRtl ? 'left' : 'right' );
 			} else if ( left + modalInnerWidth + bubbleWidth <= overlayWidth && left - modalInnerWidth < 0 ) {
 				// More on the left hand side. The modal should be on the right.
 				left -= bubbleRadius;
-				$bubble.addClass( 'left' );
-				$modal.addClass( 'left' );
+				$bubble.addClass( this.isRtl ? 'right' : 'left' );
+				$modal.addClass( this.isRtl ? 'right' : 'left' );
 			} else {
-				left += bubbleRadius;
+				if ( this.isRtl ) {
+					left -= bubbleRadius;
+				} else {
+					left += bubbleRadius;
+				}
+
 				$bubble.addClass( 'middle' );
 				$modal.addClass( 'middle' );
 			}
