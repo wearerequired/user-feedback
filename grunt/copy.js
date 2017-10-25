@@ -19,6 +19,7 @@ module.exports = {
 			'!tests/**',
 			'!bin/**',
 			'!.travis.yml',
+			'!codecov.yml',
 			'!phpunit.xml',
 			'!phpcs.ruleset.xml',
 			'!composer.lock',
