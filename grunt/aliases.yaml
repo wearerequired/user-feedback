@@ -1,6 +1,5 @@
 # Default task
 default:
-- 'checktextdomain'
 - 'replace:header'
 - 'replace:plugin'
 - 'js'

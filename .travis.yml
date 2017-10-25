@@ -51,15 +51,10 @@ before_install:
 # Clones WordPress and configures our testing environment.
 before_script:
   - composer install --no-interaction --prefer-dist
-  - |
-     if [[ "$WP_TRAVISCI" == "travis:checktextdomain" ]] ; then
-       grunt checktextdomain
-     fi
 
 script:
   - |
     if [[ "$WP_TRAVISCI" == "travis:phpvalidate" ]] ; then
-      grunt checktextdomain
       vendor/bin/phpmd classes text codesize,naming,unusedcode
       vendor/bin/phpcs -n --report=emacs --standard=phpcs.ruleset.xml
     fi
