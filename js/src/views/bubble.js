@@ -250,7 +250,15 @@ var Bubble = wp.Backbone.View.extend(
 				modalInnerWidth = $modal.innerWidth(),
 				modalWidth = $modal.width(),
 				overlayHeight = $overlay.height(),
-				overlayWidth = $overlay.width();
+				overlayWidth = $overlay.width(),
+				isSmallScreen = overlayWidth <= 400;
+
+			// Reduce width of modal to match screen size.
+			if ( isSmallScreen ) {
+				$modal.css( { width: overlayWidth + 'px' } );
+				modalInnerWidth = $modal.innerWidth();
+				modalWidth = $modal.width();
+			}
 
 			$container.removeClass( 'user-feedback-bubble-container-initial' );
 
@@ -294,7 +302,7 @@ var Bubble = wp.Backbone.View.extend(
 			top = Math.max( 0, top );
 			top = Math.min( overlayHeight, top );
 
-			left = Math.max( bubbleOuterWidth, left );
+			left = Math.max( isSmallScreen ? bubbleOuterWidth : 0, left );
 			left = Math.min( overlayWidth, left );
 
 			this.offset = {
@@ -309,29 +317,38 @@ var Bubble = wp.Backbone.View.extend(
 				bottom: 'auto'
 			} );
 
-			$modal.removeAttr( 'style' );
-			$modalArrow.removeAttr( 'style' );
+			// Reset left/right position.
+			$modal.css( {
+				left: '',
+				right: '',
+			} );
+			$modalArrow.css( {
+				left: '',
+				right: '',
+			} );
 
 			if ( $modal.hasClass( 'middle' ) ) {
 				var modalLeft = left,
-					modalArrowWidth = parseInt( $modalArrow.css( 'border-left-width' ), 10 );
+					modalArrowWidth = parseInt( $modalArrow.css( 'border-left-width' ), 10 ),
+					modalCSS = {},
+					modalArrowCSS = {},
+					direction = this.isRtl ? 'right' : 'left';
 
-				if ( modalLeft > overlayWidth / 2 ) {
-					modalLeft = modalLeft - overlayWidth / 2;
+				if ( isSmallScreen ) {
+					modalCSS[ direction ] = left * -1;
+					modalArrowCSS[ direction ] = left - bubbleWidth;
 				} else {
-					modalLeft = modalLeft - bubbleWidth - bubbleWidth - bubbleRadius;
+					if ( modalLeft > overlayWidth / 2 ) {
+						modalLeft = modalLeft - overlayWidth / 2;
+					} else {
+						modalLeft = modalLeft - bubbleWidth - bubbleWidth - bubbleRadius;
+					}
+
+					modalCSS[ direction ] = ( -modalLeft / 2 ) - bubbleWidth;
+					modalArrowCSS[ direction ] = Math.max( 0, Math.min( modalLeft / 2 - ( bubbleWidth / 2 ) / 2 + modalArrowWidth / 2, modalWidth - 2 ) );
 				}
 
-				var direction = this.isRtl ? 'right' : 'left';
-
-				var modalCSS = {};
-				modalCSS[ direction ] = ( -modalLeft / 2 ) - bubbleWidth;
-
 				$modal.css( modalCSS );
-
-				var modalArrowCSS = {};
-				modalArrowCSS[ direction ] = Math.max( 0, Math.min( modalLeft / 2 - ( bubbleWidth / 2 ) / 2 + modalArrowWidth / 2, modalWidth - 2 ) );
-
 				$modalArrow.css( modalArrowCSS );
 			}
 		}, 100 ),
