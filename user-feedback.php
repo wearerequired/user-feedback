@@ -37,6 +37,11 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 	require dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
+if ( ! class_exists( '\Required\User_Feedback\Controller' ) ) {
+	trigger_error( sprintf( '%s does not exist. Check Composer\'s autoloader.', '\Required\User_Feedback\Controller' ), E_USER_WARNING );
+	return;
+}
+
 $requirements_check = new WP_Requirements_Check( array(
 	'title' => 'User Feedback',
 	'php'   => '5.4',
