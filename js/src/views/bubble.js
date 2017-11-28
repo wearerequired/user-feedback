@@ -244,6 +244,7 @@ var Bubble = wp.Backbone.View.extend(
 				$modal = this.$el.find( '.user-feedback-modal' ),
 				$modalArrow = this.$el.find( '.user-feedback-modal__arrow' ),
 				bubbleWidth = $bubble.width(),
+				bubbleOuterWidth = $bubble.outerWidth(),
 				bubbleHeight = $bubble.height(),
 				bubbleRadius = bubbleHeight / 2,
 				modalInnerWidth = $modal.innerWidth(),
@@ -293,7 +294,7 @@ var Bubble = wp.Backbone.View.extend(
 			top = Math.max( 0, top );
 			top = Math.min( overlayHeight, top );
 
-			left = Math.max( 0, left );
+			left = Math.max( bubbleOuterWidth, left );
 			left = Math.min( overlayWidth, left );
 
 			this.offset = {
