@@ -2,7 +2,7 @@
 Contributors:      wearerequired, swissspidy, karinchristen, neverything  
 Tags:              users, feedback, email, media, support  
 Requires at least: 4.0  
-Tested up to:      4.8  
+Tested up to:      4.9  
 Requires PHP:      5.4  
 Stable tag:        1.1.1  
 License:           GPLv2 or later  
