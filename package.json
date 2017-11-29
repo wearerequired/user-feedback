@@ -2,7 +2,7 @@
   "name": "user-feedback",
   "title": "User Feedback",
   "description": "Allows users to submit feedback and bug reports  anywhere on the site using an interactive feedback button.",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "homepage": "https://required.com",
   "license": "GPL-2.0+",
   "author": {
