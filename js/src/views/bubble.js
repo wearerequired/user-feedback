@@ -12,13 +12,14 @@ var template = require( 'templates/bubble' ),
  */
 var Bubble = wp.Backbone.View.extend(
 	{
-		className: 'user-feedback-bubble-view',
-		template:  template( user_feedback.templates.bubble ),
-		step:      0,
-		offset:    {},
-		clientX:   0,
-		clientY:   0,
-		isRtl:     user_feedback.isRtl,
+		className:  'user-feedback-bubble-view',
+		template:   template( user_feedback.templates.bubble ),
+		step:       0,
+		offset:     {},
+		clientX:    0,
+		clientY:    0,
+		isRtl:      user_feedback.isRtl,
+		isDragging: false,
 
 		/**
 		 * View constructor.
@@ -167,6 +168,8 @@ var Bubble = wp.Backbone.View.extend(
 		dragStart: function( e ) {
 			var self = this;
 
+			this.isDragging = true;
+
 			// Hide the original element after the browser has copied it.
 			setTimeout( function() {
 				self.$el.find( '.user-feedback-bubble' ).addClass( 'hidden' );
@@ -183,6 +186,12 @@ var Bubble = wp.Backbone.View.extend(
 		 * Shows the modal again on drag end.
 		 */
 		dragEnd: function() {
+			if ( ! this.isDragging ) {
+				return;
+			}
+
+			this.isDragging = false;
+
 			this.$el.find( '.user-feedback-bubble' ).removeClass( 'hidden' );
 			this.$el.find( '.user-feedback-sub-view' ).removeClass( 'hidden' );
 		},
