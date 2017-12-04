@@ -68,6 +68,11 @@ class AjaxHandler {
 		 */
 		do_action( 'user_feedback_received', $data );
 
+		// Remove the temporary file of the screenshot.
+		if ( ! empty( $data['screenshot'] ) && is_file( $data['screenshot'] ) ) {
+			unlink( $data['screenshot'] );
+		}
+
 		wp_send_json_success( [
 			'title'   => __( 'Successfully sent!', 'user-feedback' ),
 			'message' => sprintf(
@@ -80,8 +85,6 @@ class AjaxHandler {
 
 	/**
 	 * Save the submitted image as a temporary file.
-	 *
-	 * @todo Revisit file handling.
 	 *
 	 * @param string $img Base64 encoded image.
 	 *
@@ -100,40 +103,30 @@ class AjaxHandler {
 		$filename = 'user-feedback-' . date( 'Y-m-d-H-i' );
 		$tempfile = wp_tempnam( $filename );
 
-		$filehandle = fopen( $tempfile, 'r' );
+		$filehandle = fopen( $tempfile, 'w+' );
 
-		if ( ! $filehandle && is_file( $tempfile ) ) {
+		if ( ! $filehandle ) {
+			if ( is_file( $tempfile ) ) {
+				unlink( $tempfile );
+			}
+
+			return false;
+		}
+
+		fwrite( $filehandle, $img );
+		fclose( $filehandle );
+
+		// WordPress adds a .tmp file extension, but we want .png.
+		$tempfile_no_ext = preg_replace( '|\.[^.]*$|', '', $tempfile );
+		$tempfile_png    = $tempfile_no_ext . '.png';
+		$renamed         = rename( $tempfile, $tempfile_png );
+
+		if ( ! $renamed ) {
 			unlink( $tempfile );
 
 			return false;
 		}
 
-		fclose( $filehandle );
-
-		// WordPress adds a .tmp file extension, but we want .png.
-		if ( rename( $tempfile, $tempfile . '.png' ) ) {
-			$tempfile = $tempfile . '.png';
-		}
-
-		if ( ! WP_Filesystem( request_filesystem_credentials( '' ) ) ) {
-			return false;
-		}
-
-		/**
-		 * WordPress Filesystem API.
-		 *
-		 * @var \WP_Filesystem_Base $wp_filesystem
-		 */
-		global $wp_filesystem;
-		$success = $wp_filesystem->put_contents(
-			$tempfile,
-			$img
-		);
-
-		if ( ! $success ) {
-			return false;
-		}
-
-		return $tempfile;
+		return $tempfile_png;
 	}
 }
