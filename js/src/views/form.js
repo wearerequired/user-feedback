@@ -71,7 +71,13 @@ var Form = wp.Backbone.View.extend(
 			html2canvas( document.documentElement, {
 				type: 'view',
 			} ).then( _.bind( function ( canvas ) {
-				this.model.set( 'screenshot', canvas.toDataURL() );
+				try {
+					this.model.set( 'screenshot', canvas.toDataURL() );
+				} catch ( e ) {
+					this.setError();
+					this.model.trigger( 'error' );
+					return;
+				}
 
 				jQuery( document ).trigger( 'user_feedback:screen_capture' );
 
