@@ -101,8 +101,6 @@ class Controller {
 
 		// Send feedback emails.
 		add_action( 'user_feedback_received', [ $this, 'process_feedback' ] );
-
-		add_action( 'user_feedback_received', [ $this, 'filter_wp_mail_from' ] );
 	}
 
 	/**
